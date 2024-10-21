@@ -1,0 +1,215 @@
+/* contact content */
+.gridSection{
+  display: grid;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 5em;
+}
+/* Media Query so the website would be responsive on medium sized screens */
+@media screen and (min-width:800px) {
+  section{
+      width: 85%;
+  }   
+  
+  .gridSection{
+      grid-template-columns: 1fr 1fr;
+  }
+}
+/* Changes the properties of elements with class .contactformContainer */
+.contactformContainer{
+  display: flex;
+  flex-direction: column;
+  margin-left: 25%;
+}
+/* Adds a bounce effect  */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+/* Calls the function bounce and applies the function properties to the selectors */
+.bouncepic img {
+  animation: bounce 2s infinite;
+}
+/* Media Query so the website would be responsive on smaller screens */
+@media screen and (min-width:800px) {
+  .contactformContainer{
+      order: 0;
+  }
+  .address{
+      grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+/* Changes the properties of elements with class .sectionHeader */
+
+.sectionHeader{
+  color: white;
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+/* Media Query so the website would be responsive on smaller screens */
+@media screen and (min-width:1000px){
+  .sectionHeader{
+      font-size: 48px;
+  }
+}
+/* Changes the properties of elements with class .contactPic*/
+.contactPic{
+  width: 150px;
+  background-color: rgba(241, 241, 241,.05);
+  border-top-left-radius: 20%;
+  
+}
+/* Changes the properties of img elements with a parent of class .contactPic */
+.contactPic img{
+  width: 100%;
+}
+/* Changes the properties of elements with class .contactInput */
+.contactInput{
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  border: 2px solid black;
+  background-color: transparent;
+  resize: none;
+  color:black;
+}
+/* changes effect to the placeholder section in the .contactInput inputs */
+.contactInput::placeholder{
+  color: var(--lightgrey);
+  text-transform: capitalize;
+}
+/* Changes the div elements properties with a parent of class .contactForm */
+.contactForm div{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+/* Changes the properties of elements with class .btn */
+.btn{
+  border: 1px solid black;
+  border-radius: 50px;
+  background-color: transparent;
+  color: black;
+  font-size:18px;
+  padding: 12px 24px;
+  cursor: pointer;
+}
+/* Changes the properties of elements with parent class class .contactBtn */
+.contactBtn{
+  width: 200px;
+}
+/* Changes the properties of elements with id #sectionPic */
+#sectionPic{
+  width: 70%;
+  max-width: 550px;
+  margin: auto;
+}
+/* Changes the properties of img elements with parent class .sectionPic */
+.sectionPic img{
+  width: 100%;
+}
+/* Media Query so the website would be responsive on smaller screens */
+@media screen and (min-width:800px) {
+  .sectionPic{
+      order: 1;
+  }
+  
+  .sectionDesc{
+      order: 0;
+  }  
+}
+/* changes color property of p elements */
+p{
+  color: var(--lightgrey);
+}
+.address-container {
+  text-align: center; /* Centers content inside the container */
+}
+/* change the properties of all elements with class .addressHeader */
+.addressHeader {
+  color: white;
+  position: relative;
+  display: inline-block;
+  padding: 15px 30px;
+  background-color:navy; /* Adjust color as needed */
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 1.5rem;
+  margin: 0 auto; /* Centers the .addressHeader block */
+  transform: translateY(-50%);
+  z-index: 2;
+}
+/* Changes the properties of a elements with a parent of class .addressHeader */
+.addressHeader a{
+  text-decoration: none;
+  color:white;
+}
+/* Changes the properties of elements with class .address */
+.address {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center children horizontally */
+  gap: 20px; /* Space between items */
+  justify-content: space-between;
+  width: 90%;
+  max-width: 600px; /* Adjust max width as needed */
+  margin: auto; /* Center the entire grid */
+}
+/*Change the properties of elements with class .eachAddress*/
+.eachAddress {
+  position: relative;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width within the container */
+}
+/* Changes the h1 header properties with a parent of class .eachAddress */
+.eachAddress h1 {
+  color: #343a40; /* Dark color for readability */
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+/* Changes the properties of p elements with a parent of class .eachAddress */
+.eachAddress p {
+  color: #6c757d; /* Slightly lighter color for content */
+  margin-bottom: 16px;
+}
+@media screen and (max-width: 800px) {
+  .gridSection {
+    grid-template-columns: 1fr; /* Single column layout */
+    text-align: center; /* Center the content */
+  }
+
+  .contactformContainer {
+    margin: 0; /* Reset margin */
+    order: 1; /* Order of the form */
+  }
+
+  .sectionPic {
+    order: 0; /* Order of the picture */
+    width: 100%; /* Full width */
+    max-width: none; /* Remove max width */
+  }
+}
+
+.contactPic {
+  background-color: rgba(241, 241, 241, .05);
+  border-top-left-radius: 20%;
+}
+
+.contactPic img {
+  width: 100%; /* Ensure full width */
+}
+
+.contactInput {
+  width: 100%;
+}

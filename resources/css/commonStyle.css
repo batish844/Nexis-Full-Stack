@@ -1,0 +1,264 @@
+/* Global box-sizing, margin, and padding settings */
+* {
+  box-sizing: border-box; /* Sets box-sizing to include padding and border in element's width and height */
+  margin: 0; /* Resets default margin */
+  padding: 0; /* Resets default padding */
+}
+
+/* Header styles */
+header {
+  display: flex; /* Uses flexbox for layout */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  padding: 10px 20px; /* Padding around the header */
+  margin: 20px; /* Margin around the header */
+}
+
+/* Nav logo styles */
+.nav-logo {
+  height: 90px; /* Height of the logo */
+}
+
+/* Nav styles */
+.nav {
+  display: flex; /* Uses flexbox for layout */
+  align-items: center; /* Aligns items vertically in the center */
+  border-radius: 40px; /* Rounded corners for the nav bar */
+  font-size: large; /* Larger font size for nav items */
+  box-shadow: 0 10px 40px rgba(159, 162, 177, .8); /* Shadow effect for depth */
+  transition: animation 0.5s ease-in-out; /* Smooth transition for hover effects */
+  padding: 10px 5%; /* Padding inside nav */
+  justify-content: space-evenly; /* Even spacing of nav items */
+}
+
+/* Nav item styles */
+.nav-items {
+  color: black; /* Text color */
+  padding: 0px 30px; /* Padding around each nav item */
+  text-decoration: none; /* Removes underline from links */
+  transition: color 0.3s; /* Transition for hover color change */
+}
+
+/* Hover effect for nav items */
+.nav-items:hover {
+  color: white; /* Color change on hover */
+}
+
+/* Hamburger menu styles for small screens */
+.hamburger-menu {
+  display: none; /* Hidden by default on larger screens */
+  cursor: pointer; /* Changes cursor to pointer */
+  flex-direction: column; /* Stacks the bars vertically */
+  justify-content: space-around; /* Even spacing */
+  height: 25px;
+  width: 30px;
+  position: absolute; /* Absolute positioning */
+  top: 20px; /* Position from the top */
+  right: 20px; /* Position from the right */
+  z-index: 1001; /* Stacks above other content */
+}
+
+/* Hamburger menu bar styles */
+.hamburger-menu .bar {
+  height: 3px; /* Height of each bar */
+  width: 100%; /* Full width of the container */
+  background-color: #333; /* Color of the bars */
+}
+
+/* Animation for sparkling effect on nav bar */
+@keyframes navBarSparkle {
+  0% {
+    /* Starting state of animation */
+    box-shadow: 0 0 10px #d7ebf9, 0 0 20px #d7ebf9, 0 0 30px #d7ebf9, 0 0 40px #d7ebf9;
+    background-image: linear-gradient(45deg, #d7ebf9, #d7ebf9);
+  }
+  100% {
+    /* Ending state of animation */
+    box-shadow: 0 0 5px #d7ebf9, 0 0 10px #d7ebf9, 0 0 15px #d7ebf9, 0 0 20px #d7ebf9;
+    background-image: linear-gradient(135deg, #d7ebf9, #d7ebf9);
+  }
+}
+
+/* Hover effect for sparkling animation */
+.nav:hover,
+.nav-items:hover {
+  animation: navBarSparkle 1.5s infinite alternate; /* Applies the sparkle animation */
+}
+
+/* Responsive design for nav and hamburger menu */
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: flex; /* Shows the hamburger menu */
+  }
+
+  .nav {
+    position: fixed; /* Fixed position */
+    top: 60px; /* Adjusted top position */
+    left: 0;
+    right: 0;
+    flex-direction: column; /* Stacks nav items vertically */
+    background-color: #fff; /* White background */
+    border-top: 1px solid #ddd; /* Top border */
+    display: none; /* Hidden by default */
+    z-index: 1000; /* Stacks below the hamburger icon */
+  }
+
+  .nav.active {
+    display: flex; /* Shows the nav when active */
+  }
+
+  .nav-items {
+    padding: 15px 20px; /* Padding for nav items */
+    border-bottom: 1px solid #eee; /* Bottom border for each item */
+  }
+}
+
+/* Footer styles */
+footer {
+  background-color: #333; /* Dark background */
+  color: white; /* White text color */
+  padding: 20px 0; /* Padding around the footer */
+  text-align: center; /* Centered text */
+}
+
+/* Footer 'find us' section styles */
+.footer-find-us {
+  font-size: 1.5em; /* Larger font size */
+  margin-bottom: 20px; /* Margin below the text */
+  text-align: center; /* Centered text */
+  width: 100%; /* Full width */
+}
+
+/* Footer social links styles */
+.footer-social-links {
+  flex-direction: row; /* Horizontal layout */
+  justify-content: center; /* Centered horizontally */
+  align-items: center; /* Centered vertically */
+}
+
+/* Footer social link anchor tag styles */
+.footer-social-links a {
+  margin: 0 15px; /* Space between links */
+}
+
+/* Footer social link image styles */
+.footer-social-links img {
+  height: 40px; /* Icon height */
+}
+
+/* Responsive adjustments for footer on smaller screens */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column; /* Stacks elements vertically */
+  }
+
+  .footer-social-links {
+    margin-bottom: 20px; /* Space below social links */
+  }
+
+  .footer-find-us {
+    margin-bottom: 10px; /* Reduced margin */
+  }
+}
+
+/* Subscription section styles */
+.signup {
+  text-align: center; /* Centered text */
+  padding: 20px; /* Padding around the section */
+}
+
+/* Telephone and email margin adjustments */
+#tel, #email {
+  margin: 10px; /* Uniform margin for both */
+}
+
+/* Styles for subscription text */
+.subscribe-text {
+  color: white; /* White text color */
+  margin-bottom: 15px; /* Space below the text */
+  font-size: 1.2em; /* Slightly larger font size */
+}
+
+/* Signup form styles */
+.signup-form {
+  display: inline-block; /* Aligns form in the center */
+  text-align: left; /* Left-aligned text inside form */
+}
+
+/* Styles for input and button in signup form */
+.signup input, .signup button {
+  display: block; /* Each element takes full width */
+  width: 300px; /* Fixed width for inputs and button */
+  max-width: 100%; /* Responsive max-width */
+  padding: 10px; /* Padding inside elements */
+  margin: 5px auto; /* Centering and spacing */
+  border: 1px solid #ccc; /* Border for inputs */
+  border-radius: 5px; /* Rounded corners */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+/* Button styles in signup form */
+.signup button {
+  background-color: #f4f4f4; /* Light background color */
+  color: #333; /* Dark text color */
+  cursor: pointer; /* Cursor changes to pointer */
+  transition: background-color 0.3s, color 0.3s; /* Transition for hover effects */
+}
+
+/* Hover effect for button in signup form */
+.signup button:hover {
+  background-color: #d7ebf9; /* Change background color */
+  color: white; /* Change text color */
+}
+
+/* Footer social link styles */
+.social-link {
+  text-decoration: none; /* Removes underline from links */
+  color: inherit; /* Inherits color from parent */
+}
+.error-message, .thank-you-message {
+  color: red;
+  text-align: center;
+  display: none; /* Hide initially */
+  margin-top: 10px;
+  width: 100%;
+}
+
+.thank-you-message {
+  color: green;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .error-message, .thank-you-message {
+    font-size: 0.9em;
+  }
+}
+#icon {
+  position: relative;
+  display: inline-block; /* Or flex, depending on your design */
+}
+
+#cart-count {
+  position: absolute;
+  top: -10px; /* Adjust as needed */
+  right: -10px; /* Adjust as needed */
+  background-color: rgb(0, 106, 255); /* Example color - bright red */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Responsive Design Adjustments */
+@media screen and (max-width: 768px) {
+  #cart-count {
+      top: -5px;
+      right: -5px;
+      font-size: 0.8rem;
+      padding: 1px 6px;
+  }
+}

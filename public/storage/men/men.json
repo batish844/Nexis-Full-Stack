@@ -1,0 +1,182 @@
+[
+    {
+        "src": "Men/img/c1.jpg",
+        "alt": "Clothing Item",
+        "price": "$19.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c2.jpg",
+        "alt": "Clothing Item",
+        "price": "$19.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c3.jpg",
+        "alt": "Clothing Item",
+        "price": "$29.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c4.jpg",
+        "alt": "Clothing Item",
+        "price": "$39.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c5.jpg",
+        "alt": "Clothing Item",
+        "price": "$49.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c6.jpg",
+        "alt": "Clothing Item",
+        "price": "$29.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c7.jpg",
+        "alt": "Clothing Item",
+        "price": "$19.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c8.jpg",
+        "alt": "Clothing Item",
+        "price": "$9.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c9.jpg",
+        "alt": "Clothing Item",
+        "price": "$10.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c10.jpg",
+        "alt": "Clothing Item",
+        "price": "$12.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c11.jpg",
+        "alt": "Clothing Item",
+        "price": "$40.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c12.jpg",
+        "alt": "Clothing Item",
+        "price": "$30.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c13.jpg",
+        "alt": "Clothing Item",
+        "price": "$20.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c14.jpg",
+        "alt": "Clothing Item",
+        "price": "$30.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c15.jpg",
+        "alt": "Clothing Item",
+        "price": "$20.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c16.jpg",
+        "alt": "Clothing Item",
+        "price": "$31.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c17.jpg",
+        "alt": "Clothing Item",
+        "price": "$11.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c18.jpg",
+        "alt": "Clothing Item",
+        "price": "$15.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c19.jpg",
+        "alt": "Clothing Item",
+        "price": "$16.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c20.jpg",
+        "alt": "Clothing Item",
+        "price": "$19.99",
+        "sizes": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "src": "Men/img/c21.jpg",
+        "alt": "Clothing Item",
+        "price": "$49.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c22.jpg",
+        "alt": "Clothing Item",
+        "price": "$60.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c23.jpg",
+        "alt": "Clothing Item",
+        "price": "$80.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c24.jpg",
+        "alt": "Clothing Item",
+        "price": "$99.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c25.jpg",
+        "alt": "Clothing Item",
+        "price": "$79.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c26.jpg",
+        "alt": "Clothing Item",
+        "price": "$69.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c27.jpg",
+        "alt": "Clothing Item",
+        "price": "$49.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c28.jpg",
+        "alt": "Clothing Item",
+        "price": "$76.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c29.jpg",
+        "alt": "Clothing Item",
+        "price": "$59.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    },
+    {
+        "src": "Men/img/c30.jpg",
+        "alt": "Clothing Item",
+        "price": "$54.99",
+        "sizes": ["39", "40", "41", "42", "43"]
+    }
+]

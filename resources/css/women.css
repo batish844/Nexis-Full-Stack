@@ -1,0 +1,207 @@
+/* Container for an image slider */
+.image-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* Hides any overflowed content */
+}
+
+/* Responsive adjustments for image slider on smaller screens */
+@media (max-width: 768px) {
+  .image-slider {
+    height: 200px; /* Reduced height for better mobile display */
+  }
+}
+
+/* Styling for individual slides */
+.slide {
+  display: block;
+  position: absolute;
+  width: 100%;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s, transform 2s ease; /* Smooth transitions */
+}
+
+/* Active slide styles */
+.slide.active {
+  opacity: 1; /* Visible */
+  visibility: visible;
+  transform: translateX(0); /* Centered in view */
+}
+
+/* Styles for the previous slide to transition it out of view */
+.slide.left-slide {
+  transform: translateX(-200%); /* Slide out to the left */
+  opacity: 3;
+  visibility: hidden;
+}
+
+/* Ensures images fill their container */
+.slide img {
+  width: 100%;
+  display: block;
+}
+
+/* Adjusts the height of the image slider */
+.image-slider {
+  height: 700px;
+}
+
+/* Responsive adjustments for image slider on smaller screens */
+@media (max-width: 768px) {
+  .image-slider {
+    height: 200px;
+  }
+}
+
+/* Fade animation for transitions */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+/* Keyframes for fade animation */
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/* Grid layout for displaying products */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px; /* Space between items */
+  padding: 40px; /* Padding around the grid */
+  justify-items: center; /* Center items horizontally */
+}
+
+/* Individual product styling */
+.product {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for products */
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Product image styling */
+.product-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* Product information section */
+.product-info {
+  padding: 20px;
+}
+
+/* Price styling */
+.price {
+  font-size: 1.5em;
+  color: #333;
+  font-weight: bold;
+  margin: 10px 0px;
+}
+
+/* Add to cart button styles */
+.add-to-cart {
+  background-color: #6284a9;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Hover effect for add to cart button */
+.add-to-cart:hover {
+  background-color: #064180;
+}
+
+/* Responsive layout adjustments for products on smaller screens */
+@media only screen and (max-width: 768px) {
+  .products {
+    grid-template-columns: repeat(2, 1fr); /* Display 2 items per row */
+    grid-gap: 20px; /* Adjust the gap if needed */
+  }
+
+  .product {
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+  }
+
+  .product-image {
+    height: 200px;
+  }
+
+  .product-info {
+    padding: 10px;
+  }
+
+  .price {
+    font-size: 1.2em;
+  }
+
+  .add-to-cart {
+    padding: 8px 20px;
+    font-size: 0.8em;
+  }
+}
+
+/* Size selector styles */
+.size-select {
+  width: 100%;
+  max-width: 250px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 1em;
+  cursor: pointer;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+/* Focus styles for size selector */
+.size-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Padding for size selector options */
+.size-select option {
+  padding: 5px 10px;
+}
+
+/* Responsive adjustments for size selector on smaller screens */
+@media screen and (max-width: 678px) {
+  .size-select {
+    font-size: 1.1em; /* Adjust font size for better readability */
+    padding: 10px; /* Adjust padding for better touch interaction */
+    /* Other styles if needed */
+  }
+}
+
+/* Warning message for size selection */
+.size-warning {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+  height: 20px;
+  order: 2; /* Positioned at the end */
+}

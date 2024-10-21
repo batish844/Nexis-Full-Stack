@@ -1,0 +1,277 @@
+/* importing an external font from Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=D+Sans:500,700&display=swap'); 
+
+/* applies universal properties to all elements */
+* {
+    box-sizing: border-box; /* Content-box plus padding and borders are considered for width and height */
+    margin: 0; /* Resets default margin */
+    padding: 0; /* Resets default padding */
+}
+body {
+  overflow: hidden;
+}
+
+/* Styles for the main content area */
+.main-content {
+  display: flex; /* Uses flexbox for layout */
+  flex-direction: column; /* Arranges children in a column */
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers items vertically */
+  min-height: 100vh; /* Ensures minimum height is the full viewport height */
+}
+
+/* Styles for the navigation logo */
+.nav-logo {
+  height: 60vh; /* Sets the height as a percentage of the viewport height */
+  align-self: center; /* Centers the logo horizontally in the flex container */
+}
+
+/* Styles for anchor tags */
+a {
+  color: #3d0f0e; /* Text color */
+  font-size: 14px; /* Font size */
+  text-decoration: none; /* Removes underline */
+  margin: 15px 0; /* Vertical margin */
+}
+
+/* Styles for the container element */
+.container {
+  background: #fff; /* White background */
+  border-radius: 90px; /* Rounded corners */
+  box-shadow: 30px 14px 28px rgba(0, 0, 5, .2), 0 10px 10px rgba(0, 0, 0, .2); /* Box shadow */
+  overflow: hidden; /* Hides any child content that overflows */
+  opacity: 85%; /* Partial transparency */
+  width: 768px; /* Fixed width */
+  max-width: 100%; /* Max width relative to parent */
+  transition: 333ms; /* Smooth transition for any changes */
+  margin: 0 auto; /* Centering in the parent */
+}
+
+/* Styles for forms inside the form-container class */
+.form-container form {
+  background: #fff; /* White background */
+  display: flex; /* Uses flexbox for layout */
+  flex-direction: column; /* Arranges children in a column */
+  padding:  0 50px; /* Padding on left and right */
+  height: 100%; /* Full height of the parent */
+  justify-content: center; /* Centers children vertically */
+  align-items: center; /* Centers children horizontally */
+  text-align: center; /* Center aligns text */
+}
+
+/* Styles for input fields inside the form-container class */
+.form-container input {
+  background: #eee; /* Light grey background */
+  border: none; /* Removes border */
+  border-radius: 50px; /* Rounded corners */
+  padding: 12px 15px; /* Padding inside the input field */
+  margin: 8px 0; /* Vertical margin */
+  width: 100%; /* Full width of the parent */
+}
+
+/* Styles for input hover state */
+.form-container input:hover {
+  transform: scale(101%); /* Slightly enlarges the input field on hover */
+}
+
+/* Positioning and styling for form-container class */
+.form-container {
+  position: absolute; /* Absolute positioning */
+  top: 0; /* Positioned at the top */
+  height: 100%; /* Full height of the parent */
+  transition: all .6s ease-in-out; /* Smooth transition for any changes */
+}
+
+/* Styles for sign-up-container when right panel is active */
+.sign-up-container {
+  left: 0; /* Positioned on the left */
+  width: 50%; /* Takes half of the parent's width */
+  z-index: 1; /* Stack order */
+  opacity: 0; /* Fully transparent */
+}
+
+/* Styles for sign-in-container */
+.sign-in-container {
+  left: 0; /* Positioned on the left */
+  width: 50%; /* Takes half of the parent's width */
+  z-index: 2; /* Stack order */
+}
+
+/* Styles for overlay-container */
+.overlay-container {
+  position: absolute; /* Absolute positioning */
+  top: 0; /* Positioned at the top */
+  left: 50%; /* Positioned at 50% from the left */
+  width: 50%; /* Takes half of the parent's width */
+  height: 100%; /* Full height of the parent */
+  overflow: hidden; /* Hides any overflowing content */
+  transition: transform .6s ease-in-out; /* Smooth transition for transformations */
+  z-index: 100; /* High stack order */
+}
+
+/* Styles for overlay */
+.overlay {
+  background: #ff416c; /* Gradient background color */
+  background: linear-gradient(to right, rgb(4, 0, 255), rgb(49, 0, 128)) no-repeat 0 0 / cover; /* Gradient */
+  color: #fff; /* White text */
+  position: relative; /* Relative positioning */
+  left: -100%; /* Positioned 100% to the left */
+  height: 100%; /* Full height of the parent */
+  width: 200%; /* Double the width of the parent */
+  transform: translateY(0); /* Keeps it in place vertically */
+  transition: transform .6s ease-in-out; /* Smooth transition for transformations */
+}
+
+/* Styles for sections */
+section {
+  margin-left: 25%; /* Left margin */
+  margin-bottom: 20px; /* Bottom margin */
+}
+
+/* Styles for overlay-panel */
+.overlay-panel {
+  position: absolute; /* Absolute positioning */
+  top: 0; /* Positioned at the top */
+  display: flex; /* Uses flexbox for layout */
+  flex-direction: column; /* Arranges children in a column */
+  justify-content: center; /* Centers children of flexbox vertically */
+  align-items: center; /* Centers children horizontally */
+  padding: 0 40px; /* Padding on left and right */
+  height: 100%; /* Full height of the parent */
+  width: 50%; /* Takes half of the parent's width sizw */
+  text-align: center; /* Center aligns text */
+  transform: translateY(0); /* Keeps it in place vertically */
+  transition: transform .6s ease-in-out; /* Smooth transition for transformations */
+}
+
+/* Styles for anchor tags inside button elements */
+button a {
+    text-decoration: none; /* Removes the underline */
+    color: white; /* Sets text color to white */
+}
+
+/* Styles for button elements */
+button {
+  border-radius: 50px; /* Rounded corners */
+  box-shadow: 0 1px 1px; /* Subtle shadow */
+  border: 1px solid purple; /* Purple border */
+  background: linear-gradient(to right, rgb(4, 0, 255), rgb(49, 0, 128)) no-repeat 0 0 / cover; /* Gradient background */
+  color: #fff; /* White text */
+  font-size: 12px; /* Font size */
+  font-weight: bold; /* Bold text */
+  padding: 12px 45px; /* Padding inside the button */
+  letter-spacing: 1px; /* Space between letters */
+  text-transform: uppercase; /* Uppercase text */
+  transition: transform 80ms ease-in; /* Quick transform transition */
+}
+
+/* Styles for active button state */
+button:active {
+  transform: scale(.95); /* Slightly reduces size when clicked */
+}
+
+/* Removes outline when button is focused for better visual */
+button:focus {
+  outline: none; /* Removes default focus outline */
+}
+
+/* Styles for button with class 'ghost' */
+button.ghost {
+  background: transparent; /* Transparent background */
+  border-color: #fff; /* White border */
+}
+
+/* Styles for paragraph elements */
+p {
+    font-size: 14px; /* Font size */
+    font-weight: 100; /* Lighter font weight */
+    line-height: 20px; /* Spacing between lines */
+    letter-spacing: .5px; /* Space between letters */
+    margin: 20px 0 30px; /* Margins around paragraph */
+}
+
+/* Overlay right styles */
+.overlay-right {
+  right: 0; /* Aligns to the right */
+  transform: translateY(0); /* Keeps it in place vertically */
+}
+
+/* Overlay left styles */
+.overlay-left {
+  transform: translateY(-20%); /* Moves up by 20% of its height */
+}
+
+/* Additional styles when right panel is active */
+.container.right-panel-active .sign-in-container {
+  transform: translateY(100%); /* Moves down by 100% of its height */
+}
+
+.container.right-panel-active .overlay-container {
+  transform: translateX(-100%); /* Moves left by 100% of its width */
+}
+
+.container.right-panel-active .sign-up-container {
+  transform: translateX(100%); /* Moves right by 100% of its width */
+  opacity: 1; /* Fully visible */
+  z-index: 5; 
+}
+
+.container.right-panel-active .overlay {
+  transform: translateX(50%); /* Moves right by 50% of its width */
+}
+
+.container.right-panel-active .overlay-left {
+  transform: translateY(0); /* Resets vertical position */
+}
+
+.container.right-panel-active .overlay-right {
+  transform: translateY(20%); /* Moves down by 20% of its height */
+}
+.form-container form {
+      padding: 0 30px; 
+}
+@media (max-width: 600px) {
+    .container {
+      width: 90%; /* Reduce width to 90% of the screen width */
+      margin: 0 auto; /* Center it with automatic margin */
+      /* Adjust other styles as needed for smaller screens */
+    }
+  
+  
+    .form-container form {
+      padding: 0 30px; /* Reduce padding for small screens */
+    }
+  
+    .form-container input, .form-container button {
+      padding: 10px; /* Adjust button and input padding */
+    }
+  
+    /* Adjust the size of the overlay panels */
+    .overlay-panel {
+      padding: 0 20px;
+    }
+  }
+  .error {
+    color: red;
+    font-size: 12px;
+  }
+  .back-home-button {
+    position: absolute; /* Positions the button relative to the nearest positioned ancestor */
+    top: 20px; /* 20px from the top of the screen */
+    left: 20px; /* 20px from the left of the screen */
+    padding: 10px 20px; /* Padding inside the button */
+    text-decoration: none; /* Removes underline from text */
+    color: white; /* Text color */
+    background: linear-gradient(to right, rgb(51, 48, 192), rgb(64, 62, 218)); /* Gradient background */
+    border-radius: 20px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    z-index: 1000;
+}
+
+.back-home-button:hover {
+    background: linear-gradient(to right, rgb(4, 0, 255), rgb(49, 0, 128)) no-repeat 0 0 / cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+  

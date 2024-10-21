@@ -1,0 +1,136 @@
+body {
+    background-color: white; /* White background for the body */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.checkout-container {
+    background-color: white; /* White background for the container */
+    padding: 20px;
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 0 40px 100px rgba(159, 162, 177, .8); /* Shadow effect for depth */
+    transition: animation 0.5s ease-in-out; /* Smooth transition for hover effects */
+    width: 90%;
+    max-width: 500px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.button {
+    background: linear-gradient(to right, rgb(51, 48, 192), rgb(64, 62, 218));;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px; /* Added space above the button */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+#order-message {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Responsive Styles for smaller devices */
+@media (max-width: 768px) {
+    .checkout-container {
+        width: 100%;
+        margin: 10px;
+        border-radius: 0;
+    }
+
+    .button {
+        padding: 12px 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+        font-size: 14px;
+    }
+}
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+}
+.checkout-empty-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1em;
+    width: 100%;
+}
+.checkout-container {
+    position: relative; /* Needed for absolute positioning of the child element */
+}
+
+#back-to-cart-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(to right, rgb(51, 48, 192), rgb(64, 62, 218));
+    color: white; /* White text */
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none; /* Remove underline from link */
+    font-size: 0.9em;
+}
+
+#back-to-cart-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Responsive Styles for smaller devices */
+@media (max-width: 768px) {
+    #back-to-cart-button {
+        position: fixed;
+        top: 10px; /* Positioned at the top */
+        left: 10px; /* Positioned at the left */
+        right: auto; /* Override previous right positioning */
+        bottom: auto; /* Override previous bottom positioning */
+        width: auto; /* Auto width for flexibility */
+        font-size: 1em; /* Larger font for better visibility */
+        padding: 10px 20px; /* Bigger padding for easier tapping */
+        z-index: 1000; /* Ensure it's above other elements */
+    }
+}
+
+
+
+
+

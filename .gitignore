@@ -1,0 +1,41 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+
+# Ignore everything in public/storage except specific folders
+/public/storage/*
+!/public/storage/aboutus
+!/public/storage/CommonImg
+!/public/storage/men
+!/public/storage/women
+
+/storage/*.key
+/storage/pail
+
+# Vendor directory (for Composer dependencies)
+vendor/
+
+# Environment files
+.env
+.env.backup
+.env.production
+
+# Laravel-specific files
+.phpactor.json
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+
+# Authentication-related
+auth.json
+
+# Log files
+npm-debug.log
+yarn-error.log
+
+# IDE/editor-specific directories
+/.fleet
+/.idea
+/.vscode
+/.zed
