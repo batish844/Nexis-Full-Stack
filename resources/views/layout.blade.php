@@ -27,19 +27,17 @@
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
-
         <!-- Navigation Bar menu for a friendly interface -->
         <nav class="nav" id="navMenu">
             <a href="{{ url('/') }}"> <!-- Using Laravel's url helper for homepage -->
-                <img src="{{ asset('storage/CommonImg/BrandLogo.png') }}" alt="Logo" class="nav-logo">
-                <!-- Corrected logo path -->
+                <img src="{{ asset('storage/CommonImg/BrandLogo.png') }}" alt="Logo" class="nav-logo"> <!-- Corrected logo path -->
             </a>
-            <a href="{{ url('/') }}" class="nav-items">Home</a>
-            <a href="{{ url('/About') }}" class="nav-items">About</a>
-            <a href="{{ url('/Women') }}" class="nav-items">Women</a>
-            <a href="{{ url('/Men') }}" class="nav-items">Men</a>
-            <a href="{{ url('/ContactUs') }}" class="nav-items">Contact us</a>
-            <a href="{{ url('/Login') }}" class="nav-items">Sign In</a>
+            <a href="/" class="nav-items">Home</a>
+            <a href="/About" class="nav-items">About</a>
+            <a href="/Women" class="nav-items">Women</a>
+            <a href="/Men" class="nav-items">Men</a>
+            <a href="/ContactUs" class="nav-items">Contact us</a>
+            <a href="/Login" class="nav-items">Sign In</a>
 
             <!-- Cart with cart animation on hover -->
             <div id="icon">
