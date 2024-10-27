@@ -59,9 +59,8 @@
 @endsection
 
 @push('styles')
-    @vite('resources/css/Homepage.css') <!-- Homepage-specific CSS -->
+    <!-- @vite('resources/css/Homepage.css') Homepage-specific CSS -->
 @endpush
 
 @push('scripts')
-    @vite('resources/js/Homepage.js') <!-- Homepage-specific JS -->
 @endpush
