@@ -29,7 +29,7 @@
       <a href="{{ url('/') }}"> <!-- Using Laravel's url helper for homepage -->
         <img src="{{ asset('storage/CommonImg/BrandLogo.png') }}" alt="Logo" class="nav-logo"> <!-- Corrected logo path -->
       </a>
-      <a href="{{ url('/') }}" class="nav-items">Home</a>
+      <a href="/" class="nav-items">Home</a>
       <a href="{{ url('/About') }}" class="nav-items">About</a>
       <a href="{{ url('/Women') }}" class="nav-items">Women</a>
       <a href="{{ url('/Men') }}" class="nav-items">Men</a>
