@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('home');
+    $slides = [['label' => 'Women', 'url' => 'women', 'image' => 'slide1.webp'],['label' => 'Men','url' => 'men','image' => 'slide2.webp'],['label' => 'Offers','url' => 'offers','image' => 'slide3.webp']];
+    $items= [['url' => 'Men', 'image' => 'c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'Women', 'image' => 'I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'Men', 'image' => 'c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
+    return view('home',compact('items','slides'));
 });
 Route::get('/About', function () {
     return view('about');
