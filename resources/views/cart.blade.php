@@ -1,73 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cart</title>
-  <!-- Favicon Icon of our Logo on the tab  -->
-  <link rel="icon" type="image/png" href="{{ asset('storage/CommonImg/BrandLogo.png') }}">
-  
-  <!-- Vite CSS Files -->
-  @vite(['resources/css/commonStyle.css', 'resources/css/cart.css'])
-</head>
+@section('title', 'Cart')
 
-<body>
-  <header>
-    <!-- Hamburger Icon for responsiveness on mobile -->
-    <div class="hamburger-menu" onclick="toggleMenu()">
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
+@section('content')
+
+  <!-- Main Content -->
+  <main class="container mx-auto py-10 px-4">
+    <h1 class="text-4xl font-bold text-center mb-8">Your Shopping Cart</h1>
+
+    <!-- Cart Items Section -->
+    <div class="cart-container bg-white shadow-lg rounded-lg p-6">
+      <div id="cart-items" class="space-y-6">
+        <!-- Dynamically generated cart items will appear here -->
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="flex justify-between items-center font-semibold text-lg mt-4 border-t pt-4">
+        <span>Total:</span>
+        <span id="cart-total" class="text-blue-600 text-xl">$0.00</span>
+      </div>
     </div>
 
-    <!-- Navigation Bar menu for a friendly interface -->
-    <nav class="nav" id="navMenu">
-      <a href="{{ url('/') }}">
-        <img src="{{ asset('storage/CommonImg/BrandLogo.png') }}" alt="Logo" class="nav-logo">
+    <!-- Checkout button -->
+    <div class="checkout-container text-center mt-6">
+      <a href="{{ url('Checkout') }}" class="checkout-a">
+        <button id="checkout-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          Proceed to Checkout
+        </button>
       </a>
-      <a href="{{ url('/') }}" class="nav-items">Home</a>
-      <a href="{{ url('/About') }}" class="nav-items">About</a>
-      <a href="{{ url('/Women') }}" class="nav-items">Women</a>
-      <a href="{{ url('/Men') }}" class="nav-items">Men</a>
-      <a href="{{ url('/ContactUs') }}" class="nav-items">Contact us</a>
-      <a href="{{ url('/Login') }}" class="nav-items">Sign In</a>
+    </div>
 
-      <!-- cart + cart animation on hovering -->
-      <div id="icon">
-        <a href="{{ url('Cart') }}" id="cart-icon">
-          <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover" style="width:50px;height:50px"></lord-icon>
-          <span id="cart-count">0</span> <!-- Added span for cart count -->
-        </a>
-      </div>
-    </nav>
-  </header>
+    <!-- Empty Cart Message -->
+    <div id="empty-cart-message" class="hidden text-center mt-6">
+      <p class="text-gray-500">Your cart is currently empty.</p>
+      <a href="{{ url('/') }}" class="text-blue-600 hover:underline">Continue Shopping</a>
+    </div>
+  </main>
+@endsection
 
-  <!-- LordIcon Script -->
+@push('scripts')
   <script src="https://cdn.lordicon.com/lordicon-1.2.0.js"></script>
 
-  <!-- Function for Hamburger Menu -->
   <script>
-    function toggleMenu() {
-      var navMenu = document.getElementById("navMenu");
-      navMenu.classList.toggle("active");
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+      const cartItemsContainer = document.getElementById('cart-items');
+      const emptyCartMessage = document.getElementById('empty-cart-message');
+      let cartItems = []; // Initialize an empty cart
+
+      // Function to update the cart total
+      function updateCartTotal() {
+        let total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+        emptyCartMessage.classList.toggle('hidden', cartItems.length > 0);
+      }
+
+      // Function to render cart items
+      function renderCartItems() {
+        cartItemsContainer.innerHTML = ''; // Clear existing items
+        cartItems.forEach((item, index) => {
+          const itemElement = document.createElement('div');
+          itemElement.className = 'cart-item flex justify-between items-start border-b pb-4 mb-4';
+          itemElement.innerHTML = `
+            <div class="flex items-center space-x-4">
+              <img src="${item.image}" alt="${item.name}" class="w-28 h-28 object-cover rounded-lg shadow-md transition-transform duration-200 hover:scale-105">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800">${item.name}</h3>
+                <p class="text-gray-600 text-sm">$${item.price.toFixed(2)}</p>
+                <div class="flex items-center mt-2">
+                  <label for="quantity${index}" class="mr-2 text-gray-600">Quantity:</label>
+                  <input type="number" id="quantity${index}" value="${item.quantity}" min="1" class="border rounded w-16 text-center focus:ring focus:ring-blue-300" onchange="updateQuantity(${index}, this.value)" />
+                </div>
+              </div>
+            </div>
+            <button class="text-red-500 hover:text-red-700 font-bold mt-2" onclick="removeItem(${index})">Remove</button>
+          `;
+          cartItemsContainer.appendChild(itemElement);
+        });
+        updateCartTotal();
+      }
+
+      // Function to update item quantity
+      window.updateQuantity = function (index, quantity) {
+        cartItems[index].quantity = parseInt(quantity);
+        updateCartTotal();
+      };
+
+      // Function to remove an item from the cart
+      window.removeItem = function (index) {
+        cartItems.splice(index, 1);
+        renderCartItems();
+      };
+
+      // Simulate adding items to the cart for demo
+      cartItems = [
+        { name: "Product 1", price: 19.99, quantity: 1, image: "https://via.placeholder.com/100" },
+        { name: "Product 2", price: 29.99, quantity: 1, image: "https://via.placeholder.com/100" },
+      ];
+      renderCartItems();
+    });
   </script>
 
-  <!-- Cart Items Section -->
-  <div class="cart-container">
-    <!-- Cart items will be dynamically added here -->
-  </div>
-
-  <!-- Checkout button added below the cart items -->
-  <div class="checkout-container">
-  <a href="{{ url('Checkout') }}" class="checkout-a"> <button id="checkout-button" class="checkout-button"> Checkout</button></a>
-  </div>
-
-  <!-- Vite JS Files -->
-  @vite(['resources/js/cart.js', 'resources/js/common.js'])
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-</body>
-
-</html>
+@endpush
