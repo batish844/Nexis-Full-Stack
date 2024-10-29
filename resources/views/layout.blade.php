@@ -56,7 +56,7 @@
     </style>
 </head>
 
-<body class="bg-gray-50">
+<body class>
     <header class="flex justify-center p-4">
         <!-- Desktop Navbar -->
         <nav class="nav hidden lg:flex items-center bg-white rounded-full shadow-lg w-4/5 max-w-5xl justify-center transition duration-300 ease-in-out py-4 px-10">

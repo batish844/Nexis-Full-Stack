@@ -3,87 +3,73 @@
 @section('title', 'Contact Us')
 
 @section('content')
-    <!-- Contact Section -->
-    <section class="flex flex-col md:flex-row justify-center w-full py-16 px-6 md:px-12 gap-8">
-        <!-- Contact Form Container -->
-        <div class="bg-white p-8 rounded-lg shadow-lg transition-transform transform hover:scale-105 duration-300">
-            <h1 class="text-4xl font-bold text-gray-800 mb-6">Get in Touch</h1>
-            
-            <!-- Frontend Form -->
-            <form action="#" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input 
-                        type="text" 
-                        name="full_name" 
-                        placeholder="Full Name" 
-                        class="border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md p-3" 
-                        required
-                    >
-                    <input 
-                        type="email" 
-                        name="email" 
-                        placeholder="Email" 
-                        class="border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md p-3" 
-                        required
-                    >
-                </div>
-                
-                <textarea 
-                    name="message" 
-                    cols="30" 
-                    rows="5" 
-                    placeholder="Message" 
-                    class="border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md p-3 w-full" 
-                    required
-                ></textarea>
-                
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-md font-semibold transition duration-300">
-                    Submit
-                </button>
-            </form>
-        </div>
+<section class="flex flex-col md:flex-row items-center gap-6 mb-8 mx-auto p-8 md:p-12 bg-white text-gray-800 md:justify-between">
+    <!-- Contact Form -->
+    <div class="flex flex-col space-y-4 w-full md:w-1/2">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">Get in Touch</h1>
+        <p class="text-md md:text-lg text-gray-600 mb-4">Have a question or want to work together? Drop us a message!</p>
+        <form action="#" class="space-y-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <input type="text" placeholder="Full name" class="w-full p-3 rounded-full border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none">
+                <input type="email" placeholder="Email" class="w-full p-3 rounded-full border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none">
+            </div>
+            <textarea placeholder="Message" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none" rows="4"></textarea>
+            <button type="submit" class="py-2 px-6 w-full md:w-auto bg-gradient-to-r from-blue-600 to-blue-800 rounded-full font-semibold text-md text-white shadow-md transform transition-transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit</button>
+        </form>
+    </div>
+    <!-- Contact Image with Bouncing Effect -->
+    <div class="flex justify-center items-center w-full md:w-1/2 max-w-xs md:max-w-md mx-auto animate-bounce-custom">
+        <img src="storage/CommonImg/Contact.png" alt="Contact" class="w-full rounded-lg">
+    </div>
+</section>
 
-        <!-- Contact Image with Bounce Animation -->
-        <div class="sectionPic bouncepic contactPic overflow-hidden flex justify-center items-center h-64 md:h-auto">
-            <img src="{{ asset('storage/CommonImg/Contact.png') }}" alt="Contact Image" class="transform transition-transform duration-500 animate-bounce">
-        </div>
-    </section>
+<!-- Address & Map Section -->
+<div class="flex flex-col md:flex-row items-center gap-6 px-6 md:px-12 py-10 bg-white text-gray-800 rounded-lg shadow-lg">
+    <!-- Map Embed -->
+    <div class="w-full md:w-1/2 rounded-lg overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-105">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d212361.61152701065!2d35.3415633!3d33.7309325!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151f1798849fcae3%3A0xcb7cf8d31d35ce1!2sCity%20Centre%20Beirut!5e0!3m2!1sen!2slb!4v1730239123142!5m2!1sen!2slb"
+            width="100%"
+            height="350"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
 
-    <!-- Addresses Section -->
-    <div class="flex flex-col items-center my-16 space-y-10">
-        <h2 class="text-3xl font-semibold text-gray-800 tracking-tight">
-            <a href="https://maps.app.goo.gl/x4SZWf5XkhLzoRKW9" target="_blank" class="text-blue-600 hover:text-blue-700 transition duration-200">
-                Visit Our Office
-            </a>
-        </h2>
-
-        <div class="bg-white p-10 rounded-xl shadow-md w-full md:w-3/5 lg:w-2/5 text-center">
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Lebanon Office</h3>
-            <p class="text-gray-700 mb-2"><span class="font-semibold">Phone:</span> +961 76/063922</p>
-            <p class="text-gray-700 mb-2"><span class="font-semibold">Address:</span> Beirut, Lebanon 1600</p>
-            <p class="text-gray-700"><span class="font-semibold">Email:</span> <a href="mailto:support@nexis.com" class="text-blue-600 hover:underline">support@nexis.com</a></p>
+    <!-- Contact Information -->
+    <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
+        <h2 class="text-2xl font-bold text-gray-900">Our Location</h2>
+        <p class="text-md text-gray-600">Visit us at our office or contact us through the details below.</p>
+        <div class="bg-white p-4 rounded-lg shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Lebanon Office</h3>
+            <p class="text-gray-700 mb-1"><strong>Phone:</strong> +961 81777256</p>
+            <p class="text-gray-700 mb-1"><strong>Address:</strong> Beirut, Lebanon 1600</p>
+            <p class="text-gray-700"><strong>Email:</strong> <a href="mailto:support@nexis.com" class="text-blue-600 underline hover:text-blue-800 transition duration-200">support@nexis.com</a></p>
         </div>
     </div>
+</div>
+
 @endsection
 
 @push('styles')
-    {{-- You can add any additional custom styles here --}}
-    <style>
-        /* Bounce animation for the contact image */
-        .bouncepic img {
-            animation: bounce 3s infinite;
+<style>
+    /* Custom Bounce Animation */
+    .animate-bounce-custom {
+        animation: bounce-custom 2s infinite;
+    }
+
+    @keyframes bounce-custom {
+
+        0%,
+        100% {
+            transform: translateY(0);
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
+        50% {
+            transform: translateY(-20px);
         }
-    </style>
+    }
+</style>
 @endpush

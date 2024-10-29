@@ -39,66 +39,6 @@
 @endsection
 
 @push('scripts')
-  <script src="https://cdn.lordicon.com/lordicon-1.2.0.js"></script>
+@vite('resources/js/cart.js')
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const cartItemsContainer = document.getElementById('cart-items');
-      const emptyCartMessage = document.getElementById('empty-cart-message');
-      let cartItems = []; // Initialize an empty cart
-
-      // Function to update the cart total
-      function updateCartTotal() {
-        let total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
-        emptyCartMessage.classList.toggle('hidden', cartItems.length > 0);
-      }
-
-      // Function to render cart items
-      function renderCartItems() {
-        cartItemsContainer.innerHTML = ''; // Clear existing items
-        cartItems.forEach((item, index) => {
-          const itemElement = document.createElement('div');
-          itemElement.className = 'cart-item flex justify-between items-start border-b pb-4 mb-4';
-          itemElement.innerHTML = `
-            <div class="flex items-center space-x-4">
-              <img src="${item.image}" alt="${item.name}" class="w-28 h-28 object-cover rounded-lg shadow-md transition-transform duration-200 hover:scale-105">
-              <div>
-                <h3 class="text-lg font-semibold text-gray-800">${item.name}</h3>
-                <p class="text-gray-600 text-sm">$${item.price.toFixed(2)}</p>
-                <div class="flex items-center mt-2">
-                  <label for="quantity${index}" class="mr-2 text-gray-600">Quantity:</label>
-                  <input type="number" id="quantity${index}" value="${item.quantity}" min="1" class="border rounded w-16 text-center focus:ring focus:ring-blue-300" onchange="updateQuantity(${index}, this.value)" />
-                </div>
-              </div>
-            </div>
-            <button class="text-red-500 hover:text-red-700 font-bold mt-2" onclick="removeItem(${index})">Remove</button>
-          `;
-          cartItemsContainer.appendChild(itemElement);
-        });
-        updateCartTotal();
-      }
-
-      // Function to update item quantity
-      window.updateQuantity = function (index, quantity) {
-        cartItems[index].quantity = parseInt(quantity);
-        updateCartTotal();
-      };
-
-      // Function to remove an item from the cart
-      window.removeItem = function (index) {
-        cartItems.splice(index, 1);
-        renderCartItems();
-      };
-
-      // Simulate adding items to the cart for demo
-      cartItems = [
-        { name: "Product 1", price: 19.99, quantity: 1, image: "https://via.placeholder.com/100" },
-        { name: "Product 2", price: 29.99, quantity: 1, image: "https://via.placeholder.com/100" },
-      ];
-      renderCartItems();
-    });
-  </script>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @endpush
