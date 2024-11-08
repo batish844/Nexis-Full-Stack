@@ -26,6 +26,6 @@ Route::get('/Cart', function () {
 Route::get('/Checkout', function () {
     return view('checkout');
 });
-Route::get('/login', function () {
+Route::get('/Login', function () {
     return view('login');
 });
