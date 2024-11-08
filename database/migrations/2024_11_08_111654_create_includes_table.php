@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('includes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('OrderID')->constrained('orders', 'OrderID');
+            $table->foreignId('ItemID')->constrained('items', 'ItemID');
+            $table->integer('Quantity');
             $table->timestamps();
         });
     }

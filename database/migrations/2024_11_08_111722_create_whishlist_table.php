@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('whishlist', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('UserID')->constrained('users', 'UserID');
+            $table->foreignId('ItemID')->constrained('items', 'ItemID');
             $table->timestamps();
         });
     }
