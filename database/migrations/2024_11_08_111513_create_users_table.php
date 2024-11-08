@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('First_Name');
             $table->string('Last_Name');
             $table->string('Password');
-            $table->string('Address')->nullable();
+            $table->json('address')->nullable(); 
             $table->integer('Points')->default(0);
             $table->string('Avatar')->nullable();
             $table->boolean('isAdmin')->default(false);

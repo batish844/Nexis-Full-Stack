@@ -17,12 +17,46 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $primaryKey = 'UserID';
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'Email',
+        'Phone_Number',
+        'First_Name',
+        'Last_Name',
+        'Password',
+        'Points',
+        'Avatar',
+        'isAdmin',
+        'Address'
+    ];
+    protected $casts = [
+        'Address' => 'array',
     ];
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'OrderedBy');
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class, 'ContactedBy');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'UserID');
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(Cart::class, 'UserID');
+    }
+
+    public function wishlistItems()
+    {
+        return $this->hasMany(Wishlist::class, 'UserID');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

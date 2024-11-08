@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id('ItemID');
+            $table->foreignId('CategoryID')->constrained('categories', 'CategoryID');
             $table->string('Name');
             $table->text('Description')->nullable();
+            $table->string('Gender');
             $table->decimal('Price', 8, 2);
             $table->string('Size');
             $table->integer('Quantity');
