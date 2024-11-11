@@ -43,7 +43,6 @@ class RegisteredUserController extends Controller
             'Phone_Number' => $request->Phone_Number,
             'email'       => $request->email,
             'password'    => Hash::make($request->password),
-            // 'isAdmin' defaults to false; include it here if you need to set it explicitly
         ]);
 
         event(new Registered($user));

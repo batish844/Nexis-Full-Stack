@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController; 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
@@ -13,21 +13,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.profile');
-
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
 Route::get('/home', function () {
-    $slides = [['label' => 'women', 'url' => 'women', 'image' => 'slide1.webp'],['label' => 'men','url' => 'men','image' => 'slide2.webp'],['label' => 'Offers','url' => 'women','image' => 'slide3.webp']];
-    $items= [['url' => 'men', 'image' => 'c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'women', 'image' => 'I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'men', 'image' => 'c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
-    return view('home',compact('items','slides'));
+    $slides = [['label' => 'women', 'url' => 'women', 'image' => 'slide1.webp'], ['label' => 'men', 'url' => 'men', 'image' => 'slide2.webp'], ['label' => 'Offers', 'url' => 'women', 'image' => 'slide3.webp']];
+    $items = [['url' => 'men', 'image' => 'c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'women', 'image' => 'I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'men', 'image' => 'c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
+    return view('home', compact('items', 'slides'));
 });
 Route::get('/about-us', function () {
     return view('about');
@@ -51,4 +50,4 @@ Route::get('/loginN', function () {
     return view('login');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
