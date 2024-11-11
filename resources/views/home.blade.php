@@ -44,7 +44,6 @@
 
 
 
-<!-- Explore Section -->
 <section class="py-20 bg-gradient-to-b from-white to-gray-100 text-center">
     <h2 class="text-5xl font-bold mb-6 text-gray-900">Explore More</h2>
     <p class="text-lg mb-12 text-gray-700 max-w-3xl mx-auto">Discover the latest trends in fashion with our exclusive collection tailored for every occasion.</p>
@@ -67,7 +66,6 @@
 @endpush
 
 <style>
-    /* Slider Styling */
     .slide {
         opacity: 0;
         position: absolute;
