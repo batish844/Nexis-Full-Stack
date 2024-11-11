@@ -6,19 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/css/men.css',
-                'resources/css/women.css',
-                'resources/css/checkout.css',
-                'resources/css/login.css',
                 'resources/js/app.js',
-                'resources/js/Homepage.js',
-                'resources/js/common.js',
-                'resources/js/women.js',
-                'resources/js/men.js',
-                'resources/js/cart.js',
-                'resources/js/checkout.js',
             ],
-            refresh: true, // Enables hot reloading when you make changes
+            refresh: true,
         }),
     ],
 });
