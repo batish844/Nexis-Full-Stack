@@ -12,9 +12,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/user/profile', [UserController::class, 'index'])->name('user.profile');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -24,6 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.profile');
+
 });
 Route::get('/home', function () {
     $slides = [['label' => 'women', 'url' => 'women', 'image' => 'slide1.webp'],['label' => 'men','url' => 'men','image' => 'slide2.webp'],['label' => 'Offers','url' => 'women','image' => 'slide3.webp']];
