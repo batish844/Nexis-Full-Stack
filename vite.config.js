@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/men.css',
                 'resources/css/women.css',
                 'resources/css/checkout.css',
+                'resources/css/login.css',
                 'resources/js/app.js',
                 'resources/js/Homepage.js',
                 'resources/js/common.js',

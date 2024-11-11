@@ -95,7 +95,7 @@
 
         <!-- Mobile Menu Overlay -->
         <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
-        <div id="mobileMenu" class="fixed inset-0 flex justify-center items-center z-50 hidden mobile-menu-hidden">
+        <div id="mobileMenu" class="fixed inset-0 justify-center items-center z-50 hidden mobile-menu-hidden">
             <div class="bg-white rounded-3xl shadow-2xl overflow-y-auto flex flex-col items-center py-10 px-6 w-11/12 max-w-md relative">
                 <!-- Close Button with Corrected Icon -->
                 <button class="absolute top-4 right-4 text-gray-800 hover:text-gray-900" onclick="toggleMenu()">

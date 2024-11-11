@@ -3,7 +3,6 @@
 @section('title', 'Home')
 
 @section('content')
-<!-- Image Slider -->
 <div class="relative w-full overflow-hidden aspect-[16/9] md:aspect-[16/7] image-slider" id="imageSlider">
     @foreach ($slides as $slide)
     <div class="absolute inset-0 w-full opacity-0 transition-opacity duration-1000 ease-in-out slide {{ $loop->first ? 'active' : '' }}">
@@ -19,22 +18,17 @@
     @endforeach
 </div>
 
-<!-- Featured Items Section -->
 <section class="py-16 bg-gradient-to-b from-gray-100 to-gray-50 text-center relative">
     <h2 class="text-4xl font-extrabold tracking-tight text-gray-800 mb-12">Featured Items</h2>
 
-    <!-- Subtle, minimal background pattern -->
     <div class="flex flex-wrap justify-center gap-8 mt-10">
         @foreach ($items as $item)
         <a href="{{ url($item['url']) }}" class="relative group w-[85vw] sm:w-[40vw] lg:w-[28vw] overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:scale-105">
-            <!-- Full-Width Image with Smooth Zoom on Hover -->
             <div class="relative overflow-hidden rounded-xl">
                 <img src="{{ asset('storage/'.$item['url'].'/'.$item['image']) }}" class="w-full h-[450px] object-cover transition-transform duration-700 ease-in-out group-hover:scale-110">
-                <!-- Subtle border glow effect on hover -->
                 <div class="absolute inset-0 border border-transparent rounded-xl transition-all duration-500"></div>
             </div>
 
-            <!-- Text Overlay with Elegant Transition -->
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4 rounded-xl">
                 <div class="text-left">
                     <h3 class="text-2xl font-semibold text-white">{{ $item['label'] }}</h3>
