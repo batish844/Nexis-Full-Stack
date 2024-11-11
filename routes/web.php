@@ -9,11 +9,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('/user/profile', [UserController::class, 'index'])->name('user.profile');
 });
 
 Route::get('/dashboard', function () {

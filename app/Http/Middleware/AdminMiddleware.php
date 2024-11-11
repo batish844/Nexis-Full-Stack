@@ -18,10 +18,11 @@ class AdminMiddleware
     {
        // Check if the user is authenticated and is an admin
        if (Auth::check() && Auth::user()->isAdmin) {
+        // User is authenticated and is an admin
         return $next($request);
     }
 
-    // Redirect non-admin users to home with an error message
+    // Redirect non-admin users or abort with a 403 error
     return redirect('/')->with('error', 'You are not authorized to access this page.');
     }
 }
