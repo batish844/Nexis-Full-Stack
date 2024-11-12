@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('Size');
             $table->integer('Quantity');
             $table->integer('Points')->default(0);
-            $table->string('Photo')->nullable();
+            $table->json('Photo')->nullable();
             $table->boolean('isAvailable')->default(true);
             $table->timestamps();
         });
