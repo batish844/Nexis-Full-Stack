@@ -76,7 +76,7 @@
                             </button>
                             <div id="userDropdown" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
                                 <a href="{{ route('profile.orders') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
-                                <a href="{{ route('profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                                <a href="{{ route('profile.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault();
@@ -124,7 +124,7 @@
                         @if (Auth::user()->isAdmin)
                             <a href="{{ route('admin.dashboard') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Admin Dashboard</a>
                         @else
-                            <a href="{{ route('profile') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Profile</a>
+                            <a href="{{ route('profile.index') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Profile</a>
                             <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Orders</a>
 
                         @endif

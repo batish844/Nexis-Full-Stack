@@ -43,23 +43,8 @@
                             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
                             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-                            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                            <div>
-                                <p class="text-sm mt-2 text-gray-800">
-                                    {{ __('Your email address is unverified.') }}
-
-                                    <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        {{ __('Click here to re-send the verification email.') }}
-                                    </button>
-                                </p>
-
-                                @if (session('status') === 'verification-link-sent')
-                                <p class="mt-2 font-medium text-sm text-green-600">
-                                    {{ __('A new verification link has been sent to your email address.') }}
-                                </p>
-                                @endif
-                            </div>
-                            @endif
+                           
+                        
                         </div>
                         <div class="mt-4">
                             <x-input-label for="Phone_Number" :value="__('Phone Number')" />
@@ -68,19 +53,18 @@
                         </div>
                         <div class="mt-4">
                         <x-input-label for="city" :value="__('City')" />
-                        <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city', $user->city)" required />
+                        <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city', $user->city)" />
                         <x-input-error :messages="$errors->get('city')" class="mt-2" />
                     </div>
 
-                    <!-- Street Address Field -->
                     <div class="mt-4">
                         <x-input-label for="street_address" :value="__('Street Address')" />
-                        <x-text-input id="street_address" class="block mt-1 w-full" type="text" name="street_address" :value="old('street_address', $user->street_address)" required />
+                        <x-text-input id="street_address" class="block mt-1 w-full" type="text" name="street_address" :value="old('street_address', $user->street_address)" />
                         <x-input-error :messages="$errors->get('street_address')" class="mt-2" />
                     </div>
                     <div class="mt-4">
                         <x-input-label for="building" :value="__('Building')" />
-                        <x-text-input id="building" class="block mt-1 w-full" type="text" name="building" :value="old('building', $user->building)" required />
+                        <x-text-input id="building" class="block mt-1 w-full" type="text" name="building" :value="old('building', $user->building)" />
                         <x-input-error :messages="$errors->get('building')" class="mt-2" />
                     </div>
                         <div class="flex items-center gap-4">

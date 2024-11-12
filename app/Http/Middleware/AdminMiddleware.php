@@ -20,7 +20,6 @@ class AdminMiddleware
         return $next($request);
     }
 
-    // Redirect non-admin users or abort with a 403 error
     return redirect('/')->with('error', 'You are not authorized to access this page.');
     }
 }

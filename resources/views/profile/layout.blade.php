@@ -20,8 +20,8 @@
                         <a href="{{ route('profile.orders') }}" class="text-gray-900 font-bold text-lg hover:text-indigo-600">
                             Orders
                         </a>
-                        <a href="{{ route('profile') }}" class="text-gray-900 font-bold text-lg hover:text-indigo-600">
-                            Profile Settings
+                        <a href="{{ route('profile.index') }}" class="text-gray-900 font-bold text-lg hover:text-indigo-600">
+                            Account Settings
                         </a>
                     </div>
                     <div class="hidden md:flex items-center space-x-6">
@@ -50,10 +50,10 @@
                     <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700">
                         Return to Home
                     </a>
-                    <a href="{{ route('profile') }}" class="block px-3 py-2 rounded-md text-base font-bold text-gray-900 hover:text-indigo-600">
+                    <a href="{{ route('profile.orders') }}" class="block px-3 py-2 rounded-md text-base font-bold text-gray-900 hover:text-indigo-600">
                         Orders
                     </a>
-                    <a href="{{ route('profile') }}" class="block px-3 py-2 rounded-md text-base font-bold text-gray-900 hover:text-indigo-600">
+                    <a href="{{ route('profile.index') }}" class="block px-3 py-2 rounded-md text-base font-bold text-gray-900 hover:text-indigo-600">
                         Account Settings
                     </a>
                     <div class="border-t border-gray-200 mt-2"></div>

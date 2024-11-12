@@ -27,9 +27,9 @@ class ProfileController extends Controller
         }
         return view('profile.profile', compact('user'));
     }
-    public function order(){
+    public function order()
+    {
         return view('profile.order');
-
     }
 
     public function edit(Request $request): View
@@ -46,7 +46,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $user->fill($request->except(['city', 'street_address', 'building']));
-        
+
         if ($request->filled(['city', 'street_address', 'building'])) {
             $Address = [
                 'city' => $request->input('city'),
@@ -56,12 +56,10 @@ class ProfileController extends Controller
             $user->address = json_encode($Address);
         }
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
+
         $user->save();
 
-        return Redirect::route('profile')->with('status', 'profile-updated');
+        return Redirect::route('profile.index')->with('status', 'profile-updated');
     }
 
     /**
