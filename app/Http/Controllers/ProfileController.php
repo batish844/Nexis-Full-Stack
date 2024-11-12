@@ -14,16 +14,21 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function index()
+    /**
+     * Display the user's profile.
+     */
+    public function index(): View
     {
         $user = Auth::user();
-        $user->street_address = json_decode($user->address)->street_address;
-        $user->building = json_decode($user->address)->building;
-        $user->city = json_decode($user->address)->city;
-        return view('profile', compact('user'));
+        if ($user->address) {
+            $user->street_address = json_decode($user->address)->street_address;
+            $user->building = json_decode($user->address)->building;
+            $user->city = json_decode($user->address)->city;
+        }
+        return view('profile.profile', compact('user'));
     }
     public function order(){
-        return view('profile.orders');
+        return view('profile.order');
 
     }
 
@@ -41,12 +46,16 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $user->fill($request->except(['city', 'street_address', 'building']));
-        $Address = [
-            'city' => $request->input('city'),
-            'street_address' => $request->input('street_address'),
-            'building' => $request->input('building'),
-        ];
-        $user->Address = $Address;
+        
+        if ($request->filled(['city', 'street_address', 'building'])) {
+            $Address = [
+                'city' => $request->input('city'),
+                'street_address' => $request->input('street_address'),
+                'building' => $request->input('building'),
+            ];
+            $user->address = json_encode($Address);
+        }
+
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }

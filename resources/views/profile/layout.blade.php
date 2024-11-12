@@ -17,7 +17,7 @@
                         </a>
                     </div>
                     <div class="hidden md:flex space-x-8 items-center">
-                        <a href="{{ route('profile') }}" class="text-gray-900 font-bold text-lg hover:text-indigo-600">
+                        <a href="{{ route('profile.orders') }}" class="text-gray-900 font-bold text-lg hover:text-indigo-600">
                             Orders
                         </a>
                         <a href="{{ route('profile') }}" class="text-gray-900 font-bold text-lg hover:text-indigo-600">
@@ -74,12 +74,13 @@
         </main>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x/dist/cdn.min.js" defer></script>
     <script>
         $(document).ready(function() {
-            const $mobileMenuBtn = $('#mobileMenuBtn');
-            const $mobileMenu = $('#mobileMenu');
-            const $menuOpen = $('#menuOpen');
-            const $menuClose = $('#menuClose');
+            let $mobileMenuBtn = $('#mobileMenuBtn');
+            let $mobileMenu = $('#mobileMenu');
+            let $menuOpen = $('#menuOpen');
+            let $menuClose = $('#menuClose');
 
             $mobileMenuBtn.on('click', function() {
             $mobileMenu.toggleClass('hidden');
