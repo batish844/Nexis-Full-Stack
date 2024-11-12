@@ -17,12 +17,19 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('profile.profile', compact('user'));
-    
+        $user->street_address = json_decode($user->address)->street_address;
+        $user->building = json_decode($user->address)->building;
+        $user->city = json_decode($user->address)->city;
+        return view('profile', compact('user'));
     }
+    public function order(){
+        return view('profile.orders');
+
+    }
+
     public function edit(Request $request): View
     {
-        return view('profile.profile', [
+        return view('profile', [
             'user' => $request->user(),
         ]);
     }
@@ -32,15 +39,20 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user = $request->user();
+        $user->fill($request->except(['city', 'street_address', 'building']));
+        $Address = [
+            'city' => $request->input('city'),
+            'street_address' => $request->input('street_address'),
+            'building' => $request->input('building'),
+        ];
+        $user->Address = $Address;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
+        $user->save();
 
-        $request->user()->save();
-
-        return Redirect::route('profile.profile')->with('status', 'profile-updated');
+        return Redirect::route('profile')->with('status', 'profile-updated');
     }
 
     /**

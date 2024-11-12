@@ -27,6 +27,9 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique('users', 'email')->ignore($this->user()->UserID, 'UserID'),
             ],
             'Phone_Number' => ['required', 'string', 'max:20'],
+            'city' => ['required', 'string', 'max:255'],
+            'street_address' => ['required', 'string', 'max:255'],
+            'building' => ['required', 'string', 'max:255'],
         ];
     }
 }

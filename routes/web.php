@@ -6,7 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -15,19 +15,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.profile');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
     Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+        return view('profile.dashboard');})->name('dashboard');
 });
 Route::get('/home', function () {
     $slides = [['label' => 'women', 'url' => 'women', 'image' => 'slide1.webp'], ['label' => 'men', 'url' => 'men', 'image' => 'slide2.webp'], ['label' => 'Offers', 'url' => 'women', 'image' => 'slide3.webp']];
     $items = [['url' => 'men', 'image' => 'c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'women', 'image' => 'I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'men', 'image' => 'c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
     return view('home', compact('items', 'slides'));
-});
+})->name('home');
 Route::get('/about-us', function () {
     return view('about');
 });
@@ -39,7 +39,7 @@ Route::get('/men', function () {
 });
 Route::get('/contact-us', function () {
     return view('contactus');
-});
+})->name('contact-us');
 Route::get('/cart', function () {
     return view('cart');
 });

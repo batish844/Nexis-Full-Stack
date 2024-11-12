@@ -63,7 +63,33 @@
                 <a href="/women" class="nav-items transition-colors hover:text-white">Women</a>
                 <a href="/men" class="nav-items transition-colors hover:text-white">Men</a>
                 <a href="/contact-us" class="nav-items transition-colors hover:text-white">Contact us</a>
-                <a href="/login" class="nav-items transition-colors hover:text-white">Sign In</a>
+                @if (Auth::check())
+                    @if (Auth::user()->isAdmin)
+                        <a href="{{ route('admin.dashboard') }}" class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
+                    @else
+                        <div class="relative inline-block text-left">
+                            <button onclick="toggleDropdown()" class="nav-items flex items-center transition-colors hover:text-white">
+                                <span>{{ Auth::user()->First_Name }}</span>
+                                <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5.25 7.75L10 12.5l4.75-4.75" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div id="userDropdown" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
+                                <a href="{{ route('profile.orders') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
+                                <a href="{{ route('profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+                @else
+                    <a href="{{ route('login') }}" class="nav-items transition-colors hover:text-white">Sign In</a>
+                @endif
             </div>
             <div id="icon" class="ml-6">
                 <a href="/cart" id="cart-icon" class="relative inline-block">
@@ -94,7 +120,18 @@
                     <a href="/women" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Women</a>
                     <a href="/men" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Men</a>
                     <a href="/contact-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Contact us</a>
-                    <a href="/login" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Sign In</a>
+                    @if (Auth::check())
+                        @if (Auth::user()->isAdmin)
+                            <a href="{{ route('admin.dashboard') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Admin Dashboard</a>
+                        @else
+                            <a href="{{ route('profile') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Profile</a>
+                            <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Orders</a>
+
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Sign In</a>
+                    @endif
+                
                 </div>
                 <div class="mt-8 mb-4">
                     <a href="{{ url('Cart') }}" id="cart-icon" class="relative inline-block">
@@ -157,14 +194,25 @@
     @vite('resources/js/common.js')
     <script>
         function toggleMenu() {
-            const overlay = document.getElementById("overlay");
-            const mobileMenu = document.getElementById("mobileMenu");
+            let overlay = $("#overlay");
+            let mobileMenu = $("#mobileMenu");
 
-            overlay.classList.toggle("hidden");
-            mobileMenu.classList.toggle("hidden");
-            mobileMenu.classList.toggle("mobile-menu-visible");
-            mobileMenu.classList.toggle("mobile-menu-hidden");
+            overlay.toggleClass("hidden");
+            mobileMenu.toggleClass("hidden mobile-menu-visible mobile-menu-hidden");
         }
+
+        function toggleDropdown() {
+            $("#userDropdown").toggleClass('hidden');
+        }
+
+        $(window).click(function(event) {
+            if (!$(event.target).closest('.relative').length) {
+            let dropdown = $("#userDropdown");
+            if (!dropdown.hasClass('hidden')) {
+                dropdown.addClass('hidden');
+            }
+            }
+        });
     </script>
 </body>
 
