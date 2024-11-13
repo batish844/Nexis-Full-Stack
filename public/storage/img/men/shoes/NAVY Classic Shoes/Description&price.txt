@@ -1,0 +1,15 @@
+Price
+19,95 EUR
+
+Product Contents and Features
+Product Content:
+Lining: TEXTILE MATERIAL
+
+Outer Sole: OTHER MATERIAL (TPR)
+
+Upper: OTHER MATERIAL (POLYURETHANE)
+
+Product Features:
+Product Type: Classic Shoes
+Gender: Man
+Color: Navy

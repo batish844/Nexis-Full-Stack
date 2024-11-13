@@ -1,0 +1,16 @@
+Price
+32,95 EUR
+
+Product Description
+Wear resistant
+Flexible and comfortable sole
+Product Contents and Features
+Product Features:
+Pattern: Plain
+Product Type: Boots
+Occasion: Casual
+Lining Detail: Jersey Lining
+Toe Style: Round Toe
+Shoe Closing Style: Pull On
+Gender: Man
+Color: Brown

@@ -1,0 +1,12 @@
+Price
+19,99 EUR
+
+Product Description
+Product Contents and Features
+Product Features:
+Pattern: Plain
+Product Type: Classic Shoes
+Toe Style: Round Toe
+Shoe Closing Style: Shoestring
+Gender: Man
+Color: Brown

@@ -1,0 +1,21 @@
+Price
+29,99 EUR
+
+Product Description
+Product Contents and Features
+Product Content:
+Inner Sole: %100 TEXTILE MATERIAL
+
+Lining: %100 TEXTILE MATERIAL
+
+Outher Sole: %100 OTHER MATERIAL (TPR)
+
+Upper: %5 TEXTILE MATERIAL %95 OTHER MATERIAL (POLYURETHANE)
+
+Product Features:
+Pattern: Plain
+Product Type: Trekking Shoes
+Fabric: Suede
+Toe Style: Round Toe
+Gender: Man
+Color: Black

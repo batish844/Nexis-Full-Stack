@@ -4,7 +4,7 @@
 /public/hot
 
 # Ignore everything in public/storage except specific folders
-/public/storage/*
+
 !/public/storage/img/aboutus
 !/public/storage/img/CommonImg
 !/public/storage/img/men
@@ -14,7 +14,6 @@
 !/public/storage/img/slides
 !/public/storage/img/women
 !/public/storage/img/women/*
-
 /storage/*.key
 /storage/pail
 

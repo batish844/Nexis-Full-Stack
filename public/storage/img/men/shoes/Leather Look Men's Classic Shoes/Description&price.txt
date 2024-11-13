@@ -1,0 +1,13 @@
+Price
+22,99 EUR
+
+Product Description
+Product Contents and Features
+Product Features:
+Pattern: Plain
+Product Type: Classic Shoes
+Fabric: Imitation Leather
+Toe Style: Oval Toe
+Shoe Closing Style: Shoestring
+Gender: Man
+Color: Black

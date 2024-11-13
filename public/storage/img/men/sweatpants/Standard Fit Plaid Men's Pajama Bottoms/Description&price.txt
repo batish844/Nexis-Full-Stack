@@ -1,0 +1,11 @@
+Price
+8,99 EUR
+
+Product Description
+Product Contents and Features
+Product Features:
+Pattern: Plaid
+Fit: Regular
+Product Type: Pyjamas Bottom
+Gender: Man
+Color: Green
