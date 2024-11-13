@@ -6,13 +6,13 @@
     <!-- Image Slider -->
     <div class="image-slider">
         <div class="slide">
-            <img src="{{ asset('storage/CommonImg/slide2.webp') }}" alt="Slide 1">
+            <img src="{{ asset('storage/img/slides/m1.jpg') }}" alt="Slide 1">
         </div>
         <div class="slide">
-            <img src="{{ asset('storage/men/P&B1.jpg') }}" alt="Slide 2">
+            <img src="{{ asset('storage/img/slides/m2.webp') }}" alt="Slide 2">
         </div>
         <div class="slide">
-            <img src="{{ asset('storage/men/P&B2.webp') }}" alt="Slide 3">
+            <img src="{{ asset('storage/img/slides/m3.jpg') }}" alt="Slide 3">
         </div>
     </div>
 

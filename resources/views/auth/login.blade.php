@@ -30,7 +30,7 @@
                            type="email"
                            name="email"
                            value="{{ old('email') }}"
-                           required autofocus autocomplete="username" />
+                           autofocus autocomplete="username" />
                     @error('email')
                         <div class="mt-2 text-sm text-red-600">
                             {{ $message }}
@@ -45,7 +45,7 @@
                     <input id="password" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                            type="password"
                            name="password"
-                           required autocomplete="current-password" />
+                           autocomplete="current-password" />
                     @error('password')
                         <div class="mt-2 text-sm text-red-600">
                             {{ $message }}

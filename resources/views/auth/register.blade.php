@@ -23,7 +23,7 @@
                            type="text"
                            name="First_Name"
                            value="{{ old('First_Name') }}"
-                           required autofocus />
+                           autofocus />
                     @error('First_Name')
                         <div class="mt-2 text-sm text-red-600">
                             {{ $message }}
@@ -38,7 +38,7 @@
                            type="text"
                            name="Last_Name"
                            value="{{ old('Last_Name') }}"
-                           required />
+                            />
                     @error('Last_Name')
                         <div class="mt-2 text-sm text-red-600">
                             {{ $message }}
@@ -54,7 +54,7 @@
                            type="email"
                            name="email"
                            value="{{ old('email') }}"
-                           required />
+                            />
                     @error('email')
                         <div class="mt-2 text-sm text-red-600">
                             {{ $message }}
@@ -70,7 +70,7 @@
                            type="text"
                            name="Phone_Number"
                            value="{{ old('Phone_Number') }}"
-                           required />
+                            />
                     @error('Phone_Number')
                         <div class="mt-2 text-sm text-red-600">
                             {{ $message }}
@@ -85,7 +85,7 @@
                     <input id="password" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                            type="password"
                            name="password"
-                           required autocomplete="new-password" />
+                            autocomplete="new-password" />
                     @error('password')
                         <div class="mt-2 text-sm text-red-600">
                             {{ $message }}
@@ -100,7 +100,7 @@
                     <input id="password_confirmation" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                            type="password"
                            name="password_confirmation"
-                           required />
+                            />
                     @error('password_confirmation')
                         <div class="mt-2 text-sm text-red-600">
                             {{ $message }}

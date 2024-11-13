@@ -6,13 +6,13 @@
     <!-- Image Slider for Women Store -->
     <div class="image-slider">
         <div class="slide">
-            <img src="{{ asset('storage/women/slider1.webp') }}" alt="Slide 1">
+            <img src="{{ asset('storage/img/slides/g1.webp') }}" alt="Slide 1">
         </div>
         <div class="slide">
-            <img src="{{ asset('storage/women/slider3.jpg') }}" alt="Slide 3">
+            <img src="{{ asset('storage/img/slides/g2.webp') }}" alt="Slide 3">
         </div>
         <div class="slide">
-            <img src="{{ asset('storage/women/slider1.webp') }}" alt="Slide 1">
+            <img src="{{ asset('storage/img/slides/g3.jpg') }}" alt="Slide 1">
         </div>
     </div>
 
