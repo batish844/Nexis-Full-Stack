@@ -31,8 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
 });
 Route::get('/home', function () {
-    $slides = [['label' => 'women', 'url' => 'women', 'image' => 'slide1.webp'], ['label' => 'men', 'url' => 'men', 'image' => 'slide2.webp'], ['label' => 'Offers', 'url' => 'women', 'image' => 'slide3.webp']];
-    $items = [['url' => 'men', 'image' => 'c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'women', 'image' => 'I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'men', 'image' => 'c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
+    $slides = [['label' => 'women', 'url' => 'women', 'image' => 'h1.webp'], ['label' => 'men', 'url' => 'men', 'image' => 'h2.webp'], ['label' => 'Offers', 'url' => 'women', 'image' => 'h3.webp']];
+    $items = [['url' => 'img/home', 'image' => 'c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'img/home', 'image' => 'I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'img/home', 'image' => 'c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
     return view('home', compact('items', 'slides'));
 })->name('home');
 Route::get('/about-us', function () {

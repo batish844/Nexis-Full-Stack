@@ -8,7 +8,7 @@
 <body>
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
-        <img src="storage/CommonImg/BrandLogo.png" alt="Logo" class="h-20">
+        <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-20">
 
         </div>
 

@@ -17,7 +17,7 @@
         </a>
     </div>
     <div class="relative z-0 md:w-1/2 h-full">
-        <img src="storage/aboutus/NexusQuote.png" alt="Nexis Fashion" class="object-cover w-full h-full transform scale-105 opacity-90 animate-parallax">
+        <img src="storage/img/aboutus/NexusQuote.png" alt="Nexis Fashion" class="object-cover w-full h-full transform scale-105 opacity-90 animate-parallax">
     </div>
 </div>
 <section id="our-journey" class="py-20 px-8 md:px-16 lg:px-24 text-gray-800 bg-gray-50">
@@ -50,7 +50,7 @@
     <div class="flex flex-col md:flex-row gap-12 justify-center items-center">
         <div class="bg-white p-10 rounded-3xl shadow-lg max-w-sm text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
             <div class="w-32 h-32 mx-auto mb-6">
-                <img src="{{ asset('storage/aboutus/CEO1.jpg') }}" alt="CEO Samer Hariri" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
+                <img src="{{ asset('storage/img/aboutus/CEO1.jpg') }}" alt="CEO Samer Hariri" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
             </div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Samer Hariri</h3>
             <p class="text-md text-gray-500 mb-4">Co-Founder & CEO</p>
@@ -58,7 +58,7 @@
         </div>
         <div class="bg-white p-10 rounded-3xl shadow-lg max-w-sm text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
             <div class="w-32 h-32 mx-auto mb-6">
-                <img src="{{ asset('storage/aboutus/CEO2.jpg') }}" alt="CEO Mahmoud Batish" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
+                <img src="{{ asset('storage/img/aboutus/CEO2.jpg') }}" alt="CEO Mahmoud Batish" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
             </div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Mahmoud Batish</h3>
             <p class="text-md text-gray-500 mb-4">Co-Founder & CEO</p>
@@ -106,7 +106,7 @@
 <section class="py-20 bg-gray-800 text-white text-center">
     <h2 class="text-4xl font-extrabold mb-6">Join Us on Our Journey</h2>
     <p class="text-lg mb-12">Be part of a brand that values innovation, sustainability, and style.</p>
-    <a href="/contact" class="px-8 py-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300">Contact Us</a>
+    <a href="/contact-us" class="px-8 py-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300">Contact Us</a>
 </section>
 @endsection
 
