@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Nexus')</title>
 
-    <link rel="icon" type="image/png" href="storage/img/CommonImg/BrandLogo.png">
+    <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
 
     @vite('resources/css/app.css')
     @stack('styles')
@@ -50,7 +50,7 @@
     </style>
 </head>
 
-<body class>
+<body>
     <header class="flex justify-center p-4">
         <nav class="nav hidden lg:flex items-center bg-white rounded-full shadow-lg w-4/5 max-w-5xl justify-center transition duration-300 ease-in-out py-4 px-10">
             <a href="/home" class="mr-6">
@@ -65,7 +65,7 @@
                 <a href="/contact-us" class="nav-items transition-colors hover:text-white">Contact us</a>
                 @if (Auth::check())
                     @if (Auth::user()->isAdmin)
-                        <a href="{{ route('admin.dashboard') }}" class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
+                        <a href="{{ route('analytics.index') }}" class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
                     @else
                         <div class="relative inline-block text-left">
                             <button onclick="toggleDropdown()" class="nav-items flex items-center transition-colors hover:text-white">
@@ -122,7 +122,7 @@
                     <a href="/contact-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Contact us</a>
                     @if (Auth::check())
                         @if (Auth::user()->isAdmin)
-                            <a href="{{ route('admin.dashboard') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Admin Dashboard</a>
+                            <a href="{{ route('analytics.index') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Admin Dashboard</a>
                         @else
                             <a href="{{ route('profile.index') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Profile</a>
                             <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Orders</a>

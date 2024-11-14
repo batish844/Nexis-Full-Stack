@@ -5,18 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
+    <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
     @vite('resources/css/app.css')
 </head>
 
-<body class="flex h-screen bg-blue-50">
-    <div x-data="{ open: false }" class="flex">
-        <div
-            x-show="open"
-            @click="open = false"
-            class="fixed inset-0 z-20 bg-black opacity-50 lg:hidden">
-        </div>
-        <div
-            class="fixed z-30 inset-y-0 left-0 w-64 bg-blue-800 text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0">
+<body class="flex h-screen overflow-hidden">
+    <div class="flex h-full w-full">
+        <div class="w-64 bg-blue-800 text-white flex-shrink-0">
             <div class="flex flex-col items-center justify-center h-32 bg-blue-900">
                 <img src="/storage/img/CommonImg/blacklogo.png" alt="Logo" class="h-20">
                 <span>Welcome, {{ Auth::user()->First_Name }}!</span>
@@ -27,7 +22,7 @@
                 [
                 'name' => 'Analytics',
                 'icon' => '/storage/img/icons/analytics.png',
-                'route' => 'admin.dashboard',
+                'route' => 'analytics.index',
                 ],
                 [
                 'name' => 'Products',
@@ -61,7 +56,12 @@
                 </a>
                 @endforeach
             </nav>
-            <form method="POST" action="{{ route('logout') }}" class=" mt-24 mx-2">
+            <div class="mt-14 mx-2">
+                <a href="{{ route('home') }}" class="flex items-center px-4 py-2 bg-green-600 text-white hover:bg-green-700 rounded-full transition-colors shadow-lg w-full">
+                    Return to Home
+                </a>
+            </div>
+            <form method="POST" action="{{ route('logout') }}" class="my-4 mx-2">
                 @csrf
                 <button type="submit" class="flex items-center px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded-full transition-colors shadow-lg w-full">
                     <img src="/storage/img/icons/logout.png" alt="Logout Icon" class="h-5 w-5 mr-3">
@@ -70,8 +70,8 @@
             </form>
         </div>
 
-        <div class="flex-1 flex flex-col">
-            <header class="bg-blue-800 text-white h-16 flex items-center justify-between px-6 shadow-md w-full fixed top-0 lg:left-64 z-10">
+        <div class="flex flex-col flex-grow overflow-hidden">
+            <header class="bg-blue-800 text-white h-16 flex items-center justify-between px-6 shadow-md flex-shrink-0">
                 <div class="flex items-center">
                     <button id="mobile-menu-button" class="lg:hidden mr-4 focus:outline-none">
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,7 +83,7 @@
                 </div>
             </header>
 
-            <main class="p-6 bg-blue-50 flex-grow overflow-auto mt-16">
+            <main class="flex-grow overflow-y-auto p-6">
                 @yield('content')
             </main>
         </div>

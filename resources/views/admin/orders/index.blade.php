@@ -2,5 +2,4 @@
 @section('content')
 
 <h1 class="text-center">Orders</h1>
-wjb
 @endsection
