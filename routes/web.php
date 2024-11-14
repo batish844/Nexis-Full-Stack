@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\MenController;
+use App\Http\Controllers\WomenController;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -37,12 +39,9 @@ Route::get('/home', function () {
 Route::get('/about-us', function () {
     return view('about');
 });
-Route::get('/women', function () {
-    return view('women');
-});
-Route::get('/men', function () {
-    return view('men');
-});
+Route::get('/women', [WomenController::class, 'index']);
+Route::get('/men', [MenController::class, 'index']);
+
 Route::get('/contact-us', function () {
     return view('contactus');
 })->name('contact-us');
