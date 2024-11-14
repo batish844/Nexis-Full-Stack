@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.layouts.sidebar')
+@section('content')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<h1 class="text-center">Analytics</h1>
 
-<body>
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-            Logout
-        </button>
-</body>
-
-</html>
+@endsection
