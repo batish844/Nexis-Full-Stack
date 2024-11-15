@@ -9,9 +9,15 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="flex h-screen overflow-hidden">
-    <div class="flex h-full w-full">
-        <div class="w-64 bg-blue-800 text-white flex-shrink-0">
+<body class="h-screen">
+    <div x-data="{ open: false }" class="flex">
+        <div
+            x-show="open"
+            @click="open = false"
+            class="fixed inset-0 z-20 bg-black opacity-50 lg:hidden">
+        </div>
+        <div
+            class="fixed z-30 h-screen inset-y-0 left-0 w-64 bg-blue-800 text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0">
             <div class="flex flex-col items-center justify-center h-32 bg-blue-900">
                 <img src="/storage/img/CommonImg/blacklogo.png" alt="Logo" class="h-20">
                 <span>Welcome, {{ Auth::user()->First_Name }}!</span>
@@ -19,31 +25,21 @@
             <nav class="flex flex-col mt-4 space-y-2 px-2">
                 @php
                 $navItems = [
-                [
-                'name' => 'Analytics',
+                ['name' => 'Analytics',
                 'icon' => '/storage/img/icons/analytics.png',
-                'route' => 'analytics.index',
-                ],
-                [
-                'name' => 'Products',
+                'route' => 'analytics.index',],
+                ['name' => 'Products',
                 'icon' => '/storage/img/icons/item.png',
-                'route' => 'products.index',
-                ],
-                [
-                'name' => 'Categories',
+                'route' => 'products.index',],
+                ['name' => 'Categories',
                 'icon' => '/storage/img/icons/categories.png',
-                'route' => 'categories.index',
-                ],
-                [
-                'name' => 'Users',
+                'route' => 'categories.index',],
+                ['name' => 'Users',
                 'icon' => '/storage/img/icons/users.png',
-                'route' => 'users.index',
-                ],
-                [
-                'name' => 'Orders',
+                'route' => 'users.index',],
+                ['name' => 'Orders',
                 'icon' => '/storage/img/icons/orders.png',
-                'route' => 'orders.index',
-                ],
+                'route' => 'orders.index',],
                 ];
                 @endphp
 
