@@ -14,7 +14,7 @@ use App\Http\Controllers\WomenController;
 Route::get('/', function () {
     return redirect()->route('home');
 });
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('orders', OrderController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
@@ -24,7 +24,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

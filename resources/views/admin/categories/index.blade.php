@@ -23,33 +23,50 @@
         </form>
     </div>
     <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="min-w-full">
-            <thead class="bg-gray-50">
-                <tr class="text-left text-gray-700 font-semibold text-sm tracking-wider border-b">
-                    <th class="px-6 py-3">Category</th>
-                    <th class="px-6 py-3">Items Count</th>
-                    <th class="px-6 py-3">Actions</th>
+        <table class="min-w-full divide-y divide-gray-200 shadow-lg rounded-lg overflow-hidden">
+            <thead class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+                <tr class="text-left text-sm uppercase tracking-wider">
+                    <th class="px-6 py-3 font-semibold">Category</th>
+                    <th class="px-6 py-3 font-semibold">Items Count</th>
+                    <th class="px-6 py-3 font-semibold">Actions</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 text-gray-800 text-sm">
+            <tbody class="bg-white divide-y divide-gray-200">
                 <!-- Example -->
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4">Category 1</td>
-                    <td class="px-6 py-4">12</td>
+                <tr class="hover:bg-gray-100 transition duration-200">
+                    <td class="px-6 py-4 flex items-center">
+
+                        <div class="ml-4">
+                            <div class="text-sm font-bold text-gray-900">Category 1</div>
+                            <div class="text-sm text-gray-500">Additional info</div>
+                        </div>
+                    </td>
                     <td class="px-6 py-4">
-                        <div class="flex space-x-4">
-                            <a href="#" class="text-blue-600 font-medium hover:underline flex items-center">
-                                <span class="mr-1">📃</span> Show
+                        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            12
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex space-x-2">
+                            <a href="#" class="text-blue-500 hover:text-blue-700">
+                                <img src="path/to/icon.png" alt="Show" class="w-5 h-5 inline-block">
+                                Show
                             </a>
-                            <a href="#" class="text-green-600 font-medium hover:underline flex items-center">
-                                <span class="mr-1">✏️</span> Edit
+                            <a href="#" class="text-green-500 hover:text-green-700">
+                                <img src="/storage/img/icons/edit.png" alt="Show" class="w-5 h-5 inline-block">
+
+                                Edit
                             </a>
-                            <a href="#" class="text-red-600 font-medium hover:underline flex items-center">
-                                <span class="mr-1">🗑️</span> Delete
+                            <a href="#" class="text-red-500 hover:text-red-700">
+                                <svg class="w-5 h-5 inline-block" fill="currentColor" viewBox="0 0 20 20">
+                                    <!-- SVG content -->
+                                </svg>
+                                Delete
                             </a>
                         </div>
                     </td>
                 </tr>
+                <!-- More rows -->
             </tbody>
         </table>
     </div>
