@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
     @vite('resources/css/app.css')
 </head>
 <body>

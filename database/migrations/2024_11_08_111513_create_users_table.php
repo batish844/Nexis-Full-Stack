@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('Points')->default(0);
             $table->string('Avatar')->nullable();
             $table->boolean('isAdmin')->default(false);
+            $table->rememberToken();
             $table->timestamps();
         });
         
