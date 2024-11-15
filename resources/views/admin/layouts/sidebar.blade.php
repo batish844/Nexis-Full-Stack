@@ -9,7 +9,8 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="h-screen">
+<body>
+    <div class="flex h-screen">
     <div x-data="{ open: false }" class="flex">
         <div
             x-show="open"
@@ -65,7 +66,7 @@
                 </button>
             </form>
         </div>
-
+    </div>
         <div class="flex flex-col flex-grow overflow-hidden">
             <header class="bg-blue-800 text-white h-16 flex items-center justify-between px-6 shadow-md flex-shrink-0">
                 <div class="flex items-center">
@@ -85,7 +86,7 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#mobile-menu-button').on('click', function() {
