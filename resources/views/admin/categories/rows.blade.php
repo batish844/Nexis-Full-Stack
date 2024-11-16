@@ -18,10 +18,14 @@
                 <img src="/storage/img/icons/list.png" alt="Show" class="w-5 h-5 inline-block">
                 View & Edit
             </a>
-            <a href="{{ route('categories.destroy', $category->CategoryID) }}" class="text-red-500 hover:text-red-700">
-                <img src="/storage/img/icons/trash.png" alt="Show" class="w-5 h-5 inline-block">
-                Delete
-            </a>
+            <form action="{{ route('categories.destroy', $category->CategoryID) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-red-500 hover:text-red-700">
+                    <img src="/storage/img/icons/trash.png" alt="Delete" class="w-5 h-5 inline-block">
+                    Delete
+                </button>
+            </form>
         </div>
     </td>
 </tr>
