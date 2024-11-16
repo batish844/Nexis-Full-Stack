@@ -3,8 +3,7 @@
     <td class="px-6 py-4 flex items-center">
 
         <div class="ml-4">
-            <div class="text-sm font-bold text-gray-900">{{$category->Name}}</div>
-            <div class="text-sm text-gray-500">{{$category->Description}}</div>
+            <div class="text-sm font-bold text-gray">{{$category->Name}}</div>
         </div>
     </td>
     <td class="px-6 py-4">
