@@ -20,12 +20,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('analytics', AnalyticsController::class);
-   
 
 });
 
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('categories.search');
 ;
+Route::get('users/search', [UserController::class, 'search'])->name('users.search');
 
 
 Route::middleware('auth', 'role:user')->group(function () {
