@@ -23,9 +23,10 @@
             </select>
         </div>
 
-        <form class="flex space-x-4 items-center w-full lg:w-auto">
+        <form method="POST" action="{{ route('categories.store') }}" class="flex space-x-4 items-center w-full lg:w-auto">
+            @csrf
             <input type="text" placeholder="Add Category Here" class="flex-grow px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button type="submit" class="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-500">
+            <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-500">
                 Add
             </button>
         </form>
