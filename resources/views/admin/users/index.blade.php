@@ -3,8 +3,12 @@
 @section('content')
 <div class="container p-6">
     @if(session('success'))
-    <div class="flash-message bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+    <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
         {{ session('success') }}
+    </div>
+    @elseif(session('error'))
+    <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+        {{ session('error') }}
     </div>
     @endif
 
@@ -15,7 +19,7 @@
 
     <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center space-y-4 lg:space-y-0 mb-8">
         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 items-center">
-            <input type="text" id="search" placeholder="Search users by name" 
+            <input type="text" id="search" placeholder="Search users by name"
                 class="w-full sm:w-72 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
 
             <select id="nameOrder" class="w-full sm:w-40 px-4 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -24,8 +28,8 @@
             </select>
         </div>
 
-        <a href="{{ route('users.create') }}" 
-            class="flex items-center px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-500">
+        <a href="{{ route('users.create') }}"
+            class="flex items-center px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-500">
             Add New User
         </a>
     </div>
@@ -72,19 +76,19 @@
             let name = $('#search').val();
             let nameOrder = $('#nameOrder').val();
             $.ajax({
-    url: '{{ route("users.search") }}',
-    method: 'GET',
-    data: {
-        name: name, // User input for search
-        nameOrder: nameOrder // User-selected sort order
-    },
-    success: function(response) {
-        $('#table-body-ajax').html(response); // Populate the table with the response
-    },
-    error: function(xhr) {
-        console.error('AJAX error:', xhr.responseText);
-    }
-});
+                url: '{{ route("users.search") }}',
+                method: 'GET',
+                data: {
+                    name: name, // User input for search
+                    nameOrder: nameOrder // User-selected sort order
+                },
+                success: function(response) {
+                    $('#table-body-ajax').html(response); // Populate the table with the response
+                },
+                error: function(xhr) {
+                    console.error('AJAX error:', xhr.responseText);
+                }
+            });
 
         }
     });
