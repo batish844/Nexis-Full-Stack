@@ -3,8 +3,8 @@
 @section('content')
 <div class="container p-6">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Create New User</h1>
-        <p class="text-gray-600">Add a new user to the system</p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Create New Admin</h1>
+        <p class="text-gray-600">Add a new admin to the system</p>
     </div>
 
     <div class="bg-white rounded-lg shadow p-8">
@@ -41,6 +41,16 @@
             </div>
 
             <div>
+                <label for="Phone_Number" class="block text-blue-700 font-semibold mb-2">Phone Number</label>
+                <input type="text" id="Phone_Number" name="Phone_Number" placeholder="Enter phone number"
+                    class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 placeholder-gray-400"
+                    value="{{ old('Phone_Number') }}" required>
+                @error('Phone_Number')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>            
+
+            <div>
                 <label for="password" class="block text-blue-700 font-semibold mb-2">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter password"
                     class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 placeholder-gray-400" 
@@ -57,13 +67,16 @@
                     required>
             </div>
 
+            <!-- Add Admin role -->
+            <input type="hidden" name="isAdmin" value="1"> <!-- Always create as admin -->
+
             <div class="flex justify-end">
                 <button type="submit"
                     class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400">
-                    Create User
+                    Create Admin
                 </button>
             </div>
         </form>
     </div>
 </div>
-@endsection
+@endsection 
