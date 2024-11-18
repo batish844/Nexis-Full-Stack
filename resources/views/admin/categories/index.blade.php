@@ -125,12 +125,10 @@
             }
         });
 
-        // Prevent clicks inside the modal content from closing the modal
         $('#modal-content').on('click', function(e) {
             e.stopPropagation();
         });
 
-        // Handle form submission
         $('#delete-form').on('submit', function() {
             $('button[type="submit"]', this).prop('disabled', true);
         });

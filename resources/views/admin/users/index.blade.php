@@ -2,9 +2,18 @@
 
 @section('content')
 <div class="container p-6">
+    @if(session('success'))
+    <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+        {{ session('success') }}
+    </div>
+    @elseif(session('error'))
+    <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+        {{ session('error') }}
+    </div>
+    @endif
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">Users</h1>
-        <a href="{{ route('users.create') }}" 
+        <a href="{{ route('users.create') }}"
             class="text-white bg-blue-600 px-6 py-3 rounded-lg shadow hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400">
             Add New Admin
         </a>
@@ -30,8 +39,8 @@
             </select>
 
             <!-- Reset Button -->
-            <button type="button" id="resetFilters" 
-                class="px-6 py-2 bg-gray-600 text-white font-semibold rounded-lg shadow hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400">
+            <button type="button" id="resetFilters"
+                class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400">
                 Reset Filters
             </button>
         </form>
@@ -64,13 +73,17 @@
         });
 
         // Reset Filters functionality
-        $('#resetFilters').on('click', function () {
+        $('#resetFilters').on('click', function() {
             $('#role').val('all');
             $('#search').val('');
             $('#nameOrder').val('asc');
             performSearch(); // Trigger the AJAX search
         });
-
+        if ($('.flash-message').length) {
+            $('.flash-message').delay(3000).fadeOut(500, function() {
+                $(this).remove();
+            });
+        }
         // Perform the AJAX search
         function performSearch() {
             let name = $('#search').val();

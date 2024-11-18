@@ -30,12 +30,12 @@
                     ['name' => 'Analytics',
                     'icon' => '/storage/img/icons/analytics.png',
                     'route' => 'analytics.index',],
-                    ['name' => 'Products',
-                    'icon' => '/storage/img/icons/item.png',
-                    'route' => 'products.index',],
                     ['name' => 'Categories',
                     'icon' => '/storage/img/icons/categories.png',
                     'route' => 'categories.index',],
+                    ['name' => 'Products',
+                    'icon' => '/storage/img/icons/item.png',
+                    'route' => 'products.index',],
                     ['name' => 'Users',
                     'icon' => '/storage/img/icons/users.png',
                     'route' => 'users.index',],
@@ -50,7 +50,7 @@
                         class="{{ request()->routeIs($item['route']) ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }} 
                flex items-center px-6 py-3 rounded-md transition-colors">
                         <img src="{{ $item['icon'] }}" alt="{{ $item['name'] }} Icon" class="h-6 w-6 mr-4">
-                        <span class="text-lg">{{ $item['name'] }}</span>
+                        <span class="text-lg font-bold text-white">{{ $item['name'] }}</span>
                     </a>
                     @endforeach
                 </nav>

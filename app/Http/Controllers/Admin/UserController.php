@@ -103,7 +103,7 @@ class UserController extends Controller
             'Last_Name' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
             'Phone_Number' => 'required|string|max:15',
-            // 'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         // Create the user as admin
@@ -112,7 +112,7 @@ class UserController extends Controller
             'Last_Name' => $request->Last_Name,
             'email' => $request->email,
             'Phone_Number' => $request->Phone_Number,
-            // 'password' => bcrypt($request->password),
+            'password' => bcrypt($request->password),
             'isAdmin' => 1, // Always admin
         ]);
 
@@ -174,8 +174,7 @@ class UserController extends Controller
             'First_Name' => 'required|string|max:50',
             'Last_Name' => 'required|string|max:50',
             'Phone_Number' => 'required|string|max:20',
-            'email' => 'required|email|unique:users,email,' . $UserID,
-            // 'password' => 'nullable|string|min:8|confirmed',
+            'email' => 'required|email|unique:users,email,' . $UserID . ',UserID',
         ]);
 
         $user = User::findOrFail($UserID);
@@ -184,7 +183,6 @@ class UserController extends Controller
             'Last_Name' => $request->Last_Name,
             'Phone_Number' => $request->Phone_Number,
             'email' => $request->email,
-            // 'password' => $request->password ? bcrypt($request->password) : $user->password,
         ]);
 
         return redirect()->route('users.index')->with('success', "{$user->First_Name} {$user->Last_Name} updated successfully");
@@ -198,6 +196,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($UserID);
         $user->delete();
-        return redirect()->route('users.index')->with('success', "{$user->First_Name} {$user->Last_Name} deleted successfully");
+        return redirect()->route('users.index')->with('error', "{$user->First_Name} {$user->Last_Name} deleted successfully");
     }
 }

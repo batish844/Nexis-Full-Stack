@@ -72,7 +72,7 @@
 
             <div class="flex justify-end">
                 <button type="submit"
-                    class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400">
+                    class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400">
                     Create Admin
                 </button>
             </div>

@@ -6,7 +6,7 @@
         <h1 class="text-3xl font-bold text-gray-800">
             User: <span class="text-blue-600">{{ $user->Full_Name }}</span>
         </h1>
-        <a href="{{ route('users.index') }}" 
+        <a href="{{ route('users.index') }}"
             class="text-gray-700 bg-gray-100 px-5 py-2 rounded-lg shadow hover:bg-gray-200 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
             ← Back to Users
         </a>
@@ -46,9 +46,9 @@
                 <h2 class="text-sm font-semibold text-blue-700 uppercase mb-2">Role</h2>
                 <p class="text-gray-700">
                     @if ($user->isAdmin == 1)
-                        Admin
+                    Admin
                     @else
-                        Customer
+                    Customer
                     @endif
                 </p>
             </div>
@@ -56,19 +56,75 @@
     </div>
 
     <div class="mt-6 flex space-x-4">
-        <a href="{{ route('users.edit', $user->UserID) }}" 
+        <a href="{{ route('users.edit', $user->UserID) }}"
             class="px-6 py-3 bg-yellow-600 text-white font-semibold rounded-lg shadow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
             Edit User
         </a>
         <form action="{{ route('users.destroy', $user->UserID) }}" method="POST" class="inline">
             @csrf
             @method('DELETE')
-            <button type="submit" 
-                class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"
-                onclick="return confirm('Are you sure you want to delete this user?');">
+            <button type="button"
+                class="delete-button px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400" data-user-id="{{ $user->UserID }}" data-action-url="{{ route('users.destroy', $user->UserID) }}">
                 Delete User
             </button>
         </form>
     </div>
 </div>
+<div id="delete-confirmation-modal"
+    class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="modal-content" class="bg-white rounded shadow-lg p-6 w-96 mx-auto">
+        <form id="delete-form" method="POST" action="{{ old('action_url', '') }}">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="action_url" id="action_url" value="{{ old('action_url', '') }}">
+
+            <h2 class="text-lg font-medium text-gray-900 text-center">
+                Are you sure you want to delete {{$user->Full_Name}}?
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600 text-center">
+                Once this user is deleted, all of their data will be permanently deleted.
+            </p>
+
+            <div class="mt-6 flex justify-center">
+                <button type="button" id="cancel-button" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                    Cancel
+                </button>
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">
+                    Delete Category
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.delete-button', function() {
+            let actionUrl = $(this).data('action-url');
+            //this basically sets the form action attribute to the URL of the delete button that was clicked along with its id (check rows.blade.php the delete button)
+            $('#delete-form').attr('action', actionUrl);
+            $('#action_url').val(actionUrl);
+            $('#delete-confirmation-modal').removeClass('hidden');
+        });
+
+        $('#cancel-button').on('click', function() {
+            $('#delete-confirmation-modal').addClass('hidden');
+        });
+
+        $('#delete-confirmation-modal').on('click', function(e) {
+            if ($(e.target).is('#delete-confirmation-modal')) {
+                $('#delete-confirmation-modal').addClass('hidden');
+            }
+        });
+
+        $('#modal-content').on('click', function(e) {
+            e.stopPropagation();
+        });
+
+        $('#delete-form').on('submit', function() {
+            $('button[type="submit"]', this).prop('disabled', true);
+        });
+    });
+</script>
 @endsection
