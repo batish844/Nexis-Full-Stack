@@ -65,6 +65,7 @@ Route::get('/checkout', function () {
 });
 
 Route::post('/profile/account', [ProfileController::class, 'uploadAvatar'])->name('profile.avatar.upload');
+Route::delete('/profile/account', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.delete');
 
 require __DIR__ . '/auth.php';
 
