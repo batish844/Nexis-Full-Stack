@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -60,6 +62,33 @@ class ProfileController extends Controller
         $user->save();
 
         return Redirect::route('profile.index')->with('status', 'profile-updated');
+    }
+    //upload avatar function
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $fileName = null;
+
+        if ($request->file('avatar')->isValid()) {
+            $fileName = time() . '.' . $request->file('avatar')->extension();
+            $request->file('avatar')->storeAs('img/avatar', $fileName, 'public');
+
+            $user = Auth::user();
+
+            // Remove old avatar if it exists
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            // Save new avatar path in DB
+            $user->avatar = $fileName; 
+            $user->save();
+        }
+
+        return redirect()->back()->with('status', 'avatar-updated');
     }
 
     /**

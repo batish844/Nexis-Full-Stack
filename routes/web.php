@@ -55,6 +55,6 @@ Route::get('/cart', function () {
 Route::get('/checkout', function () {
     return view('checkout');
 });
-
+Route::post('/profile/account', [ProfileController::class, 'uploadAvatar'])->name('profile.avatar.upload');
 
 require __DIR__ . '/auth.php';
