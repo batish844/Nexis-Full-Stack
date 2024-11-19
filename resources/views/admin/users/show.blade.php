@@ -30,10 +30,12 @@
                 <h2 class="text-sm font-semibold text-blue-700 uppercase mb-2">Phone Number</h2>
                 <p class="text-gray-700">{{ $user->Phone_Number }}</p>
             </div>
+            @if ($user->isAdmin == 0)
             <div>
                 <h2 class="text-sm font-semibold text-blue-700 uppercase mb-2">Address</h2>
                 <p class="text-gray-700">{{ $user->Full_Address }}</p>
             </div>
+            @endif
             <div>
                 <h2 class="text-sm font-semibold text-blue-700 uppercase mb-2">Created At</h2>
                 <p class="text-gray-700">{{ $user->created_at->format('d M Y, h:i A') }}</p>
@@ -52,7 +54,7 @@
                     @endif
                 </p>
             </div>
-
+            @if ($user->isAdmin == 0)
             <!-- Order Count and Total Points -->
             <div class="flex items-center space-x-4">
                 <div class="flex-1">
@@ -71,6 +73,7 @@
                 <h2 class="text-sm font-semibold text-blue-700 uppercase mb-2">Total Points</h2>
                 <p class="text-gray-700">{{ $user->Points ?? 0 }}</p>
             </div>
+            @endif
         </div>
     </div>
 
