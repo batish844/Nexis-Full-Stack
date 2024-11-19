@@ -3,7 +3,7 @@
 @section('title', 'Men Store')
 
 @section('content')
-    <!-- Image Slider -->
+    <!-- Image Slider for Men Store -->
     <div class="image-slider">
         <div class="slide">
             <img src="{{ asset('storage/img/slides/m1.jpg') }}" alt="Slide 1">
@@ -19,15 +19,15 @@
     <!-- Products Section -->
     <div class="container">
         <div class="products" id="dynamic-products">
-            <!-- JavaScript will load products here -->
+            <!-- JavaScript will load products here automatically -->
         </div>
     </div>
 @endsection
 
 @push('styles')
-    @vite('resources/css/men.css') <!-- Men Store-specific CSS -->
+    @vite('resources/css/men.css') <!-- Women Store-specific CSS -->
 @endpush
 
 @push('scripts')
-    @vite('resources/js/men.js') <!-- Men Store-specific JS -->
+    @vite('resources/js/men.js') <!-- Women Store-specific JS -->
 @endpush

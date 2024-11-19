@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -17,7 +14,8 @@ return new class extends Migration
             $table->string('Phone_Number');
             $table->string('First_Name');
             $table->string('Last_Name');
-            $table->string('password');
+            $table->string('password')->nullable();
+            $table->string('google_id')->unique();
             $table->json('address')->nullable(); 
             $table->integer('Points')->default(0);
             $table->string('Avatar')->nullable();
