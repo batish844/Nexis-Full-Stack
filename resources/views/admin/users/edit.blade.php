@@ -118,7 +118,7 @@
             <!-- Submit Button -->
             <div class="col-span-1 sm:col-span-2 flex justify-end">
                 <button type="submit"
-                        class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all">
+                        class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all">
                     {{ __('Save Changes') }}
                 </button>
             </div>

@@ -15,75 +15,53 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $role = $request->get('role', 'all');
+        $status = $request->get('status', 'all');
+        $search = $request->get('search', '');
+        $nameOrder = $request->get('nameOrder', 'asc'); // Default to ascending order for names
+
+        // Start the query
         $users = User::query();
 
-        
         // Search filter
-        if ($request->has('search') && $request->search != '') {
-            $users = $users->where('First_Name', 'like', '%' . $request->search . '%')
-                ->orWhere('Last_Name', 'like', '%' . $request->search . '%')
-                ->orWhere('email', 'like', '%' . $request->search . '%')
-                ->orWhere('Phone_Number', 'like', '%' . $request->search . '%');
+        if ($search) {
+            $users = $users->where(function ($query) use ($search) {
+                $query->where('First_Name', 'like', '%' . $search . '%')
+                    ->orWhere('Last_Name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('Phone_Number', 'like', '%' . $search . '%');
+            });
         }
 
         // Role filter
-        if ($role != 'all') {
-            if ($role === 'admin') {
-                $users = $users->where('isAdmin', 1); // Only Admins
-            } elseif ($role === 'customer') {
-                $users = $users->where('isAdmin', 0); // Only Customers
-            }
+        if ($role !== 'all') {
+            $isAdmin = ($role === 'admin') ? 1 : 0;
+            $users = $users->where('isAdmin', $isAdmin);
         }
 
-        // Sorting: sort by name (ascending or descending)
-        if ($request->has('nameOrder')) {
-            $users = $users->orderBy('First_Name', $request->nameOrder);
+        // Status filter
+        if ($status !== 'all') {
+            $isActive = ($status === 'activated') ? 1 : 0;
+            $users = $users->where('isActive', $isActive);
         }
 
-        // Fetch users
-        $users = $users->get();
+        // Sorting by name
+        if ($nameOrder) {
+            $users = $users->orderBy('First_Name', $nameOrder);
+        }
 
-        // Check if AJAX request is made
+        // Eager load order counts with the users
+        $users = $users->withCount('orders') // This will add the order count to each user
+            ->paginate(10); // Pagination
+
+        // Check if the request is AJAX
         if ($request->ajax()) {
-            return view('admin.users.rows', compact('users')); // Return the partial view for AJAX
+            // Return the updated rows for the AJAX request
+            return view('admin.users.rows', compact('users'));
         }
 
-        return view('admin.users.index', compact('users', 'role'));
+        // Return the full view with the necessary data
+        return view('admin.users.index', compact('users', 'role', 'status', 'search', 'nameOrder'));
     }
-
-
-
-    /**
-     * Search users by first name or last name with alphabetical ordering.
-     */
-    public function search(Request $request)
-    {
-        $query = User::query();
-
-        // Search filter
-        if ($request->has('search') && $request->search != '') {
-            $query->where('First_Name', 'like', '%' . $request->search . '%')
-                ->orWhere('Last_Name', 'like', '%' . $request->search . '%')
-                ->orWhere('email', 'like', '%' . $request->search . '%');
-        }
-
-        // Role filter
-        if ($request->role && $request->role != 'all') {
-            $query->where('role', $request->role);
-        }
-
-        // Sort order
-        if ($request->has('nameOrder')) {
-            $query->orderBy('First_Name', $request->nameOrder);
-        }
-
-        // Fetch users and return rows
-        $users = $query->get();
-        return view('admin.users.rows', compact('users')); // Return the updated rows
-    }
-
-
-
 
     /**
      * Show the form for creating a new user.
@@ -119,29 +97,27 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Admin created successfully');
     }
 
-
-
-
     /**
      * Display the specified user.
      */
     public function show(string $UserID)
-    {
-        // Fetch the user from the database
-        $user = User::findOrFail($UserID);
-    
-        // Decode the address JSON
-        $address = json_decode($user->address);
-    
-        // Concatenate the address fields
-        $user->Full_Address = $this->concatAddress($address);
-    
-        // Concatenate the full name
-        $user->Full_Name = "{$user->First_Name} {$user->Last_Name}";
-    
-        return view('admin.users.show', compact('user'));
-    }
-    
+{
+    // Fetch the user from the database with orders count
+    $user = User::withCount('orders')->findOrFail($UserID);
+
+    // Decode the address JSON
+    $address = json_decode($user->address);
+
+    // Concatenate the address fields
+    $user->Full_Address = $this->concatAddress($address);
+
+    // Concatenate the full name
+    $user->Full_Name = "{$user->First_Name} {$user->Last_Name}";
+
+    return view('admin.users.show', compact('user'));
+}
+
+
     private function concatAddress($address)
     {
         // Check if the address object is valid and then concatenate
@@ -150,7 +126,9 @@ class UserController extends Controller
                 ($address->street_address ? $address->street_address . ', ' : '') .
                 ($address->building ? $address->building . ', ' : '') .
                 ($address->city ?? '')
-            , ', ');
+                ,
+                ', '
+            );
         }
         return '';
     }
@@ -163,7 +141,6 @@ class UserController extends Controller
         $user = User::findOrFail($UserID);
         return view('admin.users.edit', compact('user'));
     }
-
 
     /**
      * Update the specified user in storage.
@@ -188,7 +165,6 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', "{$user->First_Name} {$user->Last_Name} updated successfully");
     }
 
-
     /**
      * Remove the specified user from storage.
      */
@@ -197,5 +173,22 @@ class UserController extends Controller
         $user = User::findOrFail($UserID);
         $user->delete();
         return redirect()->route('users.index')->with('error', "{$user->First_Name} {$user->Last_Name} deleted successfully");
+    }
+
+    /**
+     * Toggle the active status of a user.
+     */
+    public function toggleStatus($UserID)
+    {
+        // Fetch the user from the database
+        $user = User::findOrFail($UserID);
+
+        // Toggle the isActive field
+        $user->isActive = !$user->isActive;
+        $user->save();
+
+        // Return with a success message
+        return redirect()->route('users.show', $user->UserID)
+            ->with('status', $user->isActive ? 'User Activated' : 'User Deactivated');
     }
 }
