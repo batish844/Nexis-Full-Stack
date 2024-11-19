@@ -14,8 +14,8 @@ return new class extends Migration
             $table->string('Phone_Number');
             $table->string('First_Name');
             $table->string('Last_Name');
+            $table->string('google_id')->unique()->nullable(); // Ensure unique Google IDs
             $table->string('password')->nullable();
-            $table->string('google_id')->unique();
             $table->json('address')->nullable(); 
             $table->integer('Points')->default(0);
             $table->string('Avatar')->nullable();
@@ -49,5 +49,6 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+       
     }
 };

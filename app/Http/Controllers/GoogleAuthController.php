@@ -16,28 +16,65 @@ class GoogleAuthController extends Controller
 
     public function callbackGoogle()
     {
-        $googleUser = Socialite::driver('google')->user();
+        
+    // try {
+    //     $google_user = Socialite::driver('google')->user();
+    //     dd($google_user); // Debugging step
+    // } catch (\Exception $e) {
+    //     return redirect('/login')->withErrors(['msg' => 'Something went wrong: ' . $e->getMessage()]);
+    // }
 
-// Get first name from `given_name` or fallback to a default
-$firstName = $googleUser->user['given_name'] ?? 'FirstName'; 
-$lastName = $googleUser->user['family_name'] ?? 'LastName'; 
 
-// Create or update the user
-$user = User::firstOrCreate(
-    ['email' => $googleUser->getEmail()],
-    [
-        'name' => $googleUser->getName(),
-        'google_id' => $googleUser->getId(),
-        'avatar' => $googleUser->getAvatar(),
-        'Phone_Number' => 'N/A',
-        'First_Name' => $firstName,
-        'Last_Name' => $lastName,
-    ]
-);
+        try {
+            $google_user = Socialite::driver('google')->user();
 
-        // Log the user in
-        Auth::login($user, true);
+            // Check if the user already exists
+            $user = User::where('google_id', $google_user->getId())->orWhere('email', $google_user->getEmail())->first();
 
-        return redirect()->intended('/home'); 
+            if (!$user) {
+                // Create a new user
+                $user = User::create([
+                    'email' => $google_user->getEmail(),
+                    'google_id' => $google_user->getId(),
+                    'First_Name' => $google_user->user['given_name'] ?? 'N/A',
+                    'Last_Name' => $google_user->user['family_name'] ?? 'N/A',
+                    'Phone_Number' => 'N/A', // Default value
+                    'password' => null, // No password for Google users
+                ]);
+                
+            }
+
+            // Log in the user
+            Auth::login($user);
+
+            return redirect('/home');
+        } catch (\Exception $e) {
+            return (['msg' => 'Something went wrong: ' . $e->getMessage()]);
+        }
     }
+    
 }
+    //  $google_user = Socialite::driver('google')->user();
+    //  $user = User:: where('google_id', $google_user->getId())->first();
+    //     if (!$user) {
+    //     $new_user = User::create([
+    //     'name' => $google_user->getName(),
+    //     'email' => $google_user->getEmail(),
+    //     'google_id' => $google_user->getId() ?? null, 
+    //     'Phone_Number' => $google_user->user['phone'] ?? 'N/A', // Fetch phone or default to 'N/A'
+    //     'First_Name' => $google_user->user['given_name'] ?? 'N/A',
+    //     'Last_Name' => $google_user->user['family_name'] ?? 'N/A',
+    //     ]);
+    //     Auth:: login($new_user);
+    //     return redirect()->intended('home');
+    //      }
+    //      else {
+    //         Auth:: login($user);
+    //         return redirect()->intended('home');
+    //      } 
+    //     }
+
+    //     catch(\Throwable $th){
+    //         dd('Something went wrong' . $th->getMessage());
+    //     }
+ 
