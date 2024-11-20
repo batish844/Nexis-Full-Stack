@@ -17,23 +17,26 @@
 
         <!-- Orders Count -->
         <td class="px-6 py-4 text-gray-800 text-center">
+        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
             {{ $user->orders_count ?? 0 }} <!-- Default to 0 if orders_count is null -->
+        </span>
         </td>
 
         <!-- Total Points -->
         <td class="px-6 py-4 text-gray-800 text-center">
+        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
             {{ $user->Points ?? 0 }} <!-- Default to 0 if Points is null -->
+        </span>
         </td>
 
         <!-- Manage -->
         <td class="px-6 py-4">
             <div class="flex space-x-2">
                 <!-- View -->
-                <a href="{{ route('users.show', $user->UserID) }}" 
-                    class="text-blue-600 hover:text-blue-800" 
-                    aria-label="View details for {{ $user->First_Name }}">
-                    View
-                </a>
+                <a href="{{ route('users.show', $user->UserID) }}" class="text-blue-600 hover:text-blue-800">
+                <img src="/storage/img/icons/list.png" alt="Show" class="w-5 h-5 inline-block">
+            Manage
+            </a>
             </div>
         </td>
     </tr>

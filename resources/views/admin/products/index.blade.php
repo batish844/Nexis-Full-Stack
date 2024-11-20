@@ -1,6 +1,5 @@
 @extends('admin.layouts.sidebar')
 @section('content')
-
 <div class="container p-6">
     @if(session('success'))
     <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
@@ -70,7 +69,7 @@
             $('#search, #categoryfilter, #availabilityfilter, #genderfilter').on('keyup change input', function() {
                 performSearch();
             });
-
+            
             performSearch();
 
             if ($('.flash-message').length) {
@@ -79,7 +78,6 @@
                 });
             }
             $('#download-csv').on('click', function() {
-                // Redirect to the export route
                 window.location.href = '{{ route("products.export") }}';
             });
 
