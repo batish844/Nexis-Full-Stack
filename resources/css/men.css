@@ -12,6 +12,95 @@
   }
 }
 
+/* Carousel Container */
+.carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Carousel Images */
+.carousel-img {
+  display: none; /* Hide all images by default */
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.carousel-img.active {
+  display: block; /* Only the active image is visible */
+}
+
+/* Navigation Buttons for Carousel */
+.carousel-btn {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: none; /* No background */
+  border: none; /* No border */
+  color: black; /* Arrow color (when visible) */
+  font-size: 2rem; /* Adjust arrow size */
+  cursor: pointer;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Position the Left Button */
+.carousel-btn.left {
+  left: 10px;
+}
+
+/* Position the Right Button */
+.carousel-btn.right {
+  right: 10px;
+}
+
+/* Chevron Icon Style */
+.carousel-btn::before {
+  content: '';
+  border: solid black; /* Black chevron arrows */
+  border-width: 0 4px 4px 0;
+  display: inline-block;
+  padding: 6px;
+  transform: rotate(45deg); /* Right-facing chevron */
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Left Chevron */
+.carousel-btn.left::before {
+  transform: rotate(135deg); /* Left-facing chevron */
+}
+
+/* Right Chevron */
+.carousel-btn.right::before {
+  transform: rotate(-45deg); /* Right-facing chevron */
+}
+
+/* Show Arrows on Hover */
+.item-image:hover .carousel-btn::before {
+  opacity: 1; /* Make chevrons visible */
+}
+
+/* Hover Effect for Arrows */
+.carousel-btn.left:hover::before {
+  transform: rotate(135deg) scale(1.2); /* Left chevron scales slightly */
+}
+
+.carousel-btn.right:hover::before {
+  transform: rotate(-45deg) scale(1.2); /* Right chevron scales slightly */
+}
+
+/* Smooth Transitions for Images */
+.carousel-img {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Show the navigation buttons when hovering over the carousel */
+.item-image:hover .carousel-btn {
+  display: block; /* Make buttons visible when hovering */
+}
+
 /* Styling for individual slides */
 .slide {
   display: block;
