@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
+use App\Models\Category;  // Import the Category model
+use Illuminate\Support\Facades\Storage;
 
 class MenController extends Controller
 {
@@ -11,8 +14,39 @@ class MenController extends Controller
      */
     public function index()
     {
-        return view ('men.index');
+        if (request()->expectsJson()) {
+            $menItems = Item::where('Gender', 'Men')
+                ->where('isAvailable', true)
+                ->get();
 
+            $formattedItems = $menItems->map(function ($item) {
+                $category = Category::find($item->CategoryID);
+                $categoryName = $category ? $category->Name : 'Unknown';
+
+                return [
+                    'ItemID' => $item->ItemID,
+                    'Name' => $item->Name,
+                    'Price' => $item->Price,
+                    'Points' => $item->Points,
+                    'Category' => $categoryName,
+                    'Photos' => $this->getPhotos($item, $categoryName),
+                ];
+            });
+
+            return response()->json($formattedItems);
+        }
+
+        return view('men.index');
+    }
+
+    public function getPhotos($item, $categoryName)
+    {
+        $photos = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $photoPath = "storage/img/men/{$categoryName}/{$item->Name}/p{$i}.png";
+            $photos[] = $photoPath;
+        }
+        return $photos;
     }
 
     /**
