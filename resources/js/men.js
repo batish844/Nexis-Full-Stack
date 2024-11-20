@@ -6,12 +6,6 @@ $(document).ready(function () {
     let $slides = $(".slide");
     showSlides();
 
-    $.getJSON('/men')
-        .done(renderItems)
-        .fail(() => {
-            console.error('Failed to load items.');
-            $('#dynamic-products').html('<p>Failed to load items. Please try again later.</p>');
-        });
 
     function showCategories(categories) {
         const $categoryContainer = $('#category-checkboxes');

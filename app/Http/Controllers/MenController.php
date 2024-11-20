@@ -14,39 +14,15 @@ class MenController extends Controller
      */
     public function index()
     {
-        if (request()->expectsJson()) {
-            $menItems = Item::where('Gender', 'Men')
-                ->where('isAvailable', true)
-                ->get();
+        $items = Item::whereHas('category', function ($query) {
+            $query->where('gender', 'M');
+        })->get();
 
-            $formattedItems = $menItems->map(function ($item) {
-                $category = Category::find($item->CategoryID);
-                $categoryName = $category ? $category->Name : 'Unknown';
-
-                return [
-                    'ItemID' => $item->ItemID,
-                    'Name' => $item->Name,
-                    'Price' => $item->Price,
-                    'Points' => $item->Points,
-                    'Category' => $categoryName,
-                    'Photos' => $this->getPhotos($item, $categoryName),
-                ];
-            });
-
-            return response()->json($formattedItems);
+        foreach ($items as $item) {
+            $item->Photo = json_decode($item->Photo, true);
         }
-
-        return view('men.index');
-    }
-
-    public function getPhotos($item, $categoryName)
-    {
-        $photos = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $photoPath = "storage/img/men/{$categoryName}/{$item->Name}/p{$i}.png";
-            $photos[] = $photoPath;
-        }
-        return $photos;
+        $categories = Category::where('Gender', 'M')->get();
+        return view ('men.index', compact('items', 'categories'));
     }
 
     /**
