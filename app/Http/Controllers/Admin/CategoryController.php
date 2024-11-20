@@ -24,13 +24,10 @@ class CategoryController extends Controller
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
-        $categoryfilter = $request->input('categoryfilter');
-
-
-        if ($categoryfilter === 'asc') {
-            $query->orderBy('items_count', 'asc');
-        } elseif ($categoryfilter === 'desc') {
             $query->orderBy('items_count', 'desc');
+        
+        if ($request->filled('genderfilter') && $request->input('genderfilter') !== 'A') {
+            $query->where('gender', $request->input('genderfilter'));
         }
         $categories = $query->withCount('items')->get();
 

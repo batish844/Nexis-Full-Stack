@@ -17,7 +17,6 @@
     </div>
     <div class="container flex">
 
-<<<<<<< HEAD
         <!-- Filter Panel -->
         <div id="filter-panel" class="w-64 p-4 bg-gray-200">
             <h3 class="text-lg font-semibold">Filters</h3>
@@ -51,28 +50,14 @@
             <div id="pagination" class="mt-4 text-center">
                 <!-- Pagination buttons will be dynamically added here -->
             </div>
-=======
-    <!-- Products Section -->
-    <div class="container">
-        <div class="products" id="dynamic-products">
-            <!-- JavaScript will load products here automatically -->
->>>>>>> 7db139d823a1662a1bc55cfd828a28650b3fc9a8
         </div>
     </div>
 @endsection
 
 @push('styles')
-<<<<<<< HEAD
     @vite('resources/css/men.css')
 @endpush
 
 @push('scripts')
     @vite('resources/js/men.js')
-=======
-    @vite('resources/css/men.css') <!-- Women Store-specific CSS -->
-@endpush
-
-@push('scripts')
-    @vite('resources/js/men.js') <!-- Women Store-specific JS -->
->>>>>>> 7db139d823a1662a1bc55cfd828a28650b3fc9a8
 @endpush

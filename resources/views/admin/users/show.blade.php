@@ -85,14 +85,16 @@
 
         <!-- See Orders Button (already placed beside total orders above) -->
         <!-- Deactivate/Activate Button -->
+        @if(Auth::id() !== $user->UserID)
         <form action="{{ route('users.toggleStatus', $user->UserID) }}" method="POST" class="inline">
             @csrf
             @method('PUT')
             <button type="submit"
-                class="px-6 py-3 {{ $user->isActive ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500' }} text-white font-semibold rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition-all">
-                {{ $user->isActive ? 'Deactivate User' : 'Activate User' }}
+            class="px-6 py-3 {{ $user->isActive ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500' }} text-white font-semibold rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition-all">
+            {{ $user->isActive ? 'Deactivate User' : 'Activate User' }}
             </button>
         </form>
+        @endif
     </div>
 
     <!-- Delete Button placed right below the other buttons -->

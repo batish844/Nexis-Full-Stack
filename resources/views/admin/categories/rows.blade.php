@@ -10,6 +10,11 @@
             {{$category->items_count}}
         </span>
     </td>
+    <td class="px-6 py-4 text-center hidden md:table-cell">
+        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+            {{$category->Gender}}
+        </span>
+    </td>
     <td class="px-6 py-4 text-center">
         <div class="flex justify-center space-x-2">
             <a href="{{ route('categories.edit', $category->CategoryID) }}" class="text-blue-600 hover:text-blue-800">
