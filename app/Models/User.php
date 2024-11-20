@@ -25,7 +25,7 @@ class User extends Authenticatable
         'Phone_Number',
         'password',
         'Points',
-        'Avatar',
+        'avatar',
         'isAdmin',
         'Address',
         'google_id',

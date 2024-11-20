@@ -13,7 +13,7 @@
                                 @csrf
 
                                 Display Avatar
-                                @if ($user->Avatar === null)
+                                @if ($user->avatar === null)
                                     Display default icon
                                     <div
                                         class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
@@ -23,7 +23,7 @@
                                     Display uploaded avatar
                                     <div
                                         class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
-                                        <img src="{{ asset('/storage/img/avatar/' . $user->Avatar) }}" alt="User Avatar">
+                                        <img src="{{ asset('/storage/img/avatar/' . $user->avatar) }}" alt="User Avatar">
                                     </div>
                                 @endif
 
@@ -46,7 +46,7 @@
                         {{-- Avatar Display --}}
                         <div class="relative">
                             {{-- Display Avatar --}}
-                            @if ($user->Avatar === null)
+                            @if ($user->avatar === null)
                                 {{-- Display default icon --}}
                                 <div
                                     class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
@@ -68,7 +68,7 @@
                                 {{-- Display uploaded avatar --}}
                                 <div
                                     class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
-                                    <img src="{{ asset('/storage/img/avatar/' . $user->Avatar) }}" alt="User Avatar">
+                                    <img src="{{ asset('storage/img/avatar/' . $user->avatar) }}" alt="User Avatar">
                                 </div>
 
                                 {{-- Update and Delete Buttons --}}

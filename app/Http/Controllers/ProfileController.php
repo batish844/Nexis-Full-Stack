@@ -70,22 +70,25 @@ class ProfileController extends Controller
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $fileName = null;
-
         if ($request->file('avatar')->isValid()) {
             $fileName = time() . '.' . $request->file('avatar')->extension();
-            $request->file('avatar')->storeAs('img/avatar', $fileName, 'public');
+
+            $filePath = public_path('storage/img/avatar');
+
+            if (!file_exists($filePath)) {
+                mkdir($filePath, 0777, true);
+            }
+
+            $request->file('avatar')->move($filePath, $fileName);
 
             $user = Auth::user();
 
             // Remove old avatar if it exists
-            if ($user->Avatar) {
-                Storage::disk('public')->delete('img/avatar/' . $user->Avatar);
-                $user->Avatar = null;
-                $user->save();
+            if ($user->avatar && file_exists(public_path('storage/img/avatar/' . $user->avatar))) {
+                unlink(public_path('storage/img/avatar/' . $user->avatar));
             }
 
-            // Save new avatar path in DB
+            // Save new avatar in DB
             $user->avatar = $fileName;
             $user->save();
         }
@@ -98,15 +101,21 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        // Remove the avatar if it exists
-        if ($user->Avatar) {
-            Storage::disk('public')->delete('img/avatar/' . $user->Avatar);
-            $user->Avatar = null;
+        if ($user->avatar) { 
+
+            $filePath = public_path('storage/img/avatar/' . $user->avatar);
+
+            if (file_exists($filePath)) {
+                unlink($filePath); 
+            }
+
+            $user->avatar = null; 
             $user->save();
         }
 
         return redirect()->back()->with('status', 'avatar-deleted');
     }
+
     /**
      * Delete the user's account.
      */

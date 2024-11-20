@@ -189,6 +189,6 @@ class UserController extends Controller
 
         // Return with a success message
         return redirect()->route('users.show', $user->UserID)
-            ->with('status', $user->isActive ? 'User Activated' : 'User Deactivated');
+            ->with('status', $user->isActive ? "{$user->First_Name} Activated" : "{$user->First_Name} Deactivated");
     }
 }
