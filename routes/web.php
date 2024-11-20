@@ -71,5 +71,8 @@ Route::get('/checkout', function () {
 Route::post('/profile/account', [ProfileController::class, 'uploadAvatar'])->name('profile.avatar.upload');
 Route::delete('/profile/account', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.delete');
 
+Route::fallback(function () {
+    return response()->view('404', [], 404);
+});
 require __DIR__ . '/auth.php';
 
