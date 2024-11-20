@@ -78,11 +78,10 @@
 }
 
 /* Show Arrows on Hover */
-.item-image:hover .carousel-btn::before {
-  opacity: 1; /* Make chevrons visible */
+.carousel:hover .carousel-btn {
+  display: block; /* Make buttons visible when hovering */
 }
 
-/* Hover Effect for Arrows */
 .carousel-btn.left:hover::before {
   transform: rotate(135deg) scale(1.2); /* Left chevron scales slightly */
 }
@@ -96,10 +95,54 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-/* Show the navigation buttons when hovering over the carousel */
-.item-image:hover .carousel-btn {
+/* Make buttons visible when hovering over the carousel */
+.carousel:hover .carousel-btn {
   display: block; /* Make buttons visible when hovering */
 }
+
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
+.container-slider {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  margin-top: 10px;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px;
+  background: transparent;
+  pointer-events: none;
+  position: absolute;
+  margin: 0;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  background: #3264fe;
+  border-radius: 50%;
+  pointer-events: auto;
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background: #3264fe;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.slider-track {
+  background: #dadae5;
+  height: 5px;
+  border-radius: 5px;
+}
+
 
 /* Styling for individual slides */
 .slide {
