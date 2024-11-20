@@ -27,7 +27,8 @@ class User extends Authenticatable
         'Points',
         'Avatar',
         'isAdmin',
-        'Address'
+        'Address',
+        'google_id',
     ];
     protected $casts = [
         'Address' => 'array',

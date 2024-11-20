@@ -2,33 +2,35 @@
 @section('content')
     <div class="py-12 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
-            {{-- Avatar Section --}}
+            {{-- Avatar Section
             <div class="px-12 sm:px-32 py-6 sm:py-10 mx-8 sm:mx-0 bg-white shadow-md rounded-lg">
                 <div class="w-88 mx-auto">
                     <section>
-                        {{-- Avatar Display --}}
+                        Avatar Display
                         <div class="relative ">
                             <form id="avatar-upload-form" class="flex justify-center flex-col" method="POST"
                                 action="{{ route('profile.avatar.upload') }}" enctype="multipart/form-data">
                                 @csrf
 
-                                {{-- Display Avatar --}}
-                                @if ($user->avatar === "NULL")
-                                    {{-- Display default icon --}}
+                                Display Avatar
+                                @if ($user->Avatar === null)
+                                    Display default icon
                                     <div
-                                        class="w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
-                                        <i class="fas fa-user text-4xl text-white"></i>
+                                        class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
+                                        <img src="/storage/img/icons/Default-Avatar.png" alt="USER AVATAR">
                                     </div>
                                 @else
-                                    {{-- Display uploaded avatar --}}
-                                    <img src="{{ asset('/storage/img/avatar/' . $user->avatar) }}" alt="User Avatar"
-                                        class="w-56 h-56 rounded-full mx-auto object-cover border-4 border-blue-600 shadow-md">
+                                    Display uploaded avatar
+                                    <div
+                                        class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
+                                        <img src="{{ asset('/storage/img/avatar/' . $user->Avatar) }}" alt="User Avatar">
+                                    </div>
                                 @endif
 
-                                {{-- Upload Button --}}
+                                Upload Button
                                 <label for="avatar-upload"
-                                    class="inline-flex items-center px-4 py-2 mt-12 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
-                                    Upload
+                                    class="w-fit inline-flex items-center px-4 py-2 mt-12 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
+                                    Upload Avatar
                                 </label>
                                 <input type="file" id="avatar-upload" name="avatar" accept="image/*" class="hidden"
                                     onchange="document.getElementById('avatar-upload-form').submit();">
@@ -36,8 +38,70 @@
                         </div>
                     </section>
                 </div>
-            </div>
+            </div> --}}
+            {{-- Avatar Section --}}
+            <div class="px-12 sm:px-32 py-6 sm:py-10 mx-8 sm:mx-0 bg-white shadow-md rounded-lg">
+                <div class="w-88 mx-auto">
+                    <section>
+                        {{-- Avatar Display --}}
+                        <div class="relative">
+                            {{-- Display Avatar --}}
+                            @if ($user->Avatar === null)
+                                {{-- Display default icon --}}
+                                <div
+                                    class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
+                                    <img src="/storage/img/icons/Default-Avatar.png" alt="USER AVATAR">
+                                </div>
 
+                                {{-- Upload Button --}}
+                                <form id="avatar-upload-form" class="flex justify-center flex-col  mt-12" method="POST"
+                                    action="{{ route('profile.avatar.upload') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <label for="avatar-upload"
+                                        class="w-fit inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
+                                        Upload avatar
+                                    </label>
+                                    <input type="file" id="avatar-upload" name="avatar" accept="image/*" class="hidden"
+                                        onchange="document.getElementById('avatar-upload-form').submit();">
+                                </form>
+                            @else
+                                {{-- Display uploaded avatar --}}
+                                <div
+                                    class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
+                                    <img src="{{ asset('/storage/img/avatar/' . $user->Avatar) }}" alt="User Avatar">
+                                </div>
+
+                                {{-- Update and Delete Buttons --}}
+                                <div class="flex mt-12 justify-center  mt-12 gap-4">
+                                    {{-- Update Avatar Form --}}
+                                    <form id="avatar-update-form" method="POST"
+                                        action="{{ route('profile.avatar.upload') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <label for="avatar-update"
+                                            class="w-fit inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
+                                            Update
+                                        </label>
+                                        <input type="file" id="avatar-update" name="avatar" accept="image/*"
+                                            class="hidden"
+                                            onchange="document.getElementById('avatar-update-form').submit();">
+                                    </form>
+
+                                    {{-- Delete Avatar Form --}}
+                                    <form id="avatar-delete-form" method="POST"
+                                        action="{{ route('profile.avatar.delete') }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
+                    </section>
+                </div>
+            </div>
             {{-- Profile Information Section --}}
             <div class="px-12 sm:px-32 py-6 sm:py-10 mx-12 sm:mx-0 bg-white shadow-md rounded-lg">
                 <div class="w-88 mx-auto">
@@ -114,8 +178,8 @@
 
                                 <div>
                                     <x-input-label class="text-blue-800" for="building" :value="__('Building')" />
-                                    <x-text-input id="building" class="block mt-1 w-full" type="text" name="building"
-                                        :value="old('building', $user->building)" />
+                                    <x-text-input id="building" class="block mt-1 w-full" type="text"
+                                        name="building" :value="old('building', $user->building)" />
                                     <x-input-error :messages="$errors->get('building')" class="mt-2" />
                                 </div>
                             </div>

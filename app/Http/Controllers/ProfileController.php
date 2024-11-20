@@ -79,18 +79,34 @@ class ProfileController extends Controller
             $user = Auth::user();
 
             // Remove old avatar if it exists
-            if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
+            if ($user->Avatar) {
+                Storage::disk('public')->delete('img/avatar/' . $user->Avatar);
+                $user->Avatar = null;
+                $user->save();
             }
 
             // Save new avatar path in DB
-            $user->avatar = $fileName; 
+            $user->avatar = $fileName;
             $user->save();
         }
 
         return redirect()->back()->with('status', 'avatar-updated');
     }
 
+    //Delete avatar
+    public function deleteAvatar()
+    {
+        $user = Auth::user();
+
+        // Remove the avatar if it exists
+        if ($user->Avatar) {
+            Storage::disk('public')->delete('img/avatar/' . $user->Avatar);
+            $user->Avatar = null;
+            $user->save();
+        }
+
+        return redirect()->back()->with('status', 'avatar-deleted');
+    }
     /**
      * Delete the user's account.
      */

@@ -154,31 +154,31 @@
         }
 
         function showProfileNotification(message, type = 'success') {
-            const notification = document.getElementById('profile-notification');
-            const messageSpan = document.getElementById('profile-notification-message');
+            const $notification = $('#profile-notification');
+            const $messageSpan = $('#profile-notification-message');
 
             // Set the notification message
-            messageSpan.textContent = message;
+            $messageSpan.text(message);
 
             // Apply styles based on the type
-            notification.className =
-                `relative top-1 transform -translate-x-1/2 max-w-fit whitespace-nowrap px-4 py-2 rounded shadow-md z-50 transition-transform transition-opacity duration-500 ease-in-out ${
-                type === 'success'
-                    ? 'bg-green-100 border-green-400 text-green-700'
-                    : 'bg-red-100 border-red-400 text-red-700'
-            }`;
+            const notificationClass = type === 'success' ?
+                'bg-green-100 border-green-400 text-green-700' :
+                'bg-red-100 border-red-400 text-red-700';
 
-            // Show the notification with a slide-up animation
-            notification.style.transform = 'translateY(0)';
-            notification.classList.remove('hidden');
+            $notification
+                .attr('class',
+                    `relative top-1 transform -translate-x-1/2 max-w-fit whitespace-nowrap px-4 py-2 rounded shadow-md z-50 transition-transform transition-opacity duration-500 ease-in-out ${notificationClass}`
+                    )
+                .css('transform', 'translateY(0)')
+                .removeClass('hidden');
 
             // Hide the notification after 5 seconds
             setTimeout(() => {
-                notification.style.transform = 'translateY(-150%)';
-                notification.classList.add('hidden');
+                $notification
+                    .css('transform', 'translateY(-150%)')
+                    .addClass('hidden');
             }, 5000);
         }
-        
     </script>
 </body>
 

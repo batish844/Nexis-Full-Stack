@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
+use App\Http\Controllers\GoogleAuthController;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -26,6 +27,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     // Add route for toggling user status (active/inactive)
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
 });
+
+Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
+Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
 
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('categories.search');
 Route::get('users/search', [UserController::class, 'search'])->name('users.search');
@@ -65,6 +69,7 @@ Route::get('/checkout', function () {
 });
 
 Route::post('/profile/account', [ProfileController::class, 'uploadAvatar'])->name('profile.avatar.upload');
+Route::delete('/profile/account', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.delete');
 
 require __DIR__ . '/auth.php';
 

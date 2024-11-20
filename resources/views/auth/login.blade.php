@@ -62,7 +62,11 @@
                         <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                     </label>
                 </div>
-
+                <div>
+                <a href="{{ route('google-auth') }}" class="btn btn-danger">
+                    <i class="fab fa-google"></i> Continue with Google
+                </a>
+                </div>
                 <div class="flex items-center justify-end mt-4">
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                        href="{{ route('register') }}">
