@@ -33,6 +33,7 @@ Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogl
 
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('categories.search');
 Route::get('users/search', [UserController::class, 'search'])->name('users.search');
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 
 // User Profile Routes
 Route::middleware('auth', 'role:user')->group(function () {
@@ -42,6 +43,7 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/profile/account', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
 });
+Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 
 // Home Page
 Route::get('/home', function () {
