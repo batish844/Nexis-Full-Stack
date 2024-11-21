@@ -135,56 +135,41 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validate the incoming request data
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,CategoryID',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
-            'sizes' => 'array',
+            'sizes' => 'required|array|min:1',
             'sizes.*' => 'in:S,M,L,XL',
             'existing_photos' => 'array',
-            'existing_photos.*' => 'string', // Ensure photo paths are strings
-            'new_photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Adjust max size as needed
+            'existing_photos.*' => 'string',
+            'new_photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096', 
         ]);
 
-        // Retrieve the product
         $product = Item::findOrFail($id);
 
-        Log::info("Full request data:", $request->all());
 
-        // Handle existing photos
         $existingPhotos = $request->input('existing_photos', []);
-        Log::info("Existing Photos:", ['photos' => $existingPhotos]);
 
-        // Decode current photos from DB (handled by model casting)
         $currentPhotos = $product->Photo ?? [];
-        Log::info("Current Photos in DB:", ['current_photos' => $currentPhotos]);
 
-        // Photos to remove
         $currentPhotos = json_decode($product->Photo, true) ?? [];
         $removedPhotos = array_diff($currentPhotos, $existingPhotos);
         foreach ($removedPhotos as $photo) {
             $photoPath = public_path($photo);
-            if (file_exists($photoPath)) {
+            if (file_exists($photoPath)) 
                 unlink($photoPath);
-                Log::info("Deleted Photo: $photoPath");
-            } else {
-                Log::warning("Photo not found for deletion: $photoPath");
-            }
+               
         }
 
-        // Prepare new photos array
         $newPhotos = [];
 
-        // Handle new photos
         if ($request->hasFile('new_photos')) {
             $files = $request->file('new_photos');
-            Log::info('Files in request:', ['files' => $files]);
 
             foreach ($files as $file) {
                 if ($file->isValid()) {
-                    // Generate folder and filename
                     $category = Category::findOrFail($request->input('category_id'));
                     $gender = strtolower($category->Gender == 'M' ? 'men' : 'women');
                     $categoryName = strtolower(str_replace(' ', '_', $category->Name));
@@ -195,7 +180,6 @@ class ProductController extends Controller
 
                     if (!file_exists($fullFolderPath)) {
                         mkdir($fullFolderPath, 0777, true);
-                        Log::info("Created directory: $fullFolderPath");
                     }
 
                     $fileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
@@ -203,36 +187,22 @@ class ProductController extends Controller
 
                     $newPhotoPath = $folderPath . $fileName;
                     $newPhotos[] = $newPhotoPath;
-                    Log::info("Uploaded file: {$newPhotoPath}");
-                } else {
-                    Log::error("File upload error for file: " . $file->getClientOriginalName());
                 }
             }
-        } else {
-            Log::info("No new photos uploaded");
         }
 
-        // Update the photos in the DB
         $finalPhotos = array_merge($existingPhotos, $newPhotos);
-        Log::info("Final Photos Array:", ['final_photos' => $finalPhotos]);
         $product->Photo = $finalPhotos;
 
-        // Handle sizes
         $sizes = $request->input('sizes', []);
-        Log::info("Sizes in request:", ['sizes' => $sizes]);
         $product->Size = $sizes;
-        Log::info("Updated Sizes:", ['sizes' => $sizes]);
 
-        // Update other fields
         $product->Name = $request->input('name');
         $product->CategoryID = $request->input('category_id');
         $product->Price = $request->input('price');
         $product->Quantity = $request->input('quantity');
 
-        // Save the product
         $product->save();
-
-        Log::info("Product updated successfully.", ['Product ID' => $product->ItemID]);
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
