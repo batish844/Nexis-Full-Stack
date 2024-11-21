@@ -129,7 +129,7 @@
                     Cancel
                 </button>
                 <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">
-                    Delete Category
+                    Delete User
                 </button>
             </div>
         </form>
