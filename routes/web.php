@@ -48,7 +48,7 @@ Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('p
 // Home Page
 Route::get('/home', function () {
     $slides = [['label' => 'women', 'url' => 'women', 'image' => 'h1.webp'], ['label' => 'men', 'url' => 'men', 'image' => 'h2.webp'], ['label' => 'Offers', 'url' => 'women', 'image' => 'h3.webp']];
-    $items = [['url' => 'img/home', 'image' => 'c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'img/home', 'image' => 'I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'img/home', 'image' => 'c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
+    $items = [['url' => 'men', 'image' => 'img/home/c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'women', 'image' => 'img/home/I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'men', 'image' => 'img/home/c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
     return view('home', compact('items', 'slides'));
 })->name('home');
 

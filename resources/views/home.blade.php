@@ -25,7 +25,7 @@
         @foreach ($items as $item)
         <a href="{{ url($item['url']) }}" class="relative group w-[85vw] sm:w-[40vw] lg:w-[28vw] overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:scale-105">
             <div class="relative overflow-hidden rounded-xl">
-                <img src="{{ asset('storage/'.$item['url'].'/'.$item['image']) }}" class="w-full h-[450px] object-cover transition-transform duration-700 ease-in-out group-hover:scale-110">
+                <img src="{{ asset('storage/'.$item['image']) }}" class="w-full h-[450px] object-cover transition-transform duration-700 ease-in-out group-hover:scale-110">
                 <div class="absolute inset-0 border border-transparent rounded-xl transition-all duration-500"></div>
             </div>
 
