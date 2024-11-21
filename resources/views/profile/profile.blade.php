@@ -2,43 +2,6 @@
 @section('content')
     <div class="py-12 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
-            {{-- Avatar Section
-            <div class="px-12 sm:px-32 py-6 sm:py-10 mx-8 sm:mx-0 bg-white shadow-md rounded-lg">
-                <div class="w-88 mx-auto">
-                    <section>
-                        Avatar Display
-                        <div class="relative ">
-                            <form id="avatar-upload-form" class="flex justify-center flex-col" method="POST"
-                                action="{{ route('profile.avatar.upload') }}" enctype="multipart/form-data">
-                                @csrf
-
-                                Display Avatar
-                                @if ($user->avatar === null)
-                                    Display default icon
-                                    <div
-                                        class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
-                                        <img src="/storage/img/icons/Default-Avatar.png" alt="USER AVATAR">
-                                    </div>
-                                @else
-                                    Display uploaded avatar
-                                    <div
-                                        class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
-                                        <img src="{{ asset('/storage/img/avatar/' . $user->avatar) }}" alt="User Avatar">
-                                    </div>
-                                @endif
-
-                                Upload Button
-                                <label for="avatar-upload"
-                                    class="w-fit inline-flex items-center px-4 py-2 mt-12 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
-                                    Upload Avatar
-                                </label>
-                                <input type="file" id="avatar-upload" name="avatar" accept="image/*" class="hidden"
-                                    onchange="document.getElementById('avatar-upload-form').submit();">
-                            </form>
-                        </div>
-                    </section>
-                </div>
-            </div> --}}
             {{-- Avatar Section --}}
             <div class="px-12 sm:px-32 py-6 sm:py-10 mx-8 sm:mx-0 bg-white shadow-md rounded-lg">
                 <div class="w-88 mx-auto">
@@ -54,12 +17,17 @@
                                 </div>
 
                                 {{-- Upload Button --}}
-                                <form id="avatar-upload-form" class="flex justify-center flex-col  mt-12" method="POST"
+                                <form id="avatar-upload-form" class="flex justify-center flex-row  mt-12" method="POST"
                                     action="{{ route('profile.avatar.upload') }}" enctype="multipart/form-data">
                                     @csrf
                                     <label for="avatar-upload"
-                                        class="w-fit inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
-                                        Upload avatar
+                                        class="w-fit inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M5 12h14M12 5l7 7-7 7" />
+                                        </svg>
+                                        Upload Avatar
                                     </label>
                                     <input type="file" id="avatar-upload" name="avatar" accept="image/*" class="hidden"
                                         onchange="document.getElementById('avatar-upload-form').submit();">
@@ -72,14 +40,19 @@
                                 </div>
 
                                 {{-- Update and Delete Buttons --}}
-                                <div class="flex mt-12 justify-center  mt-12 gap-4">
+                                <div class="flex mt-12 justify-center  mt-10 gap-4">
                                     {{-- Update Avatar Form --}}
                                     <form id="avatar-update-form" method="POST"
                                         action="{{ route('profile.avatar.upload') }}" enctype="multipart/form-data">
                                         @csrf
                                         <label for="avatar-update"
-                                            class="w-fit inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
-                                            Update
+                                            class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 rotate-180"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M5 12h14M12 5l7 7-7 7" />
+                                            </svg>
+                                            Update Avatar
                                         </label>
                                         <input type="file" id="avatar-update" name="avatar" accept="image/*"
                                             class="hidden"
@@ -92,9 +65,15 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150 w-24 mx-auto flex items-center justify-center">
-                                            Delete
+                                            class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white text-sm font-medium rounded-full shadow-md hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 transition duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                            Delete Avatar
                                         </button>
+
                                     </form>
                                 </div>
                             @endif
@@ -186,10 +165,17 @@
 
                             {{-- Save Button --}}
                             <div class="flex justify-end">
-                                <x-primary-button
-                                    class="w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
-                                    {{ __('Save') }}
-                                </x-primary-button>
+                                <button
+                                    class="w-fit mx-auto flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                        <polyline points="7 3 7 8 15 8"></polyline>
+                                    </svg>
+                                    Save
+                                </button>
                                 @if (session('status') === 'profile-updated')
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
@@ -249,10 +235,17 @@
 
                             {{-- Save Button --}}
                             <div class="flex justify-end">
-                                <x-primary-button
-                                    class="w-24 mx-auto flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500 text-black">
-                                    {{ __('Save') }}
-                                </x-primary-button>
+                                <button
+                                    class="w-fit mx-auto flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                        <polyline points="7 3 7 8 15 8"></polyline>
+                                    </svg>
+                                    Save
+                                </button>
                                 @if (session('status') === 'password-updated')
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
@@ -282,6 +275,38 @@
                             class="bg-gradient-to-r from-red-600 to-red-800 text-white">
                             {{ __('Delete Account') }}
                         </x-danger-button>
+                        <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                            <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                                @csrf
+                                @method('delete')
+                                <h2 class="text-lg font-medium text-gray-900">
+                                    {{ __('Are you sure you want to delete your account?') }}
+                                </h2>
+
+                                <p class="mt-1 text-sm text-gray-600">
+                                    {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+                                </p>
+
+                                <div class="mt-6">
+                                    <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+
+                                    <x-text-input id="password" name="password" type="password"
+                                        class="mt-1 block w-3/4" placeholder="{{ __('Password') }}" />
+
+                                    <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                                </div>
+
+                                <div class="mt-6 flex justify-end">
+                                    <x-secondary-button x-on:click="$dispatch('close')">
+                                        {{ __('Cancel') }}
+                                    </x-secondary-button>
+
+                                    <x-danger-button class="ms-3">
+                                        {{ __('Delete Account') }}
+                                    </x-danger-button>
+                                </div>
+                            </form>
+                        </x-modal>
                     </section>
                     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
                 </div>

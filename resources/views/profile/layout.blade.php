@@ -10,7 +10,7 @@
 
 <body class="bg-gray-100">
 
-    <div class="min-h-screen">
+    {{-- <div class="min-h-screen">
         <nav class="bg-white border-b border-gray-200">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
@@ -87,6 +87,57 @@
         </nav>
         <main>
             @yield('content')
+        </main>
+    </div> --}}
+    <div class="min-h-screen flex flex-col">
+        <header class="bg-blue-700 h-32 flex items-center justify-between px-8 shadow-md">
+            <!-- Logo and Welcome Message -->
+            <div class="flex items-center space-x-4">
+                <a href="{{ route('home') }}">
+                    <img src="/storage/img/CommonImg/blacklogo.png" alt="Logo" class="h-24">
+                </a>
+                <span class="xl:font-bold text-white text-2xl">Welcome, {{ Auth::user()->First_Name }}!</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex space-x-8 text-center">
+                <a href="{{ route('profile.index') }}"
+                    class="p-2 flex items-center space-x-4 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200 {{ request()->routeIs('profile.index') ? 'border-b-2 border-white' : '' }}">
+                    <img src="/storage/img/icons/profile-user-icon.png" alt="Profile" class="h-10 w-10">
+                    <span class="xl:font-semibold text-2xl text-white">Profile Info</span>
+                </a>
+                <a href="{{ route('profile.orders') }}"
+                    class="p-2 flex items-center space-x-4 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200 {{ request()->routeIs('profile.orders') ? 'border-b-2 border-white' : '' }}">
+                    <img src="/storage/img/icons/order-icon.png" alt="Orders" class="h-10 w-10">
+                    <span class="xl:font-semibold text-2xl text-white">Orders</span>
+                </a>
+                <a href="#"
+                    class="p-2 flex items-center space-x-4 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200">
+                    <img src="/storage/img/icons/wishlist-icon.png" alt="Wishlist" class="h-10 w-10">
+                    <span class="xl:font-semibold text-2xl text-white">Wishlist</span>
+                </a>
+            </nav>
+
+            <!-- Log Out and Return Home Button -->
+            <div class="flex flex-row space-x-8 content-center mr-5">
+                <button
+                    class="flex items-center space-x-4 text-white bg-blue-400 hover:bg-blue-300 px-4 py-1 rounded-md font-semibold text-xl">
+                    <a href="{{ route('home') }}"> Return Home </a>
+                </button>
+                <a class="flex items-center space-x-4 text-white bg-red-600 hover:bg-red-400 px-4 py-1 rounded-md">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="flex items-center space-x-4 text-white">
+                            <span class="font-semibold text-xl">Log Out</span>
+                        </button>
+                    </form>
+                </a>
+        </header>
+        <!-- Main Content -->
+        <main class="flex-1 bg-gray-100">
+            <div class="px-12">
+                @yield('content')
+            </div>
         </main>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -168,7 +219,7 @@
             $notification
                 .attr('class',
                     `relative top-1 transform -translate-x-1/2 max-w-fit whitespace-nowrap px-4 py-2 rounded shadow-md z-50 transition-transform transition-opacity duration-500 ease-in-out ${notificationClass}`
-                    )
+                )
                 .css('transform', 'translateY(0)')
                 .removeClass('hidden');
 
