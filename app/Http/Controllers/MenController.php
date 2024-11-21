@@ -34,41 +34,35 @@ class MenController extends Controller
      * Filter products based on price range, category, and search query.
      */
     public function filterProducts(Request $request)
-    {
-        $minPrice = $request->minPrice;
-        $maxPrice = $request->maxPrice;
-        $categoryId = $request->category;
-        $search = $request->search;
+{
+    // Get filter inputs
+    $minPrice = $request->input('minPrice', 0);
+    $maxPrice = $request->input('maxPrice', 150);
+    $categoryId = $request->input('category');
+    $searchQuery = $request->input('search');
 
-        // Start the query
-        $query = Item::query();
+    // Query items based on filters
+    $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice]);
 
-        // Apply price range filter
-        if ($minPrice !== null && $maxPrice !== null) {
-            $query->whereBetween('Price', [$minPrice, $maxPrice]);
-        }
-
-        // Apply category filter if selected
-        if (!empty($categoryId)) {
-            $query->where('CategoryID', $categoryId);
-        }
-
-        // Apply search filter if search query is provided
-        if (!empty($search)) {
-            $query->where('Name', 'like', '%' . $search . '%');
-        }
-
-        // Fetch filtered products
-        $items = $query->get();
-
-        // Decode the JSON 'Photo' field
-        $items->each(function($item) {
-            $item->Photo = json_decode($item->Photo, true);
-        });
-
-        // Return the filtered products as JSON
-        return response()->json($items);
+    if (!empty($categoryId)) {
+        $itemsQuery->where('CategoryID', $categoryId);
     }
+
+    if (!empty($searchQuery)) {
+        $itemsQuery->where('Name', 'like', '%' . $searchQuery . '%');
+    }
+
+    $items = $itemsQuery->with('category')->get();
+
+    // Decode Photos
+    foreach ($items as $item) {
+        $item->Photo = json_decode($item->Photo, true);
+    }
+
+    // Return JSON response
+    return response()->json($items);
+}
+
     /**
      * Show the form for creating a new resource.
      */

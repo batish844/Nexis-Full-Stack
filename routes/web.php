@@ -79,3 +79,4 @@ Route::fallback(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('/filter-products', [MenController::class, 'filterProducts'])->name('filter.products');
+Route::resource('items', ProductController::class);

@@ -2,14 +2,53 @@
 .image-slider {
   position: relative;
   width: 100%;
-  overflow: hidden; /* Hides any overflowed content */
+  height: 700px; /* Adjust height as necessary */
+  overflow: hidden;
 }
 
-/* Responsive adjustments for image slider on smaller screens */
-@media (max-width: 768px) {
-  .image-slider {
-    height: 200px; /* Reduced height for better mobile display */
-  }
+/* Styling for individual slides */
+.slide {
+  position: absolute;
+  width: 100%;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s ease-in-out, transform 2s ease; /* Smooth transitions */
+  visibility: hidden;
+}
+
+/* Active slide styles */
+.slide.active {
+  opacity: 1; /* Visible */
+  visibility: visible;
+  transform: translateX(0); /* Centered in view */
+}
+
+/* Ensures images fill their container */
+.slide img {
+  width: 100%;
+  display: block;
+}
+
+/* Adjusts the height of the image slider */
+.image-slider {
+  height: 700px;
+}
+
+/* Optional: for smoother fade-in transitions */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+/* Keyframes for fade animation */
+@keyframes fade {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+/* Carousel Container */
+.carousel {
+  position: relative;
+  overflow: hidden;
 }
 
 /* Carousel Container */
@@ -37,22 +76,30 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  background: none; /* No background */
-  border: none; /* No border */
-  color: black; /* Arrow color (when visible) */
-  font-size: 2rem; /* Adjust arrow size */
+  background: none;
+  border: none;
+  color: rgba(0, 0, 0, 0.637);
+  font-size: 2rem;
   cursor: pointer;
   transition: color 0.3s ease; /* Smooth color transition */
 }
 
 /* Position the Left Button */
 .carousel-btn.left {
-  left: 10px;
+  left: -20px; /* Moves the button to the left */
+  background: rgba(255, 255, 255, 0);
+  border-radius: 50%;
+  padding: 10px;
+  transition: background 0.3s ease;
 }
 
-/* Position the Right Button */
+/* Position the Right Button - Move more to the right */
 .carousel-btn.right {
-  right: 10px;
+  right: 0px; /* Moves the button further to the right */
+  background: rgba(255, 255, 255, 0); /* Add background to right button as well */
+  border-radius: 50%;
+  padding: 10px;
+  transition: background 0.3s ease;
 }
 
 /* Chevron Icon Style */
@@ -62,19 +109,19 @@
   border-width: 0 4px 4px 0;
   display: inline-block;
   padding: 6px;
-  transform: rotate(45deg); /* Right-facing chevron */
+  transform: rotate(45deg);
   opacity: 0; /* Hidden by default */
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Left Chevron */
 .carousel-btn.left::before {
-  transform: rotate(135deg); /* Left-facing chevron */
+  transform: rotate(135deg);
 }
 
 /* Right Chevron */
 .carousel-btn.right::before {
-  transform: rotate(-45deg); /* Right-facing chevron */
+  transform: rotate(-45deg);
 }
 
 /* Show Arrows on Hover */
@@ -95,12 +142,31 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-/* Make buttons visible when hovering over the carousel */
-.carousel:hover .carousel-btn {
-  display: block; /* Make buttons visible when hovering */
+#filter-panel {
+  min-height: 400px; /* Set a minimum height */
+  height: auto; /* Allows the height to adjust if content exceeds the minimum */
 }
 
+/* Optional: If you want the height to be consistent across all screen sizes */
+@media (max-width: 1024px) {
+  #filter-panel {
+      min-height: 400px; /* Same minimum height for medium screens */
+  }
 
+}
+
+@media (max-width: 1023px) {
+  #filter-panel{
+      min-height: 400px; /* Adjust for smaller screens */
+      width: 100%;
+  }
+}
+@media (max-width: 1023px) {
+  #search-input {
+      width: 100%;
+  }
+}
+/*Price Filter Slider*/
 .wrapper {
   position: relative;
   width: 100%;
@@ -143,58 +209,16 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 5px;
 }
 
-
-/* Styling for individual slides */
-.slide {
-  display: block;
-  position: absolute;
-  width: 100%;
-  opacity: 0; /* Initially hidden */
-  transition: opacity 1s, transform 2s ease; /* Smooth transitions */
+/*Trophy*/
+.fa-trophy {
+  font-size: 1.5rem; /* Adjust the size */
+  color: yellow; /* Ensure the icon is visible */
 }
 
-/* Active slide styles */
-.slide.active {
-  opacity: 1; /* Visible */
-  visibility: visible;
-  transform: translateX(0); /* Centered in view */
-}
-
-/* Styles for the previous slide to transition it out of view */
-.slide.left-slide {
-  transform: translateX(-200%); /* Slide out to the left */
-  opacity: 3;
-  visibility: hidden;
-}
-
-/* Ensures images fill their container */
-.slide img {
-  width: 100%;
-  display: block;
-}
-
-/* Adjusts the height of the image slider */
-.image-slider {
-  height: 700px;
-}
-
-/* Responsive adjustments for image slider on smaller screens */
-@media (max-width: 768px) {
-  .image-slider {
-    height: 200px;
-  }
-}
-
-/* Fade animation for transitions */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-/* Keyframes for fade animation */
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
+.badge-trophy {
+  background-color: #FFD700; /* Gold color */
+  padding: 5px;
+  border-radius: 50%;
 }
 
 /* Grid layout for displaying products */
