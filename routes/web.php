@@ -23,9 +23,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('analytics', AnalyticsController::class);
-
-    // Add route for toggling user status (active/inactive)
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
+    Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
+
 });
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');

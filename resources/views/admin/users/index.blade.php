@@ -11,8 +11,12 @@
         {{ session('error') }}
     </div>
     @endif
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Manage Users</h1>
+        <p class="text-gray-600">Organize and maintain User's information</p>
+    </div>
     <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Users</h1>
+
         <div class="flex items-center space-x-4">
             <a href="{{ route('users.create') }}"
                 class="text-white bg-blue-600 px-6 py-3 rounded-lg shadow hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400">
