@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Item;
+use PDO;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProductController extends Controller
@@ -100,9 +101,20 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Item::findorfail($id);
+        $product->Photo = json_decode($product->Photo, true);
+        return view('admin.products.show', compact('product'));
     }
-
+    public function toggleStatus(string $id){
+        $product = Item::findorfail($id);
+        if ($product->isAvailable) {
+            $product->isAvailable = false;
+        } else {
+            $product->isAvailable = true;
+        }
+        $product->save();
+        return redirect()->back();
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -124,6 +136,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Item::findorfail($id);
+        $product->delete();
+        return redirect()->route('products.index')->with('error', "Product deleted successfully");
+
     }
 }

@@ -1,128 +1,98 @@
 $(document).ready(function () {
-    let currentPage = 1;
-    const itemsPerPage = 12;
-
     let slideIndex = 0;
     let $slides = $(".slide");
+    // const itemsPerPage = 8; // Define items per page for pagination
+    // let currentPage = 1;
+    // let allItems = []; // Store all fetched items
+
     showSlides();
 
+    // function showCategories(categories) {
+    //     const $categoryContainer = $('#category-checkboxes');
+    //     $categoryContainer.empty(); // Ensur e no duplicate checkboxes
+    //     categories.forEach(category => {
+    //         $categoryContainer.append(`
+    //             <label>
+    //                 <input type="checkbox" class="category-filter" value="${category}" /> ${category}
+    //             </label><br>
+    //         `);
+    //     });
 
-    function showCategories(categories) {
-        const $categoryContainer = $('#category-checkboxes');
-        $categoryContainer.empty(); // Ensure no duplicate checkboxes
-        categories.forEach(category => {
-            $categoryContainer.append(`
-                <label>
-                    <input type="checkbox" class="category-filter" value="${category}" /> ${category}
-                </label><br>
-            `);
-        });
+    //     // Handle changes to category filters
+    //     $('.category-filter').off('change').on('change', function () {
+    //         currentPage = 1; // Reset pagination to the first page
+    //         applyFiltersAndRender();
+    //     });
+    // }
 
-        // Handle changes to category filters
-        $('.category-filter').off('change').on('change', function () {
-            currentPage = 1; // Reset pagination to the first page
-            applyFiltersAndRender();
-        });
-    }
+    // function renderItems(items) {
+    //     // Collect categories and render items initially
+    //     const categories = new Set();
+    //     items.forEach(item => {
+    //         categories.add(item.Category);
+    //     });
+    //     showCategories([...categories]); // Show all categories initially
 
-    function renderItems(items) {
-        // Collect categories and render items initially
-        const categories = new Set();
-        items.forEach(item => {
-            categories.add(item.Category);
-        });
-        showCategories([...categories]); // Show all categories initially
+    //     applyFiltersAndRender(items); // Apply any active filters
+    // }
 
-        applyFiltersAndRender(items); // Apply any active filters
-    }
+    // function applyFiltersAndRender() {
+    //     // Apply filters
+    //     const minPrice = parseFloat($('#price-range').val());
+    //     const selectedCategories = $('.category-filter:checked').map(function () {
+    //         return this.value;
+    //     }).get();
 
-    function applyFiltersAndRender(allItems) {
-        // If items aren't passed, fetch all items from the backend
-        if (!allItems) {
-            $.getJSON('/men')
-                .done(items => applyFiltersAndRender(items))
-                .fail(() => console.error('Failed to reload items.'));
-            return;
-        }
+    //     const filteredItems = allItems.filter(item => {
+    //         return (
+    //             item.Price >= minPrice &&
+    //             (selectedCategories.length === 0 || selectedCategories.includes(item.Category))
+    //         );
+    //     });
 
-        // Apply filters
-        const minPrice = parseFloat($('#price-range').val());
-        const selectedCategories = $('.category-filter:checked').map(function () {
-            return this.value;
-        }).get();
+    //     // Paginate filtered items
+    //     const paginatedItems = paginateItems(filteredItems, currentPage);
 
-        const filteredItems = allItems.filter(item => {
-            return (
-                item.Price >= minPrice &&
-                (selectedCategories.length === 0 || selectedCategories.includes(item.Category))
-            );
-        });
+    //     // Render the items for the current page
+    //     const $itemContainer = $('#dynamic-products');
+    //     $itemContainer.empty(); // Clear previous items
+    //     paginatedItems.forEach(item => {
+    //         $itemContainer.append(createItemHtml(item));
+    //     });
 
-        // Paginate and display filtered items
-        const paginatedItems = paginateItems(filteredItems, currentPage);
-        const $itemsContainer = $('#dynamic-products');
-        $itemsContainer.empty();
+    //     // Update pagination buttons
+    //     updatePagination(filteredItems.length);
+    // }
 
-        paginatedItems.forEach(item => {
-            $itemsContainer.append(createItemHtml(item));
-        });
+    // function paginateItems(items, page) {
+    //     const startIndex = (page - 1) * itemsPerPage;
+    //     const endIndex = page * itemsPerPage;
+    //     return items.slice(startIndex, endIndex);
+    // }
 
-        // Update pagination
-        updatePagination(filteredItems.length);
-    }
+    // function updatePagination(totalItems) {
+    //     const totalPages = Math.ceil(totalItems / itemsPerPage);
+    //     let paginationHtml = '';
 
-    function paginateItems(items, page) {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = page * itemsPerPage;
-        return items.slice(startIndex, endIndex);
-    }
+    //     for (let i = 1; i <= totalPages; i++) {
+    //         paginationHtml += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+    //     }
 
-    function updatePagination(totalItems) {
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        let paginationHtml = '';
+    //     $('#pagination').html(paginationHtml);
 
-        for (let i = 1; i <= totalPages; i++) {
-            paginationHtml += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
-        }
+    //     // Handle pagination button clicks
+    //     $('.pagination-btn').off('click').on('click', function () {
+    //         currentPage = $(this).data('page');
+    //         applyFiltersAndRender();
+    //     });
+    // }
 
-        $('#pagination').html(paginationHtml);
-
-        // Handle pagination button clicks
-        $('.pagination-btn').off('click').on('click', function () {
-            currentPage = $(this).data('page');
-            applyFiltersAndRender();
-        });
-    }
-
-    function createItemHtml(item) {
-        return `
-            <div class="item rounded overflow-hidden shadow-lg bg-white">
-                <div class="item-image relative group">
-                    <div class="carousel relative">
-                        ${item.Photos.map((photo, index) => `
-                            <img src="${photo}" 
-                                 alt="${item.Name}" 
-                                 class="carousel-img object-cover w-full h-64 ${index === 0 ? 'active' : 'hidden'}">
-                        `).join('')}
-                    </div>
-                    <button class="carousel-btn left"></button>
-                    <button class="carousel-btn right"></button>
-                </div>
-                <div class="item-info p-4">
-                    <h3 class="text-lg font-semibold text-gray-800">${item.Name}</h3>
-                    <p class="text-gray-600">Price: $${item.Price}</p>
-                    <p class="text-gray-600">Points: ${item.Points}</p>
-                    <button class="add-to-cart mt-4 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition" data-item-id="${item.ItemID}">Add to Cart</button>
-                </div>
-            </div>`;
-    }
-
-    // Handle price range slider change
-    $('#price-range').on('input', function () {
-        $('#min-price').text(this.value);
-        currentPage = 1; // Reset to first page when price filter changes
-        applyFiltersAndRender();
-    });
+    // // Handle price range slider change
+    // $('#price-range').on('input', function () {
+    //     $('#min-price').text(this.value);
+    //     currentPage = 1; // Reset to first page when price filter changes
+    //     applyFiltersAndRender();
+    // });
 
     function showSlides() {
         let nextSlideIndex = (slideIndex + 1) % $slides.length; // Calculate the index of the next slide

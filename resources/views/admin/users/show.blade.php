@@ -4,7 +4,7 @@
 <div class="container p-6">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">
-            User: <span class="text-blue-600">{{ $user->Full_Name }}</span>
+           <span class="text-blue-600">{{ $user->Full_Name }}</span>
         </h1>
         <a href="{{ route('users.index') }}"
             class="text-gray-700 bg-gray-100 px-5 py-2 rounded-lg shadow hover:bg-gray-200 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">

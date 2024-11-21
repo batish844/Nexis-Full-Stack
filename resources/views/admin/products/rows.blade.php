@@ -1,6 +1,5 @@
 @foreach($products as $product)
 <tr class="hover:bg-gray-100 transition duration-200">
-    <!-- Preview Image -->
     <td class="px-6 py-4 text-center">
         <div class="flex items-center justify-center">
             <div class="flex-shrink-0 h-10 w-10">
@@ -8,40 +7,28 @@
             </div>
         </div>
     </td>
-
-    <!-- Product Name -->
     <td class="px-6 py-4 text-left">
         <div class="text-sm font-bold text-gray-800">{{ $product->Name }}</div>
     </td>
-
-    <!-- Category -->
     <td class="px-6 py-4 text-center hidden md:table-cell">
         <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
             {{ $product->category->Name ?? 'N/A' }}
         </span>
     </td>
-
-    <!-- Price -->
     <td class="px-6 py-4 text-center hidden md:table-cell">
         <span class="text-sm font-semibold text-gray-800">${{ number_format($product->Price, 2) }}</span>
     </td>
-
-    <!-- Quantity -->
     <td class="px-6 py-4 text-center hidden md:table-cell">
         <span class="text-sm font-semibold text-gray-800 {{ $product->Quantity < 10 ? 'text-red-600 font-bold' : '' }}">
             {{ $product->Quantity }}
         </span>
     </td>
-
-    <!-- Availability -->
     <td class="px-6 py-4 text-center">
         <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full 
             {{ $product->isAvailable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
             {{ $product->isAvailable ? 'Available' : 'Unavailable' }}
         </span>
     </td>
-
-    <!-- Actions -->
     <td class="px-6 py-4 text-center">
         <div class="flex justify-center space-x-2">
             <a href="{{ route('products.show', $product->ItemID) }}" class="text-blue-600 hover:text-blue-800">
