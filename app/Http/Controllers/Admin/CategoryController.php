@@ -82,11 +82,15 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:50',
+            'gender' => 'required|in:M,F,A',
         ]);
+
         $category = Category::findOrFail($id);
         $category->update([
             'Name' => $request->name,
+            'Gender' => $request->gender,
         ]);
+
         return redirect()->route('categories.index')->with('success', "{$category->Name} updated successfully");
     }
 

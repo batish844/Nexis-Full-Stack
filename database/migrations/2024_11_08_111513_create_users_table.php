@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id('UserID');
             $table->string('email')->unique();
-            $table->string('Phone_Number');
+            $table->string('Phone_Number')->nullable();
             $table->string('First_Name');
             $table->string('Last_Name');
             $table->string('google_id')->unique()->nullable(); // Ensure unique Google IDs

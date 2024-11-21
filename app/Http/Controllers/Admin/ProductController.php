@@ -203,7 +203,7 @@ class ProductController extends Controller
         $product->Quantity = $request->input('quantity');
 
         $product->save();
-
+        //TODO: Change route to show
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
