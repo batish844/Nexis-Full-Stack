@@ -20,7 +20,7 @@ class MenController extends Controller
         })->get();
 
         // Decode the JSON 'Photo' field
-        $items->each(function($item) {
+        $items->each(function ($item) {
             $item->Photo = json_decode($item->Photo, true);
         });
 
@@ -34,34 +34,33 @@ class MenController extends Controller
      * Filter products based on price range, category, and search query.
      */
     public function filterProducts(Request $request)
-{
-    // Get filter inputs
-    $minPrice = $request->input('minPrice', 0);
-    $maxPrice = $request->input('maxPrice', 150);
-    $categoryId = $request->input('category');
-    $searchQuery = $request->input('search');
+    {
+        // Get filter inputs
+        $minPrice = $request->input('minPrice', 0);
+        $maxPrice = $request->input('maxPrice', 150);
+        $categoryId = $request->input('category');
+        $searchQuery = $request->input('search');
 
-    // Query items based on filters
-    $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice]);
+        // Query items based on filters
+        $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice]);
 
-    if (!empty($categoryId)) {
-        $itemsQuery->where('CategoryID', $categoryId);
+        if (!empty($categoryId)) {
+            $itemsQuery->where('CategoryID', $categoryId);
+        }
+
+        if (!empty($searchQuery)) {
+            $itemsQuery->where('Name', 'like', '%' . $searchQuery . '%');
+        }
+
+        $items = $itemsQuery->with('category')->get();
+
+        // Decode Photos
+        foreach ($items as $item) {
+            $item->Photo = json_decode($item->Photo, true);
+        }
+
+        return view('men.cards', compact('items'));
     }
-
-    if (!empty($searchQuery)) {
-        $itemsQuery->where('Name', 'like', '%' . $searchQuery . '%');
-    }
-
-    $items = $itemsQuery->with('category')->get();
-
-    // Decode Photos
-    foreach ($items as $item) {
-        $item->Photo = json_decode($item->Photo, true);
-    }
-
-    // Return JSON response
-    return response()->json($items);
-}
 
     /**
      * Show the form for creating a new resource.

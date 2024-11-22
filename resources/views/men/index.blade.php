@@ -3,7 +3,7 @@
 @section('title', 'Men Store')
 
 @section('content')
-<div class="image-slider">
+<!-- <div class="image-slider">
     <div class="slide active">
         <img src="{{ asset('storage/img/slides/m1.jpg') }}" alt="Slide 1">
     </div>
@@ -13,11 +13,11 @@
     <div class="slide">
         <img src="{{ asset('storage/img/slides/m3.jpg') }}" alt="Slide 3">
     </div>
-</div>
+</div> -->
 
 
 
- 
+
 <div class="container mx-auto px-4 py-10">
     <div class="flex justify-center items-center mb-6">
         <!-- Search Bar -->
@@ -25,7 +25,7 @@
             <input type="text" id="search-input" class="w-full p-3 rounded-full border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 text-lg" placeholder="Search for items...">
         </div>
     </div>
-    
+
 
     <div class="flex flex-col lg:flex-row gap-6">
         <!-- Filter Panel -->
@@ -53,7 +53,7 @@
                 <select id="category-dropdown" class="w-full mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">All Items</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->CategoryID }}">{{ $category->Name }}</option>
+                    <option value="{{ $category->CategoryID }}">{{ $category->Name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -61,55 +61,13 @@
 
         <!-- Items Section -->
         <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="dynamic-products">
-            @foreach ($items as $item)
-                <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col h-full">
-                    <!-- Product Image Carousel -->
-                    <div class="carousel relative group">
-                        @foreach ($item->Photo as $index => $photo)
-                            <img src="{{ $photo }}" alt="{{ $item->Name }}" class="carousel-img object-cover w-full h-64 {{ $index === 0 ? 'active' : 'hidden' }}" data-index="{{ $index }}">
-                        @endforeach
-        
-                        <!-- Navigation Arrows -->
-                        <button class="carousel-btn left">
-                            <i class="fas fa-chevron-left text-black"></i>
-                        </button>
-                        <button class="carousel-btn">
-                            <i class="fas fa-chevron-right text-black"></i>
-                        </button>
-                    </div>
-                    <a href="{{ route('items.show', $item->ItemID) }}" class="block">
-                    <!-- Product Details -->
-                    <div class="p-4 flex flex-col flex-grow">
-                        <h3 class="font-semibold text-lg text-gray-800">{{ $item->Name }}</h3>
-                        <p class="text-xl font-medium text-gray-600">${{ number_format($item->Price, 2) }}</p>
-        
-                        <!-- Points Display with Trophy Badge -->
-                        <div class="flex items-center mt-2 justify-between text-yellow-500">
-                            <!-- Trophy and points -->
-                            <div class="flex items-center">
-                                <i class="fas fa-trophy text-xl"></i>
-                                <span class="ml-1 text-sm font-semibold">{{ $item->Points }}</span>
-                            </div>
-                        </div>
-                    </a>
-                        <!-- Add to Cart button -->
-                        <div class="mt-auto">
-                            <button class="py-2 px-4 w-full bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-        
-        
-
-        <!-- No Items Message -->
-        <div id="no-items-message" class="text-center text-red-500 hidden w-full">
-            <p>No items found in this price range.</p>
-        </div>
+            
     </div>
+
+
+
+   
+</div>
 </div>
 @endsection
 
@@ -125,17 +83,17 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const sliderOne = document.getElementById("slider-1");
-        const sliderTwo = document.getElementById("slider-2");
-        const minPriceDisplay = document.getElementById("min-price-display");
-        const maxPriceDisplay = document.getElementById("max-price-display");
-        const categoryDropdown = document.getElementById("category-dropdown");
-        const searchInput = document.getElementById("search-input");
-        const noItemsMessage = document.getElementById("no-items-message");
-        const sliderTrack = document.querySelector(".slider-track");
-        const sliderMaxValue = parseInt(sliderOne.max);
-        const minGap = 5;
-
+        let sliderOne = document.getElementById("slider-1");
+        let sliderTwo = document.getElementById("slider-2");
+        let minPriceDisplay = document.getElementById("min-price-display");
+        let maxPriceDisplay = document.getElementById("max-price-display");
+        let categoryDropdown = document.getElementById("category-dropdown");
+        let searchInput = document.getElementById("search-input");
+        // let noItemsMessage = document.getElementById("no-items-message");
+        let sliderTrack = document.querySelector(".slider-track");
+        let sliderMaxValue = parseInt(sliderOne.max);
+        let minGap = 5;
+        let productsContainer = document.getElementById("dynamic-products");
         const updateSliderValues = () => {
             if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
                 if (sliderOne === document.activeElement) {
@@ -151,72 +109,31 @@
         };
 
         const fillColor = () => {
-            const percent1 = (sliderOne.value / sliderMaxValue) * 100;
-            const percent2 = (sliderTwo.value / sliderMaxValue) * 100;
+            let percent1 = (sliderOne.value / sliderMaxValue) * 100;
+            let percent2 = (sliderTwo.value / sliderMaxValue) * 100;
             sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}%, #3264fe ${percent1}%, #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
         };
-
         const updateProducts = () => {
-            const minPrice = sliderOne.value;
-            const maxPrice = sliderTwo.value;
-            const categoryId = categoryDropdown.value;
-            const searchQuery = searchInput.value;
+            let minPrice = sliderOne.value;
+            let maxPrice = sliderTwo.value;
+            let categoryId = categoryDropdown.value;
+            let searchQuery = searchInput.value;
 
             $.ajax({
                 url: "{{ route('filter.products') }}",
                 method: "GET",
-                data: { minPrice, maxPrice, category: categoryId, search: searchQuery },
-                success: function (response) {
-                    const productsContainer = document.getElementById("dynamic-products");
-                    productsContainer.innerHTML = ""; 
-                    if (response.length === 0) {
-                        noItemsMessage.classList.remove("hidden");
-                    } else {
-                        noItemsMessage.classList.add("hidden");
-                        response.forEach((product) => {
-                            const productCard = `
-                                <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col h-full">
-                                    <!-- Product Image Carousel -->
-                                    <div class="carousel relative group">
-                                        ${product.Photo.map((photo, index) => `
-                                            <img src="${photo}" alt="${product.Name}" class="carousel-img w-full h-64 object-cover ${index === 0 ? 'active' : 'hidden'}" data-index="${index}">
-                                        `).join('')}
-                                        <!-- Updated Carousel Navigation Buttons -->
-                                        <button class="carousel-btn left">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </button>
-                                        <button class="carousel-btn right">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <a href="{{ route('items.show', $item->ItemID) }}" class="block">
-                                        <!-- Product Details -->
-                                        <div class="p-4 flex flex-col flex-grow">
-                                            <h3 class="font-semibold text-lg text-gray-800">${product.Name}</h3>
-                                            <p class="text-xl font-medium text-gray-600">${product.Price}$</p>
-                                            <div class="flex items-center mt-2 justify-between text-yellow-500">
-                                                <!-- Trophy and points -->
-                                                <div class="flex items-center">
-                                                    <i class="fas fa-trophy text-xl"></i>
-                                                    <span class="ml-1 text-sm font-semibold">${product.Points}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <!-- Add to Cart button -->
-                                    <div class="mt-auto">
-                                        <button class="py-2 px-4 w-full bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all">
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            `;
-                            productsContainer.insertAdjacentHTML("beforeend", productCard);
-                        });
-                        initializeCarousel(); // Re-initialize the carousels after adding new products
-                    }
+                data: {
+                    minPrice,
+                    maxPrice,
+                    category: categoryId,
+                    search: searchQuery
                 },
-                error: function (error) {
+                success: function(response) {
+                    $('#dynamic-products').html(response);
+                    initializeCarousel();
+                
+                },
+                error: function(error) {
                     console.error("Error fetching filtered products:", error);
                 }
             });
@@ -272,4 +189,3 @@
     });
 </script>
 @endpush
-

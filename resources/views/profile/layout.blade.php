@@ -111,7 +111,7 @@
                     <img src="/storage/img/icons/order-icon.png" alt="Orders" class="h-10 w-10">
                     <span class="xl:font-semibold text-2xl text-white">Orders</span>
                 </a>
-                <a href="#"
+                <a href="{{ route('profile.wishlist') }}"
                     class="p-2 flex items-center space-x-4 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200">
                     <img src="/storage/img/icons/wishlist-icon.png" alt="Wishlist" class="h-10 w-10">
                     <span class="xl:font-semibold text-2xl text-white">Wishlist</span>

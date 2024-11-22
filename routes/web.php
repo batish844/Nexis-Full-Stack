@@ -42,7 +42,9 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/account', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
-});
+    Route::get('/profile/wishlist', function () {
+        return view('profile.wishlist');
+    });});
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 
 // Home Page
