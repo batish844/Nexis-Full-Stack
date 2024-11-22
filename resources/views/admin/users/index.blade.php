@@ -30,9 +30,9 @@
         </div>
     </div>
 
-    <div class="mb-6 flex flex-col sm:flex-row justify-between items-center">
+    <div class="mb-6 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
         <!-- Filter Dropdown -->
-        <form id="filtersForm" class="flex flex-wrap sm:flex-nowrap items-center space-y-4 sm:space-y-0 sm:space-x-6">
+        <form id="filtersForm" class="flex flex-wrap sm:flex-nowrap items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <select name="role" id="role" class="px-4 py-2 w-full sm:w-48 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="all" {{ $role === 'all' ? 'selected' : '' }}>All Roles</option>
                 <option value="admin" {{ $role === 'admin' ? 'selected' : '' }}>Admins</option>
@@ -56,6 +56,9 @@
                 <option value="all" {{ request()->get('status') === 'all' ? 'selected' : '' }}>All Users</option>
             </select>
         </form>
+        <button id="download-csv" class="px-4 py-2 w-full sm:w-48 bg-gray-600 text-white font-semibold rounded-lg shadow hover:bg-gray-500">
+            Download CSV
+        </button>
     </div>
 
 
@@ -102,7 +105,9 @@
             });
         }
         performSearch();
-
+        $('#download-csv').on('click', function() {
+            window.location.href = '{{ route("users.export") }}';
+        });
         // Perform the AJAX search
         function performSearch() {
             let name = $('#search').val();
