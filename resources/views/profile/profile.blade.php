@@ -204,7 +204,6 @@
                 </section>
             </div>
         </div>
-        @if(!$user->google_id)
         {{-- Update Password Section --}}
         <div class="px-12 sm:px-20 md:32 py-6 sm:py-10 mx-6 sm:mx-8 bg-white shadow-md rounded-lg">
             <div class="w-88 mx-auto">
@@ -219,6 +218,7 @@
                         class="relative top-12 hidden transform -translate-x-1/2 translate-y-full max-w-fit whitespace-nowrap bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded shadow-md z-50 transition-transform transition-opacity duration-500 ease-in-out">
                         <span id="password-notification-message"></span>
                     </div>
+                    @if ($user->password)
                     <form id="update-password-form" method="post" action="{{ route('password.update') }}"
                         class="space-y-6">
                         @csrf
@@ -231,66 +231,71 @@
                                 type="password" class="mt-1 block w-full" autocomplete="current-password" disabled />
                             <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
                         </div>
+                    @else
+                        <form id="update-password-form" method="post" action="{{ route('password.create') }}"
+                            class="space-y-6">
+                            @csrf
+                            @method('put')
+                    @endif
+                            {{-- New Password and Confirm Password --}}
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <x-input-label for="update_password_password" :value="__('New Password')" />
+                                    <x-text-input id="update_password_password" name="password" type="password"
+                                        class="mt-1 block w-full" autocomplete="new-password" disabled />
+                                    <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+                                </div>
 
-                        {{-- New Password and Confirm Password --}}
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <x-input-label for="update_password_password" :value="__('New Password')" />
-                                <x-text-input id="update_password_password" name="password" type="password"
-                                    class="mt-1 block w-full" autocomplete="new-password" disabled />
-                                <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+                                <div>
+                                    <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
+                                    <x-text-input id="update_password_password_confirmation" name="password_confirmation"
+                                        type="password" class="mt-1 block w-full" autocomplete="new-password" disabled />
+                                    <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+                                </div>
                             </div>
 
-                            <div>
-                                <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-                                <x-text-input id="update_password_password_confirmation" name="password_confirmation"
-                                    type="password" class="mt-1 block w-full" autocomplete="new-password" disabled />
-                                <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
-                            </div>
-                        </div>
-
-                        {{-- Save, Cancel, and Edit Buttons --}}
-                        <div class="flex justify-end">
-                            <button id="edit-pass-btn" type="button"
-                                class="w-fit flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
-                                <img src="/storage/img/icons/edit-icon.svg" alt="Edit" class="w-4 h-4 mr-2">
-                                Edit
-                            </button>
-
-                            <div id="update-actions" class="hidden space-x-1 sm:space-x-3 md:space-x-4 flex flex-row">
-                                <button type="submit"
-                                    class="w-fit mx-auto flex items-center justify-center px-2 sm:px-3 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
-                                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                        <polyline points="7 3 7 8 15 8"></polyline>
-                                    </svg>
-                                    Save
+                            {{-- Save, Cancel, and Edit Buttons --}}
+                            <div class="flex justify-end">
+                                <button id="edit-pass-btn" type="button"
+                                    class="w-fit flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                    <img src="/storage/img/icons/edit-icon.svg" alt="Edit" class="w-4 h-4 mr-2">
+                                    Edit
                                 </button>
-                                <button type="button" id="cancel-pass"
-                                    class="inline-flex items-center justify-center px-2 sm:px-3 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-800 text-white text-sm font-medium rounded-full shadow-md hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 transition duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12">
-                                        </path>
-                                    </svg>
-                                    Cancel
-                                </button>
-                                @if (session('status') === 'password-updated')
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        showPasswordNotification('Password updated successfully.', 'success');
-                                    });
-                                </script>
-                                @endif
-                            </div>
-                    </form>
+
+                                <div id="update-actions" class="hidden space-x-1 sm:space-x-3 md:space-x-4 flex flex-row">
+                                    <button type="submit"
+                                        class="w-fit mx-auto flex items-center justify-center px-2 sm:px-3 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                            <polyline points="7 3 7 8 15 8"></polyline>
+                                        </svg>
+                                        Save
+                                    </button>
+                                    <button type="button" id="cancel-pass"
+                                        class="inline-flex items-center justify-center px-2 sm:px-3 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-800 text-white text-sm font-medium rounded-full shadow-md hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 transition duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12">
+                                            </path>
+                                        </svg>
+                                        Cancel
+                                    </button>
+                                    @if (session('status') === 'password-updated')
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            showPasswordNotification('Password updated successfully.', 'success');
+                                        });
+                                    </script>
+                                    @endif
+                                </div>
+                        </form>
                 </section>
             </div>
         </div>
-        @endif
+        
         {{-- Delete Account Section --}}
         <div class="px-12 sm:px-20 md:32 py-6 sm:py-10 mx-6 sm:mx-8 bg-white shadow-md rounded-lg">
             <div class="max-w-2xl">
@@ -301,14 +306,14 @@
                             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
                         </p>
                     </header>
-                    @if($user->google_id)
+                    @if(!$user->password)
                     <form action="{{ route('profile.destroy', $user->UserID) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
                             class="delete-button px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-400">
                             Delete Account
-                            </button>
+                        </button>
                     </form>
                     @else
                     <x-danger-button x-data=""
