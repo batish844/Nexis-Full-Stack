@@ -64,6 +64,8 @@ Route::get('/about-us', function () {
 });
 Route::get('/women', [WomenController::class, 'index']);
 Route::get('/men', [MenController::class, 'index']);
+Route::get('/men/{id}', [MenController::class, 'show'])->name('men.show');
+
 Route::get('/contact-us', [ContactController::class, 'index']);
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contacts.store');
 

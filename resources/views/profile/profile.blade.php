@@ -144,37 +144,21 @@
                                 <div>
                                     <x-input-label for="city" :value="__('City')" />
                                     <x-text-input id="city" class="block mt-1 w-full" type="text" name="city"
-                                        :value="old('city', $user->city)" disabled />
-                                    <x-input-error :messages="$errors->get('city')" class="mt-2" />
-                                    @if (empty($user->city))
-                                        <p class="mt-2 text-sm sm:text-xs lg:text-sm font-medium text-red-600">
-                                            Please fill in this field before placing an order.
-                                        </p>
-                                    @endif
-                                </div>
+                                        :value="old('city', $user->city)" disabled/>
 
+                                </div>
                                 <div>
                                     <x-input-label class="text-blue-800" for="street_address" :value="__('Street Address')" />
                                     <x-text-input id="street_address" class="block mt-1 w-full" type="text"
                                         name="street_address" :value="old('street_address', $user->street_address)" disabled />
-                                    <x-input-error :messages="$errors->get('street_address')" class="mt-2" />
-                                    @if (empty($user->street_address))
-                                        <p class="mt-2 text-sm sm:text-xs lg:text-sm font-medium text-red-600">
-                                            Please fill in this field before placing an order.
-                                        </p>
-                                    @endif
-                                </div>
 
+
+                                </div>
                                 <div>
                                     <x-input-label class="text-blue-800" for="building" :value="__('Building')" />
                                     <x-text-input id="building" class="block mt-1 w-full" type="text"
                                         name="building" :value="old('building', $user->building)" disabled />
-                                    <x-input-error :messages="$errors->get('building')" class="mt-2" />
-                                    @if (empty($user->building))
-                                        <p class="mt-2 text-sm sm:text-xs lg:text-sm font-medium text-red-600">
-                                            Please fill in this field before placing an order.
-                                        </p>
-                                    @endif
+
                                 </div>
                             </div>
 

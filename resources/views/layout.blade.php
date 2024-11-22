@@ -54,7 +54,7 @@
     <header class="flex justify-center p-4">
         <nav class="nav hidden lg:flex items-center bg-white rounded-full shadow-lg w-4/5 max-w-5xl justify-center transition duration-300 ease-in-out py-4 px-10">
             <a href="/home" class="mr-6">
-                <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-20">
+                <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-20">
             </a>
 
             <div id="navMenu" class="flex items-center text-lg text-black font-normal space-x-8">
@@ -160,16 +160,16 @@
             </div>
             <div class="flex justify-center md:justify-start space-x-6 mb-8 md:mb-0">
                 <a href="https://www.facebook.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="storage/img/CommonImg/facebook logo.png" alt="Facebook" class="h-10 w-10 md:h-12 md:w-12">
+                    <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook" class="h-10 w-10 md:h-12 md:w-12">
                 </a>
                 <a href="https://www.pinterest.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="storage/img/CommonImg/pinterest logo.png" alt="Pinterest" class="h-10 w-10 md:h-12 md:w-12">
+                    <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest" class="h-10 w-10 md:h-12 md:w-12">
                 </a>
                 <a href="https://www.instagram.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="storage/img/CommonImg/instagram logo.png" alt="Instagram" class="h-10 w-10 md:h-12 md:w-12">
+                    <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram" class="h-10 w-10 md:h-12 md:w-12">
                 </a>
                 <a href="https://www.tiktok.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="storage/img/CommonImg/tiktok logo.png" alt="TikTok" class="h-10 w-10 md:h-12 md:w-12">
+                    <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok" class="h-10 w-10 md:h-12 md:w-12">
                 </a>
             </div>
             <div class="text-center md:text-left max-w-sm">

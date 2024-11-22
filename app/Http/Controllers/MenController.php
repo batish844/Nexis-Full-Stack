@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
-use App\Models\Category; 
+use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
 class MenController extends Controller
@@ -37,11 +37,11 @@ class MenController extends Controller
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
 
-        
+
         $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice])
-        ->whereHas('category', function ($query) {
-            $query->where('Gender', 'M');
-        });
+            ->whereHas('category', function ($query) {
+                $query->where('Gender', 'M');
+            });
         if (!empty($categoryId)) {
             $itemsQuery->where('CategoryID', $categoryId);
         }
@@ -52,7 +52,7 @@ class MenController extends Controller
 
         $items = $itemsQuery->with('category')->get();
 
-       
+
         foreach ($items as $item) {
             $item->Photo = json_decode($item->Photo, true);
         }
@@ -79,11 +79,15 @@ class MenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        // Fetch the item by its ID
+        $item = Item::findOrFail($id);
+        $item->Photo = json_decode($item->Photo, true);
+        $item->Size = json_decode($item->Size, true);
+        // Pass the item to the view
+        return view('store.men.show', compact('item'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */

@@ -58,7 +58,6 @@ class ProfileController extends Controller
             $user->address = json_encode($Address);
         }
 
-
         $user->save();
 
         return Redirect::route('profile.index')->with('status', 'profile-updated');
@@ -101,15 +100,15 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->avatar) { 
+        if ($user->avatar) {
 
             $filePath = public_path('storage/img/avatar/' . $user->avatar);
 
             if (file_exists($filePath)) {
-                unlink($filePath); 
+                unlink($filePath);
             }
 
-            $user->avatar = null; 
+            $user->avatar = null;
             $user->save();
         }
 
