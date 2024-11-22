@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('whishlist', function (Blueprint $table) {
+        Schema::create('wishlist', function (Blueprint $table) {
             $table->foreignId('UserID')->constrained('users', 'UserID')->onDelete('cascade');
             $table->foreignId('ItemID')->constrained('items', 'ItemID')->onDelete('cascade');
             $table->dateTime('DateTime');
+            $table->boolean('is_read')->default(false);
             $table->primary(['UserID', 'ItemID']);
             $table->timestamps();
         });
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('whishlist');
+        Schema::dropIfExists('wishlist');
     }
 };

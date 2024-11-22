@@ -35,7 +35,6 @@ class ContactController extends Controller
         $contact->Full_Name = $request->full_name;
         $contact->Email = $request->email;
         $contact->Message = $request->message;
-        $contact->DateTime = now();
 
         if (Auth::check()) {
             $contact->ContactedBy = Auth::id();

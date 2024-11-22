@@ -37,6 +37,9 @@ Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogl
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('categories.search');
 Route::get('users/search', [UserController::class, 'search'])->name('users.search');
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
+Route::get('/messages/search', [MessageController::class, 'search'])->name('messages.search');
+Route::post('/messages/mark-read', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
+
 
 // User Profile Routes
 Route::middleware('auth', 'role:user')->group(function () {
