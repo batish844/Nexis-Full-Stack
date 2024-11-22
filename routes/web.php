@@ -89,3 +89,4 @@ Route::get('/filter/men', [MenController::class, 'filterProducts'])->name('men.f
 Route::get('/filter/women', [WomenController::class, 'filterProducts'])->name('women.filter.products');
 
 Route::resource('items', ProductController::class);
+
