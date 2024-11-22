@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('Message');
             $table->string('Email');
             $table->string('Full_Name');
-            $table->foreignId('ContactedBy')->constrained('users', 'UserID');
+            $table->foreignId('ContactedBy')->nullable()->constrained('users', 'UserID');
             $table->timestamps();
         });
     }

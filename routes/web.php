@@ -8,9 +8,11 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Models\Contact;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -43,7 +45,7 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
     Route::get('/profile/wishlist', function () {
         return view('profile.wishlist');
-    });
+    })->name('profile.wishlist');
 });
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 
@@ -60,9 +62,8 @@ Route::get('/about-us', function () {
 });
 Route::get('/women', [WomenController::class, 'index']);
 Route::get('/men', [MenController::class, 'index']);
-Route::get('/contact-us', function () {
-    return view('contactus');
-})->name('contact-us');
+Route::get('/contact-us', [ContactController::class, 'index']);
+Route::post('/contact-us', [ContactController::class, 'store'])->name('contacts.store');
 
 // Cart and Checkout Routes
 Route::get('/cart', function () {

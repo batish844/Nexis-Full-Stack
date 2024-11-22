@@ -5,14 +5,41 @@
 @section('content')
 <section class="flex flex-col md:flex-row items-center gap-6 mb-8 mx-auto p-8 md:p-12 bg-white text-gray-800 md:justify-between">
     <div class="flex flex-col space-y-4 w-full md:w-1/2">
+        @if (session('success'))
+        <div class="flash-message bg-green-500 text-white p-3 rounded-lg">
+            {{ session('success') }}
+        </div>
+        @endif
         <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">Get in Touch</h1>
         <p class="text-md md:text-lg text-gray-600 mb-4">Have a question or want to work together? Drop us a message!</p>
-        <form action="#" class="space-y-3">
+        <form action="{{ route('contacts.store') }}" method="POST" class="space-y-3">
+            @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <input type="text" placeholder="Full name" class="w-full p-3 rounded-full border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none">
-                <input type="email" placeholder="Email" class="w-full p-3 rounded-full border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none">
+                <div class="col-span-1">
+                    @error('full_name')
+                    <div class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                    <input type="text" name="full_name" placeholder="Full name" value="{{ old('full_name', Auth::check() ? Auth::user()->First_Name . ' ' . Auth::user()->Last_Name : '') }}" class="w-full p-3 rounded-full border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none">
+                </div>
+                <div class="col-span-1">
+                    @error('email')
+                    <div class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                    <input type="email" name="email" placeholder="Email" value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}" class="w-full p-3 rounded-full border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none">
+                </div>
             </div>
-            <textarea placeholder="Message" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none" rows="4"></textarea>
+            <div>
+                @error('message')
+                <div class="mt-2 text-sm text-red-600">
+                    {{ $message }}
+                </div>
+                @enderror
+                <textarea name="message" placeholder="Message" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 transition duration-300 focus:outline-none" rows="4">{{ old('message') }}</textarea>
+            </div>
             <button type="submit" class="py-2 px-6 w-full md:w-auto bg-gradient-to-r from-blue-600 to-blue-800 rounded-full font-semibold text-md text-white shadow-md transform transition-transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit</button>
         </form>
     </div>
@@ -45,10 +72,6 @@
         </div>
     </div>
 </div>
-
-@endsection
-
-@push('styles')
 <style>
     .animate-bounce-custom {
         animation: bounce-custom 2s infinite;
@@ -66,4 +89,13 @@
         }
     }
 </style>
-@endpush
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    if ($('.flash-message').length) {
+        $('.flash-message').delay(3000).fadeOut(500, function() {
+            $(this).remove();
+        });
+    }
+</script>
+@endsection

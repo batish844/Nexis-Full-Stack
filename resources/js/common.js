@@ -1,6 +1,5 @@
 $(document).ready(function() {
     $('button').click(function(event) {
-      event.preventDefault(); // Prevents form from submitting traditionally
       var email = $('#email').val();
       var tel = $('#tel').val();
       var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
