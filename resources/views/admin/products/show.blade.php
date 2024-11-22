@@ -28,45 +28,47 @@
             </div>
         </div>
 
-        <div class="space-y-3">
+        <div class="space-y-3 grid grid-cols-1 md:grid-cols-2 gap-4">
             @foreach([
             'Category' => $product->category->Name ?? 'N/A',
             'Price' => '$' . number_format($product->Price, 2),
             'Quantity' => "<span class='" . ($product->Quantity < 10 ? ' text-red-600 font-bold' : 'text-gray-800' ) . "'>{$product->Quantity}</span>",
             'Availability' => "<span class='px-3 mt-2 py-1 inline-flex text-sm font-semibold rounded-full " . ($product->isAvailable ? ' bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ) . "'>" . ($product->isAvailable ? 'Available' : 'Unavailable') . "</span>",
             'Points' => $product->Points ?? 'N/A',
+            'Sizes' => is_array($product->Size) ? implode(', ', $product->Size) : $product->Size,
             'Created At' => $product->created_at->format('d M Y, h:i A'),
             'Last Updated' => $product->updated_at->format('d M Y, h:i A'),
             ] as $label => $value)
-                <div>
-                    <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wide">{{ $label }}</h2>
-                    <p class="text-lg font-medium text-gray-800">{!! $value !!}</p>
-                </div>
+            <div>
+                <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wide">{{ $label }}</h2>
+                <p class="text-lg font-medium text-gray-800">{!! $value !!}</p>
+            </div>
             @endforeach
 
-            <div class="flex flex-wrap gap-4 mt-4">
-                <a href="{{ route('products.edit', $product->ItemID) }}"
-                    class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-400">
-                    Edit Product
-                </a>
-                <form action="{{ route('products.toggleStatus', $product->ItemID) }}" method="POST" class="inline">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit"
-                        class="px-6 py-3 {{ $product->isAvailable ? 'bg-yellow-600 hover:bg-yellow-500' : 'bg-green-600 hover:bg-green-500' }} text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-red-400">
-                        {{ $product->isAvailable ? 'Deactivate Product' : 'Activate Product' }}
-                    </button>
-                </form>
-                <form action="{{ route('products.destroy', $product->ItemID) }}" method="POST" class="inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button"
-                        class="delete-button px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-400"
-                        data-item-id="{{ $product->ItemID }}" data-action-url="{{ route('products.destroy', $product->ItemID) }}">
-                        Delete Product
-                    </button>
-                </form>
-            </div>
+                <!-- Buttons Section -->
+                <div class="flex flex-col sm:flex-row justify-center items-center sm:justify-start gap-4 mt-2 md:col-span-2">
+                    <a href="{{ route('products.edit', $product->ItemID) }}"
+                        class="w-36 px-4 py-3 text-center bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-400">
+                        Edit Product
+                    </a>
+                    <form action="{{ route('products.toggleStatus', $product->ItemID) }}" method="POST" class="inline">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit"
+                            class="w-36 px-4 py-3 text-center {{ $product->isAvailable ? 'bg-yellow-600 hover:bg-yellow-500' : 'bg-green-600 hover:bg-green-500' }} text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                            {{ $product->isAvailable ? 'Deactivate' : 'Activate' }}
+                        </button>
+                    </form>
+                    <form action="{{ route('products.destroy', $product->ItemID) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button"
+                            class="w-36 px-4 py-3 text-center delete-button bg-red-600 text-white font-semibold rounded-md shadow-md hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-400"
+                            data-item-id="{{ $product->ItemID }}" data-action-url="{{ route('products.destroy', $product->ItemID) }}">
+                            Delete Product
+                        </button>
+                    </form>
+                </div>
         </div>
     </div>
 </div>
@@ -122,7 +124,7 @@
             $('button[type="submit"]', this).prop('disabled', true);
         });
         let productDataElement = $('#product-data');
-        let images = JSON.parse(productDataElement.attr('data-images')); 
+        let images = JSON.parse(productDataElement.attr('data-images'));
         let currentIndex = 0;
 
         let carouselImage = $('#carousel-image');
@@ -134,16 +136,16 @@
         };
 
         leftButton.on('click', () => {
-            currentIndex = (currentIndex - 1 + images.length) % images.length; 
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
             updateImage();
         });
 
         rightButton.on('click', () => {
-            currentIndex = (currentIndex + 1) % images.length; 
+            currentIndex = (currentIndex + 1) % images.length;
             updateImage();
         });
 
-        updateImage(); 
+        updateImage();
     });
 </script>
 @endsection
