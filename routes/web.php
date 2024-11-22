@@ -25,7 +25,6 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('analytics', AnalyticsController::class);
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
-
 });
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
@@ -44,7 +43,8 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
     Route::get('/profile/wishlist', function () {
         return view('profile.wishlist');
-    });});
+    });
+});
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 
 // Home Page
@@ -80,5 +80,7 @@ Route::fallback(function () {
 });
 require __DIR__ . '/auth.php';
 
-Route::get('/filter-products', [MenController::class, 'filterProducts'])->name('filter.products');
+Route::get('/filter/men', [MenController::class, 'filterProducts'])->name('men.filter.products');
+Route::get('/filter/women', [WomenController::class, 'filterProducts'])->name('women.filter.products');
+
 Route::resource('items', ProductController::class);

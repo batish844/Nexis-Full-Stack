@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
+use App\Models\Category;
 
 class WomenController extends Controller
 {
@@ -11,7 +13,46 @@ class WomenController extends Controller
      */
     public function index()
     {
-        return view ('women.index');
+        $items = Item::whereHas('category', function ($query) {
+            $query->where('gender', 'F');
+        })->get();
+
+        $items->each(function ($item) {
+            $item->Photo = json_decode($item->Photo, true);
+        });
+
+        $categories = Category::where('Gender', 'F')->get();
+
+        return view('store.women.index', compact('items', 'categories'));
+        return view('store.women.index');
+    }
+    public function filterProducts(Request $request)
+    {
+        $minPrice = $request->input('minPrice', 0);
+        $maxPrice = $request->input('maxPrice', 150);
+        $categoryId = $request->input('category');
+        $searchQuery = $request->input('search');
+
+        $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice])
+            ->whereHas('category', function ($query) {
+                $query->where('Gender', 'F');
+            });
+
+        if (!empty($categoryId)) {
+            $itemsQuery->where('CategoryID', $categoryId);
+        }
+
+        if (!empty($searchQuery)) {
+            $itemsQuery->where('Name', 'like', '%' . $searchQuery . '%');
+        }
+
+        $items = $itemsQuery->with('category')->get();
+
+        foreach ($items as $item) {
+            $item->Photo = json_decode($item->Photo, true);
+        }
+
+        return view('store.cards', compact('items'));
     }
 
     /**

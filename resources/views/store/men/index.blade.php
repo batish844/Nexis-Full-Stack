@@ -61,13 +61,13 @@
 
         <!-- Items Section -->
         <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="dynamic-products">
-            
+
+        </div>
+
+
+
+
     </div>
-
-
-
-   
-</div>
 </div>
 @endsection
 
@@ -120,7 +120,7 @@
             let searchQuery = searchInput.value;
 
             $.ajax({
-                url: "{{ route('filter.products') }}",
+                url: "{{ route('men.filter.products') }}",
                 method: "GET",
                 data: {
                     minPrice,
@@ -131,7 +131,7 @@
                 success: function(response) {
                     $('#dynamic-products').html(response);
                     initializeCarousel();
-                
+
                 },
                 error: function(error) {
                     console.error("Error fetching filtered products:", error);
@@ -144,9 +144,9 @@
             const carousels = document.querySelectorAll(".carousel");
             carousels.forEach((carousel) => {
                 let currentIndex = 0;
-                const images = carousel.querySelectorAll(".carousel-img");
-                const leftButton = carousel.querySelector(".carousel-btn.left");
-                const rightButton = carousel.querySelector(".carousel-btn.right");
+                let images = carousel.querySelectorAll(".carousel-img");
+                let leftButton = carousel.querySelector(".carousel-btn.left");
+                let rightButton = carousel.querySelector(".carousel-btn.right");
 
                 const updateImage = () => {
                     images.forEach((img, idx) => {

@@ -39,7 +39,7 @@
 </div>
 @endforeach
 @if ($items->isEmpty())
-<div class="text-center text-red-500 w-full flex items-center justify-center h-full">
+<div class="text-center text-blue-500 w-full flex items-center justify-center h-full">
     <p>No items found in this price range.</p>
 </div>
 @endif
