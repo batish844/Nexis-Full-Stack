@@ -144,30 +144,31 @@ class ProductController extends Controller
             'sizes.*' => 'in:S,M,L,XL',
             'existing_photos' => 'array',
             'existing_photos.*' => 'string',
-            'new_photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096', 
+            'new_photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            'image_order' => 'required|string', // Validate the image order input
         ]);
 
         $product = Item::findOrFail($id);
 
-
         $existingPhotos = $request->input('existing_photos', []);
 
-        $currentPhotos = $product->Photo ?? [];
+        // Decode the current photos from the database
+        $currentPhotos = $product->Photo ? json_decode($product->Photo, true) : [];
 
-        $currentPhotos = json_decode($product->Photo, true) ?? [];
+        // Identify removed photos and delete them from storage
         $removedPhotos = array_diff($currentPhotos, $existingPhotos);
         foreach ($removedPhotos as $photo) {
             $photoPath = public_path($photo);
-            if (file_exists($photoPath)) 
+            if (file_exists($photoPath)) {
                 unlink($photoPath);
-               
+            }
         }
 
         $newPhotos = [];
 
+        // Handle uploaded new photos
         if ($request->hasFile('new_photos')) {
             $files = $request->file('new_photos');
-
             foreach ($files as $file) {
                 if ($file->isValid()) {
                     $category = Category::findOrFail($request->input('category_id'));
@@ -191,20 +192,44 @@ class ProductController extends Controller
             }
         }
 
+        // Combine existing and new photos
         $finalPhotos = array_merge($existingPhotos, $newPhotos);
-        $product->Photo = $finalPhotos;
 
+        // Reorder photos based on `image_order`
+        $imageOrder = json_decode($request->input('image_order'), true);
+        $orderedPhotos = [];
+        foreach ($imageOrder as $key) {
+            if (strpos($key, 'existing-') === 0) {
+                $photoPath = substr($key, strlen('existing-'));
+                if (in_array($photoPath, $finalPhotos)) {
+                    $orderedPhotos[] = $photoPath;
+                }
+            } elseif (strpos($key, 'new-') === 0) {
+                $index = intval(substr($key, strlen('new-')));
+                if (isset($newPhotos[$index])) {
+                    $orderedPhotos[] = $newPhotos[$index];
+                }
+            }
+        }
+
+        // Update the product's photos
+        $product->Photo = $orderedPhotos;
+
+        // Update sizes
         $sizes = $request->input('sizes', []);
         $product->Size = $sizes;
 
+        // Update other product details
         $product->Name = $request->input('name');
         $product->CategoryID = $request->input('category_id');
         $product->Price = $request->input('price');
         $product->Quantity = $request->input('quantity');
+        $product->Description = $request->input('description');
+
 
         $product->save();
-        //TODO: Change route to show
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+
+        return redirect()->route('products.show', $id)->with('success', 'Product updated successfully.');
     }
 
     /**

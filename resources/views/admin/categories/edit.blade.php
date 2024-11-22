@@ -4,11 +4,11 @@
 <div class="mx-auto">
     <div class="flex justify-between items-center mb-3">
         <h1 class="text-4xl font-extrabold text-gray-900">
-        <span class="text-blue-600">{{ $category->Name }} Details:</span>
+            <span class="text-blue-600">{{ $category->Name }} Details:</span>
         </h1>
         <a href="{{ route('categories.index') }}"
-            class="text-gray-700 bg-gray-100 px-5 py-2 rounded-lg shadow hover:bg-gray-200 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
-            ← Back to Categories
+            class="text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
+            ← Back
         </a>
     </div>
     <div class="bg-white rounded-xl shadow-lg border  mb-10 p-8">

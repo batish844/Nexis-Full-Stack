@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
@@ -22,11 +23,13 @@ class ProfileController extends Controller
     public function index(): View
     {
         $user = Auth::user();
-        if ($user->address) {
-            $user->street_address = json_decode($user->address)->street_address;
-            $user->building = json_decode($user->address)->building;
-            $user->city = json_decode($user->address)->city;
-        }
+
+        $decodedAddress = $user->address ? json_decode($user->address, true) : [];
+
+        $user->street_address = $decodedAddress['street_address'] ?? null;
+        $user->building = $decodedAddress['building'] ?? null;
+        $user->city = $decodedAddress['city'] ?? null;
+
         return view('profile.profile', compact('user'));
     }
     public function order()
@@ -44,32 +47,60 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $user = $request->user();
-        $user->fill($request->except(['city', 'street_address', 'building']));
+        $user = Auth::user();
+        $user = request()->user();
+        $primaryKey = 'UserID'; // Replace 'UserID' with your actual primary key column name
 
-        if ($request->filled(['city', 'street_address', 'building'])) {
-            $Address = [
-                'city' => $request->input('city'),
-                'street_address' => $request->input('street_address'),
-                'building' => $request->input('building'),
-            ];
-            $user->address = json_encode($Address);
+        $validatedData = $request->validate([
+            'First_Name'     => 'required|string|max:255',
+            'Last_Name'      => 'required|string|max:255',
+            'email'          => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                \Illuminate\Validation\Rule::unique('users', 'email')->ignore($user->$primaryKey, $primaryKey),
+            ],
+            'Phone_Number'   => 'required|string|max:20',
+            'city'           => 'nullable|string|max:255',
+            'street_address' => 'nullable|string|max:255',
+            'building'       => 'nullable|string|max:255',
+        ]);
+
+        $user->First_Name = $validatedData['First_Name'];
+        $user->Last_Name  = $validatedData['Last_Name'];
+        $user->email      = $validatedData['email'];
+        $user->Phone_Number = $validatedData['Phone_Number'];
+
+        $addressFields = [
+            'street_address' => $validatedData['street_address'] ?? null,
+            'building'       => $validatedData['building'] ?? null,
+            'city'           => $validatedData['city'] ?? null,
+        ];
+
+        foreach ($addressFields as $key => $value) {
+            if ($value === null || $value === '') {
+                unset($addressFields[$key]);
+            }
         }
 
+        $user->address = empty($addressFields) ? null : json_encode($addressFields);
 
         $user->save();
 
-        return Redirect::route('profile.index')->with('status', 'profile-updated');
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
+
     //upload avatar function
     public function uploadAvatar(Request $request)
     {
         $request->validate([
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+        $user = Auth::user();
+        $user = request()->user();
         if ($request->file('avatar')->isValid()) {
             $fileName = time() . '.' . $request->file('avatar')->extension();
 
@@ -81,14 +112,11 @@ class ProfileController extends Controller
 
             $request->file('avatar')->move($filePath, $fileName);
 
-            $user = Auth::user();
 
-            // Remove old avatar if it exists
             if ($user->avatar && file_exists(public_path('storage/img/avatar/' . $user->avatar))) {
                 unlink(public_path('storage/img/avatar/' . $user->avatar));
             }
 
-            // Save new avatar in DB
             $user->avatar = $fileName;
             $user->save();
         }
@@ -100,16 +128,16 @@ class ProfileController extends Controller
     public function deleteAvatar()
     {
         $user = Auth::user();
-
-        if ($user->avatar) { 
+        $user = request()->user();
+        if ($user->avatar) {
 
             $filePath = public_path('storage/img/avatar/' . $user->avatar);
 
             if (file_exists($filePath)) {
-                unlink($filePath); 
+                unlink($filePath);
             }
 
-            $user->avatar = null; 
+            $user->avatar = null;
             $user->save();
         }
 
@@ -121,9 +149,12 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
+    
+        if (is_null($request->user()->google_id)) {
+            $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
-        ]);
+            ]);
+        }
 
         $user = $request->user();
 

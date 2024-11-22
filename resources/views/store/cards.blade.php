@@ -1,4 +1,5 @@
 @foreach ($items as $item)
+
 <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col h-full relative group">
     <!-- Wishlist Icon -->
     <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
@@ -45,7 +46,6 @@
 </div>
 @endforeach
 
-
 @if ($items->isEmpty())
 <div class="flex items-center justify-center w-full h-full bg-gray-100">
     <div class="text-center">
@@ -58,3 +58,5 @@
     </div>
 </div>
 @endif
+
+
