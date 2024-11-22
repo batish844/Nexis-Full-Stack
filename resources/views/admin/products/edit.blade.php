@@ -60,6 +60,15 @@
         </div>
 
         <div class="mb-6">
+            <label for="points" class="block text-sm font-medium text-gray-700">Points</label>
+            <input type="number" name="points" id="points" value="{{ old('points', $product->Points) }}"
+                class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            @error('points')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="mb-6">
             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
             <textarea name="description" id="description" rows="5"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('description', $product->Description) }}</textarea>
@@ -200,7 +209,6 @@
                     div.innerHTML = `
                         <span class="handle cursor-move text-gray-500">☰</span>
                         <img src="${e.target.result}" alt="New Image" class="w-20 h-20 object-cover rounded-md shadow">
-                        <span class="text-sm">${file.name}</span>
                         <button type="button" class="delete-new-image bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500">
                             Delete
                         </button>
