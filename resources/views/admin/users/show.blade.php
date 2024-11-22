@@ -4,11 +4,11 @@
 <div class="container p-6">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">
-           <span class="text-blue-600">{{ $user->Full_Name }}</span>
+            <span class="text-blue-600">{{ $user->Full_Name }}</span>
         </h1>
-        <a href="{{ route('users.index') }}"
-            class="text-gray-700 bg-gray-100 px-5 py-2 rounded-lg shadow hover:bg-gray-200 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
-            ← Back to Users
+        <a href="{{ route('products.index') }}"
+            class="text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
+            ← Back
         </a>
     </div>
 
@@ -90,8 +90,8 @@
             @csrf
             @method('PUT')
             <button type="submit"
-            class="px-6 py-3 {{ $user->isActive ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500' }} text-white font-semibold rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition-all">
-            {{ $user->isActive ? 'Deactivate User' : 'Activate User' }}
+                class="px-6 py-3 {{ $user->isActive ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500' }} text-white font-semibold rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition-all">
+                {{ $user->isActive ? 'Deactivate User' : 'Activate User' }}
             </button>
         </form>
         @endif

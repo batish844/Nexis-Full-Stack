@@ -1,14 +1,23 @@
 @extends('admin.layouts.sidebar')
 
 @section('content')
+@if(session('success'))
+<div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+    {{ session('success') }}
+</div>
+@elseif(session('error'))
+<div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+    {{ session('error') }}
+</div>
+@endif
 <div class="container mx-auto p-2">
     <div class="flex justify-between items-center mb-10">
         <h1 class="text-4xl font-extrabold text-gray-800">
             <span class="text-blue-500">{{ $product->Name }}</span>
         </h1>
         <a href="{{ route('products.index') }}"
-            class="text-gray-700 w-[20%] bg-gray-100 px-6 py-3 rounded-lg shadow hover:bg-gray-200 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400">
-            ← Back to Products
+            class="text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
+            ← Back
         </a>
     </div>
 
@@ -32,18 +41,17 @@
             @foreach([
             'Category' => $product->category->Name ?? 'N/A',
             'Price' => '$' . number_format($product->Price, 2),
-            'Quantity' => "<span class='" . ($product->Quantity < 10 ? ' text-red-600 font-bold' : 'text-gray-800' ) . "'>{$product->Quantity}</span>",
-            'Availability' => "<span class='px-3 mt-2 py-1 inline-flex text-sm font-semibold rounded-full " . ($product->isAvailable ? ' bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ) . "'>" . ($product->isAvailable ? 'Available' : 'Unavailable') . "</span>",
-            'Points' => $product->Points ?? 'N/A',
-            'Sizes' => is_array($product->Size) ? implode(', ', $product->Size) : $product->Size,
-            'Created At' => $product->created_at->format('d M Y, h:i A'),
-            'Last Updated' => $product->updated_at->format('d M Y, h:i A'),
-            ] as $label => $value)
-            <div>
-                <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wide">{{ $label }}</h2>
-                <p class="text-lg font-medium text-gray-800">{!! $value !!}</p>
-            </div>
-            @endforeach
+            'Quantity' => "<span class='" . ($product->Quantity < 10 ? ' text-red-600 font-bold' : 'text-gray-800' ) . "'>{$product->Quantity}</span>" , 'Availability'=> "<span class='px-3 mt-2 py-1 inline-flex text-sm font-semibold rounded-full " . ($product->isAvailable ? ' bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ) . "'>" . ($product->isAvailable ? 'Available' : 'Unavailable') . "</span>",
+                'Points' => $product->Points ?? 'N/A',
+                'Sizes' => is_array($product->Size) ? implode(', ', $product->Size) : $product->Size,
+                'Created At' => $product->created_at->format('d M Y, h:i A'),
+                'Last Updated' => $product->updated_at->format('d M Y, h:i A'),
+                ] as $label => $value)
+                <div>
+                    <h2 class="text-sm font-bold text-blue-600 uppercase tracking-wide">{{ $label }}</h2>
+                    <p class="text-lg font-medium text-gray-800">{!! $value !!}</p>
+                </div>
+                @endforeach
 
                 <!-- Buttons Section -->
                 <div class="flex flex-col sm:flex-row justify-center items-center sm:justify-start gap-4 mt-2 md:col-span-2">
@@ -123,6 +131,11 @@
         $('#delete-form').on('submit', function() {
             $('button[type="submit"]', this).prop('disabled', true);
         });
+        if ($('.flash-message').length) {
+            $('.flash-message').delay(3000).fadeOut(500, function() {
+                $(this).remove();
+            });
+        }
         let productDataElement = $('#product-data');
         let images = JSON.parse(productDataElement.attr('data-images'));
         let currentIndex = 0;
