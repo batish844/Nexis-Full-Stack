@@ -23,7 +23,7 @@
             </div>
             <div>
                 <h2 class="text-sm font-bold text-blue-700 uppercase mb-2">Gender</h2>
-                <p class="text-xl font-semibold text-gray-800">{{ $category->gender === 'M' ? 'Male' : 'Female' }}</p>
+                <p class="text-xl font-semibold text-gray-800">{{ $category->Gender === 'M' ? 'Male' : 'Female' }}</p>
             </div>
             <div>
                 <h2 class="text-sm font-bold text-blue-700 uppercase mb-2">Last Updated</h2>
@@ -47,8 +47,8 @@
                 <label for="gender" class="block text-blue-700 font-semibold mb-2">Gender</label>
                 <select id="gender" name="gender"
                     class="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 shadow">
-                    <option value="M" {{ $category->gender === 'M' ? 'selected' : '' }}>Male</option>
-                    <option value="F" {{ $category->gender === 'F' ? 'selected' : '' }}>Female</option>
+                    <option value="M" {{ $category->Gender === 'M' ? 'selected' : '' }}>Male</option>
+                    <option value="F" {{ $category->Gender === 'F' ? 'selected' : '' }}>Female</option>
                 </select>
             </div>
             <div class="col-span-1 sm:col-span-2 flex justify-end">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -24,8 +25,8 @@ class CategoryController extends Controller
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
-            $query->orderBy('items_count', 'desc');
-        
+        $query->orderBy('items_count', 'desc');
+
         if ($request->filled('genderfilter') && $request->input('genderfilter') !== 'A') {
             $query->where('gender', $request->input('genderfilter'));
         }
@@ -45,14 +46,17 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:50|',
+            'name' => 'required|string|max:50',
+            'gender' => 'required|in:M,F,A',
         ]);
 
-        if (Category::where('name', $request->name)->exists()) {
-            return redirect()->back()->with('error', 'The category name already exists.');
+        if (Category::where('name', $request->name)->where('gender', $request->gender)->exists()) {
+            return redirect()->back()->with('error', "{$request->name} already exists.");
         }
         Category::create([
             'Name' => $request->name,
+            'Gender' => $request->gender,
+
         ]);
         return redirect()->route('categories.index')->with('success', "{$request->name} created successfully");
     }
@@ -80,6 +84,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        Log::info('Update request data:', $request->all());
+
         $request->validate([
             'name' => 'required|string|max:50',
             'gender' => 'required|in:M,F,A',
@@ -90,6 +96,8 @@ class CategoryController extends Controller
             'Name' => $request->name,
             'Gender' => $request->gender,
         ]);
+
+        Log::info('Updated category:', $category->toArray());
 
         return redirect()->route('categories.index')->with('success', "{$category->Name} updated successfully");
     }

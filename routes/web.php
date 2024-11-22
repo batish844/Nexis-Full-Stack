@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
@@ -25,6 +26,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('analytics', AnalyticsController::class);
+    Route::resource('messages', MessageController::class);
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
 });
