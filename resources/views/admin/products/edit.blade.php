@@ -89,7 +89,7 @@
                         {{ in_array($size, $productSizes) ? 'checked' : '' }}
                         class="size-checkbox hidden">
                     <div class="w-12 h-12 flex items-center justify-center rounded-lg border cursor-pointer 
-                        {{ in_array($size, $productSizes) ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300' }}">
+                        {{ in_array($size, $productSizes) ? 'bg-blue-600 text-white' : 'bg-gray-200 ' }}">
                         {{ $size }}
                     </div>
                 </label>

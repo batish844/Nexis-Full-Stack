@@ -50,6 +50,7 @@ Route::middleware('auth', 'role:user')->group(function () {
     })->name('profile.wishlist');
 });
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
+Route::get('/users/export', [UserController::class, 'exportCsv'])->name('users.export');
 
 // Home Page
 Route::get('/home', function () {
