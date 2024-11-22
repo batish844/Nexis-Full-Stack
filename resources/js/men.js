@@ -19,4 +19,5 @@ $(document).ready(function() {
 
     // Set the interval for automatic slide transitions (every 3 seconds)
     setInterval(showSlides, 3000);  // Change image every 3 seconds
+    
 });
