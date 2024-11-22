@@ -25,6 +25,11 @@
             <h1 class="text-3xl font-bold">{{ $item->Name }}</h1>
             <p class="text-lg text-gray-700 mt-2">Product Code: {{ $item->ItemID }}</p>
             <p class="text-2xl font-bold text-blue-600 mt-4">Price: ${{ number_format($item->Price, 2) }}</p>
+            <!-- Product Description Section -->
+            <div class="mt-8">
+                <h3 class="text-lg font-semibold">Description</h3>
+                <p class="text-gray-600 mt-2">{{ $item->Description }}</p>
+            </div>
 
             <!-- Size Options -->
             <div class="mt-6">
@@ -41,12 +46,6 @@
                 Add to Cart
             </button>
         </div>
-    </div>
-
-    <!-- Product Description Section -->
-    <div class="mt-8">
-        <h3 class="text-lg font-semibold">Description</h3>
-        <p class="text-gray-600 mt-2">{{ $item->Description }}</p>
     </div>
 </div>
 
