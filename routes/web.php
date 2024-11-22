@@ -8,9 +8,12 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Models\Contact;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -23,9 +26,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
     Route::resource('analytics', AnalyticsController::class);
+    Route::resource('messages', MessageController::class);
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
-
 });
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
@@ -42,13 +45,16 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/account', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
+    Route::get('/profile/wishlist', function () {
+        return view('profile.wishlist');
+    })->name('profile.wishlist');
 });
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 
 // Home Page
 Route::get('/home', function () {
     $slides = [['label' => 'women', 'url' => 'women', 'image' => 'h1.webp'], ['label' => 'men', 'url' => 'men', 'image' => 'h2.webp'], ['label' => 'Offers', 'url' => 'women', 'image' => 'h3.webp']];
-    $items = [['url' => 'img/home', 'image' => 'c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'img/home', 'image' => 'I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'img/home', 'image' => 'c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
+    $items = [['url' => 'men', 'image' => 'img/home/c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'women', 'image' => 'img/home/I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'men', 'image' => 'img/home/c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
     return view('home', compact('items', 'slides'));
 })->name('home');
 
@@ -58,9 +64,8 @@ Route::get('/about-us', function () {
 });
 Route::get('/women', [WomenController::class, 'index']);
 Route::get('/men', [MenController::class, 'index']);
-Route::get('/contact-us', function () {
-    return view('contactus');
-})->name('contact-us');
+Route::get('/contact-us', [ContactController::class, 'index']);
+Route::post('/contact-us', [ContactController::class, 'store'])->name('contacts.store');
 
 // Cart and Checkout Routes
 Route::get('/cart', function () {
@@ -78,4 +83,7 @@ Route::fallback(function () {
 });
 require __DIR__ . '/auth.php';
 
-Route::get('/filter-products', [MenController::class, 'filterProducts'])->name('filter.products');
+Route::get('/filter/men', [MenController::class, 'filterProducts'])->name('men.filter.products');
+Route::get('/filter/women', [WomenController::class, 'filterProducts'])->name('women.filter.products');
+
+Route::resource('items', ProductController::class);

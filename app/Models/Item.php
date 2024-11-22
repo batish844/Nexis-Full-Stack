@@ -10,6 +10,7 @@ class Item extends Model
     use HasFactory;
 
     protected $primaryKey = 'ItemID';
+    
 
     protected $fillable = [
         'Name',

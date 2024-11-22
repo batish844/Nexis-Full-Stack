@@ -42,6 +42,9 @@
                     ['name' => 'Orders',
                     'icon' => '/storage/img/icons/orders.png',
                     'route' => 'orders.index',],
+                    ['name' => 'Messages',
+                    'icon' => '/storage/img/icons/messages.png',
+                    'route' => 'messages.index',],
                     ];
                     @endphp
 

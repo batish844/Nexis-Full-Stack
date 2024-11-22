@@ -44,11 +44,12 @@
                     <img src="/storage/img/icons/order-icon.png" alt="Orders" class="h-8 lg:h-10 w-8 lg:w-10">
                     <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Orders</span>
                 </a>
-                <a href="#"
-                    class="p-2 flex items-center space-x-2 lg:space-x-3 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200">
-                    <img src="/storage/img/icons/wishlist-icon.png" alt="Wishlist" class="h-8 lg:h-10 w-8 lg:w-10">
-                    <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Wishlist</span>
-                </a>
+
+            <a href="{{ route('profile.wishlist') }}"
+                    class="p-2 flex items-center space-x-4 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200">
+                    <img src="/storage/img/icons/wishlist-icon.png" alt="Wishlist" class="h-10 w-10">
+                    <span class="xl:font-semibold text-2xl text-white">Wishlist</span>
+
             </nav>
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden bg-blue-700 lg:hidden mt-4 p-4 rounded-lg shadow-md space-y-4">
@@ -150,7 +151,7 @@
                                 <span
                                     class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Orders</span>
                             </a>
-                            <a href="#"
+                            <a href="{{ route('profile.wishlist')
                                 class="p-2 flex items-center space-x-2 lg:space-x-3 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200">
                                 <img src="/storage/img/icons/wishlist-icon.png" alt="Wishlist"
                                     class="h-8 lg:h-10 w-8 lg:w-10">
@@ -170,7 +171,8 @@
 
                                 <button type="submit"
                                     class="flex items-center justify-center text-white bg-red-600 hover:bg-red-400 px-4 py-2 rounded-md font-semibold transition duration-300">
-                                    <img src="/storage/img/icons/user-logout-icon.png" alt="Logout" class="w-6 h-6 mr-3">
+                                    <img src="/storage/img/icons/user-logout-icon.png" alt="Logout"
+                                        class="w-6 h-6 mr-3">
 
                                     Log Out
                                 </button>
@@ -194,7 +196,7 @@
                         <img src="/storage/img/icons/order-icon.png" alt="Orders" class="h-8 lg:h-10 w-8 lg:w-10">
                         <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Orders</span>
                     </a>
-                    <a href="#"
+                    <a href="{{ route('profile.wishlist')
                         class="p-2 flex items-center space-x-2 lg:space-x-3 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200">
                         <img src="/storage/img/icons/wishlist-icon.png" alt="Wishlist" class="h-8 lg:h-10 w-8 lg:w-10">
                         <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Wishlist</span>

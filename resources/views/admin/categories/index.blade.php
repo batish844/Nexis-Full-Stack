@@ -31,6 +31,11 @@
         <form method="POST" action="{{ route('categories.store') }}" class="flex space-x-2 w-full lg:w-auto">
             @csrf
             <input type="text" id="name" name="name" placeholder="Add Category Here" class="flex-grow px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select id="gender" name="gender" class="w-full sm:w-40 px-4 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="" disabled selected class="text-gray-500">Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
             <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-500">
                 Add
             </button>
