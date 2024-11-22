@@ -3,7 +3,7 @@
     <div class="py-12 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
             {{-- Avatar Section --}}
-            <div class="px-12 sm:px-32 py-6 sm:py-10 mx-8 sm:mx-0 bg-white shadow-md rounded-lg">
+            <div class="px-12 sm:px-32 py-6 sm:py-10 mx-8 sm:mx-8 bg-white shadow-md rounded-lg">
                 <div class="w-88 mx-auto">
                     <section>
                         {{-- Avatar Display --}}
@@ -12,7 +12,7 @@
                             @if ($user->avatar === null)
                                 {{-- Display default icon --}}
                                 <div
-                                    class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
+                                    class="overflow-hidden w-36 h-36 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-60 lg:h-60 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
                                     <img src="/storage/img/icons/Default-Avatar.png" alt="USER AVATAR">
                                 </div>
 
@@ -35,24 +35,24 @@
                             @else
                                 {{-- Display uploaded avatar --}}
                                 <div
-                                    class="overflow-hidden w-56 h-56 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
+                                    class="overflow-hidden w-36 h-36 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-60 lg:h-60 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
                                     <img src="{{ asset('storage/img/avatar/' . $user->avatar) }}" alt="User Avatar">
                                 </div>
 
                                 {{-- Update and Delete Buttons --}}
-                                <div class="flex mt-12 justify-center  mt-10 gap-4">
+                                <div class="flex mt-12 justify-center mt-10 gap-2 md:gap-4">
                                     {{-- Update Avatar Form --}}
                                     <form id="avatar-update-form" method="POST"
                                         action="{{ route('profile.avatar.upload') }}" enctype="multipart/form-data">
                                         @csrf
                                         <label for="avatar-update"
-                                            class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 rotate-180"
+                                            class="inline-flex items-center justify-center px-2 sm:px-3 md:px-4 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-xs md:text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 md:mr-2 rotate-180"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M5 12h14M12 5l7 7-7 7" />
                                             </svg>
-                                            Update Avatar
+                                            Update
                                         </label>
                                         <input type="file" id="avatar-update" name="avatar" accept="image/*"
                                             class="hidden"
@@ -65,13 +65,13 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white text-sm font-medium rounded-full shadow-md hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 transition duration-300">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24"
-                                                fill="none" stroke="currentColor" stroke-width="2">
+                                            class="inline-flex items-center justify-center px-2 sm:px-3 md:px-4 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-800 text-white text-xs sm:text:sm md:text-sm font-medium rounded-full shadow-md hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 transition duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:mr-2"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M6 18L18 6M6 6l12 12"></path>
                                             </svg>
-                                            Delete Avatar
+                                            Delete
                                         </button>
 
                                     </form>
@@ -82,7 +82,7 @@
                 </div>
             </div>
             {{-- Profile Information Section --}}
-            <div class="px-12 sm:px-32 py-6 sm:py-10 mx-12 sm:mx-0 bg-white shadow-md rounded-lg">
+            <div class="px-12 sm:px-20 md:32 py-6 sm:py-10 mx-6 sm:mx-8 bg-white shadow-md rounded-lg">
                 <div class="w-88 mx-auto">
                     <section>
                         <header class="border-b pb-4 mb-6">
@@ -101,7 +101,7 @@
                             class="relative top-1 hidden transform -translate-x-1/2 translate-y-full max-w-fit whitespace-nowrap bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded shadow-md z-50 transition-transform transition-opacity duration-500 ease-in-out">
                             <span id="profile-notification-message"></span>
                         </div>
-                        <form method="post" action="{{ route('profile.update') }}" class="space-y-6">
+                        <form id="profile-form" method="post" action="{{ route('profile.update') }}" class="space-y-6">
                             @csrf
                             @method('patch')
 
@@ -110,14 +110,14 @@
                                 <div>
                                     <x-input-label class="text-blue-800" for="First_Name" :value="__('First Name')" />
                                     <x-text-input id="First_Name" class="block mt-1 w-full" type="text" name="First_Name"
-                                        :value="old('First_Name', $user->First_Name)" required autofocus />
+                                        :value="old('First_Name', $user->First_Name)" required autofocus disabled />
                                     <x-input-error :messages="$errors->get('First_Name')" class="mt-2" />
                                 </div>
 
                                 <div>
                                     <x-input-label class="text-blue-800" for="Last_Name" :value="__('Last Name')" />
                                     <x-text-input id="Last_Name" class="block mt-1 w-full" type="text" name="Last_Name"
-                                        :value="old('Last_Name', $user->Last_Name)" required />
+                                        :value="old('Last_Name', $user->Last_Name)" required disabled />
                                     <x-input-error :messages="$errors->get('Last_Name')" class="mt-2" />
                                 </div>
                             </div>
@@ -127,14 +127,14 @@
                                 <div>
                                     <x-input-label class="text-blue-800" for="email" :value="__('Email')" />
                                     <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
-                                        :value="old('email', $user->email)" required autocomplete="username" />
+                                        :value="old('email', $user->email)" required autocomplete="username" disabled />
                                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                 </div>
 
                                 <div>
                                     <x-input-label class="text-blue-800" for="Phone_Number" :value="__('Phone Number')" />
-                                    <x-text-input id="Phone_Number" class="block mt-1 w-full" type="text"
-                                        name="Phone_Number" :value="old('Phone_Number', $user->Phone_Number)" required />
+                                    <x-text-input id="Phone_Number" class="block mt-1 w-full disabled" type="text"
+                                        name="Phone_Number" :value="old('Phone_Number', $user->Phone_Number)" required disabled />
                                     <x-input-error :messages="$errors->get('Phone_Number')" class="mt-2" />
                                 </div>
                             </div>
@@ -144,45 +144,78 @@
                                 <div>
                                     <x-input-label for="city" :value="__('City')" />
                                     <x-text-input id="city" class="block mt-1 w-full" type="text" name="city"
-                                        :value="old('city', $user->city)" />
+                                        :value="old('city', $user->city)" disabled />
                                     <x-input-error :messages="$errors->get('city')" class="mt-2" />
+                                    @if (empty($user->city))
+                                        <p class="mt-2 text-sm sm:text-xs lg:text-sm font-medium text-red-600">
+                                            Please fill in this field before placing an order.
+                                        </p>
+                                    @endif
                                 </div>
 
                                 <div>
                                     <x-input-label class="text-blue-800" for="street_address" :value="__('Street Address')" />
                                     <x-text-input id="street_address" class="block mt-1 w-full" type="text"
-                                        name="street_address" :value="old('street_address', $user->street_address)" />
+                                        name="street_address" :value="old('street_address', $user->street_address)" disabled />
                                     <x-input-error :messages="$errors->get('street_address')" class="mt-2" />
+                                    @if (empty($user->street_address))
+                                        <p class="mt-2 text-sm sm:text-xs lg:text-sm font-medium text-red-600">
+                                            Please fill in this field before placing an order.
+                                        </p>
+                                    @endif
                                 </div>
 
                                 <div>
                                     <x-input-label class="text-blue-800" for="building" :value="__('Building')" />
                                     <x-text-input id="building" class="block mt-1 w-full" type="text"
-                                        name="building" :value="old('building', $user->building)" />
+                                        name="building" :value="old('building', $user->building)" disabled />
                                     <x-input-error :messages="$errors->get('building')" class="mt-2" />
+                                    @if (empty($user->building))
+                                        <p class="mt-2 text-sm sm:text-xs lg:text-sm font-medium text-red-600">
+                                            Please fill in this field before placing an order.
+                                        </p>
+                                    @endif
                                 </div>
                             </div>
 
-                            {{-- Save Button --}}
+                            {{-- Save, Cancel, and Edit Buttons --}}
+
                             <div class="flex justify-end">
-                                <button
-                                    class="w-fit mx-auto flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
-                                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                        <polyline points="7 3 7 8 15 8"></polyline>
-                                    </svg>
-                                    Save
+                                <button id="edit-profile-btn" type="button"
+                                    class="w-fit flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                    <img src="/storage/img/icons/edit-icon.svg" alt="Edit" class="w-4 h-4 mr-2">
+                                    Edit
                                 </button>
-                                @if (session('status') === 'profile-updated')
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            showProfileNotification('Profile updated successfully.', 'success');
-                                        });
-                                    </script>
-                                @endif
+
+                                <div id="edit-actions" class="hidden space-x-1 sm:space-x-3 md:space-x-4 flex flex-row">
+                                    <button type="submit"
+                                        class="w-fit mx-auto flex items-center justify-center px-2 sm:px-3 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                            <polyline points="7 3 7 8 15 8"></polyline>
+                                        </svg>
+                                        Save
+                                    </button>
+                                    <button type="button" id="cancel-edit"
+                                        class="inline-flex items-center justify-center px-2 sm:px-3 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-800 text-white text-sm font-medium rounded-full shadow-md hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 transition duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12">
+                                            </path>
+                                        </svg>
+                                        Cancel
+                                    </button>
+                                    @if (session('status') === 'profile-updated')
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                showProfileNotification('Profile updated successfully.', 'success');
+                                            });
+                                        </script>
+                                    @endif
+                                </div>
                             </div>
                         </form>
                     </section>
@@ -190,7 +223,7 @@
             </div>
 
             {{-- Update Password Section --}}
-            <div class="px-12 sm:px-32 py-6 sm:py-10 mx-12 sm:mx-0 bg-white shadow-md rounded-lg">
+            <div class="px-12 sm:px-20 md:32 py-6 sm:py-10 mx-6 sm:mx-8 bg-white shadow-md rounded-lg">
                 <div class="w-88 mx-auto">
                     <section>
                         <header class="border-b pb-4 mb-6">
@@ -212,7 +245,7 @@
                             <div>
                                 <x-input-label for="update_password_current_password" :value="__('Current Password')" />
                                 <x-text-input id="update_password_current_password" name="current_password"
-                                    type="password" class="mt-1 block w-full" autocomplete="current-password" />
+                                    type="password" class="mt-1 block w-full" autocomplete="current-password" disabled />
                                 <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
                             </div>
 
@@ -221,46 +254,62 @@
                                 <div>
                                     <x-input-label for="update_password_password" :value="__('New Password')" />
                                     <x-text-input id="update_password_password" name="password" type="password"
-                                        class="mt-1 block w-full" autocomplete="new-password" />
+                                        class="mt-1 block w-full" autocomplete="new-password" disabled />
                                     <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
                                 </div>
 
                                 <div>
                                     <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
                                     <x-text-input id="update_password_password_confirmation" name="password_confirmation"
-                                        type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                                        type="password" class="mt-1 block w-full" autocomplete="new-password" disabled />
                                     <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
                                 </div>
                             </div>
 
-                            {{-- Save Button --}}
+                            {{-- Save, Cancel, and Edit Buttons --}}
                             <div class="flex justify-end">
-                                <button
-                                    class="w-fit mx-auto flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
-                                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                        <polyline points="7 3 7 8 15 8"></polyline>
-                                    </svg>
-                                    Save
+                                <button id="edit-pass-btn" type="button"
+                                    class="w-fit flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                    <img src="/storage/img/icons/edit-icon.svg" alt="Edit" class="w-4 h-4 mr-2">
+                                    Edit
                                 </button>
-                                @if (session('status') === 'password-updated')
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            showPasswordNotification('Password updated successfully.', 'success');
-                                        });
-                                    </script>
-                                @endif
-                            </div>
+
+                                <div id="update-actions" class="hidden space-x-1 sm:space-x-3 md:space-x-4 flex flex-row">
+                                    <button type="submit"
+                                        class="w-fit mx-auto flex items-center justify-center px-2 sm:px-3 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                            <polyline points="7 3 7 8 15 8"></polyline>
+                                        </svg>
+                                        Save
+                                    </button>
+                                    <button type="button" id="cancel-pass"
+                                        class="inline-flex items-center justify-center px-2 sm:px-3 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-600 to-red-800 text-white text-sm font-medium rounded-full shadow-md hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 transition duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12">
+                                            </path>
+                                        </svg>
+                                        Cancel
+                                    </button>
+                                    @if (session('status') === 'password-updated')
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                showPasswordNotification('Password updated successfully.', 'success');
+                                            });
+                                        </script>
+                                    @endif
+                                </div>
                         </form>
                     </section>
                 </div>
             </div>
 
             {{-- Delete Account Section --}}
-            <div class="px-12 sm:px-32 py-6 sm:py-10 mx-12 sm:mx-0 bg-white shadow-md rounded-lg">
+            <div class="px-12 sm:px-20 md:32 py-6 sm:py-10 mx-6 sm:mx-8 bg-white shadow-md rounded-lg">
                 <div class="max-w-2xl">
                     <section>
                         <header class="border-b pb-4 mb-6">
