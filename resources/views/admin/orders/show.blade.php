@@ -10,7 +10,6 @@
         </a>
     </div>
 
-    <!-- Order Summary -->
     <div class="bg-white rounded-xl shadow-lg border mb-10 p-8">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Order Summary</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-10">
@@ -33,7 +32,6 @@
         </div>
     </div>
 
-    <!-- Customer Details -->
     <div class="bg-white rounded-xl shadow-lg border mb-10 p-8">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Customer Details</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-10">
@@ -52,7 +50,6 @@
         </div>
     </div>
 
-    <!-- Items Purchased -->
     <div class="bg-white rounded-xl shadow-lg border p-8">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Items Purchased</h2>
         <div class="overflow-x-auto">
@@ -70,18 +67,14 @@
                     @foreach ($order->orderItems as $orderItem)
                     <tr>
                         <td class="px-6 py-4 flex items-center">
-                            @if(!empty($orderItem->item->Photo) && is_array($orderItem->item->Photo))
-                            <img src="/{{ $orderItem->item->Photo[0] }}" alt="{{ $orderItem->item->Name }}" class="w-12 h-12 object-cover rounded-md mr-4">
-                            @else
-                            <div class="w-12 h-12 bg-gray-200 rounded-md mr-4"></div>
-                            @endif
+                            <img src="{{ $orderItem->item->Photo[0] }}" alt="{{ $orderItem->item->Name }}" class="w-12 h-12 object-cover rounded-md mr-4">
                             <span class="text-gray-800">{{ $orderItem->item->Name }}</span>
                         </td>
                         <td class="px-6 py-4 text-gray-800">${{ number_format($orderItem->item->Price, 2) }}</td>
                         <td class="px-6 py-4 text-gray-800">{{ $orderItem->Quantity }}</td>
-                        <td class="px-6 py-4 text-gray-800">{{ $orderItem->item->Size[0] }}</td>
+                        <td class="px-6 py-4 text-gray-800">{{ $orderItem->Size }}</td>
                         <td class="px-6 py-4 text-gray-800">
-                            ${{ number_format($orderItem->item->Price * $orderItem->Quantity, 2) }}
+                            ${{ number_format($orderItem->TotalPrice, 2) }}
                         </td>
                     </tr>
                     @endforeach

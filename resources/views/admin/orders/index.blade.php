@@ -7,7 +7,6 @@
         <p class="text-gray-600">Monitor and process customer orders</p>
     </div>
 
-    <!-- Orders Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200 shadow-lg rounded-lg overflow-x-auto text-center">
             <thead class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
@@ -23,7 +22,7 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 @forelse ($orders as $order)
                 <tr class="hover:bg-gray-100">
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $order->user->First_Name }} {{ $order->user->Last_Name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->user->First_Name }} {{ $order->user->Last_Name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $order->user->email }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ $order->Status == 'Completed' ? 'green' : ($order->Status == 'Pending' ? 'yellow' : 'red') }}-100 text-{{ $order->Status == 'Completed' ? 'green' : ($order->Status == 'Pending' ? 'yellow' : 'red') }}-800">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Item;
 
 class OrderController extends Controller
 {
@@ -46,7 +47,15 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::with(['user', 'orderItems.item'])->findOrFail($id);
-
+        $totalPrice = $order->orderItems->sum(function ($orderItem) {
+            return $orderItem->Quantity * $orderItem->item->Price;
+        });
+        $order->TotalPrice = $totalPrice;
+        foreach ($order->orderItems as $orderItem) {
+            $orderItem->TotalPrice = $orderItem->item->Price * $orderItem->Quantity;
+            $orderItem->save();
+        }
+        $order->save();
         return view('admin.orders.show', compact('order'));
     }
 

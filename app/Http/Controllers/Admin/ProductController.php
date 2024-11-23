@@ -93,8 +93,8 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:items,Name',
             'category_id' => 'required|exists:categories,CategoryID',
-            'price' => 'required|numeric|min:0',
-            'quantity' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:1',
+            'quantity' => 'required|integer|min:1',
             'sizes' => 'required|array|min:1',
             'sizes.*' => 'in:S,M,L,XL',
             'points' => 'required|integer|min:0',
@@ -204,8 +204,8 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,CategoryID',
-            'price' => 'required|numeric|min:0',
-            'quantity' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:1',
+            'quantity' => 'required|integer|min:1',
             'points' => 'required|integer|min:0',
             'sizes' => 'required|array|min:1',
             'sizes.*' => 'in:S,M,L,XL',

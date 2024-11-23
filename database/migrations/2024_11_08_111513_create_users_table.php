@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('Phone_Number')->nullable();
             $table->string('First_Name');
             $table->string('Last_Name');
-            $table->string('google_id')->nullable()->change();
+            $table->string('google_id')->nullable();
             $table->string('password')->nullable();
             $table->json('address')->nullable();
             $table->integer('Points')->default(0);
