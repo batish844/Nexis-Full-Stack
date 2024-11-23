@@ -17,9 +17,7 @@ class WomenController extends Controller
             $query->where('gender', 'F');
         })->get();
 
-        $items->each(function ($item) {
-            $item->Photo = json_decode($item->Photo, true);
-        });
+        
 
         $categories = Category::where('Gender', 'F')->get();
 
@@ -48,9 +46,7 @@ class WomenController extends Controller
 
         $items = $itemsQuery->with('category')->get();
 
-        foreach ($items as $item) {
-            $item->Photo = json_decode($item->Photo, true);
-        }
+      
 
         return view('store.cards', compact('items'));
     }

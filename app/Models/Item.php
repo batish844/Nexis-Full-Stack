@@ -10,7 +10,7 @@ class Item extends Model
     use HasFactory;
 
     protected $primaryKey = 'ItemID';
-    
+
 
     protected $fillable = [
         'Name',
@@ -24,6 +24,12 @@ class Item extends Model
         'isAvailable',
         'CategoryID',
     ];
+
+    protected $casts = [
+        'Size' => 'array',
+        'Photo' => 'array',
+    ];
+
 
     public function category()
     {
@@ -48,5 +54,9 @@ class Item extends Model
     public function wishlistUsers()
     {
         return $this->hasMany(Wishlist::class, 'ItemID');
+    }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'ItemID', 'ItemID');
     }
 }

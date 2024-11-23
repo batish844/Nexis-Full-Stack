@@ -6,7 +6,7 @@
         <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight">Message Details</h1>
         <a href="{{ route('messages.index') }}"
             class="inline-flex items-center text-white bg-blue-600 px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition-all focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50">
-            ← Back to Messages
+            ← Back
         </a>
     </div>
 

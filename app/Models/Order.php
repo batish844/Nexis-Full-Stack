@@ -20,11 +20,15 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'OrderedBy');
+        return $this->belongsTo(User::class, 'OrderedBy', 'UserID');
     }
 
     public function items()
     {
         return $this->belongsToMany(Item::class, 'order_items', 'OrderID', 'ItemID')->withPivot('Quantity', 'TotalPrice');
+    }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'OrderID', 'OrderID');
     }
 }

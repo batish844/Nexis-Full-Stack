@@ -49,7 +49,7 @@
                         @php
                             $productSizes = $product->Size ?? [];
                         @endphp
-                        @foreach (['S', 'M', 'L', 'XL'] as $size)
+                        @foreach ($item->Size as $size)
                             <label class="relative cursor-pointer size-label">
                                 <input type="checkbox" name="sizes[]" value="{{ $size }}"
                                     {{ in_array($size, $productSizes) ? 'checked' : '' }} class="hidden size-checkbox ">

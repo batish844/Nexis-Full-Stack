@@ -24,7 +24,7 @@
             </a>
             <!-- Reset Filters Button -->
             <button type="button" id="resetFilters"
-                class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-gray-400">
                 Reset Filters
             </button>
         </div>

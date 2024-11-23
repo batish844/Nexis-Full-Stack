@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,9 +19,6 @@ class MenController extends Controller
             $query->where('gender', 'M');
         })->get();
 
-        $items->each(function ($item) {
-            $item->Photo = json_decode($item->Photo, true);
-        });
 
         $categories = Category::where('Gender', 'M')->get();
 
@@ -53,9 +51,6 @@ class MenController extends Controller
         $items = $itemsQuery->with('category')->get();
 
 
-        foreach ($items as $item) {
-            $item->Photo = json_decode($item->Photo, true);
-        }
 
         return view('store.cards', compact('items'));
     }
@@ -82,8 +77,7 @@ class MenController extends Controller
     public function show($id)
     {
         $item = Item::findOrFail($id);
-        $item->Photo = json_decode($item->Photo, true);
-        $item->Size = json_decode($item->Size, true);
+        
 
         // Fetch all reviews for the item
         $reviews = $item->reviews()->with('user')->get();

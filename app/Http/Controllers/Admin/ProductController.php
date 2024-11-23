@@ -41,9 +41,7 @@ class ProductController extends Controller
 
         $products = $query->with('category')->get();
 
-        foreach ($products as $product) {
-            $product->Photo = json_decode($product->Photo, true);
-        }
+
 
         return view('admin.products.rows', compact('products'));
     }
@@ -92,7 +90,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming data
         $request->validate([
             'name' => 'required|string|max:255|unique:items,Name',
             'category_id' => 'required|exists:categories,CategoryID',
@@ -103,14 +100,12 @@ class ProductController extends Controller
             'points' => 'required|integer|min:0',
             'new_photos' => 'required|array|min:1',
             'new_photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
-            'image_order' => 'required|string', // Validate the image order input
+            'image_order' => 'required|string',
             'description' => 'nullable|string',
         ]);
 
-        // Create a new product instance
         $product = new Item();
 
-        // Handle uploaded new photos
         $newPhotos = [];
 
         if ($request->hasFile('new_photos')) {
@@ -122,7 +117,7 @@ class ProductController extends Controller
                     $categoryName = strtolower(str_replace(' ', '_', $category->Name));
                     $productName = strtolower(str_replace(' ', '_', $request->input('name')));
 
-                    $folderPath = 'storage/img/' . $gender . '/' . $categoryName . '/' . $productName . '/';
+                    $folderPath = "/storage/img/{$gender}/{$categoryName}/{$productName}/";
                     $fullFolderPath = public_path($folderPath);
 
                     if (!file_exists($fullFolderPath)) {
@@ -138,7 +133,6 @@ class ProductController extends Controller
             }
         }
 
-        // Reorder photos based on `image_order`
         $imageOrder = json_decode($request->input('image_order'), true);
         $orderedPhotos = [];
 
@@ -151,14 +145,12 @@ class ProductController extends Controller
             }
         }
 
-        // Assign the ordered photos to the product
-        $product->Photo = json_encode($orderedPhotos); // Store as JSON string
+        $product->Photo = $orderedPhotos;
 
         // Assign sizes
         $sizes = $request->input('sizes', []);
-        $product->Size = json_encode($sizes); // Store as JSON string
+        $product->Size = $sizes;
 
-        // Assign other product details
         $product->Name = $request->input('name');
         $product->CategoryID = $request->input('category_id');
         $product->Price = $request->input('price');
@@ -166,7 +158,6 @@ class ProductController extends Controller
         $product->Quantity = $request->input('quantity');
         $product->Description = $request->input('description');
 
-        // Save the product
         $product->save();
 
         return redirect()->route('products.show', $product->ItemID)->with('success', 'Product created successfully.');
@@ -178,7 +169,6 @@ class ProductController extends Controller
     public function show(string $id)
     {
         $product = Item::findorfail($id);
-        $product->Photo = json_decode($product->Photo, true);
         return view('admin.products.show', compact('product'));
     }
     public function toggleStatus(string $id)
@@ -198,8 +188,6 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Item::findorfail($id);
-        $product->Photo = json_decode($product->Photo, true);
-        $product->Size = json_decode($product->Size, true);
         $categories = Category::all();
         return view('admin.products.edit', compact('product', 'categories'));
     }
@@ -231,7 +219,7 @@ class ProductController extends Controller
 
         $existingPhotos = $request->input('existing_photos', []);
 
-        $currentPhotos = $product->Photo ? json_decode($product->Photo, true) : [];
+        $currentPhotos = $product->Photo ? $product->Photo : [];
 
         $removedPhotos = array_diff($currentPhotos, $existingPhotos);
         foreach ($removedPhotos as $photo) {
@@ -252,7 +240,7 @@ class ProductController extends Controller
                     $categoryName = strtolower(str_replace(' ', '_', $category->Name));
                     $productName = strtolower(str_replace(' ', '_', $request->input('name')));
 
-                    $folderPath = 'storage/img/' . $gender . '/' . $categoryName . '/' . $productName . '/';
+                    $folderPath = "/storage/img/{$gender}/{$categoryName}/{$productName}/";
                     $fullFolderPath = public_path($folderPath);
 
                     if (!file_exists($fullFolderPath)) {

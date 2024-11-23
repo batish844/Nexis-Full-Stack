@@ -24,7 +24,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <div class="bg-white rounded-xl shadow-lg p-4">
             <div class="relative h-[450px] overflow-hidden rounded-lg">
-                <img id="carousel-image" src="/{{ $product->Photo[0] }}" alt="{{ $product->Name }}"
+                <img id="carousel-image" src="{{ $product->Photo[0] }}" alt="{{ $product->Name }}"
                     class="w-[90%] h-[100%] object-cover mx-auto rounded-lg transition-transform duration-200 ease-in-out">
                 <button id="carousel-left"
                     class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-900 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-gray-800 transition">
@@ -145,7 +145,7 @@
         let rightButton = $('#carousel-right');
 
         let updateImage = () => {
-            carouselImage.attr('src', `/${images[currentIndex]}`);
+            carouselImage.attr('src', `${images[currentIndex]}`);
         };
 
         leftButton.on('click', () => {
