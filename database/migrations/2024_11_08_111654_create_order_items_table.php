@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('ItemID')->constrained('items', 'ItemID')->onDelete('cascade');
             $table->string('Size');
             $table->integer('Quantity');
-            $table->decimal('TotalPrice', 8, 2);
+            $table->decimal('TotalPrice', 8, 2)->nullable();
             $table->timestamps();
         });
     }
