@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container mx-auto py-10 px-6">
-    <!-- Header -->
     <div class="flex flex-wrap justify-between items-center gap-4 mb-10">
         <div class="w-full sm:w-auto">
             <h1 class="text-4xl font-extrabold text-gray-900">Order #{{ $order->OrderID }}</h1>
@@ -14,7 +13,6 @@
         </a>
     </div>
 
-    <!-- Order Summary -->
     <section class="bg-white rounded-xl shadow-md p-8 mb-10">
         <h2 class="text-3xl font-semibold text-gray-900 mb-6">Order Summary</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -33,13 +31,11 @@
         </div>
     </section>
 
-    <!-- Customer Details -->
     <section class="bg-white rounded-xl shadow-md p-8 mb-10">
         <div class="flex flex-wrap justify-between items-center gap-4">
             <h2 class="text-3xl font-semibold text-gray-900">Customer Details</h2>
-            <!-- Redirect Button -->
             <a href="{{ route('users.show', $order->OrderedBy) }}"
-                class="inline-flex items-center justify-center gap-2 text-white bg-indigo-600 px-5 py-3 rounded-lg shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                class="inline-flex items-center justify-center gap-2 text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12.34A9 9 0 1115.34 3.46 9.05 9.05 0 0121 12.34z" />
                 </svg>
@@ -53,7 +49,7 @@
             </div>
             <div>
                 <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Email</h3>
-                <p class="text-lg font-medium text-gray-800">{{ $order->user->Email }}</p>
+                <p class="text-lg font-medium text-gray-800">{{ $order->user->email }}</p>
             </div>
             <div>
                 <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Phone</h3>
@@ -62,18 +58,17 @@
         </div>
     </section>
 
-    <!-- Items Purchased -->
     <section class="bg-white rounded-xl shadow-md p-8">
         <h2 class="text-3xl font-semibold text-gray-900 mb-6">Items Purchased</h2>
         <div class="overflow-x-auto">
             <table class="w-full border-collapse rounded-lg shadow">
-                <thead class="bg-gray-100">
-                    <tr class="text-left text-gray-700 font-semibold">
-                        <th class="px-6 py-4 border-b">Item</th>
-                        <th class="px-6 py-4 border-b">Price</th>
-                        <th class="px-6 py-4 border-b">Quantity</th>
-                        <th class="px-6 py-4 border-b">Size</th>
-                        <th class="px-6 py-4 border-b">Subtotal</th>
+                <thead class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+                    <tr class=" text-left text-white font-semibold">
+                    <th class="px-6 py-4 border-b">Item</th>
+                    <th class="px-6 py-4 border-b">Price</th>
+                    <th class="px-6 py-4 border-b">Quantity</th>
+                    <th class="px-6 py-4 border-b">Size</th>
+                    <th class="px-6 py-4 border-b">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
