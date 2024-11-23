@@ -14,7 +14,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Order::with('user')->orderBy('DateTime', 'desc');
+        $query = Order::with('user')->orderBy('created_at', 'desc');
 
         if ($request->has('email') && $request->email) {
             $query->whereHas('user', function ($q) use ($request) {
