@@ -3,7 +3,8 @@
 <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col h-full relative group">
     <!-- Wishlist Icon -->
     <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-        <button class="wishlist-btn text-gray-400 hover:text-red-500 focus:outline-none">
+        <button class="wishlist-btn text-gray-400 hover:text-red-500 focus:outline-none"
+            data-id="{{ $item->ItemID }}">
             <i class="fas fa-heart text-2xl"></i>
         </button>
     </div>
@@ -33,17 +34,15 @@
     <!-- Add to Cart button with Trophy and Points -->
     <div class="mt-auto">
         <button class="py-2 px-4 w-full bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all flex items-center justify-between space-x-2">
-            <!-- Add to Cart Text -->
             <span class="text-lg font-semibold">Add to Cart</span>
-            <!-- Trophy Icon with margin -->
             <div class="flex items-center space-x-1">
                 <i class="fas fa-trophy text-yellow-400"></i>
-                <!-- Points -->
                 <span class="text-sm font-semibold text-yellow-400">{{ $item->Points }}</span>
             </div>
         </button>
     </div>
 </div>
+
 @endforeach
 
 @if ($items->isEmpty())
@@ -57,6 +56,4 @@
         </p>
     </div>
 </div>
-@endif
-
-
+@endif 
