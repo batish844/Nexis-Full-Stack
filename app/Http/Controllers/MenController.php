@@ -81,12 +81,28 @@ class MenController extends Controller
      */
     public function show($id)
     {
-        // Fetch the item by its ID
         $item = Item::findOrFail($id);
         $item->Photo = json_decode($item->Photo, true);
         $item->Size = json_decode($item->Size, true);
-        // Pass the item to the view
-        return view('store.men.show', compact('item'));
+
+        // Fetch all reviews for the item
+        $reviews = $item->reviews()->with('user')->get();
+
+        // Find the existing review for the authenticated user
+        $existingReview = $item->reviews()->where('UserID', auth()->id())->first();
+
+        // Calculate star distribution
+        $starDistribution = [
+            5 => $reviews->where('Stars', 5)->count(),
+            4 => $reviews->where('Stars', 4)->count(),
+            3 => $reviews->where('Stars', 3)->count(),
+            2 => $reviews->where('Stars', 2)->count(),
+            1 => $reviews->where('Stars', 1)->count(),
+        ];
+
+        $totalReviews = $reviews->count();
+
+        return view('store.men.show', compact('item', 'reviews', 'starDistribution', 'totalReviews', 'existingReview'));
     }
     /**
      * Show the form for editing the specified resource.

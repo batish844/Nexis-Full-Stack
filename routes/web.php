@@ -14,6 +14,8 @@ use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Models\Contact;
+use App\Http\Controllers\ReviewController;
+
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -65,6 +67,10 @@ Route::get('/about-us', function () {
 Route::get('/women', [WomenController::class, 'index']);
 Route::get('/men', [MenController::class, 'index']);
 Route::get('/men/{id}', [MenController::class, 'show'])->name('men.show');
+
+Route::get('men/{id}/reviews', [ReviewController::class, 'show'])->name('reviews.show');
+Route::post('men/{id}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::patch('men/{id}/reviews', [ReviewController::class, 'update'])->name('reviews.update');
 
 Route::get('/contact-us', [ContactController::class, 'index']);
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contacts.store');

@@ -52,7 +52,8 @@
 
 <body>
     <header class="flex justify-center p-4">
-        <nav class="nav hidden lg:flex items-center bg-white rounded-full shadow-lg w-4/5 max-w-5xl justify-center transition duration-300 ease-in-out py-4 px-10">
+        <nav
+            class="nav hidden lg:flex items-center bg-white rounded-full shadow-lg w-4/5 max-w-5xl justify-center transition duration-300 ease-in-out py-4 px-10">
             <a href="/home" class="mr-6">
                 <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-20">
             </a>
@@ -64,44 +65,54 @@
                 <a href="/men" class="nav-items transition-colors hover:text-white">Men</a>
                 <a href="/contact-us" class="nav-items transition-colors hover:text-white">Contact us</a>
                 @if (Auth::check())
-                @if (Auth::user()->isAdmin)
-                <a href="{{ route('analytics.index') }}" class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
-                @else
-                <div class="relative inline-block text-left">
-                    <button onclick="toggleDropdown()" class="nav-items flex items-center transition-colors hover:text-white">
-                        <span>{{ Auth::user()->First_Name }}</span>
-                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.25 7.75L10 12.5l4.75-4.75" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    <div id="userDropdown" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
-                        <a href="{{ route('profile.orders') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
-                        <a href="{{ route('profile.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                Logout
+                    @if (Auth::user()->isAdmin)
+                        <a href="{{ route('analytics.index') }}"
+                            class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
+                    @else
+                        <div class="relative inline-block text-left">
+                            <button onclick="toggleDropdown()"
+                                class="nav-items flex items-center transition-colors hover:text-white">
+                                <span>{{ Auth::user()->First_Name }}</span>
+                                <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5.25 7.75L10 12.5l4.75-4.75" stroke="currentColor" stroke-width="1.5"
+                                        fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
                             </button>
-                        </form>
-                    </div>
-                </div>
-                @endif
+                            <div id="userDropdown"
+                                class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
+                                <a href="{{ route('profile.orders') }}"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
+                                <a href="{{ route('profile.index') }}"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                                        onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
                 @else
-                <a href="{{ route('login') }}" class="nav-items transition-colors hover:text-white">Sign In</a>
+                    <a href="{{ route('login') }}" class="nav-items transition-colors hover:text-white">Sign In</a>
                 @endif
             </div>
             <div id="icon" class="ml-6">
                 <a href="/cart" id="cart-icon" class="relative inline-block">
-                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover" style="width:35px;height:35px"></lord-icon>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                        style="width:35px;height:35px"></lord-icon>
+                    <span id="cart-count"
+                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
                 </a>
             </div>
         </nav>
         <div class="flex items-center justify-between w-full lg:hidden">
             <div class="cursor-pointer">
                 <a href="/home">
-                <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-16">
+                    <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-16">
                 </a>
             </div>
             <div class="ml-auto cursor-pointer" onclick="toggleMenu()">
@@ -112,7 +123,8 @@
         </div>
         <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
         <div id="mobileMenu" class="fixed inset-0 flex justify-center items-center z-50 hidden mobile-menu-hidden">
-            <div class="bg-white rounded-3xl shadow-2xl overflow-y-auto flex flex-col items-center py-10 px-6 w-11/12 max-w-md relative">
+            <div
+                class="bg-white rounded-3xl shadow-2xl overflow-y-auto flex flex-col items-center py-10 px-6 w-11/12 max-w-md relative">
                 <button class="absolute top-4 right-4 text-gray-800 hover:text-gray-900" onclick="toggleMenu()">
                     <lord-icon src="storage/xicon.json" trigger="hover" style="width:32px;height:32px"></lord-icon>
                 </button>
@@ -124,22 +136,29 @@
                     <a href="/about-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">About</a>
                     <a href="/women" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Women</a>
                     <a href="/men" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Men</a>
-                    <a href="/contact-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Contact us</a>
+                    <a href="/contact-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Contact
+                        us</a>
                     @if (Auth::check())
-                    @if (Auth::user()->isAdmin)
-                    <a href="{{ route('analytics.index') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Admin Dashboard</a>
+                        @if (Auth::user()->isAdmin)
+                            <a href="{{ route('analytics.index') }}" class="mobile-menu-link hover:text-white"
+                                onclick="toggleMenu()">Admin Dashboard</a>
+                        @else
+                            <a href="{{ route('profile.index') }}" class="mobile-menu-link hover:text-white"
+                                onclick="toggleMenu()">Profile</a>
+                            <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white"
+                                onclick="toggleMenu()">Orders</a>
+                        @endif
                     @else
-                    <a href="{{ route('profile.index') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Profile</a>
-                    <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Orders</a>
-                    @endif
-                    @else
-                    <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Sign In</a>
+                        <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white"
+                            onclick="toggleMenu()">Sign In</a>
                     @endif
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
                     <a href="{{ url('Cart') }}" id="cart-icon" class="relative inline-block">
-                        <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover" style="width:48px;height:48px"></lord-icon>
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                        <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                            style="width:48px;height:48px"></lord-icon>
+                        <span id="cart-count"
+                            class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
                     </a>
                 </div>
             </div>
@@ -160,25 +179,32 @@
             </div>
             <div class="flex justify-center md:justify-start space-x-6 mb-8 md:mb-0">
                 <a href="https://www.facebook.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook" class="h-10 w-10 md:h-12 md:w-12">
+                    <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook"
+                        class="h-10 w-10 md:h-12 md:w-12">
                 </a>
                 <a href="https://www.pinterest.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest" class="h-10 w-10 md:h-12 md:w-12">
+                    <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest"
+                        class="h-10 w-10 md:h-12 md:w-12">
                 </a>
                 <a href="https://www.instagram.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram" class="h-10 w-10 md:h-12 md:w-12">
+                    <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram"
+                        class="h-10 w-10 md:h-12 md:w-12">
                 </a>
                 <a href="https://www.tiktok.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok" class="h-10 w-10 md:h-12 md:w-12">
+                    <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok"
+                        class="h-10 w-10 md:h-12 md:w-12">
                 </a>
             </div>
             <div class="text-center md:text-left max-w-sm">
                 <p class="text-lg mb-4 font-semibold">Subscribe to Our Newsletter</p>
                 <div class="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-3">
-                    <input type="email" id="email" placeholder="Email address" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
-                    <input type="tel" id="tel" placeholder="Phone number" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
+                    <input type="email" id="email" placeholder="Email address"
+                        class="w-full p-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
+                    <input type="tel" id="tel" placeholder="Phone number"
+                        class="w-full p-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
                 </div>
-                <button class="w-full mt-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition duration-300 focus:outline-none">
+                <button
+                    class="w-full mt-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition duration-300 focus:outline-none">
                     Subscribe
                 </button>
             </div>
@@ -196,35 +222,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/js/common.js')
     <script>
+        
         function toggleMenu() {
-        let overlay = $("#overlay");
-        let mobileMenu = $("#mobileMenu");
+            let overlay = $("#overlay");
+            let mobileMenu = $("#mobileMenu");
 
-        overlay.toggleClass("hidden");
-        mobileMenu.toggleClass("hidden mobile-menu-visible mobile-menu-hidden");
+            overlay.toggleClass("hidden");
+            mobileMenu.toggleClass("hidden mobile-menu-visible mobile-menu-hidden");
         }
 
         function toggleDropdown() {
-        $("#userDropdown").toggleClass('hidden');
+            $("#userDropdown").toggleClass('hidden');
         }
-        
-        $(window).click(function(event) {
-        if (!$(event.target).closest('.relative').length) {
-        let dropdown = $("#userDropdown");
-        if (!dropdown.hasClass('hidden')) {
-        dropdown.addClass('hidden');
-        }
-        }
-        //  !! DOESNT WORK ||Close the mobile menu if clicked outside
-        $('#overlay').on('click', function(e) {
-            if ($(e.target).is('#overlay')) {
-                $('#overlay').addClass('hidden');
-            }
-        });
-        
-        });
 
-        </script>
+        $(window).click(function(event) {
+            if (!$(event.target).closest('.relative').length) {
+                let dropdown = $("#userDropdown");
+                if (!dropdown.hasClass('hidden')) {
+                    dropdown.addClass('hidden');
+                }
+            }
+            //  !! DOESNT WORK ||Close the mobile menu if clicked outside
+            $('#overlay').on('click', function(e) {
+                if ($(e.target).is('#overlay')) {
+                    $('#overlay').addClass('hidden');
+                }
+            });
+
+        });
+       
+    </script>
 </body>
 
 </html>
