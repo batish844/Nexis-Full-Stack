@@ -18,6 +18,12 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
 
+    public function getCategoriesByGender(string $gender)
+    {
+        $categories = Category::where('Gender', $gender)->get();
+        return response()->json($categories);
+    }
+
     public function search(Request $request)
     {
         $query = Category::query();

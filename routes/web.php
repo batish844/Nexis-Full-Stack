@@ -35,6 +35,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
 });
+Route::get('/gender/{gender}', [CategoryController::class, 'getCategoriesByGender']);
+
 Route::get('analytics/data', [AnalyticsController::class, 'getData'])->name('analytics.data');
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
@@ -80,7 +82,6 @@ Route::patch('men/{id}/reviews', [ReviewController::class, 'update'])->name('rev
 Route::get('/contact-us', [ContactController::class, 'index']);
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contacts.store');
 
-// Cart and Checkout Routes
 Route::get('/cart', function () {
     return view('cart');
 });

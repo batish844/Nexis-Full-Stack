@@ -7,29 +7,51 @@
             <h1 class="text-4xl font-extrabold text-gray-900">Order #{{ $order->OrderID }}</h1>
             <p class="text-sm text-gray-500">Placed on {{ \Carbon\Carbon::parse($order->DateTime)->format('d M Y, h:i A') }}</p>
         </div>
-        <a href="{{ url()->previous() }}"
+        @if (url()->previous() == route('users.show', $order->OrderedBy))
+        <a href="{{ url()->previous()  }}"
             class="inline-flex items-center justify-center gap-2 text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400 sm:ml-auto">
-            ← Back
+            ← Back to Users
         </a>
+        @else
+        <a href="{{ route('orders.index') }}"
+            class="inline-flex items-center justify-center gap-2 text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400 sm:ml-auto">
+            ← Back to Orders
+        </a>
+        @endif
     </div>
-
     <section class="bg-white rounded-xl shadow-md p-8 mb-10">
-        <h2 class="text-3xl font-semibold text-gray-900 mb-6">Order Summary</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
-                <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Order ID</h3>
+        <h2 class="text-3xl font-semibold text-gray-900 mb-6">Summary</h2>
+
+        <div class="flex flex-wrap gap-6 mb-6">
+            <div class="flex-1 min-w-[150px]">
+                <h3 class="text-sm font-bold text-blue-700 uppercase">Order ID</h3>
                 <p class="text-lg font-medium text-gray-800">{{ $order->OrderID }}</p>
             </div>
-            <div>
-                <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Status</h3>
+            <div class="flex-1 min-w-[150px]">
+                <h3 class="text-sm font-bold text-blue-700 uppercase">Status</h3>
                 <p class="text-lg font-medium text-gray-800">{{ $order->Status }}</p>
             </div>
-            <div>
-                <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Total Price</h3>
+            <div class="flex-1 min-w-[150px]">
+                <h3 class="text-sm font-bold text-blue-700 uppercase">Total Price</h3>
                 <p class="text-lg font-medium text-gray-800">${{ number_format($order->TotalPrice, 2) }}</p>
             </div>
         </div>
+
+        <form action="{{ route('orders.update', $order->OrderID) }}" method="POST" class="flex flex-wrap gap-4 items-center">
+            @csrf
+            @method('PUT')
+            <select name="status" class="w-full sm:w-48 px-4 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="Pending" {{ $order->Status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                <option value="Processing" {{ $order->Status == 'Processing' ? 'selected' : '' }}>Processing</option>
+                <option value="Completed" {{ $order->Status == 'Completed' ? 'selected' : '' }}>Completed</option>
+                <option value="Cancelled" {{ $order->Status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
+            </select>
+            <button type="submit" class="w-full sm:w-auto px-6 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition">
+                Update Status
+            </button>
+        </form>
     </section>
+
 
     <section class="bg-white rounded-xl shadow-md p-8 mb-10">
         <div class="flex flex-wrap justify-between items-center gap-4">
@@ -64,11 +86,11 @@
             <table class="w-full border-collapse rounded-lg shadow">
                 <thead class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
                     <tr class=" text-left text-white font-semibold">
-                    <th class="px-6 py-4 border-b">Item</th>
-                    <th class="px-6 py-4 border-b">Price</th>
-                    <th class="px-6 py-4 border-b">Quantity</th>
-                    <th class="px-6 py-4 border-b">Size</th>
-                    <th class="px-6 py-4 border-b">Subtotal</th>
+                        <th class="px-6 py-4 border-b">Item</th>
+                        <th class="px-6 py-4 border-b">Price</th>
+                        <th class="px-6 py-4 border-b">Quantity</th>
+                        <th class="px-6 py-4 border-b">Size</th>
+                        <th class="px-6 py-4 border-b">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">

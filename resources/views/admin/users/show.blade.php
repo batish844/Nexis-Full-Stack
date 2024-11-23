@@ -6,10 +6,17 @@
         <h1 class="text-3xl font-bold text-gray-800">
             <span class="text-blue-600">{{ $user->Full_Name }}</span>
         </h1>
+        @if (url()->previous() == route('orders.show', $user->UserID))
         <a href="{{ url()->previous() }}"
-            class="text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
-            ← Back
+            class="inline-flex items-center justify-center gap-2 text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400 sm:ml-auto">
+            ← Back to Orders
         </a>
+        @else
+        <a href="{{ route('users.index') }}"
+            class="inline-flex items-center justify-center gap-2 text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400 sm:ml-auto">
+            ← Back to Users
+        </a>
+        @endif
     </div>
 
     <div class="bg-white rounded-lg shadow p-8">
@@ -55,7 +62,6 @@
                 </p>
             </div>
             @if ($user->isAdmin == 0)
-            <!-- Order Count and Total Points -->
             <div class="flex items-center space-x-4">
                 <div class="flex-1">
                     <h2 class="text-sm font-semibold text-blue-700 uppercase mb-2">Total Orders</h2>
@@ -65,7 +71,7 @@
                     <a href="{{ route('orders.index', ['email' => $user->email]) }}"
                         class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         See Orders
-                        
+
                     </a>
                 </div>
 
@@ -86,8 +92,7 @@
             Edit User
         </a>
 
-        <!-- See Orders Button (already placed beside total orders above) -->
-        <!-- Deactivate/Activate Button -->
+        
         @if(Auth::id() !== $user->UserID)
         <form action="{{ route('users.toggleStatus', $user->UserID) }}" method="POST" class="inline">
             @csrf
@@ -100,7 +105,6 @@
         @endif
     </div>
 
-    <!-- Delete Button placed right below the other buttons -->
     <div class="mt-6 flex justify-end">
         <form action="{{ route('users.destroy', $user->UserID) }}" method="POST" class="inline">
             @csrf
@@ -114,7 +118,6 @@
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
 <div id="delete-confirmation-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div id="modal-content" class="bg-white rounded shadow-lg p-6 w-96 mx-auto">
         <form id="delete-form" method="POST" action="{{ old('action_url', '') }}">

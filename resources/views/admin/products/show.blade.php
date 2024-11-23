@@ -53,7 +53,6 @@
                 </div>
                 @endforeach
 
-                <!-- Buttons Section -->
                 <div class="flex flex-col sm:flex-row justify-center items-center sm:justify-start gap-4 mt-2 md:col-span-2">
                     <a href="{{ route('products.edit', $product->ItemID) }}"
                         class="w-36 px-4 py-3 text-center bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-400">

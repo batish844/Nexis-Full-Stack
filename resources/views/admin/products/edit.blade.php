@@ -18,23 +18,27 @@
 
         <div class="mb-6">
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-            <input type="text" name="name" id="name" value="{{ old('name', $product->Name) }}"
+            <input type="text" placeholder="Enter Product Name" name="name" id="name" value="{{ old('name', $product->Name) }}"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             @error('name')
             <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>
+        <div class="mb-6">
+            <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+            <select id="gender" name="gender"
+                class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="" disabled selected>Select Gender</option>
+                <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Male</option>
+                <option value="F" {{ old('gender') == 'F' ? 'selected' : '' }}>Female</option>
+            </select>
+        </div>
 
         <div class="mb-6">
             <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-            <select name="category_id" id="category"
+            <select id="category" name="category_id"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                <option value="" disabled>Select a Category</option>
-                @foreach($categories as $category)
-                <option value="{{ $category->CategoryID }}" {{ old('category_id', $product->CategoryID) == $category->CategoryID ? 'selected' : '' }}>
-                    {{ $category->Name }}
-                </option>
-                @endforeach
+                <option value="" disabled selected>Select a Category</option>
             </select>
             @error('category_id')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -43,7 +47,7 @@
 
         <div class="mb-6">
             <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-            <input type="number" name="price" id="price" value="{{ old('price', $product->Price) }}" step="0.01"
+            <input type="number" name="price" placeholder="Enter Price Here" id="price" value="{{ old('price', $product->Price) }}" step="0.01"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             @error('price')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -51,7 +55,7 @@
         </div>
 
         <div class="mb-6">
-            <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+            <label for="quantity" placeholder="Enter Quantity Here" class="block text-sm font-medium text-gray-700">Quantity</label>
             <input type="number" name="quantity" id="quantity" value="{{ old('quantity', $product->Quantity) }}"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             @error('quantity')
@@ -60,7 +64,7 @@
         </div>
 
         <div class="mb-6">
-            <label for="points" class="block text-sm font-medium text-gray-700">Points</label>
+            <label for="points" placeholder="Enter Points" class="block text-sm font-medium text-gray-700">Points</label>
             <input type="number" name="points" id="points" value="{{ old('points', $product->Points) }}"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             @error('points')
@@ -69,7 +73,7 @@
         </div>
 
         <div class="mb-6">
-            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <label for="description" placeholder="Enter Description" class="block text-sm font-medium text-gray-700">Description</label>
             <textarea name="description" id="description" rows="5"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('description', $product->Description) }}</textarea>
             @error('description')
@@ -103,7 +107,6 @@
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-2">Images</label>
             <div id="images-container" class="flex flex-col space-y-4">
-                <!-- Existing Images -->
                 @foreach($product->Photo as $photo)
                 <div class="flex items-center space-x-4 draggable-item">
                     <span class="handle cursor-move text-gray-500">☰</span>
@@ -116,7 +119,6 @@
                 @endforeach
             </div>
 
-            <!-- File Input for New Images -->
             <input type="file" id="new-photos-input" name="new_photos[]" accept="image/*" multiple
                 class="block w-full px-4 py-2 border rounded-lg shadow-sm file:bg-blue-500 file:text-white file:border-0 file:py-2 file:px-4 file:rounded-lg hover:file:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-500 transition duration-300">
             @error('new_photos')
@@ -124,7 +126,6 @@
             @enderror
         </div>
 
-        <!-- Hidden input to store the order of images -->
         <input type="hidden" id="image-order-input" name="image_order">
 
         <div class="mt-6 flex justify-end">
@@ -159,8 +160,28 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const sizeButtons = document.querySelectorAll('.size-btn');
-        const sizeLabels = document.querySelectorAll('label.relative');
+        const genderSelect = document.getElementById('gender');
+        const categorySelect = document.getElementById('category');
+
+        genderSelect.addEventListener('change', function() {
+            const gender = this.value;
+
+            categorySelect.innerHTML = '<option value="" disabled selected>Select a Category</option>';
+
+            fetch(`/gender/${gender}`)
+                .then(response => response.json())
+                .then(categories => {
+                    categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category.CategoryID;
+                        option.textContent = category.Name;
+                        categorySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching categories:', error));
+        });
+        let sizeButtons = document.querySelectorAll('.size-btn');
+        let sizeLabels = document.querySelectorAll('label.relative');
 
         sizeLabels.forEach(label => {
             label.addEventListener('click', (e) => {
@@ -184,7 +205,6 @@
         let uploadInput = document.getElementById('new-photos-input');
         let selectedFiles = [];
 
-        // Initialize Sortable on the combined container
         new Sortable(imagesContainer, {
             animation: 150,
             handle: '.handle',
@@ -194,7 +214,6 @@
             },
         });
 
-        // Add new images to the container
         uploadInput.addEventListener('change', function() {
             let files = uploadInput.files;
             selectedFiles = Array.from(files);
@@ -219,7 +238,6 @@
             });
         });
 
-        // Handle deletion of existing images
         imagesContainer.addEventListener('click', function(event) {
             if (event.target.classList.contains('delete-existing-image')) {
                 event.preventDefault();
@@ -237,7 +255,6 @@
             }
         });
 
-        // Update the file input with the current selected files
         function updateFileInput() {
             let dataTransfer = new DataTransfer();
             selectedFiles.forEach(function(file) {
@@ -246,7 +263,6 @@
             uploadInput.files = dataTransfer.files;
         }
 
-        // Serialize image order before form submission
         document.getElementById('edit-product-form').addEventListener('submit', function() {
             let imageOrder = [];
             let items = imagesContainer.querySelectorAll('.draggable-item');

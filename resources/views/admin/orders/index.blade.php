@@ -41,21 +41,24 @@
     </div>
 
     <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200 shadow-lg rounded-lg text-center">
-            <thead class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
-                <tr class="text-sm uppercase tracking-wider">
-                    <th class="px-6 py-3 font-semibold">Customer</th>
-                    <th class="px-6 py-3 font-semibold">Email</th>
-                    <th class="px-6 py-3 font-semibold">Status</th>
-                    <th class="px-6 py-3 font-semibold">Total Price</th>
-                    <th class="px-6 py-3 font-semibold">Date</th>
-                    <th class="px-6 py-3 font-semibold">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="table-body-ajax" class="bg-white divide-y divide-gray-200">
-                <!-- AJAX Content -->
-            </tbody>
-        </table>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 shadow-lg rounded-lg text-center">
+                <thead class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+                    <tr class="text-sm uppercase tracking-wider">
+                        <th class="px-6 py-3 font-semibold">Customer</th>
+                        <th class="px-6 py-3 font-semibold">Email</th>
+                        <th class="px-6 py-3 font-semibold">Status</th>
+                        <th class="px-6 py-3 font-semibold">Total Price</th>
+                        <th class="px-6 py-3 font-semibold">Date</th>
+                        <th class="px-6 py-3 font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-ajax" class="bg-white divide-y divide-gray-200">
+                    <!-- AJAX Content -->
+                </tbody>
+            </table>
+        </div>
+    </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

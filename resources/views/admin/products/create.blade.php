@@ -17,23 +17,27 @@
 
         <div class="mb-6">
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-            <input type="text" name="name" id="name" value="{{ old('name') }}"
+            <input type="text" name="name" placeholder="Enter Name Here" id="name" value="{{ old('name') }}"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             @error('name')
             <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>
+        <div class="mb-6">
+            <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+            <select id="gender" name="gender"
+                class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="" disabled selected>Select Gender</option>
+                <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Male</option>
+                <option value="F" {{ old('gender') == 'F' ? 'selected' : '' }}>Female</option>
+            </select>
+        </div>
 
         <div class="mb-6">
             <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-            <select name="category_id" id="category"
+            <select id="category" name="category_id"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 <option value="" disabled selected>Select a Category</option>
-                @foreach($categories as $category)
-                <option value="{{ $category->CategoryID }}" {{ old('category_id') == $category->CategoryID ? 'selected' : '' }}>
-                    {{ $category->Name }}
-                </option>
-                @endforeach
             </select>
             @error('category_id')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -42,7 +46,7 @@
 
         <div class="mb-6">
             <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-            <input type="number" name="price" id="price" value="{{ old('price') }}" step="0.01"
+            <input type="number" name="price" placeholder="Enter Price Here" id="price" value="{{ old('price') }}" step="0.01"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             @error('price')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -51,7 +55,7 @@
 
         <div class="mb-6">
             <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-            <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}"
+            <input type="number" name="quantity" id="quantity" placeholder="Enter Quantity" value="{{ old('quantity') }}"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             @error('quantity')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -59,7 +63,7 @@
         </div>
         <div class="mb-6">
             <label for="points" class="block text-sm font-medium text-gray-700">Points</label>
-            <input type="number" name="points" id="points" value="{{ old('points') }}"
+            <input type="number" placeholder="Enter Points" name="points" id="points" value="{{ old('points') }}"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             @error('points')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -67,7 +71,7 @@
         </div>
         <div class="mb-6">
             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-            <textarea name="description" id="description" rows="5"
+            <textarea name="description" placeholder="Enter Description" id="description" rows="5"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('description') }}</textarea>
             @error('description')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -96,10 +100,8 @@
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-2">Images</label>
             <div id="images-container" class="flex flex-col space-y-4">
-                <!-- No existing images for create -->
             </div>
 
-            <!-- File Input for New Images -->
             <input type="file" id="new-photos-input" name="new_photos[]" accept="image/*" multiple
                 class="block w-full px-4 py-2 border rounded-lg shadow-sm file:bg-blue-500 file:text-white file:border-0 file:py-2 file:px-4 file:rounded-lg hover:file:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-500 transition duration-300">
             @error('new_photos')
@@ -107,7 +109,6 @@
             @enderror
         </div>
 
-        <!-- Hidden input to store the order of images -->
         <input type="hidden" id="image-order-input" name="image_order">
 
         <div class="mt-6 flex justify-end">
@@ -142,9 +143,30 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const genderSelect = document.getElementById('gender');
+        const categorySelect = document.getElementById('category');
 
-        const sizeButtons = document.querySelectorAll('.size-btn');
-        const sizeLabels = document.querySelectorAll('label.relative');
+        genderSelect.addEventListener('change', function() {
+            const gender = this.value;
+
+            // Clear existing categories
+            categorySelect.innerHTML = '<option value="" disabled selected>Select a Category</option>';
+
+            // Fetch categories based on gender
+            fetch(`/gender/${gender}`)
+                .then(response => response.json())
+                .then(categories => {
+                    categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category.CategoryID;
+                        option.textContent = category.Name;
+                        categorySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching categories:', error));
+        });
+        let sizeButtons = document.querySelectorAll('.size-btn');
+        let sizeLabels = document.querySelectorAll('label.relative');
 
         sizeLabels.forEach(label => {
             label.addEventListener('click', (e) => {
@@ -168,7 +190,6 @@
         let uploadInput = document.getElementById('new-photos-input');
         let selectedFiles = [];
 
-        // Initialize Sortable
         new Sortable(imagesContainer, {
             animation: 150,
             handle: '.handle',
@@ -178,7 +199,6 @@
             },
         });
 
-        // Add new images
         uploadInput.addEventListener('change', function() {
             let files = uploadInput.files;
             selectedFiles = Array.from(files);
@@ -204,7 +224,6 @@
             });
         });
 
-        // Handle new image deletion
         imagesContainer.addEventListener('click', function(event) {
             if (event.target.classList.contains('delete-new-image')) {
                 let imageDiv = event.target.closest('.draggable-item');
