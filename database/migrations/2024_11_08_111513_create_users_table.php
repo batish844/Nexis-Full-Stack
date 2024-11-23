@@ -14,9 +14,9 @@ return new class extends Migration
             $table->string('Phone_Number')->nullable();
             $table->string('First_Name');
             $table->string('Last_Name');
-            $table->string('google_id')->unique()->nullable(); // Ensure unique Google IDs
+            $table->string('google_id')->nullable()->change();
             $table->string('password')->nullable();
-            $table->json('address')->nullable(); 
+            $table->json('address')->nullable();
             $table->integer('Points')->default(0);
             $table->string('avatar')->nullable();
             $table->boolean('isAdmin')->default(false);
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        
+
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
@@ -49,6 +49,5 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
-       
     }
 };

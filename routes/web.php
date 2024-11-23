@@ -39,6 +39,9 @@ Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogl
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('categories.search');
 Route::get('users/search', [UserController::class, 'search'])->name('users.search');
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
+Route::get('/messages/search', [MessageController::class, 'search'])->name('messages.search');
+Route::post('/messages/mark-read', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
+
 
 // User Profile Routes
 Route::middleware('auth', 'role:user')->group(function () {
@@ -52,6 +55,7 @@ Route::middleware('auth', 'role:user')->group(function () {
     })->name('profile.wishlist');
 });
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
+Route::get('/users/export', [UserController::class, 'exportCsv'])->name('users.export');
 
 // Home Page
 Route::get('/home', function () {
@@ -95,3 +99,4 @@ Route::get('/filter/men', [MenController::class, 'filterProducts'])->name('men.f
 Route::get('/filter/women', [WomenController::class, 'filterProducts'])->name('women.filter.products');
 
 Route::resource('items', ProductController::class);
+

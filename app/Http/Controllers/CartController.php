@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Contact;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class ContactController extends Controller
+use Illuminate\Http\Request;
+
+class CartController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return view('contactus');
+        //
     }
 
     /**
@@ -25,24 +27,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'message' => 'required|string',
-        ]);
-
-        $contact = new Contact();
-        $contact->Full_Name = $request->full_name;
-        $contact->Email = $request->email;
-        $contact->Message = $request->message;
-
-        if (Auth::check()) {
-            $contact->ContactedBy = Auth::id();
-        }
-
-        $contact->save();
-
-        return redirect()->back()->with('success', 'Your message has been sent successfully!');
+        //
     }
 
     /**

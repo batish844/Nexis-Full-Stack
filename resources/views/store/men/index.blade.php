@@ -63,10 +63,7 @@
         <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="dynamic-products">
 
         </div>
-
-
-
-
+        
     </div>
 </div>
 @endsection
@@ -80,6 +77,7 @@
 
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         let sliderOne = document.getElementById("slider-1");
@@ -185,6 +183,7 @@
 
         updateProducts();
         initializeCarousel(); // Initialize carousels when page loads
+
     });
 </script>
 @endpush

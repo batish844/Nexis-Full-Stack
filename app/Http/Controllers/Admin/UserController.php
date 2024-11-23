@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UserController extends Controller
 {
@@ -62,6 +63,47 @@ class UserController extends Controller
         // Return the full view with the necessary data
         return view('admin.users.index', compact('users', 'role', 'status', 'search', 'nameOrder'));
     }
+    public function exportCsv()
+    {
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=users.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0",
+        ];
+
+        $callback = function () {
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, ['First Name', 'Last Name', 'Email', 'Phone Number', 'Address','Status', 'Role', 'Points', 'Item Count', 'Date Registered']);
+
+            $users = User::all();
+            foreach ($users as $user) {
+                $address = json_decode($user->address);
+                $user->Full_Address = $this->concatAddress($address);
+            }
+
+            foreach ($users as $user) {
+                fputcsv($file, [
+                    $user->First_Name,
+                    $user->Last_Name,
+                    $user->email,
+                    $user->Phone_Number,
+                    $user->Full_Address,
+                    $user->isActive ? 'Activated' : 'Deactivated',
+                    $user->isAdmin ? 'Admin' : 'User',
+                    $user->points, // Assuming 'points' is a column in the users table
+                    $user->orders_count, // Assuming 'items' is a relationship in the User model
+                    $user->created_at->format('Y-m-d'), // Date registered
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return new StreamedResponse($callback, 200, $headers);
+    }
 
     /**
      * Show the form for creating a new user.
@@ -101,21 +143,21 @@ class UserController extends Controller
      * Display the specified user.
      */
     public function show(string $UserID)
-{
-    // Fetch the user from the database with orders count
-    $user = User::withCount('orders')->findOrFail($UserID);
+    {
+        // Fetch the user from the database with orders count
+        $user = User::withCount('orders')->findOrFail($UserID);
 
-    // Decode the address JSON
-    $address = json_decode($user->address);
+        // Decode the address JSON
+        $address = json_decode($user->address);
 
-    // Concatenate the address fields
-    $user->Full_Address = $this->concatAddress($address);
+        // Concatenate the address fields
+        $user->Full_Address = $this->concatAddress($address);
 
-    // Concatenate the full name
-    $user->Full_Name = "{$user->First_Name} {$user->Last_Name}";
+        // Concatenate the full name
+        $user->Full_Name = "{$user->First_Name} {$user->Last_Name}";
 
-    return view('admin.users.show', compact('user'));
-}
+        return view('admin.users.show', compact('user'));
+    }
 
 
     private function concatAddress($address)
@@ -123,10 +165,9 @@ class UserController extends Controller
         // Check if the address object is valid and then concatenate
         if (is_object($address)) {
             return trim(
-                ($address->street_address ? $address->street_address . ', ' : '') .
-                ($address->building ? $address->building . ', ' : '') .
-                ($address->city ?? '')
-                ,
+                ($address->street_address ?? '') .
+                    ($address->building ?? '') .
+                    ($address->city ?? ''),
                 ', '
             );
         }
