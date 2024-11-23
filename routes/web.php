@@ -13,7 +13,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
-use App\Http\Controllers\HomeController;
 use App\Models\Contact;
 use App\Http\Controllers\ReviewController;
 
@@ -43,9 +42,9 @@ Route::get('/categories/search', [CategoryController::class, 'search'])->name('c
 Route::get('users/search', [UserController::class, 'search'])->name('users.search');
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 Route::get('/messages/search', [MessageController::class, 'search'])->name('messages.search');
-Route::get('/orders/search', [OrderController::class, 'search'])->name('orders.search');
 
 
+// User Profile Routes
 Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -59,12 +58,15 @@ Route::middleware('auth', 'role:user')->group(function () {
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 Route::get('/users/export', [UserController::class, 'exportCsv'])->name('users.export');
 Route::get('/messages/export', [MessageController::class, 'exportCsv'])->name('messages.export');
-Route::get('/orders/export', [OrderController::class, 'exportCsv'])->name('orders.export');
 
+// Home Page
+Route::get('/home', function () {
+    $slides = [['label' => 'women', 'url' => 'women', 'image' => 'h1.webp'], ['label' => 'men', 'url' => 'men', 'image' => 'h2.webp'], ['label' => 'Offers', 'url' => 'women', 'image' => 'h3.webp']];
+    $items = [['url' => 'men', 'image' => 'img/home/c1.jpg', 'label' => "Nexus Original's Men Shirt"], ['url' => 'women', 'image' => 'img/home/I3.jpg', 'label' => "Nexus Original's Women Shirt"], ['url' => 'men', 'image' => 'img/home/c3.jpg', 'label' => "Nexus Original's Men Shirt"]];
+    return view('home', compact('items', 'slides'));
+})->name('home');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
+// Static Pages Routes
 Route::get('/about-us', function () {
     return view('about');
 });
