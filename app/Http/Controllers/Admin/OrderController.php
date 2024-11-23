@@ -29,7 +29,7 @@ class OrderController extends Controller
             $order->TotalPrice = $totalPrice;
             $order->save();
         });
-            
+
 
         return view('admin.orders.index', compact('orders'));
     }
