@@ -14,15 +14,22 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Order::with('user')->orderBy('DateTime', 'desc');
+        $query = Order::with(['user', 'orderItems.item'])->orderBy('created_at', 'desc');
 
         if ($request->has('email') && $request->email) {
             $query->whereHas('user', function ($q) use ($request) {
                 $q->where('Email', $request->email);
             });
         }
-
         $orders = $query->get();
+        $orders->each(function ($order) {
+            $totalPrice = $order->orderItems->sum(function ($orderItem) {
+                return $orderItem->Quantity * $orderItem->item->Price;
+            });
+            $order->TotalPrice = $totalPrice;
+            $order->save();
+        });
+
 
         return view('admin.orders.index', compact('orders'));
     }
