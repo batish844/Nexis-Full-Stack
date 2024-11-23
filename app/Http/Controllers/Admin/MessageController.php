@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MessageController extends Controller
 {
@@ -12,6 +13,39 @@ class MessageController extends Controller
     {
         return view('admin.messages.index');
     }
+
+    public function exportCsv()
+    {
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=messages.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0",
+        ];
+
+        $callback = function () {
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, ['Name', 'Email', 'Message', 'Status', 'Received At']);
+
+            $messages = Contact::all();
+            foreach ($messages as $message) {
+                fputcsv($file, [
+                    $message->Full_Name,
+                    $message->Email,
+                    $message->Message,
+                    $message->is_read ? 'Read' : 'Unread',
+                    $message->created_at ? $message->created_at->format('Y-m-d') : '####',
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return new StreamedResponse($callback, 200, $headers);
+    }
+
     public function search(Request $request)
     {
         $query = Contact::query();
@@ -39,7 +73,7 @@ class MessageController extends Controller
         $message->is_read = !$message->is_read;
         $message->save();
 
-        return response()->json(['status' => 'success']);
+        return redirect()->back()->with('success', 'Message status updated successfully.');
     }
 
     /**
@@ -88,6 +122,6 @@ class MessageController extends Controller
         $message = Contact::findOrFail($id);
         $message->delete();
 
-        return redirect()->route('admin.messages.index')->with('success', 'Message deleted successfully.');
+        return redirect()->route('messages.index')->with('success', 'Message deleted successfully.');
     }
 }

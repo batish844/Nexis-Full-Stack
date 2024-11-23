@@ -27,9 +27,12 @@
                 <option value="Read">Read</option>
             </select>
         </div>
+        <button id="download-csv" class="px-4 py-2 w-full sm:w-48 bg-gray-600 text-white font-semibold rounded-lg shadow hover:bg-gray-500">
+            Download CSV
+        </button>
     </div>
 
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="bg-white rounded-lg shadow overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200 shadow-lg rounded-lg overflow-x-auto text-center">
             <thead class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
                 <tr class="text-sm uppercase tracking-wider">
@@ -116,6 +119,9 @@
                 $(this).remove();
             });
         }
+        $('#download-csv').on('click', function() {
+            window.location.href = '{{ route("messages.export") }}';
+        });
 
         function performSearch() {
             let search = $('#search').val();
@@ -129,6 +135,7 @@
                 },
                 success: function(response) {
                     $('#table-body-ajax').html(response);
+                    console.log('Search performed successfully');
                 },
                 error: function(xhr) {
                     console.error('AJAX error:', xhr.responseText);
@@ -136,23 +143,7 @@
             });
         }
 
-        $(document).on('click', '.mark-read-button', function() {
-            let messageId = $(this).data('message-id');
-            $.ajax({
-                url: '{{ route("messages.markAsRead") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: messageId
-                },
-                success: function(response) {
-                    performSearch();
-                },
-                error: function(xhr) {
-                    console.error('AJAX error:', xhr.responseText);
-                }
-            });
-        });
+
     });
 </script>
 @endsection

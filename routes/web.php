@@ -29,6 +29,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('analytics', AnalyticsController::class);
     Route::resource('messages', MessageController::class);
+    Route::put('/messages/mark-read/{id}', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
 });
@@ -40,7 +41,6 @@ Route::get('/categories/search', [CategoryController::class, 'search'])->name('c
 Route::get('users/search', [UserController::class, 'search'])->name('users.search');
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 Route::get('/messages/search', [MessageController::class, 'search'])->name('messages.search');
-Route::post('/messages/mark-read', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
 
 
 // User Profile Routes
@@ -56,6 +56,7 @@ Route::middleware('auth', 'role:user')->group(function () {
 });
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 Route::get('/users/export', [UserController::class, 'exportCsv'])->name('users.export');
+Route::get('/messages/export', [MessageController::class, 'exportCsv'])->name('messages.export');
 
 // Home Page
 Route::get('/home', function () {
@@ -89,14 +90,11 @@ Route::get('/checkout', function () {
 
 Route::post('/profile/account', [ProfileController::class, 'uploadAvatar'])->name('profile.avatar.upload');
 Route::delete('/profile/account', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.delete');
-
-Route::fallback(function () {
-    return response()->view('404', [], 404);
-});
-require __DIR__ . '/auth.php';
-
 Route::get('/filter/men', [MenController::class, 'filterProducts'])->name('men.filter.products');
 Route::get('/filter/women', [WomenController::class, 'filterProducts'])->name('women.filter.products');
 
 Route::resource('items', ProductController::class);
-
+Route::fallback(function () {
+    return response()->view('404', [], 404);
+});
+require __DIR__ . '/auth.php';

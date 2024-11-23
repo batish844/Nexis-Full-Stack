@@ -3,7 +3,7 @@
     <td class="px-6 py-4 text-center">
         <div class="flex items-center justify-center">
             <div class="flex-shrink-0 h-10 w-10">
-                <img class="h-10 w-10 rounded-lg object-cover" src="/{{ $product->Photo[0] }}" alt="{{ $product->Name }}">
+                <img class="h-10 w-10 rounded-lg object-cover" src="{{ $product->Photo[0] }}" alt="{{ $product->Name }}">
             </div>
         </div>
     </td>
