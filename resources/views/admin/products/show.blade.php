@@ -15,7 +15,7 @@
         <h1 class="text-4xl font-extrabold text-gray-800">
             <span class="text-blue-500">{{ $product->Name }}</span>
         </h1>
-        <a href="{{ route('products.index') }}"
+        <a href="{{ url()->previous() }}"
             class="text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
             ← Back
         </a>

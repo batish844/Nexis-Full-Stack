@@ -29,34 +29,35 @@
                     $navItems = [
                     ['name' => 'Analytics',
                     'icon' => '/storage/img/icons/analytics.png',
-                    'route' => 'analytics.index',],
+                    'route' => 'analytics.*',], // Wildcard for Analytics
                     ['name' => 'Categories',
                     'icon' => '/storage/img/icons/categories.png',
-                    'route' => 'categories.index',],
+                    'route' => 'categories.*',], // Wildcard for Categories
                     ['name' => 'Products',
                     'icon' => '/storage/img/icons/item.png',
-                    'route' => 'products.index',],
+                    'route' => 'products.*',], // Wildcard for Products
                     ['name' => 'Users',
                     'icon' => '/storage/img/icons/users.png',
-                    'route' => 'users.index',],
+                    'route' => 'users.*',], // Wildcard for Users
                     ['name' => 'Orders',
                     'icon' => '/storage/img/icons/orders.png',
-                    'route' => 'orders.index',],
+                    'route' => 'orders.*',], // Wildcard for Orders
                     ['name' => 'Messages',
                     'icon' => '/storage/img/icons/messages.png',
-                    'route' => 'messages.index',],
+                    'route' => 'messages.*',], // Wildcard for Messages
                     ];
                     @endphp
 
                     @foreach ($navItems as $item)
-                    <a href="{{ route($item['route']) }}"
+                    <a href="{{ route(str_replace('.*', '.index', $item['route'])) }}"
                         class="{{ request()->routeIs($item['route']) ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }} 
-               flex items-center px-6 py-3 rounded-md transition-colors">
+            flex items-center px-6 py-3 rounded-md transition-colors">
                         <img src="{{ $item['icon'] }}" alt="{{ $item['name'] }} Icon" class="h-6 w-6 mr-4">
                         <span class="text-lg font-bold text-white">{{ $item['name'] }}</span>
                     </a>
                     @endforeach
                 </nav>
+
                 <div class="mt-14 mx-2">
                     <a href="{{ route('home') }}" class="flex items-center px-4 py-2 bg-blue-600 text-white hover:bg-blue-900 rounded-full transition-colors shadow-lg w-full">
                         Return to Home

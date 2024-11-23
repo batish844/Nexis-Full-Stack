@@ -6,7 +6,7 @@
         <h1 class="text-3xl font-bold text-gray-800">
             <span class="text-blue-600">{{ $user->Full_Name }}</span>
         </h1>
-        <a href="{{ route('products.index') }}"
+        <a href="{{ url()->previous() }}"
             class="text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400">
             ← Back
         </a>
@@ -62,11 +62,14 @@
                     <p class="text-gray-700">{{ $user->orders_count }}</p>
                 </div>
                 <div>
-                    <a href="{{ route('orders.index', ['userID' => $user->UserID]) }}"
+                    <a href="{{ route('orders.index', ['email' => $user->email]) }}"
                         class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         See Orders
+                        
                     </a>
                 </div>
+
+
             </div>
 
             <div>
