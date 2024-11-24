@@ -33,9 +33,24 @@ class ProfileController extends Controller
         return view('profile.profile', compact('user'));
     }
     public function order()
-    {
-        return view('profile.order');
-    }
+{
+    $user = auth()->user();
+
+    // Fetch the orders with their items and calculate TotalPrice dynamically
+    $orders = $user->orders()->with(['orderItems.item'])->get();
+
+    $orders->each(function ($order) {
+        // Calculate the total price for the order
+        $totalPrice = $order->orderItems->sum(function ($orderItem) {
+            return $orderItem->Quantity * $orderItem->item->Price;
+        });
+
+        $order->TotalPrice = $totalPrice;
+    });
+
+    return view('profile.order', compact('orders'));
+}
+
 
     public function edit(Request $request): View
     {
@@ -54,30 +69,30 @@ class ProfileController extends Controller
         $primaryKey = 'UserID'; // Replace 'UserID' with your actual primary key column name
 
         $validatedData = $request->validate([
-            'First_Name'     => 'required|string|max:255',
-            'Last_Name'      => 'required|string|max:255',
-            'email'          => [
+            'First_Name' => 'required|string|max:255',
+            'Last_Name' => 'required|string|max:255',
+            'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
                 \Illuminate\Validation\Rule::unique('users', 'email')->ignore($user->$primaryKey, $primaryKey),
             ],
-            'Phone_Number'   => 'required|string|max:20',
-            'city'           => 'nullable|string|max:255',
+            'Phone_Number' => 'required|string|max:20',
+            'city' => 'nullable|string|max:255',
             'street_address' => 'nullable|string|max:255',
-            'building'       => 'nullable|string|max:255',
+            'building' => 'nullable|string|max:255',
         ]);
 
         $user->First_Name = $validatedData['First_Name'];
-        $user->Last_Name  = $validatedData['Last_Name'];
-        $user->email      = $validatedData['email'];
+        $user->Last_Name = $validatedData['Last_Name'];
+        $user->email = $validatedData['email'];
         $user->Phone_Number = $validatedData['Phone_Number'];
 
         $addressFields = [
             'street_address' => $validatedData['street_address'] ?? null,
-            'building'       => $validatedData['building'] ?? null,
-            'city'           => $validatedData['city'] ?? null,
+            'building' => $validatedData['building'] ?? null,
+            'city' => $validatedData['city'] ?? null,
         ];
 
         foreach ($addressFields as $key => $value) {
@@ -144,15 +159,16 @@ class ProfileController extends Controller
         return redirect()->back()->with('status', 'avatar-deleted');
     }
 
+
     /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
     {
-    
+
         if (is_null($request->user()->google_id)) {
             $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+                'password' => ['required', 'current_password'],
             ]);
         }
 

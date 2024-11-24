@@ -80,8 +80,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/about-us', function () {
     return view('about');
 });
-Route::get('/women', [WomenController::class, 'index']);
-Route::get('/men', [MenController::class, 'index']);
+Route::get('/women', [WomenController::class, 'index'])->name('store.women');
+Route::get('/men', [MenController::class, 'index'])->name('store.men');
 Route::get('/store/{id}', [StoreController::class, 'show'])->name('store.show');
 Route::post('store/{id}/reviews', [StoreController::class, 'store'])->name('reviews.store');
 Route::patch('store/{id}/reviews', [StoreController::class, 'update'])->name('reviews.update');
