@@ -18,6 +18,7 @@ use App\Models\Contact;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\storeController;
 use App\Http\Controllers\CartController;
+
 use App\Http\Controllers\WishlistController;
 
 Route::get('/', function () {
@@ -62,6 +63,8 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/account', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
+    Route::get('/profile/orders/{id}', [ProfileController::class, 'orderDetails'])->name('profile.orderDetails');
+
     Route::get('/profile/wishlist', function () {
         return view('profile.wishlist');
     })->name('profile.wishlist');
@@ -83,8 +86,8 @@ Route::get('/wishlist', function () {
 Route::get('/about-us', function () {
     return view('about');
 });
-Route::get('/women', [WomenController::class, 'index']);
-Route::get('/men', [MenController::class, 'index']);
+Route::get('/women', [WomenController::class, 'index'])->name('store.women');
+Route::get('/men', [MenController::class, 'index'])->name('store.men');
 Route::get('/store/{id}', [StoreController::class, 'show'])->name('store.show');
 Route::post('store/{id}/reviews', [StoreController::class, 'store'])->name('reviews.store');
 Route::patch('store/{id}/reviews', [StoreController::class, 'update'])->name('reviews.update');

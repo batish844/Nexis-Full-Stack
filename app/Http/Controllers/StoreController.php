@@ -12,7 +12,7 @@ class StoreController extends Controller
     /**
      * Display reviews for a specific item.
      */
-    
+
     public function show($id)
     {
         $item = Item::findOrFail($id);
@@ -39,6 +39,9 @@ class StoreController extends Controller
     }
     public function store(Request $request, $id)
     {
+        if (!auth()->check()) {
+            return redirect()->back()->with('error', 'You need to log in to add a review.');
+        }
         $request->validate([
             'Stars' => 'required|integer|min:1|max:5',
             'Comment' => 'nullable|string|max:500',

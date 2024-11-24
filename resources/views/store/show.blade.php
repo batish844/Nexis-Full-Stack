@@ -36,7 +36,10 @@
                 <h1 class="text-4xl font-extrabold text-gray-800 mb-4">{{ $item->Name }}</h1>
 
                 <p class="text-2xl font-bold text-blue-600 mt-4">Price: ${{ number_format($item->Price, 2) }}</p>
-
+                <div class="w-full flex items-center space-x-2 mt-2">
+                    <i class="fas fa-trophy text-yellow-400 text-xl"></i>
+                    <p class="text-2xl font-bold text-yellow-400">{{ $item->Points }}</p>
+                </div>
                 <!-- Product Description Section -->
                 <div class="mt-8">
                     <h3 class="text-xl font-semibold text-gray-700">Description</h3>
@@ -65,9 +68,14 @@
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-
+                <!-- Stock Availability -->
+                <div class="mt-8">
+                    <p class="text-xl font-semibold text-gray-700">
+                        <span class="text-blue-600 font-bold">{{ $item->Quantity }}</span> items available in stock
+                    </p>
+                </div>
                 <!-- Add to Cart with Counter -->
-                <div class="mt-8 flex items-center space-x-4">
+                <div class="mt-4 flex items-center space-x-4">
                     <!-- Counter -->
                     <div class="flex items-center border border-gray-300 rounded-lg">
                         <button id="decrement"
@@ -133,7 +141,29 @@
             <!-- Review Submission Form -->
             <div class="mt-10 bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Add Your Review</h3>
-                <form
+                <!-- Flash Message -->
+                @if (session('success'))
+                    <div id="flashMessage"
+                        class="flash-message w-fit mb-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+                        {{ session('success') }}
+                    </div>
+                @elseif(session('error'))
+                    <div id="flashMessage"
+                        class="flash-message w-fit mb-4 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div id="validationErrors"
+                        class="flash-message w-fit mb-4 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+                        <ul class="list-disc ml-5">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <form id="reviewForm"
                     action="{{ $existingReview ? route('reviews.update', [$item->ItemID, auth()->id()]) : route('reviews.store', $item->ItemID) }}"
                     method="POST" class="space-y-6">
                     @csrf
@@ -162,7 +192,9 @@
                     <!-- Comment -->
                     <label class="block text-lg font-semibold text-gray-700">Comment</label>
                     <div class="flex flex-col items-end w-full space-y-5">
-                        <textarea name="Comment" rows="4" class="w-full border-gray-300 rounded-lg">{{ $existingReview->Comment ?? '' }}</textarea>
+                        <textarea id="commentInput" name="Comment" rows="4" class="w-full border-gray-300 rounded-lg">{{ $existingReview->Comment ?? '' }}</textarea>
+                        <span id="commentError" class="text-red-500 text-sm hidden self-start">Please enter a message for
+                            your review.</span>
                         <button type="submit"
                             class="w-1/4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-all">
                             {{ $existingReview ? 'Edit Review' : 'Submit Review' }}
@@ -222,9 +254,16 @@
             <button id="closeZoomModal" class="absolute top-4 right-4 text-white text-2xl">&times;</button>
         </div>
     </div>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
+            if ($('.flash-message').length) {
+                $('.flash-message').delay(3000).fadeOut(500, function() {
+                    $(this).remove();
+                });
+            }
             // Add click event listener to size labels
             $('.size-label').click(function() {
                 const $checkbox = $(this).find('.size-checkbox'); // Hidden checkbox
@@ -244,7 +283,7 @@
             $('#increment').click(function() {
                 const quantity = $('#quantity');
                 const currentVal = parseInt(quantity.val());
-                if (currentVal < 5) {
+                if (currentVal < {{ $item->Quantity }}) {
                     quantity.val(currentVal + 1);
                 }
             });
@@ -258,30 +297,50 @@
                 }
             });
 
-            const $stars = $('#starRating .star');
-            const $selectedStarInput = $('#selectedStar');
-            const existingRating = parseInt($selectedStarInput.val(), 10);
+            const $stars = $('#starRating .star'); // Select all star buttons
+            const $selectedStarInput = $('#selectedStar'); // Hidden input for storing the selected star value
 
-            // Prefill stars if there's an existing rating
-            if (existingRating) {
+            // Function to refresh star ratings based on the input value
+            const refreshStars = () => {
+                const currentRating = parseInt($selectedStarInput.val(), 10) || 0;
+
+                // Reset all stars to unfilled
                 $stars.each(function(index) {
-                    if (index < existingRating) {
-                        $(this).addClass('text-yellow-300').removeClass('text-gray-300');
+                    if (index < currentRating) {
+                        $(this).addClass('text-yellow-400').removeClass('text-gray-300');
+                    } else {
+                        $(this).addClass('text-gray-300').removeClass('text-yellow-400');
                     }
                 });
-            }
+            };
 
-            // Add click event listener to stars
+            // Initial refresh based on existing rating
+            refreshStars();
+
+            // Handle star button clicks
             $stars.on('click', function() {
-                const rating = $(this).index() + 1; // Get the index of the clicked star and add 1
-                $selectedStarInput.val(rating); // Set hidden input value
+                const rating = $(this).data('value'); // Get the data-value of the clicked star
+                $selectedStarInput.val(rating); // Update the hidden input value
 
-                // Highlight the selected stars
-                $stars.each(function(index) {
-                    if (index < rating) {
-                        $(this).addClass('text-yellow-300').removeClass('text-gray-300');
-                    } else {
-                        $(this).addClass('text-gray-300').removeClass('text-yellow-300');
+                // Refresh the stars after setting the new rating
+                refreshStars();
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('reviewForm');
+                const commentInput = document.getElementById('commentInput');
+                const commentError = document.getElementById('commentError');
+
+                form.addEventListener('submit', function(event) {
+                    // Reset error message
+                    commentError.classList.add('hidden');
+
+                    // Check if the comment input is empty
+                    if (!commentInput.value.trim()) {
+                        event.preventDefault(); // Prevent form submission
+                        commentError.textContent = "Please enter a message for your review.";
+                        commentError.classList.remove('hidden');
+                        commentInput.focus();
                     }
                 });
             });
