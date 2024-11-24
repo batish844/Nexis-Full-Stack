@@ -16,7 +16,8 @@ use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Models\Contact;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\storeController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Mail;
 
@@ -44,7 +45,6 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/messages/mark-read/{id}', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
-
 });
 Route::get('/gender/{gender}', [CategoryController::class, 'getCategoriesByGender']);
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
@@ -109,6 +109,11 @@ Route::post('/profile/account', [ProfileController::class, 'uploadAvatar'])->nam
 Route::delete('/profile/account', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.delete');
 
 Route::resource('items', ProductController::class);
+
+Route::get('/checkout', [PaymentController::class, 'checkoutForm'])->name('checkout.form');
+Route::post('/checkout/session', [PaymentController::class, 'createCheckoutSession'])->name('checkout.session');
+Route::get('/checkout/success', [PaymentController::class, 'checkoutSuccess'])->name('checkout.success');
+Route::get('/checkout/cancel', [PaymentController::class, 'checkoutCancel'])->name('checkout.cancel');
 Route::fallback(function () {
     return response()->view('404', [], 404);
 });
