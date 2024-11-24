@@ -12,19 +12,22 @@ class ResetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $url; // The reset URL
-    public $name; // The user's name
+    public $url;
+    public $name;
+    public $email;
 
     /**
      * Create a new message instance.
-     * 
+     *
      * @param string $url
      * @param string $name
+     * @param string $email
      */
-    public function __construct($url, $name)
+    public function __construct($url, $name, $email)
     {
         $this->url = $url;
         $this->name = $name;
+        $this->email = $email;
     }
 
     /**
@@ -43,7 +46,7 @@ class ResetPasswordMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.reset-password', // Path to your Blade template
+            view: 'emails.reset-password',
             with: [
                 'url' => $this->url,
                 'name' => $this->name,

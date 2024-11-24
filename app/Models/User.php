@@ -36,10 +36,12 @@ class User extends Authenticatable
     ];
     public function sendPasswordResetNotification($token)
     {
-        $resetUrl = url('/reset-password/' . $token);
+        $resetUrl = url('/reset-password/' . $token) . '?email=' . urlencode($this->email);
         $userName = trim($this->First_Name . ' ' . $this->Last_Name) ?: 'Valued Customer';
-        Mail::to($this->email)->send(new \App\Mail\ResetPasswordMail($resetUrl, $userName));
+
+        Mail::to($this->email)->send(new \App\Mail\ResetPasswordMail($resetUrl, $userName, $this->email));
     }
+
 
 
 

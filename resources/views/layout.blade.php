@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Lato link-->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <title>@yield('title', 'Nexus')</title>
 
     <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
@@ -50,7 +52,10 @@
     </style>
 </head>
 
-<body>
+<body class="font-lato bg-[#F9FFFE]">
+
+
+
     <header class="flex justify-center p-4">
         <nav
             class="nav hidden lg:flex items-center bg-white rounded-full shadow-lg w-4/5 max-w-5xl justify-center transition duration-300 ease-in-out py-4 px-10">
@@ -99,6 +104,15 @@
                 @else
                     <a href="{{ route('login') }}" class="nav-items transition-colors hover:text-white">Sign In</a>
                 @endif
+            </div>
+            <div id="icon" class="ml-6">
+                <a href="/wishlist" id="wishlist-icon" class="relative inline-block">
+                    <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
+                    state="morph-heart" colors="primary:#c71f16"
+                    style="width:35px;height:35px"></lord-icon>
+                    <span id="wishlist-count"
+                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                </a>
             </div>
             <div id="icon" class="ml-6">
                 <a href="/cart" id="cart-icon" class="relative inline-block">
@@ -152,6 +166,15 @@
                         <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white"
                             onclick="toggleMenu()">Sign In</a>
                     @endif
+                </div>
+                <div class="mt-8 mb-4 flex justify-center">
+                    <a href="{{ url('Wishlist') }}" id="wishlist-icon" class="relative inline-block">
+                        <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
+                        state="morph-heart" colors="primary:#c71f16"
+                        style="width:35px;height:35px"></lord-icon>
+                        <span id="wishlist-count"
+                            class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                    </a>
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
                     <a href="{{ url('Cart') }}" id="cart-icon" class="relative inline-block">
