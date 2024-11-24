@@ -2,9 +2,8 @@
 
 <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col h-full relative group">
     <!-- Wishlist Icon -->
-    <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-        <button class="wishlist-btn text-gray-400 hover:text-red-500 focus:outline-none"
-            data-id="{{ $item->ItemID }}">
+    <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"> 
+        <button class="wishlist-btn text-gray-400 hover:text-red-500 focus:outline-none" data-id="{{ $item->ItemID }}">
             <i class="fas fa-heart text-2xl"></i>
         </button>
     </div>

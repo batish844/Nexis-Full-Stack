@@ -18,15 +18,8 @@ use App\Models\Contact;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\storeController;
 use App\Http\Controllers\CartController;
-use Illuminate\Support\Facades\Mail;
 
-Route::get('/test-email', function () {
-    Mail::raw('This is a test email.', function ($message) {
-        $message->to('batish844@gmail.com')->subject('Test Email');
-    });
-
-    return 'Email sent!';
-});
+use App\Http\Controllers\WishlistController;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -85,8 +78,10 @@ Route::get('/orders/export', [OrderController::class, 'exportCsv'])->name('order
 
 // Home Page
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
+//Wishlist 
+Route::get('/wishlist', function () {
+    return view('wishlist');
+});
 // Static Pages Routes
 Route::get('/about-us', function () {
     return view('about');
