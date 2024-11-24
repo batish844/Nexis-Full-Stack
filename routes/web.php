@@ -16,7 +16,7 @@ use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Models\Contact;
 use App\Http\Controllers\ReviewController;
-
+use App\Http\Controllers\storeController;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -47,6 +47,8 @@ Route::get('users/search', [UserController::class, 'search'])->name('users.searc
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 Route::get('/messages/search', [MessageController::class, 'search'])->name('messages.search');
 Route::get('/orders/search', [OrderController::class, 'search'])->name('orders.search');
+Route::get('/men/search', [MenController::class, 'filterProducts'])->name('men.filter.products');
+Route::get('/women/search', [WomenController::class, 'filterProducts'])->name('women.filter.products');
 
 
 // User Profile Routes
@@ -76,11 +78,9 @@ Route::get('/about-us', function () {
 });
 Route::get('/women', [WomenController::class, 'index']);
 Route::get('/men', [MenController::class, 'index']);
-Route::get('/men/{id}', [MenController::class, 'show'])->name('men.show');
-
-Route::get('men/{id}/reviews', [ReviewController::class, 'show'])->name('reviews.show');
-Route::post('men/{id}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-Route::patch('men/{id}/reviews', [ReviewController::class, 'update'])->name('reviews.update');
+Route::get('/store/{id}', [StoreController::class, 'show'])->name('store.show');
+Route::post('store/{id}/reviews', [StoreController::class, 'store'])->name('reviews.store');
+Route::patch('store/{id}/reviews', [StoreController::class, 'update'])->name('reviews.update');
 
 Route::get('/contact-us', [ContactController::class, 'index']);
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contacts.store');
@@ -94,8 +94,6 @@ Route::get('/checkout', function () {
 
 Route::post('/profile/account', [ProfileController::class, 'uploadAvatar'])->name('profile.avatar.upload');
 Route::delete('/profile/account', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.delete');
-Route::get('/filter/men', [MenController::class, 'filterProducts'])->name('men.filter.products');
-Route::get('/filter/women', [WomenController::class, 'filterProducts'])->name('women.filter.products');
 
 Route::resource('items', ProductController::class);
 Route::fallback(function () {

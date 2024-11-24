@@ -24,10 +24,6 @@ class MenController extends Controller
 
         return view('store.men.index', compact('items', 'categories'));
     }
-
-    /**
-     * Filter products based on price range, category, and search query.
-     */
     public function filterProducts(Request $request)
     {
         $minPrice = $request->input('minPrice', 0);
@@ -54,7 +50,10 @@ class MenController extends Controller
 
         return view('store.cards', compact('items'));
     }
-
+    public function show(string $id)
+    {
+        //
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -74,30 +73,7 @@ class MenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-        $item = Item::findOrFail($id);
-        
 
-        // Fetch all reviews for the item
-        $reviews = $item->reviews()->with('user')->get();
-
-        // Find the existing review for the authenticated user
-        $existingReview = $item->reviews()->where('UserID', auth()->id())->first();
-
-        // Calculate star distribution
-        $starDistribution = [
-            5 => $reviews->where('Stars', 5)->count(),
-            4 => $reviews->where('Stars', 4)->count(),
-            3 => $reviews->where('Stars', 3)->count(),
-            2 => $reviews->where('Stars', 2)->count(),
-            1 => $reviews->where('Stars', 1)->count(),
-        ];
-
-        $totalReviews = $reviews->count();
-
-        return view('store.men.show', compact('item', 'reviews', 'starDistribution', 'totalReviews', 'existingReview'));
-    }
     /**
      * Show the form for editing the specified resource.
      */

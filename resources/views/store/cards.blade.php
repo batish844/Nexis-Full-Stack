@@ -23,7 +23,7 @@
             <i class="fas fa-chevron-right text-black"></i>
         </button>
     </div>
-    <a href="{{ route('men.show', ['id' => $item->ItemID, 'photos' => json_encode($item->Photo)]) }}">
+    <a href="{{ route('store.show', ['id' => $item->ItemID, 'photos' => json_encode($item->Photo)]) }}">
         <!-- Product Details -->
         <div class="p-4 flex flex-col flex-grow">
             <h3 class="font-semibold text-lg text-gray-800">{{ $item->Name }}</h3>
