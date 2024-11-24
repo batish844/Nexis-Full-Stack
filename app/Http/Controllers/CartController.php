@@ -73,4 +73,5 @@ class CartController extends Controller
 
         return view('cart', compact('cartItems','Phone_Number', 'totalPrice', 'totalPoints', 'address', 'availablePoints'));
     }
+    
 }

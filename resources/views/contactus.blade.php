@@ -61,18 +61,53 @@
         </iframe>
     </div>
 
-    <div class="w-full md:w-1/2 text-center md:text-left space-y-3">
-        <h2 class="text-2xl font-bold text-gray-900">Our Location</h2>
-        <p class="text-md text-gray-600">Visit us at our office or contact us through the details below.</p>
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">Lebanon Office</h3>
-            <p class="text-gray-700 mb-1"><strong>Phone:</strong> +961 81777256</p>
-            <p class="text-gray-700 mb-1"><strong>Address:</strong> Beirut, Lebanon 1600</p>
-            <p class="text-gray-700"><strong>Email:</strong> <a href="mailto:support@nexis.com" class="text-blue-600 underline hover:text-blue-800 transition duration-200">support@nexis.com</a></p>
-        </div>
-    </div>
+    <div class="w-full md:w-1/2 text-center md:text-left space-y-5">
+    <!-- Section Title -->
+    <h2 class="text-3xl font-bold text-gray-900">Our Location</h2>
+    <p class="text-md text-gray-600">Visit us at our office or contact us through the details below.</p>
+    
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+  <!-- Office Location -->
+  <div class="mb-4">
+    <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-x-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+        <path fill-rule="evenodd" d="m9.69 18.933.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 0 0 .281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 1 0 3 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 0 0 2.273 1.765 11.842 11.842 0 0 0 .976.544l.062.029.018.008.006.003ZM10 11.25a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z" clip-rule="evenodd" />
+      </svg>
+      Office Location
+    </h3>
+    <p class="text-gray-700 ml-7"><strong>Address:</strong> 123 Main St, City, Country</p>
+  </div>
+
+  <!-- Phone -->
+  <div class="mb-4">
+    <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-x-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+        <path fill-rule="evenodd" d="M2 3.5A1.5 1.5 0 0 1 3.5 2h1.148a1.5 1.5 0 0 1 1.465 1.175l.716 3.223a1.5 1.5 0 0 1-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 0 0 6.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 0 1 1.767-1.052l3.223.716A1.5 1.5 0 0 1 18 15.352V16.5a1.5 1.5 0 0 1-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 0 1 2.43 8.326 13.019 13.019 0 0 1 2 5V3.5Z" clip-rule="evenodd" />
+      </svg>
+      Contact Details
+    </h3>
+    <p class="text-gray-700 ml-7"><strong>Phone:</strong> +123 456 789</p>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-x-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+        <path fill-rule="evenodd" d="M1 11.27c0-.246.033-.492.099-.73l1.523-5.521A2.75 2.75 0 0 1 5.273 3h9.454a2.75 2.75 0 0 1 2.651 2.019l1.523 5.52c.066.239.099.485.099.732V15a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3.73Zm3.068-5.852A1.25 1.25 0 0 1 5.273 4.5h9.454a1.25 1.25 0 0 1 1.205.918l1.523 5.52c.006.02.01.041.015.062H14a1 1 0 0 0-.86.49l-.606 1.02a1 1 0 0 1-.86.49H8.236a1 1 0 0 1-.894-.553l-.448-.894A1 1 0 0 0 6 11H2.53l.015-.062 1.523-5.52Z" clip-rule="evenodd" />
+      </svg>
+      Email Us
+    </h3>
+    <p class="text-gray-700 ml-7"><strong>Email:</strong> <a href="mailto:support@nexis.com" class="text-blue-600 underline hover:text-blue-800 transition duration-200">support@nexis.com</a></p>
+  </div>
+</div>
+
+</div>
+
 </div>
 <style>
+    Lebanon Office
+    +961 81777256
+    Beirut, Lebanon 1600
     .animate-bounce-custom {
         animation: bounce-custom 2s infinite;
     }

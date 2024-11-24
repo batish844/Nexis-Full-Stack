@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Lato link-->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <title>@yield('title', 'Nexus')</title>
 
     <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
@@ -50,7 +52,10 @@
     </style>
 </head>
 
-<body>
+<body class="font-lato bg-[#F9FFFE]">
+
+
+
     <header class="flex justify-center p-4">
         <nav
             class="nav hidden lg:flex items-center bg-white rounded-full shadow-lg w-4/5 max-w-5xl justify-center transition duration-300 ease-in-out py-4 px-10">
