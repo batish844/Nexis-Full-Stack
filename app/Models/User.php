@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -33,6 +34,14 @@ class User extends Authenticatable
     protected $casts = [
         'Address' => 'array',
     ];
+    public function sendPasswordResetNotification($token)
+    {
+        $resetUrl = url('/reset-password/' . $token);
+        $userName = trim($this->First_Name . ' ' . $this->Last_Name) ?: 'Valued Customer';
+        Mail::to($this->email)->send(new \App\Mail\ResetPasswordMail($resetUrl, $userName));
+    }
+
+
 
     public function orders()
     {

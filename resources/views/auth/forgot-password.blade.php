@@ -14,9 +14,6 @@
         <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
         <input id="email" type="email" name="email" required autocomplete="username"
             class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-        @if ($errors->has('email'))
-            <p class="text-sm text-red-500 mt-1">{{ $errors->first('email') }}</p>
-        @endif
     </div>
 
     <!-- Submit -->
