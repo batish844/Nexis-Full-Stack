@@ -12,11 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cart', function (Blueprint $table) {
+            $table->bigIncrements('CartID');
             $table->foreignId('UserID')->constrained('users', 'UserID')->onDelete('cascade');
             $table->foreignId('ItemID')->constrained('items', 'ItemID')->onDelete('cascade');
-            $table->integer('Quantity');
-            $table->decimal('TotalPrice', 8, 2);
-            $table->primary(['UserID', 'ItemID']);
+            $table->integer('Quantity')->default(1);
             $table->timestamps();
         });
     }

@@ -63,7 +63,7 @@
         <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="dynamic-products">
 
         </div>
-        
+
     </div>
 </div>
 @endsection
@@ -86,11 +86,11 @@
         let maxPriceDisplay = document.getElementById("max-price-display");
         let categoryDropdown = document.getElementById("category-dropdown");
         let searchInput = document.getElementById("search-input");
-        // let noItemsMessage = document.getElementById("no-items-message");
         let sliderTrack = document.querySelector(".slider-track");
         let sliderMaxValue = parseInt(sliderOne.max);
         let minGap = 5;
         let productsContainer = document.getElementById("dynamic-products");
+
         const updateSliderValues = () => {
             if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
                 if (sliderOne === document.activeElement) {
@@ -110,33 +110,36 @@
             let percent2 = (sliderTwo.value / sliderMaxValue) * 100;
             sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}%, #3264fe ${percent1}%, #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
         };
+
         const updateProducts = () => {
             let minPrice = sliderOne.value;
             let maxPrice = sliderTwo.value;
             let categoryId = categoryDropdown.value;
             let searchQuery = searchInput.value;
 
-            $.ajax({
-                url: "{{ route('men.filter.products') }}",
-                method: "GET",
-                data: {
-                    minPrice,
-                    maxPrice,
-                    category: categoryId,
-                    search: searchQuery
-                },
-                success: function(response) {
-                    $('#dynamic-products').html(response);
-                    initializeCarousel();
+            const url = new URL('{{ route("men.filter.products") }}', window.location.origin);
+            url.searchParams.append('minPrice', minPrice);
+            url.searchParams.append('maxPrice', maxPrice);
+            url.searchParams.append('category', categoryId);
+            url.searchParams.append('search', searchQuery);
 
-                },
-                error: function(error) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    productsContainer.innerHTML = html;
+                    initializeCarousel();
+                })
+                .catch(error => {
                     console.error("Error fetching filtered products:", error);
-                }
-            });
+                });
         };
 
-        // Updated Carousel logic initialization
+        let debounceTimer;
+        searchInput.addEventListener("input", () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(updateProducts, 300);
+        });
+
         const initializeCarousel = () => {
             const carousels = document.querySelectorAll(".carousel");
             carousels.forEach((carousel) => {
@@ -157,7 +160,6 @@
                     });
                 };
 
-                // Add event listeners only if buttons exist
                 if (leftButton) {
                     leftButton.addEventListener("click", () => {
                         currentIndex = (currentIndex - 1 + images.length) % images.length;
@@ -171,7 +173,7 @@
                     });
                 }
 
-                updateImage(); // Initialize the carousel with the first image
+                updateImage();
             });
         };
 
@@ -179,11 +181,44 @@
         sliderOne.addEventListener("input", updateSliderValues);
         sliderTwo.addEventListener("input", updateSliderValues);
         categoryDropdown.addEventListener("change", updateProducts);
-        searchInput.addEventListener("input", updateProducts);
 
         updateProducts();
-        initializeCarousel(); // Initialize carousels when page loads
+        initializeCarousel();
 
+        // Event delegation for dynamically added products
+        productsContainer.addEventListener('click', function(event) {
+            const button = event.target.closest('.add-to-cart-btn');
+            if (button) {
+                const itemId = button.dataset.itemId;
+                const quantity = 1; // Default quantity
+
+                fetch('{{ route("cart.add") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            ItemID: itemId,
+                            Quantity: quantity
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            // Optionally update cart count or UI
+                        } else {
+                            alert('Error adding to cart: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error adding to cart:', error);
+                        alert('Error adding to cart');
+                    });
+            }
+        });
     });
 </script>
 @endpush

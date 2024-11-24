@@ -66,10 +66,12 @@
     <script>
         $(document).ready(function() {
 
-            $('#search, #categoryfilter, #availabilityfilter, #genderfilter').on('keyup change input', function() {
-                performSearch();
+            let debounceTimer;
+            $('#search, #genderfilter, #categoryfilter , #availabilityfilter').on('keyup change input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(performSearch, 300);
             });
-            
+
             performSearch();
 
             if ($('.flash-message').length) {

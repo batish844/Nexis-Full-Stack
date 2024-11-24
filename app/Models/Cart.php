@@ -10,15 +10,17 @@ class Cart extends Model
     use HasFactory;
 
     protected $table = 'cart';
-    protected $fillable = ['UserID', 'ItemID', 'Quantity', 'TotalPrice'];
+    protected $primaryKey = 'CartID'; 
+    protected $fillable = ['UserID', 'ItemID', 'Quantity'];
+
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'UserID');
+        return $this->belongsTo(User::class, 'UserID', 'UserID');
     }
 
     public function item()
     {
-        return $this->belongsTo(Item::class, 'ItemID');
+        return $this->belongsTo(Item::class, 'ItemID', 'ItemID');
     }
 }

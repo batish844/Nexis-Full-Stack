@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Review;
+use App\Models\Cart;
 use Illuminate\Http\Request;
+use \Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
     /**
      * Display reviews for a specific item.
      */
-    
+
     public function show($id)
     {
         $item = Item::findOrFail($id);
@@ -88,4 +90,5 @@ class StoreController extends Controller
         // Fallback if update fails
         return redirect()->route('store.show', $id)->with('error', 'Failed to update review.');
     }
+    
 }

@@ -40,6 +40,10 @@ class Item extends Model
     {
         return $this->belongsToMany(Order::class, 'order_items', 'ItemID', 'OrderID')->withPivot('Quantity', 'TotalPrice');
     }
+    public function cartEntries()
+    {
+        return $this->hasMany(Cart::class, 'ItemID', 'ItemID');
+    }
 
     public function reviews()
     {

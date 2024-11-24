@@ -140,10 +140,12 @@
         $('#delete-form').on('submit', function() {
             $('button[type="submit"]', this).prop('disabled', true);
         });
-
-        $('#search, #categoryfilter, #genderfilter').on('keyup change input', function() {
-            performSearch();
+        let debounceTimer;
+        $('#search, #genderfilter').on('keyup change input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(performSearch, 300);
         });
+       
 
         performSearch();
 

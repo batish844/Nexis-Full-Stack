@@ -59,55 +59,58 @@
             </table>
         </div>
     </div>
-    </div>
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#search, #statusFilter').on('keyup change', function() {
-                performSearch();
-            });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+            
 
-            function performSearch() {
-                let searchQuery = $('#search').val();
-                let statusFilter = $('#statusFilter').val();
+        function performSearch() {
+            let searchQuery = $('#search').val();
+            let statusFilter = $('#statusFilter').val();
 
-                $.ajax({
-                    url: '{{ route("orders.search") }}',
-                    method: 'GET',
-                    data: {
-                        search: searchQuery,
-                        status: statusFilter
-                    },
-                    success: function(response) {
-                        $('#table-body-ajax').html(response);
-                        if (history.pushState) {
-                            const newUrl = '{{ route("orders.index") }}';
-                            window.history.pushState({
-                                path: newUrl
-                            }, '', newUrl);
-                        }
-                    },
-                    error: function(xhr) {
-                        console.error('AJAX Error:', xhr.responseText);
+            $.ajax({
+                url: '{{ route("orders.search") }}',
+                method: 'GET',
+                data: {
+                    search: searchQuery,
+                    status: statusFilter
+                },
+                success: function(response) {
+                    $('#table-body-ajax').html(response);
+                    if (history.pushState) {
+                        const newUrl = '{{ route("orders.index") }}';
+                        window.history.pushState({
+                            path: newUrl
+                        }, '', newUrl);
                     }
-                });
-            }
-
-            performSearch();
-
-            $('#download-csv').on('click', function() {
-                window.location.href = '{{ route("orders.export") }}';
+                },
+                error: function(xhr) {
+                    console.error('AJAX Error:', xhr.responseText);
+                }
             });
-            if ($('#search').val()) {
-                performSearch();
-            }
-            if ($('.flash-message').length) {
-                $('.flash-message').delay(3000).fadeOut(500, function() {
-                    $(this).remove();
-                });
-            }
+        }
+
+        performSearch();
+        let debounceTimer;
+        $('#search, #statusFilter').on('keyup change', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(performSearch, 300);
         });
-    </script>
+
+        $('#download-csv').on('click', function() {
+            window.location.href = '{{ route("orders.export") }}';
+        });
+        if ($('#search').val()) {
+            performSearch();
+        }
+        if ($('.flash-message').length) {
+            $('.flash-message').delay(3000).fadeOut(500, function() {
+                $(this).remove();
+            });
+        }
+    });
+</script>
 </div>
 @endsection

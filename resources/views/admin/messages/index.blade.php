@@ -107,9 +107,10 @@
         $('#delete-form').on('submit', function() {
             $('button[type="submit"]', this).prop('disabled', true);
         });
-
+        let debounceTimer;
         $('#search, #statusfilter').on('keyup change input', function() {
-            performSearch();
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(performSearch, 300);
         });
 
         performSearch();
@@ -122,6 +123,7 @@
         $('#download-csv').on('click', function() {
             window.location.href = '{{ route("messages.export") }}';
         });
+       
 
         function performSearch() {
             let search = $('#search').val();

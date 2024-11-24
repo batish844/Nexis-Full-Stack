@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
 
 class CartController extends Controller
 {
@@ -14,51 +16,61 @@ class CartController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function addToCart(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'ItemID' => 'required|exists:items,ItemID',
+            'Quantity' => 'nullable|integer|min:1',
+        ]);
+
+        $user = Auth::user();
+        $quantity = $validatedData['Quantity'] ?? 1;
+
+        $cartEntry = Cart::where('UserID', $user->UserID)
+            ->where('ItemID', $validatedData['ItemID'])
+            ->first();
+
+        if ($cartEntry) {
+            $cartEntry->Quantity += $quantity;
+            $cartEntry->save();
+        } else {
+            Cart::create([
+                'UserID' => $user->UserID,
+                'ItemID' => $validatedData['ItemID'],
+                'Quantity' => $quantity,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Item added to cart successfully!',
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function viewCart()
     {
-        //
-    }
+        $user = Auth::user();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $cartItems = Cart::with('item')->where('UserID', $user->UserID)->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        // Calculate total price
+        $totalPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->Quantity * $cartItem->item->Price;
+        });
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        // Calculate total points
+        $totalPoints = $cartItems->sum(function ($cartItem) {
+            return $cartItem->Quantity * $cartItem->item->Points;
+        });
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Decode the address JSON field
+        $addressJson = $user->address; // Assuming 'address' is the column name
+        $address = json_decode($addressJson, true);
+        $Phone_Number = $user->Phone_Number; // Assuming 'address' is the column name
+
+        // Get user's available points
+        $availablePoints = $user->Points;
+
+        return view('cart', compact('cartItems','Phone_Number', 'totalPrice', 'totalPoints', 'address', 'availablePoints'));
     }
 }

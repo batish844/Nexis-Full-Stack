@@ -31,9 +31,12 @@
         </div>
     </a>
 
-    <!-- Add to Cart button with Trophy and Points -->
     <div class="mt-auto">
-        <button class="py-2 px-4 w-full bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all flex items-center justify-between space-x-2">
+        <button
+            class="add-to-cart-btn py-2 px-4 w-full bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all flex items-center justify-between space-x-2"
+            type="button"
+            data-item-id="{{ $item->ItemID }}"
+            data-item-points="{{ $item->Points }}">
             <span class="text-lg font-semibold">Add to Cart</span>
             <div class="flex items-center space-x-1">
                 <i class="fas fa-trophy text-yellow-400"></i>
@@ -41,6 +44,7 @@
             </div>
         </button>
     </div>
+
 </div>
 
 @endforeach
@@ -56,4 +60,4 @@
         </p>
     </div>
 </div>
-@endif 
+@endif

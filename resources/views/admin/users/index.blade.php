@@ -86,9 +86,12 @@
 <script>
     $(document).ready(function() {
         // Automatically submit the form on input change or select change
+        let debounceTimer;
         $('#search, #role, #nameOrder, #status').on('input change', function() {
-            performSearch();
-        });
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(performSearch, 300);   
+             });
+        
 
         // Reset Filters functionality
         $('#resetFilters').on('click', function() {

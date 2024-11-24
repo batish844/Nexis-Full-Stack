@@ -17,6 +17,7 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Models\Contact;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\storeController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -34,8 +35,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/messages/mark-read/{id}', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
+
 });
 Route::get('/gender/{gender}', [CategoryController::class, 'getCategoriesByGender']);
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 
 Route::get('analytics/data', [AnalyticsController::class, 'getData'])->name('analytics.data');
 
@@ -62,6 +65,7 @@ Route::middleware('auth', 'role:user')->group(function () {
         return view('profile.wishlist');
     })->name('profile.wishlist');
 });
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 Route::get('/users/export', [UserController::class, 'exportCsv'])->name('users.export');
 Route::get('/messages/export', [MessageController::class, 'exportCsv'])->name('messages.export');
@@ -85,9 +89,7 @@ Route::patch('store/{id}/reviews', [StoreController::class, 'update'])->name('re
 Route::get('/contact-us', [ContactController::class, 'index']);
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contacts.store');
 
-Route::get('/cart', function () {
-    return view('cart');
-});
+
 Route::get('/checkout', function () {
     return view('checkout');
 });
