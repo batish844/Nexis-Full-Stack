@@ -101,6 +101,15 @@
                 @endif
             </div>
             <div id="icon" class="ml-6">
+                <a href="/wishlist" id="wishlist-icon" class="relative inline-block">
+                    <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
+                    state="morph-heart" colors="primary:#c71f16"
+                    style="width:35px;height:35px"></lord-icon>
+                    <span id="wishlist-count"
+                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                </a>
+            </div>
+            <div id="icon" class="ml-6">
                 <a href="/cart" id="cart-icon" class="relative inline-block">
                     <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
                         style="width:35px;height:35px"></lord-icon>
@@ -152,6 +161,15 @@
                         <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white"
                             onclick="toggleMenu()">Sign In</a>
                     @endif
+                </div>
+                <div class="mt-8 mb-4 flex justify-center">
+                    <a href="{{ url('Wishlist') }}" id="wishlist-icon" class="relative inline-block">
+                        <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
+                        state="morph-heart" colors="primary:#c71f16"
+                        style="width:35px;height:35px"></lord-icon>
+                        <span id="wishlist-count"
+                            class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                    </a>
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
                     <a href="{{ url('Cart') }}" id="cart-icon" class="relative inline-block">
