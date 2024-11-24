@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Authentication' }}</title>
+    <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
     @vite('resources/css/app.css')
 
 </head>

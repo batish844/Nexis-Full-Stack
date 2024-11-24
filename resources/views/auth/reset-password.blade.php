@@ -13,9 +13,17 @@
     <!-- Email -->
     <div>
         <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-        <input id="email" type="email" name="email" value="{{ old('email', request()->email) }}" required autofocus autocomplete="username"
+        <input
+            id="email"
+            type="email"
+            name="email"
+            value="{{ request()->query('email', old('email')) }}"
+            required
+            autofocus
+            autocomplete="username"
             class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
     </div>
+
 
     <!-- Password -->
     <div>
