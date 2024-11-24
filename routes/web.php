@@ -18,6 +18,15 @@ use App\Models\Contact;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\storeController;
 use App\Http\Controllers\CartController;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    Mail::raw('This is a test email.', function ($message) {
+        $message->to('batish844@gmail.com')->subject('Test Email');
+    });
+
+    return 'Email sent!';
+});
 
 Route::get('/', function () {
     return redirect()->route('home');
