@@ -14,8 +14,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
-use App\Models\Contact;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\storeController;
 use App\Http\Controllers\CartController;
 
@@ -70,6 +68,7 @@ Route::middleware('auth', 'role:user')->group(function () {
     })->name('profile.wishlist');
 });
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/remaining-stock/{itemID}', [CartController::class, 'fetchRemainingStock']);
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 Route::get('/users/export', [UserController::class, 'exportCsv'])->name('users.export');
 Route::get('/messages/export', [MessageController::class, 'exportCsv'])->name('messages.export');

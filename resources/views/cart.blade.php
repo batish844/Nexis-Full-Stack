@@ -34,7 +34,7 @@
                 {{ $cartItem->item->Name }}
                 </div>
                 <div class="text-sm text-gray-500 py-2">
-                <strong>Size: </strong> {{ $cartItem->size ?? 'M' }}
+                <strong>Size: </strong> {{ $cartItem->Size ?? 'M' }}
                 </div>
             </div>
         </td>

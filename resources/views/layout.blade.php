@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <title>@yield('title', 'Nexus')</title>
 
-    <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
+    <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
 
     @vite('resources/css/app.css')
     @stack('styles')
@@ -126,7 +126,7 @@
         <div class="flex items-center justify-between w-full lg:hidden">
             <div class="cursor-pointer">
                 <a href="/home">
-                    <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-16">
+                    <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-16">
                 </a>
             </div>
             <div class="ml-auto cursor-pointer" onclick="toggleMenu()">
@@ -140,10 +140,10 @@
             <div
                 class="bg-white rounded-3xl shadow-2xl overflow-y-auto flex flex-col items-center py-10 px-6 w-11/12 max-w-md relative">
                 <button class="absolute top-4 right-4 text-gray-800 hover:text-gray-900" onclick="toggleMenu()">
-                    <lord-icon src="storage/xicon.json" trigger="hover" style="width:32px;height:32px"></lord-icon>
+                    <lord-icon src="/storage/xicon.json" trigger="hover" style="width:32px;height:32px"></lord-icon>
                 </button>
                 <a href="/home" class="mb-8">
-                    <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-24 mx-auto">
+                    <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-24 mx-auto">
                 </a>
                 <div class="flex flex-col items-center space-y-6 text-lg font-medium text-black">
                     <a href="/home" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Home</a>

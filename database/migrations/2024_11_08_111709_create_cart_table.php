@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('UserID')->constrained('users', 'UserID')->onDelete('cascade');
             $table->foreignId('ItemID')->constrained('items', 'ItemID')->onDelete('cascade');
             $table->integer('Quantity')->default(1);
+            $table->string('Size'); 
             $table->timestamps();
         });
     }
