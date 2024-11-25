@@ -27,28 +27,34 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'First_Name' => ['required', 'string', 'max:50'],
-            'Last_Name' => ['required', 'string', 'max:50'],
-            'Phone_Number' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
 
-        $user = User::create([
-            'First_Name' => $request->First_Name,
-            'Last_Name'   => $request->Last_Name,
-            'Phone_Number' => $request->Phone_Number,
-            'email'       => $request->email,
-            'password'    => Hash::make($request->password),
-        ]);
+    public function store(Request $request)
+{
+    $this->validator($request->all())->validate();
 
-        event(new Registered($user));
+    // Create the user
+    event(new Registered($user = $this->create($request->all())));
 
-        Auth::login($user);
+    // Log the user in
+    Auth::login($user);
 
-        return redirect(route('profile.index'));
+    // Transfer guest wishlist to database
+    if (session()->has('guest_wishlist')) {
+        // Call the method to transfer wishlist from session (or you can directly use ajax)
+        $wishlist = session('guest_wishlist');
+        foreach ($wishlist as $itemID) {
+            Wishlist::create([
+                'UserID' => $user->UserID,
+                'ItemID' => $itemID,
+                'DateTime' => now(),
+            ]);
+        }
+
+        // Clear guest wishlist from session
+        session()->forget('guest_wishlist');
     }
+
+    // Redirect after successful registration
+    return redirect()->route('home');
+}
 }

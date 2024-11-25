@@ -186,39 +186,56 @@
         initializeCarousel();
 
         // Event delegation for dynamically added products
-        productsContainer.addEventListener('click', function(event) {
-            const button = event.target.closest('.add-to-cart-btn');
-            if (button) {
-                const itemId = button.dataset.itemId;
-                const quantity = 1; // Default quantity
-
-                fetch('{{ route("cart.add") }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            ItemID: itemId,
-                            Quantity: quantity
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert(data.message);
-                            // Optionally update cart count or UI
-                        } else {
-                            alert('Error adding to cart: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error adding to cart:', error);
-                        alert('Error adding to cart');
-                    });
-            }
-        });
+       
     });
+    document.addEventListener("DOMContentLoaded", () => {
+    // Event delegation for dynamically added wishlist buttons
+    document.querySelector('#dynamic-products').addEventListener('click', function(event) {
+        const button = event.target.closest('.wishlist-btn'); // Find the closest button element
+        if (button) {
+            const itemId = button.dataset.itemId; // Get the ItemID from the button's dataset
+            console.log("Wishlist button clicked with ID:", itemId);
+
+            // Check if the user is authenticated
+            if (button.dataset.authenticated === "1") {
+                // Handle authenticated user wishlist logic (send to server)
+                fetch('{{ route("wishlist.add") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',  // Indicates JSON body
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'  // CSRF token for security
+                    },
+                    body: JSON.stringify({ ItemID: itemId })  // Send the ItemID in the request body
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Item added to wishlist!');
+                    } else {
+                        alert('Error adding to wishlist: ' + data.message);
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+
+            } else {
+                // Handle guest user logic (save to localStorage)
+                let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+                if (!wishlist.includes(itemId)) {
+                    wishlist.push(itemId);  // Add item to wishlist
+                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                    alert('Item added to wishlist (Guest User)!');
+                } else {
+                    alert('Item already in wishlist.');
+                }
+            }
+        }
+    });
+});
+
 </script>
 @endpush

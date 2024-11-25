@@ -129,10 +129,8 @@
         </header>
 
         <!-- Main Content -->
-        <main class="flex-1 bg-gray-100">
-            <div class="px-3 sm:px-8 md:px-12 lg:px-20">
+        <main class="flex-1 bg-gray-100 w-screen">
                 @yield('content')
-            </div>
         </main>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

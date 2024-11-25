@@ -17,7 +17,7 @@
         </a>
     </div>
     <div class="relative z-0 md:w-1/2 h-full">
-        <img src="storage/img/aboutus/NexusQuote.png" alt="Nexis Fashion" class="object-cover w-full h-full transform scale-105 opacity-90 animate-parallax">
+        <img src="storage/img/aboutus/background2.jpg" alt="Nexis Fashion" class="object-cover w-full h-full transform scale-105 opacity-90 animate-parallax">
     </div>
 </div>
 <section id="our-journey" class="py-20 px-8 md:px-16 lg:px-24 text-gray-800 bg-gray-50">

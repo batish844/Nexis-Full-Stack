@@ -14,20 +14,16 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
-use App\Models\Contact;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CartController;
-use Illuminate\Support\Facades\Mail;
 
-Route::get('/test-email', function () {
-    Mail::raw('This is a test email.', function ($message) {
-        $message->to('batish844@gmail.com')->subject('Test Email');
-    });
+use App\Http\Controllers\WishlistController;
 
-    return 'Email sent!';
-});
+
+use Illuminate\Http\Request;
+use App\Models\Item;
+
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -47,8 +43,6 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
 });
 Route::get('/gender/{gender}', [CategoryController::class, 'getCategoriesByGender']);
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-
 Route::get('analytics/data', [AnalyticsController::class, 'getData'])->name('analytics.data');
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
@@ -77,6 +71,12 @@ Route::middleware('auth', 'role:user')->group(function () {
     })->name('profile.wishlist');
 });
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::get('/cart/remaining-stock/{itemID}', [CartController::class, 'getRemainingStock'])->name('cart.remainingStock');
+Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+
+
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 Route::get('/users/export', [UserController::class, 'exportCsv'])->name('users.export');
 Route::get('/messages/export', [MessageController::class, 'exportCsv'])->name('messages.export');
@@ -85,8 +85,10 @@ Route::get('/orders/export', [OrderController::class, 'exportCsv'])->name('order
 
 // Home Page
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
+//Wishlist 
+Route::get('/wishlist', function () {
+    return view('wishlist');
+});
 // Static Pages Routes
 Route::get('/about-us', function () {
     return view('about');
@@ -118,3 +120,29 @@ Route::fallback(function () {
     return response()->view('404', [], 404);
 });
 require __DIR__ . '/auth.php';
+
+
+
+
+Route::post('/transfer-wishlist', [WishlistController::class, 'transferWishlist'])->middleware('auth');
+
+
+Route::post('/wishlist/guest/add', [WishlistController::class, 'storeGuestWishlist']);
+Route::post('/wishlist/transfer', [WishlistController::class, 'transferGuestWishlistToDatabase']);
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+});
+Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
+
+
+Route::post('/api/get-wishlist-items', function (Request $request) {
+    $itemIds = $request->input('itemIds'); // Item IDs from localStorage
+    $items = Item::whereIn('id', $itemIds)->get(['id', 'name', 'price', 'image', 'description']);
+    return response()->json(['success' => true, 'items' => $items]);
+});
+
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+
