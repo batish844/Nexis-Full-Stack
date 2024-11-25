@@ -3,181 +3,125 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Stripe\StripeClient;
-use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Item;
 
 class PaymentController extends Controller
 {
-    /**
-     * Show the checkout page.
-     */
-    public function checkoutForm()
-    {
-        return view('payment');
-    }
-
-    /**
-     * Create a Stripe Checkout session.
-     */
     public function createCheckoutSession(Request $request)
     {
-        if (Auth::check()) {
-            // ======= AUTHENTICATED USER LOGIC =======
-            $user = Auth::user();
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
-            // Retrieve cart items from the database
-            $cartItems = Cart::with('item')->where('UserID', $user->UserID)->get();
+        try {
+            if (Auth::check()) {
+                // ========== AUTHENTICATED USER LOGIC ==========
+                $user = Auth::user();
+                $cartItems = Cart::with('item')->where('UserID', $user->UserID)->get();
 
-            // Check if cart is empty
-            if ($cartItems->isEmpty()) {
-                return response()->json(['error' => 'Your cart is empty.'], 400);
-            }
+                if ($cartItems->isEmpty()) {
+                    throw new \Exception('Your cart is empty.');
+                }
 
-            // Calculate total price
-            $totalPrice = $cartItems->sum(function ($cartItem) {
-                return $cartItem->Quantity * $cartItem->item->Price;
-            });
-
-            $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-
-            try {
-                // Prepare line items for Stripe
                 $lineItems = $cartItems->map(function ($cartItem) {
-                    $itemPrice = intval($cartItem->item->Price * 100); // Price in cents
                     return [
                         'price_data' => [
                             'currency' => 'usd',
                             'product_data' => [
-                                'name' => $cartItem->item->Name,
+                                'name' => $cartItem->item->Name . ' (' . $cartItem->Size . ')',
                             ],
-                            'unit_amount' => $itemPrice,
+                            'unit_amount' => intval($cartItem->item->Price * 100), // Convert to cents
                         ],
                         'quantity' => $cartItem->Quantity,
                     ];
-                })->toArray();
+                })->values()->toArray();
 
-                // Create Stripe Checkout session
                 $checkoutSession = $stripe->checkout->sessions->create([
                     'payment_method_types' => ['card'],
                     'line_items' => $lineItems,
                     'mode' => 'payment',
-                    'customer_email' => $user->email, // Pre-fill customer email
                     'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
                     'cancel_url' => route('checkout.cancel'),
+                    'customer_email' => $user->email,
                 ]);
 
-                // Store the session ID
                 session(['checkoutSessionId' => $checkoutSession->id]);
-
-                // Return the Stripe Checkout URL
                 return response()->json(['url' => $checkoutSession->url]);
-            } catch (\Exception $e) {
-                return response()->json(['error' => 'Error creating checkout session: ' . $e->getMessage()], 500);
+            } else {
+                // ========== GUEST USER LOGIC ==========
+                return $this->createGuestCheckoutSession($stripe);
             }
-        } else {
-            // ======= GUEST USER LOGIC =======
+        } catch (\Exception $e) {
+            Log::error('Error creating checkout session:', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Error creating checkout session: ' . $e->getMessage()], 500);
+        }
+    }
 
-            // Retrieve cart items from the session
+    private function createGuestCheckoutSession($stripe)
+    {
+        try {
             $sessionCart = session('cart', []);
 
-            // Check if cart is empty
+            // Log the session cart for debugging
+            Log::info('Session Cart Content:', ['cart' => $sessionCart]);
+
             if (empty($sessionCart)) {
-                return response()->json(['error' => 'Your cart is empty.'], 400);
+                throw new \Exception('Your cart is empty.');
             }
 
-            // Map session cart items to cart items
-            $cartItems = collect($sessionCart)->map(function ($cartItem) {
-                $item = Item::find($cartItem['ItemID']);
-                if (!$item) {
-                    throw new \Exception('An item in your cart is no longer available.');
-                }
-                return (object) [
-                    'item' => $item,
-                    'Size' => $cartItem['Size'],
-                    'Quantity' => $cartItem['Quantity'],
-                ];
-            });
+            $lineItems = collect($sessionCart)->map(function ($cartItem) {
+                // ... validation and mapping code
+            })->values()->toArray();
 
-            // Calculate total price
-            $totalPrice = $cartItems->sum(function ($cartItem) {
-                return $cartItem->Quantity * $cartItem->item->Price;
-            });
+            // Log the generated line_items for debugging
+            Log::info('Generated line_items for Stripe:', ['line_items' => $lineItems]);
 
-            $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+            $checkoutSession = $stripe->checkout->sessions->create([
+                'payment_method_types' => ['card'],
+                'line_items' => $lineItems,
+                'mode' => 'payment',
+                'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('checkout.cancel'),
+                'shipping_address_collection' => [
+                    'allowed_countries' => ['US', 'CA', 'GB'], // Modify as needed
+                ],
+                'customer_creation' => 'always', // Add this line
+            ]);
 
-            try {
-                // Prepare line items for Stripe
-                $lineItems = $cartItems->map(function ($cartItem) {
-                    $itemPrice = intval($cartItem->item->Price * 100); // Price in cents
-                    return [
-                        'price_data' => [
-                            'currency' => 'usd',
-                            'product_data' => [
-                                'name' => $cartItem->item->Name,
-                            ],
-                            'unit_amount' => $itemPrice,
-                        ],
-                        'quantity' => $cartItem->Quantity,
-                    ];
-                })->toArray();
-
-                // Create Stripe Checkout session
-                $checkoutSession = $stripe->checkout->sessions->create([
-                    'payment_method_types' => ['card'],
-                    'line_items' => $lineItems,
-                    'mode' => 'payment',
-                    // Do not set 'customer_email' for guests; Stripe will collect it
-                    'shipping_address_collection' => [
-                        'allowed_countries' => ['US'], // Adjust as needed
-                    ],
-                    'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
-                    'cancel_url' => route('checkout.cancel'),
-                ]);
-
-                // Store the session ID
-                session(['checkoutSessionId' => $checkoutSession->id]);
-
-                // Return the Stripe Checkout URL
-                return response()->json(['url' => $checkoutSession->url]);
-            } catch (\Exception $e) {
-                return response()->json(['error' => 'Error creating checkout session: ' . $e->getMessage()], 500);
-            }
+            session(['checkoutSessionId' => $checkoutSession->id]);
+            return response()->json(['url' => $checkoutSession->url]);
+        } catch (\Exception $e) {
+            Log::error('Error creating checkout session for guest:', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Error creating checkout session: ' . $e->getMessage()], 500);
         }
     }
 
 
-
-
-    /**
-     * Handle successful payment.
-     */
     public function checkoutSuccess(Request $request)
     {
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
         try {
-            // Retrieve the session ID from the query parameter
             $sessionId = $request->query('session_id');
-
-            // Retrieve the checkout session from Stripe
             $session = $stripe->checkout->sessions->retrieve($sessionId, [
                 'expand' => ['customer_details', 'shipping'],
             ]);
 
-            $email = $session->customer_details->email ?? null;
-            $address = $session->shipping ? $session->shipping->address : null;
+            if (!$session) {
+                throw new \Exception('Invalid Stripe session.');
+            }
 
             if (Auth::check()) {
-                // ======= AUTHENTICATED USER LOGIC =======
+                // ========== AUTHENTICATED USER LOGIC ==========
                 $user = Auth::user();
-
-                // Retrieve cart items from the database
                 $cartItems = Cart::with('item')->where('UserID', $user->UserID)->get();
+
+                if ($cartItems->isEmpty()) {
+                    throw new \Exception('Your cart is empty.');
+                }
 
                 // Create order
                 $order = Order::create([
@@ -204,7 +148,57 @@ class PaymentController extends Controller
                 // Clear cart items from the database
                 Cart::where('UserID', $user->UserID)->delete();
             } else {
-                return $this->createCheckoutSessionForGuestUser($stripe);
+                // ========== GUEST USER LOGIC ==========
+                $email = $session->customer_details->email ?? null;
+                $address = $session->shipping ? $session->shipping->address : null;
+
+                if (!$email || !$address) {
+                    throw new \Exception('Incomplete guest checkout details.');
+                }
+
+                $sessionCart = session('cart', []);
+
+                if (empty($sessionCart)) {
+                    throw new \Exception('Your cart is empty.');
+                }
+
+                // Create order
+                $order = Order::create([
+                    'OrderedBy' => 999, // Guest user ID
+                    'TotalPrice' => $session->amount_total / 100, // Convert from cents to dollars
+                    'guest_email' => $email,
+                    'guest_address' => json_encode([
+                        'street' => $address->line1,
+                        'city' => $address->city,
+                        'building' => $address->line2 ?? null,
+                    ]),
+                    'is_guest' => true,
+                    'Status' => 'Pending',
+                ]);
+
+                // Create order items and reduce stock
+                foreach ($sessionCart as $cartItem) {
+                    // Fetch item from database
+                    $item = Item::find($cartItem['ItemID']);
+
+                    if (!$item) {
+                        throw new \Exception('Item not found: ID ' . $cartItem['ItemID']);
+                    }
+
+                    OrderItem::create([
+                        'OrderID' => $order->OrderID,
+                        'ItemID' => $item->ItemID,
+                        'Size' => $cartItem['Size'],
+                        'Quantity' => $cartItem['Quantity'],
+                        'TotalPrice' => $cartItem['Quantity'] * $item->Price,
+                    ]);
+
+                    // Reduce stock quantity
+                    $item->decrement('Quantity', $cartItem['Quantity']);
+                }
+
+                // Clear session cart
+                session()->forget('cart');
             }
 
             // Clear the checkout session ID
@@ -213,18 +207,13 @@ class PaymentController extends Controller
             // Redirect with success message
             return redirect()->route('cart.view')->with('success', 'Your order has been placed successfully!');
         } catch (\Exception $e) {
-            // Log the error for debugging
             Log::error('Error during checkoutSuccess:', ['error' => $e->getMessage()]);
-
-            // Redirect with error message
-            return redirect()->route('cart.view')->with('error', 'An error occurred while processing your order. Please try again.');
+            return redirect()->route('cart.view')->with('error', 'An error occurred during checkout.');
         }
     }
-    private function createCheckoutSessionForGuestUser($stripe)
-    {    $sessionCart = session('cart', []);
-        // Validate session cart
-        return response()->json([
-            'sessionCart' => $sessionCart,
-        ]);
+
+    public function checkoutCancel()
+    {
+        return redirect()->route('cart.view')->with('error', 'Checkout was cancelled.');
     }
 }

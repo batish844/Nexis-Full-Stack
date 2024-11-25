@@ -9,6 +9,15 @@
   <!-- Cart Message -->
   <div id="cart-message"
     class="hidden text-center text-sm mx-auto font-semibold bg-red-100 text-red-700 py-2 rounded-lg mb-4 max-w-lg">
+    @if(session('success'))
+    <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+      {{ session('success') }}
+    </div>
+    @elseif(session('error'))
+    <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
+      {{ session('error') }}
+    </div>
+    @endif
   </div>
 
   <div class="flex flex-col lg:flex-row lg:space-x-6">
@@ -196,13 +205,13 @@
 
       try {
         const response = await fetch('/checkout/session', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            },
-            body: JSON.stringify({}),
-          });
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          },
+          body: JSON.stringify({}),
+        });
 
         if (!response.ok) {
           const errorData = await response.json();
