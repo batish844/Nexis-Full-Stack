@@ -14,8 +14,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
 use App\Http\Controllers\GoogleAuthController;
-use App\Models\Contact;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\storeController;
 use App\Http\Controllers\CartController;
 
@@ -42,11 +40,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/messages/mark-read/{id}', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
     Route::put('users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::put('products/{product}/toggleStatus', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
-
 });
 Route::get('/gender/{gender}', [CategoryController::class, 'getCategoriesByGender']);
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-
 Route::get('analytics/data', [AnalyticsController::class, 'getData'])->name('analytics.data');
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
@@ -75,6 +70,12 @@ Route::middleware('auth', 'role:user')->group(function () {
     })->name('profile.wishlist');
 });
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::get('/cart/remaining-stock/{itemID}', [CartController::class, 'getRemainingStock'])->name('cart.remainingStock');
+Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+
+
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');
 Route::get('/users/export', [UserController::class, 'exportCsv'])->name('users.export');
 Route::get('/messages/export', [MessageController::class, 'exportCsv'])->name('messages.export');

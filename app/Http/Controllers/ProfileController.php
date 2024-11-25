@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Order;
 
 class ProfileController extends Controller
 {
@@ -32,61 +33,62 @@ class ProfileController extends Controller
 
         return view('profile.profile', compact('user'));
     }
-    public function order()
+    public function order(Request $request)
     {
         $user = auth()->user();
 
-        // Fetch the orders with their items and calculate TotalPrice dynamically
-        $orders = $user->orders()->with(['orderItems.item'])->get();
+        // Fetch user's orders with their items and sort by the most recent
+        $query = $user->orders()->with(['orderItems.item'])->orderBy('created_at', 'desc');
 
+        $orders = $query->get();
+
+        // Dynamically calculate total price and points for each order
         $orders->each(function ($order) {
-            // Calculate the total price for the order
-            $totalPrice = $order->orderItems->sum(function ($orderItem) {
+            $order->TotalPrice = $order->orderItems->sum(function ($orderItem) {
                 return $orderItem->Quantity * $orderItem->item->Price;
             });
 
-            $order->TotalPrice = $totalPrice;
-
-            // Include all images for each item in the order
-            $order->itemImages = $order->orderItems->flatMap(function ($orderItem) {
-                return $orderItem->item->Photo ?? [];
-            })->toArray(); // Collect all images in a flat array
+            $order->TotalPoints = $order->orderItems->sum(function ($orderItem) {
+                return $orderItem->Quantity * $orderItem->item->Points;
+            });
         });
 
+        // Pass calculated totals to the view
         return view('profile.order', compact('orders'));
     }
+
 
     public function orderDetails(string $id)
     {
         $user = auth()->user();
 
-        // Fetch the order with items and ensure it belongs to the logged-in user
+        // Fetch the specific order with items, ensuring it belongs to the user
         $order = $user->orders()->with(['orderItems.item'])->where('OrderID', $id)->firstOrFail();
 
-        // Calculate the total price dynamically
+        // Dynamically calculate the total price and points
         $totalPrice = $order->orderItems->sum(function ($orderItem) {
             return $orderItem->Quantity * $orderItem->item->Price;
         });
 
-        $order->TotalPrice = $totalPrice;
+        $totalPoints = $order->orderItems->sum(function ($orderItem) {
+            return $orderItem->Quantity * $orderItem->item->Points;
+        });
 
-        // Update the total price for each order item
-        foreach ($order->orderItems as $orderItem) {
-            $orderItem->TotalPrice = $orderItem->item->Price * $orderItem->Quantity;
-            $orderItem->save();
-        }
-
-        // Save the updated total price of the order
-        $order->save();
-
-        // Return the order details as a JSON response for the modal
+        // Return order details as JSON for the modal
         return response()->json([
-            'order' => $order,
+            'order' => [
+                'OrderID' => $order->OrderID,
+                'created_at' => $order->created_at,
+                'TotalPrice' => $totalPrice,
+                'TotalPoints' => $totalPoints,
+                'TotalQuantity' => $order->orderItems->sum('Quantity'),
+            ],
             'items' => $order->orderItems->map(function ($orderItem) {
                 return [
                     'name' => $orderItem->item->Name,
                     'photo' => $orderItem->item->Photo[0] ?? null,
                     'price' => $orderItem->item->Price,
+                    'points' => $orderItem->item->Points,
                     'size' => $orderItem->Size,
                     'quantity' => $orderItem->Quantity,
                     'subtotal' => $orderItem->TotalPrice,

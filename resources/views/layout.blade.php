@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <title>@yield('title', 'Nexus')</title>
 
-    <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
+    <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
 
     @vite('resources/css/app.css')
     @stack('styles')
@@ -73,63 +73,63 @@
                 <a href="/men" class="nav-items transition-colors hover:text-white">Men</a>
                 <a href="/contact-us" class="nav-items transition-colors hover:text-white">Contact us</a>
                 @if (Auth::check())
-                    @if (Auth::user()->isAdmin)
-                        <a href="{{ route('analytics.index') }}"
-                            class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
-                    @else
-                        <div class="relative inline-block text-left">
-                            <button onclick="toggleDropdown()"
-                                class="nav-items flex items-center transition-colors hover:text-white">
-                                <span>{{ Auth::user()->First_Name }}</span>
-                                <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M5.25 7.75L10 12.5l4.75-4.75" stroke="currentColor" stroke-width="1.5"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </button>
-                            <div id="userDropdown"
-                                class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
-                                <a href="{{ route('profile.orders') }}"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
-                                <a href="{{ route('profile.index') }}"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit"
-                                        class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                                        onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                        Logout
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    @endif
+                @if (Auth::user()->isAdmin)
+                <a href="{{ route('analytics.index') }}"
+                    class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
                 @else
-                    <a href="{{ route('login') }}" class="nav-items transition-colors hover:text-white">Sign In</a>
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleDropdown()"
+                        class="nav-items flex items-center transition-colors hover:text-white">
+                        <span>{{ Auth::user()->First_Name }}</span>
+                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.25 7.75L10 12.5l4.75-4.75" stroke="currentColor" stroke-width="1.5"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <div id="userDropdown"
+                        class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
+                        <a href="{{ route('profile.orders') }}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
+                        <a href="{{ route('profile.index') }}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                                onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                @endif
+                @else
+                <a href="{{ route('login') }}" class="nav-items transition-colors hover:text-white">Sign In</a>
                 @endif
             </div>
             <div id="icon" class="ml-6">
                 <a href="/wishlist" id="wishlist-icon" class="relative inline-block">
                     <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
-                    state="morph-heart" colors="primary:#c71f16"
-                    style="width:35px;height:35px"></lord-icon>
+                        state="morph-heart" colors="primary:#c71f16"
+                        style="width:35px;height:35px"></lord-icon>
                     <span id="wishlist-count"
                         class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
                 </a>
             </div>
             <div id="icon" class="ml-6">
-                <a href="/cart" id="cart-icon" class="relative inline-block">
+                <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
                     <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
                         style="width:35px;height:35px"></lord-icon>
-                    <span id="cart-count"
-                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                    <span id="cart-count-desktop"
+                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"></span>
                 </a>
             </div>
         </nav>
         <div class="flex items-center justify-between w-full lg:hidden">
             <div class="cursor-pointer">
                 <a href="/home">
-                    <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-16">
+                    <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-16">
                 </a>
             </div>
             <div class="ml-auto cursor-pointer" onclick="toggleMenu()">
@@ -143,10 +143,10 @@
             <div
                 class="bg-white rounded-3xl shadow-2xl overflow-y-auto flex flex-col items-center py-10 px-6 w-11/12 max-w-md relative">
                 <button class="absolute top-4 right-4 text-gray-800 hover:text-gray-900" onclick="toggleMenu()">
-                    <lord-icon src="storage/xicon.json" trigger="hover" style="width:32px;height:32px"></lord-icon>
+                    <lord-icon src="/storage/xicon.json" trigger="hover" style="width:32px;height:32px"></lord-icon>
                 </button>
                 <a href="/home" class="mb-8">
-                    <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-24 mx-auto">
+                    <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-24 mx-auto">
                 </a>
                 <div class="flex flex-col items-center space-y-6 text-lg font-medium text-black">
                     <a href="/home" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Home</a>
@@ -156,35 +156,36 @@
                     <a href="/contact-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Contact
                         us</a>
                     @if (Auth::check())
-                        @if (Auth::user()->isAdmin)
-                            <a href="{{ route('analytics.index') }}" class="mobile-menu-link hover:text-white"
-                                onclick="toggleMenu()">Admin Dashboard</a>
-                        @else
-                            <a href="{{ route('profile.index') }}" class="mobile-menu-link hover:text-white"
-                                onclick="toggleMenu()">Profile</a>
-                            <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white"
-                                onclick="toggleMenu()">Orders</a>
-                        @endif
+                    @if (Auth::user()->isAdmin)
+                    <a href="{{ route('analytics.index') }}" class="mobile-menu-link hover:text-white"
+                        onclick="toggleMenu()">Admin Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white"
-                            onclick="toggleMenu()">Sign In</a>
+                    <a href="{{ route('profile.index') }}" class="mobile-menu-link hover:text-white"
+                        onclick="toggleMenu()">Profile</a>
+                    <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white"
+                        onclick="toggleMenu()">Orders</a>
+                    @endif
+                    @else
+                    <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white"
+                        onclick="toggleMenu()">Sign In</a>
                     @endif
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
                     <a href="{{ url('Wishlist') }}" id="wishlist-icon" class="relative inline-block">
                         <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
-                        state="morph-heart" colors="primary:#c71f16"
-                        style="width:35px;height:35px"></lord-icon>
+                            state="morph-heart" colors="primary:#c71f16"
+                            style="width:35px;height:35px"></lord-icon>
                         <span id="wishlist-count"
                             class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
                     </a>
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
-                    <a href="{{ url('Cart') }}" id="cart-icon" class="relative inline-block">
+                    <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
                         <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
                             style="width:48px;height:48px"></lord-icon>
-                        <span id="cart-count"
-                            class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                        <span id="cart-count-hamburger"
+                            class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"> 0
+                        </span>
                     </a>
                 </div>
             </div>
@@ -248,7 +249,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/js/common.js')
     <script>
-        
         function toggleMenu() {
             let overlay = $("#overlay");
             let mobileMenu = $("#mobileMenu");
@@ -276,7 +276,41 @@
             });
 
         });
-       
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fetch CSRF token from meta tag
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            // Function to update cart counters
+            const updateCartCounters = () => {
+                fetch('/cart/count', {
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const desktopCounter = document.getElementById('cart-count-desktop');
+                        const hamburgerCounter = document.getElementById('cart-count-hamburger');
+
+                        if (desktopCounter) {
+                            desktopCounter.textContent = data.cartCount;
+                        }
+                        if (hamburgerCounter) {
+                            hamburgerCounter.textContent = data.cartCount;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching cart count:', error);
+                    });
+            };
+
+            // Call updateCartCounters on page load
+            updateCartCounters();
+
+            // Optionally expose updateCartCounters globally for reuse
+            window.updateCartCounters = updateCartCounters;
+        });
     </script>
 </body>
 
