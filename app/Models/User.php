@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    
 
     /**
      * The attributes that are mass assignable.
@@ -65,10 +66,28 @@ class User extends Authenticatable
         return $this->hasMany(Cart::class, 'UserID', 'UserID');
     }
 
-    public function wishlistItems()
-    {
-        return $this->hasMany(Wishlist::class, 'UserID');
-    }
+
+    public function wishlist()
+{
+    return $this->hasMany(Wishlist::class, 'UserID');
+}
+
+
+
+//     public function wishlistItems()
+//     {
+//         return $this->hasMany(Wishlist::class, 'UserID');
+//     }
+//    // User.php (Model)
+// public function wishlist()
+// {
+//     return $this->belongsToMany(Item::class, 'wishlist', 'UserID', 'ItemID')
+//                 ->withTimestamps();  // Ensure timestamps are stored in the pivot table
+// }
+
+
+    // In User.php model
+
     /**
      * The attributes that should be hidden for serialization.
      *

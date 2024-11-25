@@ -98,3 +98,26 @@
         }
     }
 </style>
+<script>
+    // Check if the user has items in their wishlist in localStorage
+if (localStorage.getItem('wishlist')) {
+    let wishlist = JSON.parse(localStorage.getItem('wishlist'));
+
+    // Send the wishlist data to the backend for saving to the database
+    fetch('/transfer-wishlist', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            items: wishlist
+        })
+    }).then(response => response.json())
+      .then(data => {
+          localStorage.removeItem('wishlist');  // Clear the wishlist after transfer
+          alert('Your guest wishlist has been transferred to your account!');
+      });
+}
+
+</script>
