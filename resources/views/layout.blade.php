@@ -16,6 +16,7 @@
     @stack('styles')
     @stack('scripts')
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    
 
     <style>
         @keyframes navBarSparkle {

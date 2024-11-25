@@ -19,6 +19,11 @@ use App\Http\Controllers\CartController;
 
 use App\Http\Controllers\WishlistController;
 
+
+use Illuminate\Http\Request;
+use App\Models\Item;
+
+
 Route::get('/', function () {
     return redirect()->route('home');
 });
@@ -109,3 +114,29 @@ Route::fallback(function () {
     return response()->view('404', [], 404);
 });
 require __DIR__ . '/auth.php';
+
+
+
+
+Route::post('/transfer-wishlist', [WishlistController::class, 'transferWishlist'])->middleware('auth');
+
+
+Route::post('/wishlist/guest/add', [WishlistController::class, 'storeGuestWishlist']);
+Route::post('/wishlist/transfer', [WishlistController::class, 'transferGuestWishlistToDatabase']);
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+});
+Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
+
+
+Route::post('/api/get-wishlist-items', function (Request $request) {
+    $itemIds = $request->input('itemIds'); // Item IDs from localStorage
+    $items = Item::whereIn('id', $itemIds)->get(['id', 'name', 'price', 'image', 'description']);
+    return response()->json(['success' => true, 'items' => $items]);
+});
+
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+

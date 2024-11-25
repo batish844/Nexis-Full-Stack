@@ -5,20 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+ 
+
 class Wishlist extends Model
 {
     use HasFactory;
 
-    protected $table = 'wish_list';
-    protected $fillable = ['UserID', 'ItemID', 'DateTime'];
+    protected $table = 'wishlist'; // Ensure this matches your database table name
+    protected $fillable = ['UserID', 'ItemID', 'DateTime', 'is_read'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'UserID');
-    }
+    // public function item()
+    // {
+    //     return $this->belongsTo(Item::class, 'ItemID'); // Adjust foreign key if necessary
+    // }
+ 
 
     public function item()
-    {
-        return $this->belongsTo(Item::class, 'ItemID');
-    }
+{
+    return $this->belongsTo(Item::class, 'ItemID', 'ItemID'); // Match foreign key correctly
+}
+
 }

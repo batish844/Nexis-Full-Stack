@@ -23,7 +23,7 @@
         </div>
 
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg z-10">
-            <form method="POST" action="{{ route('register') }}">
+            <form id="register-form" method="POST" action="{{ route('register') }}">
                 @csrf
                 <div>
                     <label for="First_Name" class="block font-medium text-sm text-gray-700">
@@ -140,7 +140,17 @@
             </form>
         </div>
     </div>
-    
+    <script>
+        document.querySelector('#register-form').addEventListener('submit', function (event) {
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const wishlistInput = document.createElement('input');
+    wishlistInput.type = 'hidden';
+    wishlistInput.name = 'wishlist';
+    wishlistInput.value = JSON.stringify(wishlist);
+    this.appendChild(wishlistInput);
+});
+
+    </script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
 
