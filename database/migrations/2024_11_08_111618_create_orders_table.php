@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('Status');
             $table->decimal('TotalPrice', 8, 2)->nullable();
             $table->foreignId('OrderedBy')->constrained('users', 'UserID');
+            $table->string('guest_email')->nullable();
             $table->timestamps();
         });
     }

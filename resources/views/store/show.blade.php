@@ -74,7 +74,8 @@
             <!-- Add to Cart with Counter -->
             <div class="mt-4">
                 <!-- Notification Area -->
-  <div id="response-message" class="hidden text-center text-sm mx-auto font-semibold bg-red-100 py-2 rounded-lg mb-4 max-w-lg"></div>
+                <div id="response-message" class="hidden rounded-lg text-center text-sm mx-auto font-semibold mb-4"></div>
+
             </div>
             <div class="mt-4 flex items-center space-x-4">
                 <!-- Counter -->
@@ -610,7 +611,6 @@
                     responseMessageEl.textContent = data.message;
                     responseMessageEl.classList.remove('hidden', 'text-red-500');
                     responseMessageEl.classList.add('text-green-500');
-
                     setTimeout(() => {
                         responseMessageEl.style.transition = 'opacity 0.5s ease';
                         responseMessageEl.style.opacity = '0';

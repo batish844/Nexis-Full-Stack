@@ -75,7 +75,7 @@
       </svg>
       Office Location
     </h3>
-    <p class="text-gray-700 ml-7"><strong>Address:</strong> 123 Main St, City, Country</p>
+    <p class="text-gray-700 ml-7"><strong>Address:</strong> Hazmieh, Beirut, Lebanon</p>
   </div>
 
   <!-- Phone -->
@@ -86,7 +86,7 @@
       </svg>
       Contact Details
     </h3>
-    <p class="text-gray-700 ml-7"><strong>Phone:</strong> +123 456 789</p>
+    <p class="text-gray-700 ml-7"><strong>Phone:</strong> +961 70771122</p>
   </div>
 
   <!-- Email -->
@@ -105,9 +105,6 @@
 
 </div>
 <style>
-    Lebanon Office
-    +961 81777256
-    Beirut, Lebanon 1600
     .animate-bounce-custom {
         animation: bounce-custom 2s infinite;
     }

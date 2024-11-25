@@ -186,39 +186,7 @@
         initializeCarousel();
 
         // Event delegation for dynamically added products
-        productsContainer.addEventListener('click', function(event) {
-            const button = event.target.closest('.add-to-cart-btn');
-            if (button) {
-                const itemId = button.dataset.itemId;
-                const quantity = 1; // Default quantity
-
-                fetch('{{ route("cart.add") }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            ItemID: itemId,
-                            Quantity: quantity
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert(data.message);
-                            // Optionally update cart count or UI
-                        } else {
-                            alert('Error adding to cart: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error adding to cart:', error);
-                        alert('Error adding to cart');
-                    });
-            }
-        });
+       
     });
 </script>
 @endpush

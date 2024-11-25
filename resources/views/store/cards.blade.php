@@ -10,7 +10,7 @@
 
     <!-- Product Image Carousel -->
     <div class="carousel relative">
-    <a href="{{ route('store.show', ['id' => $item->ItemID, 'photos' => json_encode($item->Photo)]) }}">
+    <a href="{{ route('store.show', ['id' => $item->ItemID]) }}">
         @foreach ($item->Photo as $index => $photo)
         <img src="{{ $photo }}" alt="{{ $item->Name }}" class="carousel-img object-cover w-full h-64 {{ $index === 0 ? 'active' : 'hidden' }}" data-index="{{ $index }}">
         @endforeach
@@ -24,25 +24,25 @@
             <i class="fas fa-chevron-right text-black"></i>
         </button>
     </div>
-    <a href="{{ route('store.show', ['id' => $item->ItemID, 'photos' => json_encode($item->Photo)]) }}">
+    <a href="{{ route('store.show', ['id' => $item->ItemID]) }}">
         <!-- Product Details -->
         <div class="p-4 flex flex-col flex-grow">
             <h3 class="font-semibold text-lg text-gray-800">{{ $item->Name }}</h3>
             <p class="text-xl font-medium text-gray-600">${{ number_format($item->Price, 2) }}</p>
         </div>
-
-        <div class="mt-auto">
-            <button
-                class=" py-2 px-4 w-full bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all flex items-center justify-between space-x-2"
-                type="button">
-                <span class="text-lg font-semibold mx-auto"> View Details </span>
-                <div class="flex items-center space-x-1">
-                    <i class="fas fa-trophy text-yellow-400"></i>
-                    <span class="text-sm font-semibold text-yellow-400">{{ $item->Points }}</span>
-                </div>
-            </button>
-        </div>
     </a>
+
+    <div class="mt-auto">
+    <a href="{{ route('store.show', ['id' => $item->ItemID]) }}"
+            class="py-2 px-4 w-full bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all flex items-center justify-between space-x-2">
+            <span class="text-lg font-semibold mx-auto"> View Details </span>
+            <div class="flex items-center space-x-1">
+                <i class="fas fa-trophy text-yellow-400"></i>
+                <span class="text-sm font-semibold text-yellow-400">{{ $item->Points }}</span>
+            </div>
+</a>
+    </div>
+
 </div>
 
 @endforeach
