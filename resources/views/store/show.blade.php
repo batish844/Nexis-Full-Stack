@@ -3,14 +3,14 @@
 @section('title', $item->Name)
 
 @section('content')
+
 <div class="container mx-auto my-6">
     <div class="flex flex-wrap lg:items-stretch justify-center lg:space-x-16 rounded">
         <!-- Product Images Section -->
         <div class="w-full lg:w-1/2 p-4">
             <div class="relative flex flex-col items-center sm:items-start sm:flex-row space-y-4 sm:space-x-4">
                 <!-- Thumbnail Images -->
-                <div
-                    class="hidden sm:flex flex-row sm:flex-col mt-4 items-center space-x-3 sm:space-x-0 sm:space-y-3">
+                <div class="hidden sm:flex flex-row sm:flex-col mt-4 items-center space-x-3 sm:space-x-0 sm:space-y-3">
                     @foreach ($item->Photo as $photo)
                     <img src="{{ asset($photo) }}" alt="{{ $item->Name }}"
                         class="w-24 h-24 object-cover border cursor-pointer thumbnail rounded shadow-lg">
@@ -31,8 +31,7 @@
         </div>
 
         <!-- Product Details Section -->
-        <div
-            class="w-full lg:w-2/5 h-fit flex flex-col items-start mt-8 p-6 border border-blue-700 shadow-lg rounded-lg bg-white">
+        <div class="w-full lg:w-2/5 h-fit flex flex-col items-start mt-8 p-6 border border-blue-700 shadow-lg rounded-lg bg-white">
             <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 mb-4">{{ $item->Name }}</h1>
 
             <p class="text-xl sm:text-2xl font-bold text-blue-600 mt-4">Price: ${{ number_format($item->Price, 2) }}</p>
@@ -51,16 +50,11 @@
             <div class="mt-6">
                 <label class="block text-sm sm:text-xl font-semibold text-gray-700 mb-2">Sizes</label>
                 <div class="flex flex-wrap space-x-2 sm:space-x-4">
-                    @php
-                    $productSizes = $product->Size ?? [];
-                    @endphp
                     @foreach ($item->Size as $size)
                     <label class="relative cursor-pointer size-label">
-                        <input type="radio" name="size" value="{{ $size }}"
-                            {{ in_array($size, $productSizes) ? 'checked' : '' }} class="hidden size-checkbox">
+                        <input type="radio" name="size" value="{{ $size }}" class="hidden size-checkbox">
                         <div
-                            class="size-button w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg border transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300
-                                    {{ in_array($size, $productSizes) ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800' }}">
+                            class="size-button w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg border transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 bg-gray-200 text-gray-800">
                             {{ $size }}
                         </div>
                     </label>
@@ -512,6 +506,17 @@
             }
         };
 
+        // Update cart count
+        const updateCartCount = () => {
+            fetch('/cart/count')
+                .then(response => response.json())
+                .then(data => {
+                    const cartCountEl = document.getElementById('cart-count');
+                    cartCountEl.textContent = data.cartCount;
+                })
+                .catch(error => console.error('Error fetching cart count:', error));
+        };
+
         // Increment and Decrement Buttons
         incrementBtn.addEventListener('click', () => {
             const currentVal = parseInt(quantityInput.value);
@@ -573,16 +578,18 @@
                     }, 500);
                 }, 3000);
                 return;
-                return;
             }
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             try {
                 const response = await fetch(`/cart/add`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
                     },
+                    credentials: 'same-origin', // Include this line to send cookies
                     body: JSON.stringify({
                         ItemID: itemID,
                         Size: selectedSize.value,
@@ -592,7 +599,11 @@
 
                 const data = await response.json();
 
-                if (data.success) {
+                if (response.ok) {
+                    // Handle success (e.g., update UI, display messages)
+                    if (window.updateCartCounters) {
+                        window.updateCartCounters();
+                    }
                     remainingStock = data.remainingStock; // Update remaining stock
                     updateStockUI();
 
@@ -600,38 +611,39 @@
                     responseMessageEl.classList.remove('hidden', 'text-red-500');
                     responseMessageEl.classList.add('text-green-500');
                     setTimeout(() => {
-                    responseMessageEl.style.transition = 'opacity 0.5s ease';
-                    responseMessageEl.style.opacity = '0';
-                    setTimeout(() => {
-                        responseMessageEl.classList.add('hidden');
-                        responseMessageEl.style.opacity = '1'; // Reset opacity for future use
-                    }, 500);
-                }, 3000);
-                return;
+                        responseMessageEl.style.transition = 'opacity 0.5s ease';
+                        responseMessageEl.style.opacity = '0';
+                        setTimeout(() => {
+                            responseMessageEl.classList.add('hidden');
+                            responseMessageEl.style.opacity = '1'; // Reset opacity for future use
+                        }, 500);
+                    }, 3000);
                 } else {
+                    // Handle server-side errors
+                    console.error('Server error:', data.message);
                     responseMessageEl.textContent = data.message;
                     responseMessageEl.classList.remove('hidden', 'text-green-500');
                     responseMessageEl.classList.add('text-red-500');
                     setTimeout(() => {
-                    responseMessageEl.style.transition = 'opacity 0.5s ease';
-                    responseMessageEl.style.opacity = '0';
-                    setTimeout(() => {
-                        responseMessageEl.classList.add('hidden');
-                        responseMessageEl.style.opacity = '1'; // Reset opacity for future use
-                    }, 500);
-                }, 3000);
-                return;
+                        responseMessageEl.style.transition = 'opacity 0.5s ease';
+                        responseMessageEl.style.opacity = '0';
+                        setTimeout(() => {
+                            responseMessageEl.classList.add('hidden');
+                            responseMessageEl.style.opacity = '1'; // Reset opacity for future use
+                        }, 500);
+                    }, 3000);
                 }
             } catch (error) {
-                console.error('Error adding to cart:', error);
+                console.error('Fetch error:', error);
                 responseMessageEl.textContent = "An error occurred. Please try again.";
                 responseMessageEl.classList.remove('hidden', 'text-green-500');
                 responseMessageEl.classList.add('text-red-500');
             }
         });
 
-        // Fetch initial remaining stock
+        // Fetch initial remaining stock and cart count
         await fetchRemainingStock();
+        updateCartCount();
     });
 </script>
 
