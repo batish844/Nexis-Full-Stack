@@ -128,10 +128,6 @@
       <div>
         <h2 class="text-2xl font-semibold mb-4 border-b-2 border-gray-200 pb-2">Cart Summary</h2>
         <div class="flex justify-between items-center py-2 text-sm">
-          <span class="text-gray-600">Total Items:</span>
-          <span class="font-bold text-gray-800">{{ $cartItems->count() }}</span>
-        </div>
-        <div class="flex justify-between items-center py-2 text-sm">
           <span class="text-gray-600">Total Price:</span>
           <span id="total-price-sum" class="font-bold text-blue-600">${{ number_format($totalPrice, 2) }}</span>
         </div>
