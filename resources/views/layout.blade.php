@@ -196,48 +196,43 @@
         @yield('content')
     </main>
 
-    <footer class="bg-gray-900 text-white pt-10 pb-4 md:pt-16 md:pb-4">
-        <div class="container mx-auto px-4 md:flex md:justify-between">
-            <div class="mb-8 md:mb-0">
-                <p class="text-3xl font-semibold mb-2">Stay Connected</p>
-                <p class="text-gray-400 max-w-sm leading-relaxed">
-                    Join us on social media and keep up-to-date with our latest updates and exclusive offers.
-                </p>
-            </div>
-            <div class="flex justify-center md:justify-start space-x-6 mb-8 md:mb-0">
-                <a href="https://www.facebook.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook"
-                        class="h-10 w-10 md:h-12 md:w-12">
-                </a>
-                <a href="https://www.pinterest.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest"
-                        class="h-10 w-10 md:h-12 md:w-12">
-                </a>
-                <a href="https://www.instagram.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram"
-                        class="h-10 w-10 md:h-12 md:w-12">
-                </a>
-                <a href="https://www.tiktok.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok"
-                        class="h-10 w-10 md:h-12 md:w-12">
-                </a>
-            </div>
-            <div class="text-center md:text-left max-w-sm">
-                <p class="text-lg mb-4 font-semibold">Subscribe to Our Newsletter</p>
-                <div class="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-3">
-                    <input type="email" id="email" placeholder="Email address"
-                        class="w-full p-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
-                    <input type="tel" id="tel" placeholder="Phone number"
-                        class="w-full p-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
+    <footer class="bg-gray-900 text-white pt-10 pb-6">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-10 md:space-y-0">
+                <div class="text-center md:text-left md:flex-1">
+                    <h2 class="text-3xl font-semibold mb-3">Stay Connected</h2>
+                    <p class="text-gray-400 leading-relaxed max-w-md mx-auto md:mx-0">
+                        Join us on social media and keep up-to-date with our latest updates and exclusive offers.
+                    </p>
                 </div>
-                <button
-                    class="w-full mt-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition duration-300 focus:outline-none">
-                    Subscribe
-                </button>
+
+                <div class="flex justify-center md:justify-center space-x-8 md:flex-1">
+                    <a href="https://www.facebook.com" target="_blank" class="transform transition hover:scale-110">
+                        <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook" class="h-12 w-12">
+                    </a>
+                    <a href="https://www.pinterest.com" target="_blank" class="transform transition hover:scale-110">
+                        <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest" class="h-12 w-12">
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="transform transition hover:scale-110">
+                        <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram" class="h-12 w-12">
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" class="transform transition hover:scale-110">
+                        <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok" class="h-12 w-12">
+                    </a>
+                </div>
+
+                <div class="text-center md:text-right md:flex-1">
+                    <h3 class="text-xl font-medium mr-0 sm:mr-12 mb-4">We Accept</h3>
+                    <div class="flex justify-center md:justify-end items-center space-x-6">
+                        <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-14 w-auto">
+                        <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-14 w-auto">
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="border-t border-gray-700 mt-10 pt-6 text-center">
-            <ul class="flex flex-wrap justify-center space-x-4 text-gray-400 text-sm">
+            <ul class="flex flex-wrap justify-center space-x-6 text-gray-400 text-sm">
                 <li><a href="/home" class="hover:text-white transition duration-300">Home</a></li>
                 <li><a href="/about-us" class="hover:text-white transition duration-300">About Us</a></li>
                 <li><a href="/contact-us" class="hover:text-white transition duration-300">Contact Us</a></li>

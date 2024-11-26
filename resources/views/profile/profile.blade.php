@@ -9,7 +9,7 @@
             <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
                 {{ session('success') }}
             </div>
-            @endif
+            @endi   
             {{-- Avatar Section --}}
             <div class="px-12 sm:px-32 py-6 sm:py-10 mx-8 sm:mx-8 bg-white shadow-md rounded-lg">
                 <div class="w-88 mx-auto">

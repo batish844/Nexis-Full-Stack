@@ -309,13 +309,11 @@
             });
         }
 
-        // Handle size label clicks
         sizeLabels.forEach(label => {
             label.addEventListener('click', () => {
                 const checkbox = label.querySelector('.size-checkbox');
                 const sizeButton = label.querySelector('.size-button');
 
-                // Uncheck all other checkboxes
                 document.querySelectorAll('.size-checkbox').forEach(cb => cb.checked = false);
 
                 document.querySelectorAll('.size-button').forEach(btn => {

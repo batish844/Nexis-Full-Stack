@@ -188,7 +188,10 @@
             });
 
         });
-
+        if ($('.flash-message').length) {
+            $('.flash-message').delay(3000).fadeOut(500, function() {
+                $(this).remove();
+            });}
         function showPasswordNotification(message, type = 'success') {
             const $notification = $('#password-notification');
             const $message = $('#password-notification-message');

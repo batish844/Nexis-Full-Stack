@@ -210,6 +210,12 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
+        if ($request->input('reject') === 'true') {
+            $request->session()->forget('has_guest_orders');
+
+            return redirect()->back()->with('info', 'You have chosen not to claim the guest orders. Session cleared.');
+        }
+
         $guestOrders = Order::where('guest_email', $user->email)->get();
 
         if ($guestOrders->isEmpty()) {
@@ -221,7 +227,7 @@ class ProfileController extends Controller
         foreach ($guestOrders as $order) {
             foreach ($order->orderItems as $orderItem) {
                 if ($orderItem->item) {
-                    $totalPointsRewarded += $orderItem->Quantity * $orderItem->item->Points; // Quantity * Item Points
+                    $totalPointsRewarded += $orderItem->Quantity * $orderItem->item->Points; 
                 }
             }
 
@@ -239,6 +245,7 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('success', "Your guest orders have been successfully claimed, and you earned {$totalPointsRewarded} points!");
     }
+
 
 
     /**
