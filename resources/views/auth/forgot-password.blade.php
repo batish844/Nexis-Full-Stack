@@ -1,12 +1,12 @@
 @extends('auth.layout')
 
 @section('content')
-<div class="text-center">
+<div class="text-center z-10">
     <h1 class="text-3xl font-bold text-gray-900">Forgot Password</h1>
     <p class="mt-2 text-gray-600">Enter your email to receive a reset link.</p>
 </div>
 
-<form method="POST" action="{{ route('password.email') }}" class="space-y-4">
+<form method="POST" action="{{ route('password.email') }}" class="space-y-4 z-10">
     @csrf
 
     <!-- Email -->
@@ -19,7 +19,7 @@
     <!-- Submit -->
     <div>
         <button type="submit"
-            class="w-full py-3 px-6 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            class="w-full py-3 px-6 z-10 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
             Send Reset Link
         </button>
     </div>

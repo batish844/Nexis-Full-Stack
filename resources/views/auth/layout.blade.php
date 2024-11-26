@@ -12,7 +12,7 @@
 
 <body class="bg-gray-100">
     <div class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md space-y-6">
+        <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md space-y-6 z-10">
             <div class="flex justify-center mb-4">
                 <img src="{{ asset('/storage/img/CommonImg/BrandLogo.png') }}" alt="App Logo" class="h-16 w-auto">
             </div>
@@ -39,6 +39,10 @@
             @yield('content')
         </div>
     </div>
+    
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+    <script src="{{ mix('resources/js/particles-config.js') }}"></script>
 </body>
 
 </html>
