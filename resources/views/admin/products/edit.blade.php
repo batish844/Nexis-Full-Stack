@@ -29,8 +29,8 @@
             <select id="gender" name="gender"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 <option value="" disabled selected>Select Gender</option>
-                <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Male</option>
-                <option value="F" {{ old('gender') == 'F' ? 'selected' : '' }}>Female</option>
+                <option value="M" {{ old('gender', $product->Category->Gender ?? '') == 'M' ? 'selected' : '' }}>Male</option>
+                <option value="F" {{ old('gender', $product->Category->Gender ?? '') == 'F' ? 'selected' : '' }}>Female</option>
             </select>
         </div>
 
@@ -38,7 +38,7 @@
             <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
             <select id="category" name="category_id"
                 class="mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                <option value="" disabled selected>Select a Category</option>
+                <option value="{{ $product->CategoryID }}" selected>{{ $product->Category->Name }}</option>
             </select>
             @error('category_id')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -163,10 +163,10 @@
         const genderSelect = document.getElementById('gender');
         const categorySelect = document.getElementById('category');
 
-        genderSelect.addEventListener('change', function() {
-            const gender = this.value;
+        function loadCategories() {
+            const gender = genderSelect.value;
 
-            categorySelect.innerHTML = '<option value="" disabled selected>Select a Category</option>';
+            categorySelect.innerHTML = '<option value="{{ $product->CategoryID }}" selected>{{ $product->Category->Name }}</option>';
 
             fetch(`/gender/${gender}`)
                 .then(response => response.json())
@@ -179,7 +179,12 @@
                     });
                 })
                 .catch(error => console.error('Error fetching categories:', error));
-        });
+        }
+
+        genderSelect.addEventListener('change', loadCategories);
+
+        // Call on page load
+        loadCategories();
         let sizeButtons = document.querySelectorAll('.size-btn');
         let sizeLabels = document.querySelectorAll('label.relative');
 
