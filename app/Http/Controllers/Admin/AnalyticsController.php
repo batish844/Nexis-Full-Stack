@@ -107,6 +107,9 @@ class AnalyticsController extends Controller
 
             $topCustomers = Order::with('user')
                 ->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()])
+                ->whereHas('user', function ($query) {
+                    $query->where('email', '!=', 'guest@guest.com');
+                })
                 ->select('OrderedBy', DB::raw('COUNT(*) as orders'), DB::raw('SUM(TotalPrice) as total_spent'))
                 ->groupBy('OrderedBy')
                 ->orderByDesc('total_spent')
