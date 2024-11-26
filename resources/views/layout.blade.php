@@ -171,12 +171,13 @@
                         onclick="toggleMenu()">Sign In</a>
                     @endif
                 </div>
+                
                 <div class="mt-8 mb-4 flex justify-center">
-                    <a href="{{ url('Wishlist') }}" id="wishlist-count-hamburger" class="relative inline-block">
-                        <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
-                            state="morph-heart" colors="primary:#c71f16"
-                            style="width:35px;height:35px"></lord-icon>
-                        <span id="wishlist-count"
+                    <a href="{{ url('wishlist') }}" id="wishlist-icon" class="relative inline-block">
+                    <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
+                        state="morph-heart" colors="primary:#c71f16"
+                        style="width:35px;height:35px"></lord-icon>
+                        <span id="wishlist-count-hamburger"
                             class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
                     </a>
                 </div>
