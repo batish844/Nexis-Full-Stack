@@ -20,6 +20,9 @@ class Order extends Model
         'Status',
     ];
 
+    protected $casts = [
+        'guest_address' => 'array',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class, 'OrderedBy', 'UserID');
