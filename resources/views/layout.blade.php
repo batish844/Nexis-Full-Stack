@@ -222,7 +222,7 @@
                     </a>
                 </div>
 
-                <div class="text-center md:text-right md:flex-1">
+                <div class="text-center md:text-right md:mr-20 md:flex-1">
                     <h3 class="text-xl font-medium mr-0 sm:mr-12 mb-4">We Accept</h3>
                     <div class="flex justify-center md:justify-end items-center space-x-6">
                         <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-14 w-auto">
@@ -287,7 +287,7 @@
                     .then(data => {
                         const desktopCounter = document.getElementById('cart-count-desktop');
                         const hamburgerCounter = document.getElementById('cart-count-hamburger');
-
+                        let updateCartIcon = document.getElementById('cart-icon-desktop');
                         if (desktopCounter) {
                             desktopCounter.textContent = data.cartCount;
                         }
