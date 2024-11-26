@@ -206,6 +206,39 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('status', 'avatar-deleted');
     }
+    public function claimOrders(Request $request)
+    {
+        $user = Auth::user();
+
+        $guestOrders = Order::where('guest_email', $user->email)->get();
+
+        if ($guestOrders->isEmpty()) {
+            return redirect()->back()->with('error', 'No guest orders found to claim.');
+        }
+
+        $totalPointsRewarded = 0;
+
+        foreach ($guestOrders as $order) {
+            foreach ($order->orderItems as $orderItem) {
+                if ($orderItem->item) {
+                    $totalPointsRewarded += $orderItem->Quantity * $orderItem->item->Points; // Quantity * Item Points
+                }
+            }
+
+            $order->update([
+                'OrderedBy'     => $user->UserID,
+                'is_guest'      => false,
+                'guest_email'   => null,
+                'guest_address' => null,
+            ]);
+        }
+
+        $user->increment('Points', $totalPointsRewarded);
+
+        $request->session()->forget('has_guest_orders');
+
+        return redirect()->back()->with('success', "Your guest orders have been successfully claimed, and you earned {$totalPointsRewarded} points!");
+    }
 
 
     /**

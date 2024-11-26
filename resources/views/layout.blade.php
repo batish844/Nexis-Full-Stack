@@ -8,7 +8,7 @@
 
     <!--Lato link-->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <title>@yield('title', 'Nexus')</title>
+    <title>@yield('title', 'Nexis')</title>
 
     <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
 

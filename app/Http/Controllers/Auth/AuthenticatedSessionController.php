@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Order;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,12 +29,24 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (Auth::user()->isAdmin) {
+        $user = Auth::user();
+
+        // Check for guest orders matching the user's email
+        $guestOrders = Order::where('guest_email', $user->email)->get();
+
+        if ($guestOrders->isNotEmpty()) {
+            // Store a flag in the session to indicate guest orders exist
+            session(['has_guest_orders' => true]);
+        }
+
+        // Redirect based on user role
+        if ($user->isAdmin) {
             return redirect()->intended('/admin/analytics');
         } else {
             return redirect()->intended('/home');
         }
     }
+
 
     /**
      * Destroy an authenticated session.

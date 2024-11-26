@@ -75,6 +75,7 @@ Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.u
 Route::get('/cart/remaining-stock/{itemID}', [CartController::class, 'getRemainingStock'])->name('cart.remainingStock');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/orders/claim', [ProfileController::class, 'claimOrders'])->name('orders.claim');
 
 
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');

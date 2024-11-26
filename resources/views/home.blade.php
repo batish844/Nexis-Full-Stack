@@ -3,6 +3,16 @@
 @section('title', 'Home')
 
 @section('content')
+@if(session('has_guest_orders'))
+<div class="alert alert-info">
+    <p>We found orders placed with your email while you were not logged in. Would you like to claim them?</p>
+    <form action="{{ route('orders.claim') }}" method="POST" class="inline">
+        @csrf
+        <button type="submit" class="btn btn-primary">Claim My Orders</button>
+    </form>
+</div>
+@endif
+
 <div class="relative w-full overflow-hidden aspect-[16/9] md:aspect-[16/7] image-slider" id="imageSlider">
     @foreach ($slides as $slide)
     <div class="absolute inset-0 w-full opacity-0 transition-opacity duration-1000 ease-in-out slide {{ $loop->first ? 'active' : '' }}">
@@ -100,24 +110,23 @@
 </style>
 <script>
     // Check if the user has items in their wishlist in localStorage
-if (localStorage.getItem('wishlist')) {
-    let wishlist = JSON.parse(localStorage.getItem('wishlist'));
+    if (localStorage.getItem('wishlist')) {
+        let wishlist = JSON.parse(localStorage.getItem('wishlist'));
 
-    // Send the wishlist data to the backend for saving to the database
-    fetch('/transfer-wishlist', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({
-            items: wishlist
-        })
-    }).then(response => response.json())
-      .then(data => {
-          localStorage.removeItem('wishlist');  // Clear the wishlist after transfer
-          alert('Your guest wishlist has been transferred to your account!');
-      });
-}
-
+        // Send the wishlist data to the backend for saving to the database
+        fetch('/transfer-wishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    items: wishlist
+                })
+            }).then(response => response.json())
+            .then(data => {
+                localStorage.removeItem('wishlist'); // Clear the wishlist after transfer
+                alert('Your guest wishlist has been transferred to your account!');
+            });
+    }
 </script>

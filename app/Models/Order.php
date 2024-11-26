@@ -12,10 +12,12 @@ class Order extends Model
     protected $primaryKey = 'OrderID';
 
     protected $fillable = [
-        'DateTime',
-        'Status',
+        'OrderedBy',
         'TotalPrice',
-        'OrderedBy'
+        'guest_email',
+        'guest_address',
+        'is_guest',
+        'Status',
     ];
 
     public function user()

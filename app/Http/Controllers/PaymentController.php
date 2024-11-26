@@ -18,13 +18,58 @@ class PaymentController extends Controller
 
         try {
             if (Auth::check()) {
+
                 // ======= AUTHENTICATED USER LOGIC =======
                 $user = Auth::user();
+
+                $cartItems = Cart::with('item')->where('UserID', $user->UserID)->get();
+
+                if ($cartItems->isEmpty()) {
+                    return response()->json(['error' => 'Your cart is empty.'], 400);
+                }
+                if (empty($user->address)) {
+                    return response()->json(['error' => 'Please update your address in your profile to proceed.'], 400);
+                }
+                $adjustedTotalPrice = $request->input('adjustedTotalPrice');
+                $pointsToRedeem = $request->input('pointsToRedeem');
+
+                if (!is_numeric($adjustedTotalPrice) || !is_numeric($pointsToRedeem)) {
+                    return response()->json(['error' => 'Invalid input data.'], 400);
+                }
+
+                $pointsToRedeem = intval($pointsToRedeem);
+
+                $availablePoints = $user->Points;
+
+                if ($pointsToRedeem < 0 || $pointsToRedeem > $availablePoints) {
+                    return response()->json(['error' => 'Invalid points to redeem.'], 400);
+                }
+
                 $cartItems = Cart::with('item')->where('UserID', $user->UserID)->get();
 
                 if ($cartItems->isEmpty()) {
                     throw new \Exception('Your cart is empty.');
                 }
+
+                $totalPrice = 0;
+                foreach ($cartItems as $cartItem) {
+                    $totalPrice += $cartItem->item->Price * $cartItem->Quantity;
+                }
+
+                $maxPointsRedeemable = min($availablePoints, floor($totalPrice / 0.30));
+                $pointsToRedeem = min($pointsToRedeem, $maxPointsRedeemable);
+                $pointsValue = $pointsToRedeem * 0.30;
+                $expectedAdjustedTotalPrice = $totalPrice - $pointsValue;
+
+                if (abs($expectedAdjustedTotalPrice - $adjustedTotalPrice) > 0.01) {
+                    return response()->json(['error' => 'Adjusted total price mismatch.'], 400);
+                }
+
+                $coupon = $stripe->coupons->create([
+                    'amount_off' => intval($pointsValue * 100), // amount in cents
+                    'currency' => 'usd',
+                    'duration' => 'once',
+                ]);
 
                 $lineItems = $cartItems->map(function ($cartItem) {
                     return [
@@ -33,7 +78,7 @@ class PaymentController extends Controller
                             'product_data' => [
                                 'name' => $cartItem->item->Name . ' (' . $cartItem->Size . ')',
                             ],
-                            'unit_amount' => $cartItem->item->Price * 100, // Convert to cents
+                            'unit_amount' => intval($cartItem->item->Price * 100), 
                         ],
                         'quantity' => $cartItem->Quantity,
                     ];
@@ -43,19 +88,27 @@ class PaymentController extends Controller
                     'payment_method_types' => ['card'],
                     'line_items' => $lineItems,
                     'mode' => 'payment',
+                    'discounts' => [
+                        ['coupon' => $coupon->id],
+                    ],
                     'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
                     'cancel_url' => route('checkout.cancel'),
                     'customer_email' => $user->email,
                 ]);
 
-                session(['checkoutSessionId' => $checkoutSession->id]);
+                session([
+                    'checkoutSessionId' => $checkoutSession->id,
+                    'pointsToRedeem' => $pointsToRedeem,
+                    'couponId' => $coupon->id,
+                ]);
+
                 return response()->json(['url' => $checkoutSession->url]);
             } else {
                 // ======= GUEST USER LOGIC =======
                 $sessionCart = session('cart', []);
 
                 if (empty($sessionCart)) {
-                    throw new \Exception('Your cart is empty.');
+                    return redirect()->route('cart.view')->with('error', 'Your cart is empty.');
                 }
 
                 $lineItems = collect($sessionCart)->map(function ($cartItem) {
@@ -65,7 +118,7 @@ class PaymentController extends Controller
                             'product_data' => [
                                 'name' => 'Item #' . $cartItem['ItemID'] . ' (' . $cartItem['Size'] . ')',
                             ],
-                            'unit_amount' => $cartItem['Price'] * 100, // Convert to cents
+                            'unit_amount' => $cartItem['Price'] * 100, 
                         ],
                         'quantity' => $cartItem['Quantity'],
                     ];
@@ -78,7 +131,7 @@ class PaymentController extends Controller
                     'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
                     'cancel_url' => route('checkout.cancel'),
                     'shipping_address_collection' => [
-                        'allowed_countries' => ['US', 'CA', 'GB'], // Modify as needed
+                        'allowed_countries' => ['US', 'CA', 'GB', 'LB'], 
                     ],
                 ]);
 
@@ -159,10 +212,11 @@ class PaymentController extends Controller
                     throw new \Exception('Your cart is empty.');
                 }
 
-                // Create guest order
+                
+
                 $order = Order::create([
-                    'OrderedBy' => 999, // Guest user ID placeholder
-                    'TotalPrice' => $session->amount_total / 100, // Convert from cents to dollars
+                    'OrderedBy' => 999, 
+                    'TotalPrice' => $session->amount_total / 100, 
                     'guest_email' => $email,
                     'guest_address' => json_encode([
                         'street_address' => $shipping->line1,
@@ -204,6 +258,7 @@ class PaymentController extends Controller
             return redirect()->route('cart.view')->with('error', 'An error occurred during checkout. Please try again.');
         }
     }
+
 
 
     public function checkoutCancel()
