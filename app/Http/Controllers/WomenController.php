@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Category;
+use App\Models\Wishlist;
+use Illuminate\Support\Facades\Auth;
 
 class WomenController extends Controller
 {
@@ -17,12 +19,11 @@ class WomenController extends Controller
             $query->where('gender', 'F');
         })->get();
 
-        
+
 
         $categories = Category::where('Gender', 'F')->get();
 
         return view('store.women.index', compact('items', 'categories'));
-        return view('store.women.index');
     }
     public function filterProducts(Request $request)
     {
@@ -46,11 +47,16 @@ class WomenController extends Controller
 
         $items = $itemsQuery->with('category')->get();
 
-      
+        if (Auth::check()) {
+            $wishlistItems = Wishlist::where('UserID', Auth::id())
+                ->pluck('ItemID')
+                ->toArray();
+        } else {
+            $wishlistItems = session('wishlist', []);
+        }
 
-        return view('store.cards', compact('items'));
+        return view('store.cards', compact('items', 'wishlistItems'));
     }
-
     /**
      * Show the form for creating a new resource.
      */

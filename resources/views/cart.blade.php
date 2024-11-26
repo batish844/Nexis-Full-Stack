@@ -156,7 +156,7 @@
       Proceed to Checkout
     </a>
     <div class="flex justify-center mt-4">
-      <img src="{{ asset('/storage/img/CommonImg/visa.jpg') }}" alt="Visa" class="h-8 mx-2">
+      <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-8 mx-2">
       <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-8 mx-2">
     </div>
 

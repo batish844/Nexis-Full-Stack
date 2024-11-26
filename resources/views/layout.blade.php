@@ -119,7 +119,8 @@
             </div>
             <div id="icon" class="ml-6">
                 <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
-                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-desktop"
+                        trigger="hover"
                         style="width:35px;height:35px"></lord-icon>
                     <span id="cart-count-desktop"
                         class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"></span>
@@ -181,7 +182,7 @@
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
                     <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
-                        <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                        <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-mobile" trigger="hover"
                             style="width:48px;height:48px"></lord-icon>
                         <span id="cart-count-hamburger"
                             class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"> 0
@@ -274,6 +275,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+
             const updateCartCounters = () => {
                 fetch('/cart/count', {
                         headers: {
@@ -291,6 +293,12 @@
                         }
                         if (hamburgerCounter) {
                             hamburgerCounter.textContent = data.cartCount;
+                        }
+                        if (updateCartIcon) {
+                            updateCartIcon.dispatchEvent(new MouseEvent('mouseover')); // Simulate hover
+                            setTimeout(() => {
+                                updateCartIcon.dispatchEvent(new MouseEvent('mouseout')); // End hover after animation
+                            }, 1000); 
                         }
                     })
                     .catch(error => {

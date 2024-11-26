@@ -189,46 +189,44 @@
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
         // Event delegation for wishlist button toggling
-        document.getElementById('dynamic-products').addEventListener('click', function(event) {
-            const button = event.target.closest('.wishlist-btn');
+        document.getElementById('dynamic-products').addEventListener('click', function (event) {
+        const button = event.target.closest('.wishlist-btn');
 
-            if (button) {
-                const itemId = button.dataset.id;
+        if (button) {
+            const itemId = button.dataset.id;
 
-                fetch('/wishlist/toggle', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrfToken,
-                        },
-                        body: JSON.stringify({
-                            ItemID: itemId
-                        }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Toggle heart icon color
-                            const heartIcon = button.querySelector('i');
-                            if (data.message.includes('removed')) {
-                                heartIcon.classList.remove('text-red-500');
-                                heartIcon.classList.add('text-gray-400');
-                            } else if (data.message.includes('added')) {
-                                heartIcon.classList.remove('text-gray-400');
-                                heartIcon.classList.add('text-red-500');
-                            }
-
-                            // Update wishlist counter
-                            if (window.updateWishlistCounters) {
-                                window.updateWishlistCounters();
-                            }
-                        } else {
-                            console.error(data.message);
+            fetch('/wishlist/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+                body: JSON.stringify({ ItemID: itemId }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Toggle heart icon color
+                        const heartIcon = button.querySelector('i');
+                        if (data.message.includes('removed')) {
+                            heartIcon.classList.remove('text-red-500');
+                            heartIcon.classList.add('text-gray-400');
+                        } else if (data.message.includes('added')) {
+                            heartIcon.classList.remove('text-gray-400');
+                            heartIcon.classList.add('text-red-500');
                         }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        });
+
+                        // Update wishlist counter
+                        if (window.updateWishlistCounters) {
+                            window.updateWishlistCounters();
+                        }
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
 
     });
 </script>
