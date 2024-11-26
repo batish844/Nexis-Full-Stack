@@ -135,4 +135,31 @@ class WishlistController extends Controller
 
         return response()->json(['wishlistCount' => $wishlistCount]);
     }
+    public function viewWishlist()
+    {
+        if (Auth::check()) {
+            // Authenticated User: Fetch wishlist from the database
+            $wishlistItems = Wishlist::with('item')
+                ->where('UserID', Auth::id())
+                ->get()
+                ->map(function ($wishlist) {
+                    return [
+                        'ItemID' => $wishlist->ItemID,
+                        'item'   => $wishlist->item ? $wishlist->item->toArray() : null,
+                    ];
+                });
+        } else {
+            // Guest User: Fetch wishlist from the session
+            $wishlist = session('wishlist', []);
+            $wishlistItems = collect($wishlist)->map(function ($itemId) {
+                $item = Item::find($itemId);
+                return [
+                    'ItemID' => $itemId,
+                    'item'   => $item ? $item->toArray() : null,
+                ];
+            });
+        }
+
+        return view('wishlist', compact('wishlistItems'));
+    }
 }
