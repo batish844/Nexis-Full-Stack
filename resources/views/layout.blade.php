@@ -16,7 +16,7 @@
     @stack('styles')
     @stack('scripts')
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
-    
+
 
     <style>
         @keyframes navBarSparkle {
@@ -113,8 +113,8 @@
                     <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
                         state="morph-heart" colors="primary:#c71f16"
                         style="width:35px;height:35px"></lord-icon>
-                    <span id="wishlist-count"
-                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                    <span id="wishlist-count-desktop"
+                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"></span>
                 </a>
             </div>
             <div id="icon" class="ml-6">
@@ -171,7 +171,7 @@
                     @endif
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
-                    <a href="{{ url('Wishlist') }}" id="wishlist-icon" class="relative inline-block">
+                    <a href="{{ url('Wishlist') }}" id="wishlist-count-hamburger" class="relative inline-block">
                         <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
                             state="morph-heart" colors="primary:#c71f16"
                             style="width:35px;height:35px"></lord-icon>
@@ -277,10 +277,8 @@
 
         });
         document.addEventListener('DOMContentLoaded', function() {
-            // Fetch CSRF token from meta tag
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            // Function to update cart counters
             const updateCartCounters = () => {
                 fetch('/cart/count', {
                         headers: {
@@ -305,11 +303,36 @@
                     });
             };
 
-            // Call updateCartCounters on page load
             updateCartCounters();
 
-            // Optionally expose updateCartCounters globally for reuse
             window.updateCartCounters = updateCartCounters;
+            const updateWishlistCounters = () => {
+                fetch('/wishlist/count', {
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const desktopWishlistCounter = document.getElementById('wishlist-count-desktop');
+                        const hamburgerWishlistCounter = document.getElementById('wishlist-count-hamburger');
+
+                        if (desktopWishlistCounter) {
+                            desktopWishlistCounter.textContent = data.wishlistCount;
+                        }
+                        if (hamburgerWishlistCounter) {
+                            hamburgerWishlistCounter.textContent = data.wishlistCount;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching wishlist count:', error);
+                    });
+            };
+
+            updateWishlistCounters();
+
+            window.updateWishlistCounters = updateWishlistCounters;
         });
     </script>
 </body>

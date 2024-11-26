@@ -87,9 +87,7 @@ Route::get('/orders/export', [OrderController::class, 'exportCsv'])->name('order
 // Home Page
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 //Wishlist 
-Route::get('/wishlist', function () {
-    return view('wishlist');
-});
+
 // Static Pages Routes
 Route::get('/about-us', function () {
     return view('about');
@@ -117,33 +115,20 @@ Route::get('/checkout', [PaymentController::class, 'checkoutForm'])->name('check
 Route::post('/checkout/session', [PaymentController::class, 'createCheckoutSession'])->name('checkout.session');
 Route::get('/checkout/success', [PaymentController::class, 'checkoutSuccess'])->name('checkout.success');
 Route::get('/checkout/cancel', [PaymentController::class, 'checkoutCancel'])->name('checkout.cancel');
+
+
+Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+Route::post('/wishlist/toggle', [WishlistController::class, 'toggleWishlist'])->name('wishlist.toggle');
+Route::get('/wishlist', [WishlistController::class, 'viewWishlist'])->name('wishlist.view');
+Route::get('/wishlist/count', [WishlistController::class, 'getWishlistCount'])->name('wishlist.count');
+
+// Middleware for merging wishlist after login
+Route::middleware(['auth'])->group(function () {
+    Route::post('/wishlist/merge', [WishlistController::class, 'mergeWishlist'])->name('wishlist.merge');
+});
+
+
 Route::fallback(function () {
     return response()->view('404', [], 404);
 });
 require __DIR__ . '/auth.php';
-
-
-
-
-Route::post('/transfer-wishlist', [WishlistController::class, 'transferWishlist'])->middleware('auth');
-
-
-Route::post('/wishlist/guest/add', [WishlistController::class, 'storeGuestWishlist']);
-Route::post('/wishlist/transfer', [WishlistController::class, 'transferGuestWishlistToDatabase']);
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
-});
-Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
-Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
-
-
-Route::post('/api/get-wishlist-items', function (Request $request) {
-    $itemIds = $request->input('itemIds'); // Item IDs from localStorage
-    $items = Item::whereIn('id', $itemIds)->get(['id', 'name', 'price', 'image', 'description']);
-    return response()->json(['success' => true, 'items' => $items]);
-});
-
-Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-

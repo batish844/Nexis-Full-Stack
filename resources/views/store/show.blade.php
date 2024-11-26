@@ -67,7 +67,7 @@
             <!-- Stock Availability -->
             <div class="mt-8">
                 <p id="stock-counter" class="text-lg sm:text-xl font-semibold text-gray-700">
-                    <span id="remaining-stock" class="text-blue-600 font-bold">{{ $item->Quantity }}</span> items available in stock
+                    <span id="remaining-stock" class="text-blue-600 font-bold"></span> items available in stock
                 </p>
                 <p id="error-message" class="text-red-500 text-sm hidden"></p>
             </div>
@@ -604,6 +604,9 @@
                     // Handle success (e.g., update UI, display messages)
                     if (window.updateCartCounters) {
                         window.updateCartCounters();
+                    }
+                    if (window.updateWishlistCounters) {
+                        window.updateWishlistCounters();
                     }
                     remainingStock = data.remainingStock; // Update remaining stock
                     updateStockUI();

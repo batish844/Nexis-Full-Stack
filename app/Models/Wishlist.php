@@ -11,18 +11,12 @@ class Wishlist extends Model
 {
     use HasFactory;
 
-    protected $table = 'wishlist'; // Ensure this matches your database table name
-    protected $fillable = ['UserID', 'ItemID', 'DateTime', 'is_read'];
+    protected $table = 'wishlists';
+    protected $fillable = ['UserID', 'ItemID'];
 
-    // public function item()
-    // {
-    //     return $this->belongsTo(Item::class, 'ItemID'); // Adjust foreign key if necessary
-    // }
- 
-
-    public function item()
+   public function item()
 {
-    return $this->belongsTo(Item::class, 'ItemID', 'ItemID'); // Match foreign key correctly
+    return $this->belongsTo(Item::class, 'ItemID', 'ItemID');
 }
 
 }
