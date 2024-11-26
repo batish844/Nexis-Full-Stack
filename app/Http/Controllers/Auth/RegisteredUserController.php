@@ -14,6 +14,8 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB; // Add this line to use database transactions
 use Illuminate\Support\Facades\Log; // For logging errors
+use App\Models\Wishlist;
+use App\Models\Cart;
 
 class RegisteredUserController extends Controller
 {
@@ -40,11 +42,9 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Begin database transaction
         DB::beginTransaction();
 
         try {
-            // Create the new user
             $user = User::create([
                 'First_Name'   => $request->First_Name,
                 'Last_Name'    => $request->Last_Name,
@@ -53,37 +53,63 @@ class RegisteredUserController extends Controller
                 'password'     => Hash::make($request->password),
             ]);
 
-            // Check for guest orders with matching guest_email
             $guestOrders = Order::where('guest_email', $user->email)->get();
 
             if ($guestOrders->isNotEmpty()) {
                 foreach ($guestOrders as $order) {
-                    // Update the order to belong to the new user
                     $order->update([
-                        'OrderedBy'     => $user->UserID, // Assuming 'UserID' is the primary key in 'users' table
+                        'OrderedBy'     => $user->UserID,
                         'is_guest'      => false,
                         'guest_email'   => null,
                         'guest_address' => null,
                     ]);
                 }
             }
+            $guestWishlist = session('wishlist', []);
+            if (!empty($guestWishlist)) {
+                foreach ($guestWishlist as $itemID) {
+                    $wishlistExists = Wishlist::where('UserID', $user->UserID)
+                        ->where('ItemID', $itemID)
+                        ->exists();
 
-            // Fire the Registered event
+                    if (!$wishlistExists) {
+                        Wishlist::create([
+                            'UserID' => $user->UserID,
+                            'ItemID' => $itemID,
+                        ]);
+                    }
+                }
+
+                session()->forget('wishlist');
+            }
+
+            $guestCart = session('cart', []);
+            if (!empty($guestCart)) {
+                foreach ($guestCart as $key => $cartItem) {
+                    [$itemID, $size] = explode('_', $key);
+
+                    Cart::create([
+                        'UserID'   => $user->UserID,
+                        'ItemID'   => $itemID,
+                        'Size'     => $size,
+                        'Quantity' => $cartItem['Quantity'],
+                    ]);
+                }
+
+                session()->forget('cart');
+            }
+
             event(new Registered($user));
 
-            // Log in the new user
             Auth::login($user);
 
-            // Commit the transaction
             DB::commit();
 
             return redirect(route('profile.index'))
-                ->with('success', 'Registration successful! Your previous orders have been linked to your account.');
+                ->with('success', 'Registration successful! Your previous orders, wishlist, and cart items have been linked to your account.');
         } catch (\Exception $e) {
-            // Rollback the transaction on error
             DB::rollBack();
 
-            // Log the error for debugging
             Log::error('Error during registration:', ['error' => $e->getMessage()]);
 
             return redirect()->back()
