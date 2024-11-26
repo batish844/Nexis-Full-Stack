@@ -66,11 +66,11 @@
 @vite('resources/css/men.css')
 @endpush
 
-@push('scripts')
 @vite('resources/js/men.js')
 
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         let sliderOne = document.getElementById("slider-1");
@@ -179,51 +179,49 @@
         initializeCarousel();
 
         // Event delegation for dynamically added products
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-    });
+        // Event delegation for wishlist button toggling
+        document.getElementById('dynamic-products').addEventListener('click', function(event) {
+            const button = event.target.closest('.wishlist-btn');
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+            if (button) {
+                const itemId = button.dataset.id;
 
-    // Event delegation for wishlist button toggling
-    document.getElementById('dynamic-products').addEventListener('click', function(event) {
-        const button = event.target.closest('.wishlist-btn');
+                fetch('/wishlist/toggle', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+                        body: JSON.stringify({
+                            ItemID: itemId
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Toggle heart icon color
+                            const heartIcon = button.querySelector('i');
+                            if (data.message.includes('removed')) {
+                                heartIcon.classList.remove('text-red-500');
+                                heartIcon.classList.add('text-gray-400');
+                            } else if (data.message.includes('added')) {
+                                heartIcon.classList.remove('text-gray-400');
+                                heartIcon.classList.add('text-red-500');
+                            }
 
-        if (button) {
-            const itemId = button.dataset.id;
-
-            fetch('/wishlist/toggle', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                    },
-                    body: JSON.stringify({
-                        ItemID: itemId
-                    }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Toggle heart icon color
-                        const heartIcon = button.querySelector('i');
-                        if (data.message.includes('removed')) {
-                            heartIcon.classList.remove('text-red-500');
-                            heartIcon.classList.add('text-gray-400');
-                        } else if (data.message.includes('added')) {
-                            heartIcon.classList.remove('text-gray-400');
-                            heartIcon.classList.add('text-red-500');
+                            // Update wishlist counter
+                            if (window.updateWishlistCounters) {
+                                window.updateWishlistCounters();
+                            }
+                        } else {
+                            console.error(data.message);
                         }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
 
-                        // Update wishlist counter
-                        if (window.updateWishlistCounters) {
-                            window.updateWishlistCounters();
-                        }
-                    } else {
-                        console.error(data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
     });
 </script>
-@endpush

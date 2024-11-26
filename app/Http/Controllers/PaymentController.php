@@ -78,7 +78,7 @@ class PaymentController extends Controller
                             'product_data' => [
                                 'name' => $cartItem->item->Name . ' (' . $cartItem->Size . ')',
                             ],
-                            'unit_amount' => intval($cartItem->item->Price * 100), 
+                            'unit_amount' => intval($cartItem->item->Price * 100),
                         ],
                         'quantity' => $cartItem->Quantity,
                     ];
@@ -118,7 +118,7 @@ class PaymentController extends Controller
                             'product_data' => [
                                 'name' => 'Item #' . $cartItem['ItemID'] . ' (' . $cartItem['Size'] . ')',
                             ],
-                            'unit_amount' => $cartItem['Price'] * 100, 
+                            'unit_amount' => $cartItem['Price'] * 100,
                         ],
                         'quantity' => $cartItem['Quantity'],
                     ];
@@ -131,7 +131,7 @@ class PaymentController extends Controller
                     'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
                     'cancel_url' => route('checkout.cancel'),
                     'shipping_address_collection' => [
-                        'allowed_countries' => ['US', 'CA', 'GB', 'LB'], 
+                        'allowed_countries' => ['US', 'CA', 'GB', 'LB'],
                     ],
                 ]);
 
@@ -170,19 +170,34 @@ class PaymentController extends Controller
                     throw new \Exception('Your cart is empty.');
                 }
 
+                // Retrieve pointsToRedeem from the session
+                $pointsToRedeem = session('pointsToRedeem', 0);
+
+                // Ensure pointsToRedeem is valid
+                if ($pointsToRedeem > 0) {
+                    if ($user->Points < $pointsToRedeem) {
+                        throw new \Exception('Insufficient points to complete the checkout.');
+                    }
+
+                    // Deduct points from the user's account
+                    $user->decrement('Points', $pointsToRedeem);
+                    Log::info('Deducted points from user:', ['userID' => $user->UserID, 'pointsDeducted' => $pointsToRedeem]);
+                }
+
+                // Create order
                 $order = Order::create([
-                    'OrderedBy' => $user->UserID,
-                    'TotalPrice' => $session->amount_total / 100, // Convert from cents to dollars
-                    'is_guest' => false,
-                    'Status' => 'Pending',
+                    'OrderedBy'   => $user->UserID,
+                    'TotalPrice'  => $session->amount_total / 100, // Convert from cents to dollars
+                    'is_guest'    => false,
+                    'Status'      => 'Pending',
                 ]);
 
                 foreach ($cartItems as $cartItem) {
                     OrderItem::create([
-                        'OrderID' => $order->OrderID,
-                        'ItemID' => $cartItem->item->ItemID,
-                        'Size' => $cartItem->Size,
-                        'Quantity' => $cartItem->Quantity,
+                        'OrderID'    => $order->OrderID,
+                        'ItemID'     => $cartItem->item->ItemID,
+                        'Size'       => $cartItem->Size,
+                        'Quantity'   => $cartItem->Quantity,
                         'TotalPrice' => $cartItem->Quantity * $cartItem->item->Price,
                     ]);
 
@@ -192,12 +207,12 @@ class PaymentController extends Controller
                 Cart::where('UserID', $user->UserID)->delete();
                 Log::info('Cart cleared for authenticated user:', ['userID' => $user->UserID]);
             } else {
-                // Guest user logic
+                // Guest user logic remains the same
                 $email = $session->customer_details->email ?? null;
                 $shipping = $session->shipping_details->address ?? null;
 
                 Log::info('Guest user checkout details:', [
-                    'email' => $email,
+                    'email'   => $email,
                     'address' => $shipping,
                 ]);
 
@@ -212,19 +227,17 @@ class PaymentController extends Controller
                     throw new \Exception('Your cart is empty.');
                 }
 
-                
-
                 $order = Order::create([
-                    'OrderedBy' => 999, 
-                    'TotalPrice' => $session->amount_total / 100, 
-                    'guest_email' => $email,
+                    'OrderedBy'     => 999,
+                    'TotalPrice'    => $session->amount_total / 100,
+                    'guest_email'   => $email,
                     'guest_address' => json_encode([
                         'street_address' => $shipping->line1,
-                        'building' => $shipping->line2 ?? null,
-                        'city' => $shipping->city,
+                        'building'       => $shipping->line2 ?? null,
+                        'city'           => $shipping->city,
                     ]),
-                    'is_guest' => true,
-                    'Status' => 'Pending',
+                    'is_guest'      => true,
+                    'Status'        => 'Pending',
                 ]);
 
                 foreach ($sessionCart as $cartItem) {
@@ -235,10 +248,10 @@ class PaymentController extends Controller
                     }
 
                     OrderItem::create([
-                        'OrderID' => $order->OrderID,
-                        'ItemID' => $item->ItemID,
-                        'Size' => $cartItem['Size'],
-                        'Quantity' => $cartItem['Quantity'],
+                        'OrderID'    => $order->OrderID,
+                        'ItemID'     => $item->ItemID,
+                        'Size'       => $cartItem['Size'],
+                        'Quantity'   => $cartItem['Quantity'],
                         'TotalPrice' => $cartItem['Quantity'] * $item->Price,
                     ]);
 
@@ -249,7 +262,8 @@ class PaymentController extends Controller
                 Log::info('Cart session cleared for guest user.');
             }
 
-            session()->forget('checkoutSessionId');
+            // Clear session data
+            session()->forget(['checkoutSessionId', 'pointsToRedeem', 'couponId']);
             Log::info('Checkout session cleared.');
 
             return redirect()->route('cart.view')->with('success', 'Your order has been placed successfully!');

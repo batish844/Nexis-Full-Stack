@@ -3,93 +3,96 @@
 @section('title', 'Cart')
 <link href="/" rel="stylesheet">
 @section('content')
-<div class="container mx-auto p-6">
-  <h1 class="text-3xl font-bold mb-6">Your Cart</h1>
+<div class="container mx-auto p-4 sm:p-6">
+  <h1 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Your Cart</h1>
 
   @if(session('success'))
   <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
     {{ session('success') }}
   </div>
   @endif
+
   <div class="flex flex-col lg:flex-row lg:space-x-6">
     <div class="w-full lg:w-2/3">
-      <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-        <thead class="bg-blue-600">
-          <tr class="text-sm font-semibold text-gray-600 uppercase tracking-wider">
-            <th class="px-6 py-3 text-left text-white">Item</th>
-            <th class="px-6 py-3 text-center text-white">Price</th>
-            <th class="px-6 py-3 text-center text-white">Quantity</th>
-            <th class="px-6 py-3 text-right text-white">Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($cartItems as $cartItem)
-          @php
-          // Handle authenticated user (Eloquent Model) and guest (Session Data)
-          $item = isset($cartItem->item) ? $cartItem->item : $cartItem;
-          $itemID = $item->ItemID ?? $cartItem['ItemID'] ?? null;
-          $itemSize = $cartItem->Size ?? $cartItem['Size'] ?? 'M';
-          $itemName = $item->Name ?? $cartItem['Name'] ?? 'Unknown Item';
-          $itemPhoto = $item->Photo[0] ?? 'default.jpg';
-          $itemPrice = $item->Price ?? $cartItem['Price'] ?? 0;
-          $itemPoints = $item->Points ?? 0; // Default points
-          @endphp
-          <tr class="border-b hover:bg-gray-50 transition duration-200 cart-item-row"
-            data-item-id="{{ $itemID }}"
-            data-size="{{ $itemSize }}"
-            data-points="{{ $itemPoints }}">
-            <td class="px-6 py-4 flex items-center">
-              <a href="{{ $itemID ? route('store.show', ['id' => $itemID]) : '#' }}">
-                <img src="{{ asset($itemPhoto) }}"
-                  alt="{{ $itemName }}"
-                  class="w-32 h-32 object-cover rounded-lg shadow-md mr-6">
-                <div class="text-gray-800 font-medium">
-                  <div class="text-2xl font-semibold text-gray-800 py-2">{{ $itemName }}</div>
-              </a>
-              <div class="text-sm text-gray-500 py-2">
-                <strong>Size:</strong> {{ $itemSize }}
-              </div>
-    </div>
-    </td>
-    <td class="px-6 py-4 text-center text-gray-600">${{ number_format($itemPrice, 2) }}</td>
-    <td class="px-6 py-4 text-center">
-      <div class="flex items-center justify-center space-x-2">
-        <button class="decrement-button bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300">-</button>
-        <span class="cart-quantity text-gray-800 font-medium">{{ $cartItem->Quantity ?? $cartItem['Quantity'] }}</span>
-        <button class="increment-button bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300">+</button>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg">
+          <thead class="bg-blue-600">
+            <tr class="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <th class="px-4 sm:px-6 py-3 text-left text-white">Item</th>
+              <th class="px-4 sm:px-6 py-3 text-center text-white">Price</th>
+              <th class="px-4 sm:px-6 py-3 text-center text-white">Quantity</th>
+              <th class="px-4 sm:px-6 py-3 text-right text-white">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($cartItems as $cartItem)
+            @php
+            $item = isset($cartItem->item) ? $cartItem->item : $cartItem;
+            $itemID = $item->ItemID ?? $cartItem['ItemID'] ?? null;
+            $itemSize = $cartItem->Size ?? $cartItem['Size'] ?? 'M';
+            $itemName = $item->Name ?? $cartItem['Name'] ?? 'Unknown Item';
+            $itemPhoto = $item->Photo[0] ?? 'default.jpg';
+            $itemPrice = $item->Price ?? $cartItem['Price'] ?? 0;
+            $itemPoints = $item->Points ?? 0;
+            @endphp
+            <tr class="border-b hover:bg-gray-50 transition duration-200 cart-item-row"
+              data-item-id="{{ $itemID }}"
+              data-size="{{ $itemSize }}"
+              data-points="{{ $itemPoints }}">
+              <td class="px-4 sm:px-6 py-4 flex items-center">
+                <a href="{{ $itemID ? route('store.show', ['id' => $itemID]) : '#' }}">
+                  <img src="{{ asset($itemPhoto) }}"
+                    alt="{{ $itemName }}"
+                    class="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-lg shadow-md mr-4 sm:mr-6">
+                  <div class="text-gray-800 font-medium">
+                    <div class="text-sm sm:text-lg font-semibold text-gray-800 py-2">{{ $itemName }}</div>
+                </a>
+                <div class="text-xs sm:text-sm text-gray-500 py-2">
+                  <strong>Size:</strong> {{ $itemSize }}
+                </div>
       </div>
-    </td>
-    <td class="px-6 py-4 text-right text-gray-800 font-semibold">
-      $<span class="cart-subtotal">{{ number_format(($cartItem->Quantity ?? $cartItem['Quantity']) * $itemPrice, 2) }}</span>
-    </td>
-    </tr>
-    @endforeach
-    <tr class="bg-gray-100">
-      <td colspan="3" class="px-6 py-4 text-right font-bold text-gray-800">Total Price:</td>
-      <td class="px-6 py-4 text-right font-bold text-blue-600">
-        $<span id="total-price">{{ number_format($totalPrice, 2) }}</span>
       </td>
-    </tr>
-    <tr class="bg-gray-100">
-      <td colspan="3" class="px-6 py-4 text-right font-bold text-gray-800">Total Points:</td>
-      <td class="px-6 py-4 text-right font-bold text-green-600">
-        <span id="total-points">{{ $totalPoints }}</span>
+      <td class="px-4 sm:px-6 py-4 text-center text-gray-600">${{ number_format($itemPrice, 2) }}</td>
+      <td class="px-4 sm:px-6 py-4 text-center">
+        <div class="flex items-center justify-center space-x-2">
+          <button class="decrement-button bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300">-</button>
+          <span class="cart-quantity text-gray-800 font-medium">{{ $cartItem->Quantity ?? $cartItem['Quantity'] }}</span>
+          <button class="increment-button bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300">+</button>
+        </div>
       </td>
-    </tr>
-    </tbody>
-    </table>
+      <td class="px-4 sm:px-6 py-4 text-right text-gray-800 font-semibold">
+        $<span class="cart-subtotal">{{ number_format(($cartItem->Quantity ?? $cartItem['Quantity']) * $itemPrice, 2) }}</span>
+      </td>
+      </tr>
+      @endforeach
+      <tr class="bg-gray-100">
+        <td colspan="3" class="px-4 sm:px-6 py-4 text-right font-bold text-gray-800">Total Price:</td>
+        <td class="px-4 sm:px-6 py-4 text-right font-bold text-blue-600">
+          $<span id="total-price">{{ number_format($totalPrice, 2) }}</span>
+        </td>
+      </tr>
+      <tr class="bg-gray-100">
+        <td colspan="3" class="px-4 sm:px-6 py-4 text-right font-bold text-gray-800">Total Points:</td>
+        <td class="px-4 sm:px-6 py-4 text-right font-bold text-green-600">
+          <span id="total-points">{{ $totalPoints }}</span>
+        </td>
+      </tr>
+      </tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6 space-y-8">
+  <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-4 sm:p-6 space-y-6">
     <div>
-      <h2 class="text-2xl font-semibold mb-4 border-b-2 border-gray-200 pb-2">Delivery Details</h2>
+      <h2 class="text-lg sm:text-2xl font-semibold mb-4 border-b-2 border-gray-200 pb-2">Delivery Details</h2>
       <div id="cart-message"
         class="hidden text-center text-sm mx-auto font-semibold bg-red-100 text-red-700 py-2 rounded-lg mb-4 max-w-lg"></div>
       @if (Auth::check())
       @if (empty($address))
       <p class="text-red-600 text-sm">
         No address found. Please <a href="{{ route('profile.index') }}" class="text-blue-600 underline">update your profile</a>.
-      </p> @else
+      </p>
+      @else
       <p class="text-gray-800 text-sm leading-6">
         <span class="font-medium">Street Address:</span> {{ $address['street_address'] ?? '' }}<br>
         <span class="font-medium">Building:</span> {{ $address['building'] ?? '' }}<br>
@@ -106,7 +109,6 @@
 
     <div class="border-2 border-blue-500 p-6 rounded-lg space-y-8">
       <div>
-
         @if(session('error'))
         <div class="flash-message fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 ease-in-out">
           {{ session('error') }}
@@ -118,7 +120,7 @@
           <span id="total-price-sum" class="font-bold text-blue-600">${{ number_format($totalPrice, 2) }}</span>
         </div>
         <div class="flex justify-between items-center py-2 text-sm">
-          <span class="text-gray-600">Total Points:</span>
+          <span class="text-green-600">Points To Earn:</span>
           <span id="total-points-summary" class="font-bold text-green-600">{{ $totalPoints }}</span>
         </div>
       </div>
@@ -156,14 +158,14 @@
       Proceed to Checkout
     </a>
     <div class="flex justify-center mt-4">
-      <img src="{{ asset('/storage/img/CommonImg/visa.jpg') }}" alt="Visa" class="h-8 mx-2">
-      <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-8 mx-2">
+      <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-6 sm:h-8 mx-2">
+      <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-6 sm:h-8 mx-2">
     </div>
-
   </div>
 </div>
 </div>
 @endsection
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @push('scripts')
 <script>
@@ -187,7 +189,7 @@
       cartRows.forEach(row => {
         const quantity = parseInt(row.querySelector('.cart-quantity').textContent);
         const subtotal = parseFloat(row.querySelector('.cart-subtotal').textContent);
-        const points = parseFloat(row.dataset.points || 0); 
+        const points = parseFloat(row.dataset.points || 0);
 
         totalPrice += subtotal;
         totalPoints += quantity * points;
@@ -196,20 +198,20 @@
       totalPriceEl.textContent = totalPrice.toFixed(2);
       totalPriceSum.textContent = totalPrice.toFixed(2);
       totalPointsEl.textContent = totalPoints;
-      totalPointsSummaryEl.textContent = totalPoints; 
+      totalPointsSummaryEl.textContent = totalPoints;
       updateAdjustedTotalPrice(totalPrice);
     };
 
     const updateAdjustedTotalPrice = (totalPrice) => {
-      const pointsToRedeem = Math.min(
+      const maxPointsToRedeem = Math.min(
         parseInt(pointsToRedeemInput.value) || 0,
         availablePoints,
-        Math.floor(totalPrice / 0.30)
+        Math.floor((totalPrice - 0.50) / 0.30)
       );
-      const pointsValue = pointsToRedeem * 0.30;
+      const pointsValue = maxPointsToRedeem * 0.30;
       const adjustedPrice = totalPrice - pointsValue;
 
-      pointsToRedeemInput.value = pointsToRedeem;
+      pointsToRedeemInput.value = maxPointsToRedeem;
       pointsValueElement.textContent = pointsValue.toFixed(2);
       adjustedTotalPriceEl.textContent = adjustedPrice.toFixed(2);
     };
@@ -291,9 +293,9 @@
         const {
           url
         } = await response.json();
-        window.location.href = url; 
+        window.location.href = url;
       } catch (error) {
-        alert('Error: ' + error.message);
+        showCartMessage(error.message);
       }
     });
     const showCartMessage = (message) => {

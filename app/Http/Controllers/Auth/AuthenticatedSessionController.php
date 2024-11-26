@@ -31,11 +31,9 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        // Check for guest orders matching the user's email
         $guestOrders = Order::where('guest_email', $user->email)->get();
 
         if ($guestOrders->isNotEmpty()) {
-            // Store a flag in the session to indicate guest orders exist
             session(['has_guest_orders' => true]);
         }
 

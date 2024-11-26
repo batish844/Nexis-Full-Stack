@@ -119,7 +119,8 @@
             </div>
             <div id="icon" class="ml-6">
                 <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
-                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-desktop"
+                        trigger="hover"
                         style="width:35px;height:35px"></lord-icon>
                     <span id="cart-count-desktop"
                         class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"></span>
@@ -182,7 +183,7 @@
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
                     <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
-                        <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                        <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-mobile" trigger="hover"
                             style="width:48px;height:48px"></lord-icon>
                         <span id="cart-count-hamburger"
                             class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"> 0
@@ -222,7 +223,7 @@
                     </a>
                 </div>
 
-                <div class="text-center md:text-right md:flex-1">
+                <div class="text-center md:text-right md:mr-20 md:flex-1">
                     <h3 class="text-xl font-medium mr-0 sm:mr-12 mb-4">We Accept</h3>
                     <div class="flex justify-center md:justify-end items-center space-x-6">
                         <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-14 w-auto">
@@ -275,6 +276,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+
             const updateCartCounters = () => {
                 fetch('/cart/count', {
                         headers: {
@@ -286,12 +288,18 @@
                     .then(data => {
                         const desktopCounter = document.getElementById('cart-count-desktop');
                         const hamburgerCounter = document.getElementById('cart-count-hamburger');
-
+                        let updateCartIcon = document.getElementById('cart-icon-desktop');
                         if (desktopCounter) {
                             desktopCounter.textContent = data.cartCount;
                         }
                         if (hamburgerCounter) {
                             hamburgerCounter.textContent = data.cartCount;
+                        }
+                        if (updateCartIcon) {
+                            updateCartIcon.dispatchEvent(new MouseEvent('mouseover')); // Simulate hover
+                            setTimeout(() => {
+                                updateCartIcon.dispatchEvent(new MouseEvent('mouseout')); // End hover after animation
+                            }, 1000); 
                         }
                     })
                     .catch(error => {
