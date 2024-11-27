@@ -83,16 +83,25 @@
             </div>
             @endif
             <div>
+                @if ($order->user->email =='guest@guest.com')
                 <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Address</h3>
                 <p class="text-lg font-medium text-gray-800">
-                    {{ $order->guest_address['city'] }},
-                    {{ $order->guest_address['street_address'] }}
-                    @if($order->guest_address['building'])
+                    @php
+                        $guest_address = json_decode($order->guest_address, true);
+                    @endphp
+                    @if(is_array($guest_address) && isset($guest_address['city']))
+                    {{ $guest_address['city'] }}
+                    @endif
+                    @if(is_array($guest_address) && isset($guest_address['street_address']))
                     ,
-                    {{ $order->guest_address['building'] }}
-                    }
+                    {{ $guest_address['street_address'] }}
+                    @endif
+                    @if(is_array($guest_address) && isset($guest_address['building']))
+                    ,
+                    {{ $guest_address['building'] }}
                     @endif
                 </p>
+                @endif
             </div>
         </div>
     </section>

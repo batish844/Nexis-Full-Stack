@@ -102,6 +102,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
+            <img src="https://batish844.github.io/testingModelViewer/blacklogo.png" alt="Nexis Logo" aria-label="Nexis Logo">
             <h1>Order Confirmation</h1>
         </div>
 
