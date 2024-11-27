@@ -55,13 +55,6 @@
                                 <span
                                     class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Orders</span>
                             </a>
-                            <a href="{{ route('profile.wishlist') }}"
-                                class="p-2 flex items-center space-x-2 lg:space-x-3 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200">
-                                <img src="/storage/img/icons/wishlist-icon.png" alt="Wishlist"
-                                    class="h-8 lg:h-10 w-8 lg:w-10">
-                                <span
-                                    class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Wishlist</span>
-                            </a>
                         </nav>
 
                         {{-- Return Home and Log Out Buttons  --}}
@@ -100,11 +93,6 @@
                         <img src="/storage/img/icons/order-icon.png" alt="Orders" class="h-8 lg:h-10 w-8 lg:w-10">
                         <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Orders</span>
                     </a>
-                    <a href="{{ route('profile.wishlist') }}"
-                        class="p-2 flex items-center space-x-2 lg:space-x-3 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200">
-                        <img src="/storage/img/icons/wishlist-icon.png" alt="Wishlist" class="h-8 lg:h-10 w-8 lg:w-10">
-                        <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Wishlist</span>
-                    </a>
                 </nav>
                 <!-- Log Out and Return Home Buttons -->
                 <div id="logout-return"
@@ -131,7 +119,7 @@
 
         <!-- Main Content -->
         <main class="flex-1 bg-gray-100 w-screen">
-                @yield('content')
+            @yield('content')
         </main>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
