@@ -4,7 +4,7 @@
         {{ $order->user->First_Name }} {{ $order->user->Last_Name }}
     </td>
     <td class="px-6 py-4 whitespace-nowrap">
-        {{ $order->user->email }}
+        {{ $order->user->email == 'guest@guest.com' ? $order->guest_email : $order->user->email }}
     </td>
     <td class="px-6 py-4 whitespace-nowrap">
         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ $order->Status == 'Completed' ? 'green' : ($order->Status == 'Pending' ? 'yellow' : 'red') }}-100 text-{{ $order->Status == 'Completed' ? 'green' : ($order->Status == 'Pending' ? 'yellow' : 'red') }}-800">

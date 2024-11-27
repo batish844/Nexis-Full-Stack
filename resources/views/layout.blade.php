@@ -8,7 +8,7 @@
 
     <!--Lato link-->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <title>@yield('title', 'Nexus')</title>
+    <title>@yield('title', 'Nexis')</title>
 
     <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
 
@@ -16,7 +16,7 @@
     @stack('styles')
     @stack('scripts')
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
-    
+
 
     <style>
         @keyframes navBarSparkle {
@@ -113,13 +113,14 @@
                     <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
                         state="morph-heart" colors="primary:#c71f16"
                         style="width:35px;height:35px"></lord-icon>
-                    <span id="wishlist-count"
-                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
+                    <span id="wishlist-count-desktop"
+                        class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"></span>
                 </a>
             </div>
             <div id="icon" class="ml-6">
                 <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
-                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-desktop"
+                        trigger="hover"
                         style="width:35px;height:35px"></lord-icon>
                     <span id="cart-count-desktop"
                         class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"></span>
@@ -170,18 +171,19 @@
                         onclick="toggleMenu()">Sign In</a>
                     @endif
                 </div>
+                
                 <div class="mt-8 mb-4 flex justify-center">
-                    <a href="{{ url('Wishlist') }}" id="wishlist-icon" class="relative inline-block">
-                        <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
-                            state="morph-heart" colors="primary:#c71f16"
-                            style="width:35px;height:35px"></lord-icon>
-                        <span id="wishlist-count"
+                    <a href="{{ url('wishlist') }}" id="wishlist-icon" class="relative inline-block">
+                    <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
+                        state="morph-heart" colors="primary:#c71f16"
+                        style="width:35px;height:35px"></lord-icon>
+                        <span id="wishlist-count-hamburger"
                             class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
                     </a>
                 </div>
                 <div class="mt-8 mb-4 flex justify-center">
                     <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
-                        <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                        <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-mobile" trigger="hover"
                             style="width:48px;height:48px"></lord-icon>
                         <span id="cart-count-hamburger"
                             class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"> 0
@@ -195,49 +197,44 @@
     <main class="mt-8">
         @yield('content')
     </main>
-
-    <footer class="bg-gray-900 text-white pt-10 pb-4 md:pt-16 md:pb-4">
-        <div class="container mx-auto px-4 md:flex md:justify-between">
-            <div class="mb-8 md:mb-0">
-                <p class="text-3xl font-semibold mb-2">Stay Connected</p>
-                <p class="text-gray-400 max-w-sm leading-relaxed">
-                    Join us on social media and keep up-to-date with our latest updates and exclusive offers.
-                </p>
-            </div>
-            <div class="flex justify-center md:justify-start space-x-6 mb-8 md:mb-0">
-                <a href="https://www.facebook.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook"
-                        class="h-10 w-10 md:h-12 md:w-12">
-                </a>
-                <a href="https://www.pinterest.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest"
-                        class="h-10 w-10 md:h-12 md:w-12">
-                </a>
-                <a href="https://www.instagram.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram"
-                        class="h-10 w-10 md:h-12 md:w-12">
-                </a>
-                <a href="https://www.tiktok.com" target="_blank" class="transform transition hover:scale-110">
-                    <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok"
-                        class="h-10 w-10 md:h-12 md:w-12">
-                </a>
-            </div>
-            <div class="text-center md:text-left max-w-sm">
-                <p class="text-lg mb-4 font-semibold">Subscribe to Our Newsletter</p>
-                <div class="flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-3">
-                    <input type="email" id="email" placeholder="Email address"
-                        class="w-full p-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
-                    <input type="tel" id="tel" placeholder="Phone number"
-                        class="w-full p-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:outline-none focus:border-blue-500">
+    @if (!Request::is('cart'))
+    <footer class="bg-gray-900 text-white pt-10 pb-6">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-10 md:space-y-0">
+                <div class="text-center md:text-left md:flex-1">
+                    <h2 class="text-3xl font-semibold mb-3">Stay Connected</h2>
+                    <p class="text-gray-400 leading-relaxed max-w-md mx-auto md:mx-0">
+                        Join us on social media and keep up-to-date with our latest updates and exclusive offers.
+                    </p>
                 </div>
-                <button
-                    class="w-full mt-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition duration-300 focus:outline-none">
-                    Subscribe
-                </button>
+
+                <div class="flex justify-center md:justify-center space-x-8 md:flex-1">
+                    <a href="https://www.facebook.com" target="_blank" class="transform transition hover:scale-110">
+                        <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook" class="h-12 w-12">
+                    </a>
+                    <a href="https://www.pinterest.com" target="_blank" class="transform transition hover:scale-110">
+                        <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest" class="h-12 w-12">
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="transform transition hover:scale-110">
+                        <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram" class="h-12 w-12">
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" class="transform transition hover:scale-110">
+                        <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok" class="h-12 w-12">
+                    </a>
+                </div>
+
+                <div class="text-center md:text-right md:mr-20 md:flex-1">
+                    <h3 class="text-xl font-medium mr-0 sm:mr-12 mb-4">We Accept</h3>
+                    <div class="flex justify-center md:justify-end items-center space-x-6">
+                        <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-14 w-auto">
+                        <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-14 w-auto">
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="border-t border-gray-700 mt-10 pt-6 text-center">
-            <ul class="flex flex-wrap justify-center space-x-4 text-gray-400 text-sm">
+            <ul class="flex flex-wrap justify-center space-x-6 text-gray-400 text-sm">
                 <li><a href="/home" class="hover:text-white transition duration-300">Home</a></li>
                 <li><a href="/about-us" class="hover:text-white transition duration-300">About Us</a></li>
                 <li><a href="/contact-us" class="hover:text-white transition duration-300">Contact Us</a></li>
@@ -245,7 +242,7 @@
             <p class="mt-4 text-gray-500 text-sm">&copy; 2024 Nexis. All rights reserved.</p>
         </div>
     </footer>
-
+    @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/js/common.js')
     <script>
@@ -277,10 +274,9 @@
 
         });
         document.addEventListener('DOMContentLoaded', function() {
-            // Fetch CSRF token from meta tag
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            // Function to update cart counters
+
             const updateCartCounters = () => {
                 fetch('/cart/count', {
                         headers: {
@@ -292,12 +288,18 @@
                     .then(data => {
                         const desktopCounter = document.getElementById('cart-count-desktop');
                         const hamburgerCounter = document.getElementById('cart-count-hamburger');
-
+                        let updateCartIcon = document.getElementById('cart-icon-desktop');
                         if (desktopCounter) {
                             desktopCounter.textContent = data.cartCount;
                         }
                         if (hamburgerCounter) {
                             hamburgerCounter.textContent = data.cartCount;
+                        }
+                        if (updateCartIcon) {
+                            updateCartIcon.dispatchEvent(new MouseEvent('mouseover')); // Simulate hover
+                            setTimeout(() => {
+                                updateCartIcon.dispatchEvent(new MouseEvent('mouseout')); // End hover after animation
+                            }, 1000); 
                         }
                     })
                     .catch(error => {
@@ -305,11 +307,36 @@
                     });
             };
 
-            // Call updateCartCounters on page load
             updateCartCounters();
 
-            // Optionally expose updateCartCounters globally for reuse
             window.updateCartCounters = updateCartCounters;
+            const updateWishlistCounters = () => {
+                fetch('/wishlist/count', {
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const desktopWishlistCounter = document.getElementById('wishlist-count-desktop');
+                        const hamburgerWishlistCounter = document.getElementById('wishlist-count-hamburger');
+
+                        if (desktopWishlistCounter) {
+                            desktopWishlistCounter.textContent = data.wishlistCount;
+                        }
+                        if (hamburgerWishlistCounter) {
+                            hamburgerWishlistCounter.textContent = data.wishlistCount;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching wishlist count:', error);
+                    });
+            };
+
+            updateWishlistCounters();
+
+            window.updateWishlistCounters = updateWishlistCounters;
         });
     </script>
 </body>

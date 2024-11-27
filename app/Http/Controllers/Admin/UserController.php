@@ -23,6 +23,9 @@ class UserController extends Controller
         // Start the query
         $users = User::query();
 
+        // Exclude the user with email "guest@guest.com"
+        $users = $users->where('email', '!=', 'guest@guest.com');
+
         // Search filter
         if ($search) {
             $users = $users->where(function ($query) use ($search) {
@@ -63,6 +66,7 @@ class UserController extends Controller
         // Return the full view with the necessary data
         return view('admin.users.index', compact('users', 'role', 'status', 'search', 'nameOrder'));
     }
+
     public function exportCsv()
     {
         $headers = [
@@ -76,7 +80,7 @@ class UserController extends Controller
         $callback = function () {
             $file = fopen('php://output', 'w');
 
-            fputcsv($file, ['First Name', 'Last Name', 'Email', 'Phone Number', 'Address','Status', 'Role', 'Points', 'Item Count', 'Date Registered']);
+            fputcsv($file, ['First Name', 'Last Name', 'Email', 'Phone Number', 'Address', 'Status', 'Role', 'Points', 'Item Count', 'Date Registered']);
 
             $users = User::all();
             foreach ($users as $user) {

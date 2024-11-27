@@ -1,116 +1,125 @@
 @extends('layout')
 
-@section('title', 'Wishlist')
+@section('title', 'Your Wishlist')
 
 @section('content')
 <div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6 text-center">Your Wishlist</h1>
+    <h1 class="text-4xl font-bold mb-8 text-center text-gray-800">Your Wishlist</h1>
 
-    @if(auth()->check())
-        {{-- For authenticated users --}}
-        @if($wishlistItems && $wishlistItems->isEmpty())
-            <p class="text-lg text-gray-500 text-center">Your wishlist is empty.</p>
-        @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                @foreach($wishlistItems as $wishlist)
-                    <div class="bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition p-4 relative">
-                        <img src="{{ asset('storage/img/' . $wishlist->item->image) }}" alt="{{ $wishlist->item->name }}" class="w-full h-48 object-cover rounded-md mb-4">
-                        <h2 class="text-lg font-semibold text-gray-800 truncate">{{ $wishlist->item->name }}</h2>
-                        <p class="text-gray-500 truncate">{{ $wishlist->item->description }}</p>
-                        <span class="block text-lg font-bold text-indigo-600 my-2">{{ '$' . number_format($wishlist->item->price, 2) }}</span>
-                        
-                        <div class="flex justify-between items-center space-x-2">
-                            <button onclick="removeFromWishlist({{ $wishlist->id }})" 
-                                    class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
-                                Delete
-                            </button>
-                            <button onclick="addToCart({{ $wishlist->item->id }})" 
-                                    class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        @endif
+    @if ($wishlistItems->isEmpty())
+    <div class="flex items-center justify-center flex-col text-center py-20">
+        <img src="{{ asset('/storage/img/CommonImg/emptywishlist2.png') }}" alt="Empty Wishlist" class="w-64 h-64 mb-6">
+        <p class="text-lg text-gray-500 mb-4">You don't have any items in your wishlist yet.</p>
+        <a href="{{ route('store.men') }}" class="text-blue-500 underline text-xl font-semibold">
+            Browse our store to add items to your wishlist!
+        </a>
+    </div>
     @else
-        {{-- For guest users --}}
-        <div id="guest-wishlist" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-        <p id="empty-guest-wishlist" class="text-lg text-gray-500 text-center hidden">Your wishlist is empty.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+        @foreach ($wishlistItems as $wishlist)
+        @if ($wishlist['item'])
+        <div class="wishlist-card bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col h-full relative group border border-gray-200">
+            <!-- Wishlist Icon -->
+            <button 
+                class="absolute top-4 right-4 wishlist-btn focus:outline-none bg-white p-2 rounded-full shadow-md hover:shadow-lg transition text-red-500 hover:text-gray-400"
+                data-id="{{ $wishlist['ItemID'] }}"
+                aria-label="Remove from Wishlist">
+                <i class="fas fa-heart text-3xl"></i>
+            </button>
+
+            <a href="{{ route('store.show', ['id' => $wishlist['ItemID']]) }}" class="block">
+                <img src="{{ asset($wishlist['item']['Photo'][0] ?? 'storage/default.jpg') }}" 
+                     alt="{{ $wishlist['item']['Name'] }}" 
+                     class="w-full h-72 object-cover rounded-t-xl">
+            </a>
+
+            <div class="p-6 flex flex-col justify-between flex-grow">
+                <a href="{{ route('store.show', ['id' => $wishlist['ItemID']]) }}" class="block">
+                    <h3 class="text-2xl font-semibold text-gray-900 truncate mb-2">{{ $wishlist['item']['Name'] }}</h3>
+                    <p class="text-sm text-gray-600 truncate">{{ $wishlist['item']['Description'] }}</p>
+                </a>
+                <div class="mt-4 flex items-center justify-between">
+                    <p class="text-2xl font-bold text-gray-800">${{ number_format($wishlist['item']['Price'], 2) }}</p>
+                    <a href="{{ route('store.show', ['id' => $wishlist['ItemID']]) }}" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-full hover:bg-blue-500 transition">View Details</a>
+                </div>
+            </div>
+        </div>
+        @endif
+        @endforeach
+    </div>
     @endif
 </div>
+@endsection
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-
+@push('scripts')
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        if (!@json(Auth::check())) {
-            const guestWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-            const wishlistContainer = document.getElementById('guest-wishlist');
-            const emptyMessage = document.getElementById('empty-guest-wishlist');
+    document.addEventListener('DOMContentLoaded', function() {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            if (guestWishlist.length === 0) {
-                emptyMessage.classList.remove('hidden');
-            } else {
-                // Fetch item details for guest users
-                fetch('/api/get-wishlist-items', {
-                    method: 'POST',
+        document.addEventListener('click', function(event) {
+            const button = event.target.closest('.wishlist-btn');
+
+            if (button) {
+                const itemId = button.dataset.id;
+
+                fetch('/wishlist/toggle', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+                        body: JSON.stringify({
+                            ItemID: itemId
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            if (data.message.includes('removed')) {
+                                const card = button.closest('.wishlist-card');
+                                if (card) {
+                                    card.remove();
+                                }
+                            }
+
+                            if (window.updateWishlistCounters) {
+                                window.updateWishlistCounters();
+                            }
+                        } else {
+                            console.error(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+
+        window.updateWishlistCounters = function() {
+            fetch('/wishlist/count', {
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
                     },
-                    body: JSON.stringify({ itemIds: guestWishlist })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        data.items.forEach(item => {
-                            const wishlistItem = document.createElement('div');
-                            wishlistItem.className = 'bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition p-4 relative';
-                            wishlistItem.innerHTML = `
-                                <img src="{{ asset('storage/img/') }}/${item.image}" alt="${item.name}" class="w-full h-48 object-cover rounded-md mb-4">
-                                <h2 class="text-lg font-semibold text-gray-800">${item.name}</h2>
-                                <p class="text-gray-500 truncate">${item.description}</p>
-                                <span class="block text-lg font-bold text-indigo-600 my-2">${'$' + item.price.toFixed(2)}</span>
-                                <div class="flex justify-between items-center space-x-2 mt-4">
-                                    <button onclick="removeFromLocalWishlist(${item.id})" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Delete</button>
-                                    <button onclick="addToCart(${item.id})" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Add to Cart</button>
-                                </div>
-                            `;
-                            wishlistContainer.appendChild(wishlistItem);
-                        });
+                    const desktopCounter = document.getElementById('wishlist-count-desktop');
+                    const hamburgerCounter = document.getElementById('wishlist-count-hamburger');
+
+                    if (desktopCounter) {
+                        desktopCounter.textContent = data.wishlistCount;
                     }
+                    if (hamburgerCounter) {
+                        hamburgerCounter.textContent = data.wishlistCount;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating wishlist counter:', error);
                 });
-            }
-        }
+        };
+
+        updateWishlistCounters();
     });
-
-    function removeFromLocalWishlist(itemId) {
-        if (confirm('Are you sure you want to delete this item?')) {
-            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-            wishlist = wishlist.filter(id => id !== itemId);
-            localStorage.setItem('wishlist', JSON.stringify(wishlist));
-            alert('Item removed from wishlist.');
-            location.reload();
-        }
-    }
-
-    function addToCart(itemId) {
-        fetch(`{{ url('/cart/add') }}/${itemId}`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Item added to cart.');
-            } else {
-                alert('Failed to add item to cart.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
 </script>
+@endpush

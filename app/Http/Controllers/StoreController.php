@@ -17,6 +17,10 @@ class StoreController extends Controller
     {
         $item = Item::findOrFail($id);
 
+        // Check if the item is available
+        if (!$item->isAvailable) {
+            return redirect()->back()->with('error', 'Item is not available.');
+        }
 
         // Fetch all reviews for the item
         $reviews = $item->reviews()->with('user')->get();

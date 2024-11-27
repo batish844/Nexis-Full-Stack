@@ -56,6 +56,7 @@
     <section class="bg-white rounded-xl shadow-md p-8 mb-10">
         <div class="flex flex-wrap justify-between items-center gap-4">
             <h2 class="text-3xl font-semibold text-gray-900">Customer Details</h2>
+            @if ($order->user->email !== 'guest@guest.com')
             <a href="{{ route('users.show', $order->OrderedBy) }}"
                 class="inline-flex items-center justify-center gap-2 text-white bg-blue-600 px-5 py-3 rounded-lg shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -63,6 +64,7 @@
                 </svg>
                 View User's Profile
             </a>
+            @endif
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
             <div>
@@ -71,11 +73,26 @@
             </div>
             <div>
                 <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Email</h3>
-                <p class="text-lg font-medium text-gray-800">{{ $order->user->email }}</p>
+                <p class="text-lg font-medium text-gray-800"> {{ $order->user->email == 'guest@guest.com' ? $order->guest_email : $order->user->email }}
+                </p>
             </div>
+            @if ($order->user->email !=='guest@guest.com')
             <div>
                 <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Phone</h3>
                 <p class="text-lg font-medium text-gray-800">{{ $order->user->Phone_Number }}</p>
+            </div>
+            @endif
+            <div>
+                <h3 class="text-sm font-bold text-blue-700 uppercase mb-2">Address</h3>
+                <p class="text-lg font-medium text-gray-800">
+                    {{ $order->guest_address['city'] }},
+                    {{ $order->guest_address['street_address'] }}
+                    @if($order->guest_address['building'])
+                    ,
+                    {{ $order->guest_address['building'] }}
+                    }
+                    @endif
+                </p>
             </div>
         </div>
     </section>

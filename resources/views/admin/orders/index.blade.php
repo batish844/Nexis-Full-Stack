@@ -22,6 +22,13 @@
             <input type="text" id="search" name="email" placeholder="Search by customer or email"
                 value="{{ request('email') }}"
                 class="w-full sm:w-72 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <label for="userfilter" class="text-gray-600">Customer Type:</label>
+            <select id="userfilter"
+                class="w-full sm:w-40 px-4 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="all">All</option>
+                <option value="User">User</option>
+                <option value="Guest">Guest</option>
+            </select>
             <label for="statusFilter" class="text-gray-600">Status:</label>
             <select id="statusFilter"
                 class="w-full sm:w-40 px-4 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -31,6 +38,7 @@
                 <option value="Pending">Pending</option>
                 <option value="Cancelled">Cancelled</option>
             </select>
+
         </div>
         <div class="w-full lg:w-auto">
             <button id="download-csv"
@@ -64,18 +72,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-            
+
 
         function performSearch() {
             let searchQuery = $('#search').val();
             let statusFilter = $('#statusFilter').val();
-
+            let userfilter = $('#userfilter').val();
             $.ajax({
                 url: '{{ route("orders.search") }}',
                 method: 'GET',
                 data: {
                     search: searchQuery,
-                    status: statusFilter
+                    status: statusFilter,
+                    userfilter: userfilter
                 },
                 success: function(response) {
                     $('#table-body-ajax').html(response);
@@ -94,7 +103,7 @@
 
         performSearch();
         let debounceTimer;
-        $('#search, #statusFilter').on('keyup change', function() {
+        $('#search, #statusFilter, #userfilter').on('keyup change', function() {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(performSearch, 300);
         });

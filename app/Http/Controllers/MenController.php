@@ -7,6 +7,8 @@ use App\Models\Item;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Wishlist;
 
 class MenController extends Controller
 {
@@ -31,11 +33,12 @@ class MenController extends Controller
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
 
-
         $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice])
             ->whereHas('category', function ($query) {
                 $query->where('Gender', 'M');
-            });
+            })
+            ->where('isAvailable', true);
+
         if (!empty($categoryId)) {
             $itemsQuery->where('CategoryID', $categoryId);
         }
@@ -46,10 +49,18 @@ class MenController extends Controller
 
         $items = $itemsQuery->with('category')->get();
 
+        // Get wishlist items based on auth status
+        if (Auth::check()) {
+            $wishlistItems = Wishlist::where('UserID', Auth::id())
+                ->pluck('ItemID') // Fetch only ItemID
+                ->toArray();
+        } else {
+            $wishlistItems = session('wishlist', []);
+        }
 
-
-        return view('store.cards', compact('items'));
+        return view('store.cards', compact('items', 'wishlistItems'));
     }
+
     public function show(string $id)
     {
         //

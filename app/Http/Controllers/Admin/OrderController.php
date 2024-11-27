@@ -98,6 +98,19 @@ class OrderController extends Controller
             $query->where('Status', $request->input('status'));
         }
 
+        if ($request->filled('userfilter') && $request->input('userfilter') !== 'all') {
+            $userFilter = $request->input('userfilter');
+            if ($userFilter === 'User') {
+            $query->whereHas('user', function ($q) {
+                $q->where('Email', '!=', 'guest@guest.com');
+            });
+            } elseif ($userFilter === 'Guest') {
+            $query->whereHas('user', function ($q) {
+                $q->where('Email', 'guest@guest.com');
+            });
+            }
+        }
+        
         $query->orderBy('created_at', 'desc');
 
         $orders = $query->get();

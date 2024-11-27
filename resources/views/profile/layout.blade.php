@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
     @vite('resources/css/app.css')
 </head>
 
@@ -175,7 +176,10 @@
             });
 
         });
-
+        if ($('.flash-message').length) {
+            $('.flash-message').delay(3000).fadeOut(500, function() {
+                $(this).remove();
+            });}
         function showPasswordNotification(message, type = 'success') {
             const $notification = $('#password-notification');
             const $message = $('#password-notification-message');

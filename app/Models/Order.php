@@ -12,12 +12,17 @@ class Order extends Model
     protected $primaryKey = 'OrderID';
 
     protected $fillable = [
-        'DateTime',
-        'Status',
+        'OrderedBy',
         'TotalPrice',
-        'OrderedBy'
+        'guest_email',
+        'guest_address',
+        'is_guest',
+        'Status',
     ];
 
+    protected $casts = [
+        'guest_address' => 'array',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class, 'OrderedBy', 'UserID');

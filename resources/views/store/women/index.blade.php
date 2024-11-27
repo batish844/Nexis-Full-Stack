@@ -66,11 +66,11 @@
 @vite('resources/css/men.css')
 @endpush
 
-@push('scripts')
 @vite('resources/js/men.js')
 
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         let sliderOne = document.getElementById("slider-1");
@@ -179,58 +179,49 @@
         initializeCarousel();
 
         // Event delegation for dynamically added products
-        
-    });
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-    document.addEventListener("DOMContentLoaded", () => {
-    // Event delegation for dynamically added wishlist buttons
-    document.querySelector('#dynamic-products').addEventListener('click', function(event) {
-        const button = event.target.closest('.wishlist-btn'); // Find the closest button element
-        if (button) {
-            const itemId = button.dataset.itemId; // Get the ItemID from the button's dataset
-            console.log("Wishlist button clicked with ID:", itemId);
+        // Event delegation for wishlist button toggling
+        document.getElementById('dynamic-products').addEventListener('click', function(event) {
+            const button = event.target.closest('.wishlist-btn');
 
-            // Check if the user is authenticated
-            if (button.dataset.authenticated === "1") {
-                // Handle authenticated user wishlist logic (send to server)
-                fetch('{{ route("wishlist.add") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',  // Indicates JSON body
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'  // CSRF token for security
-                    },
-                    body: JSON.stringify({ ItemID: itemId })  // Send the ItemID in the request body
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        alert('Item added to wishlist!');
-                    } else {
-                        alert('Error adding to wishlist: ' + data.message);
-                    }
-                })
-                .catch(error => console.error("Error:", error));
+            if (button) {
+                const itemId = button.dataset.id;
 
-            } else {
-                // Handle guest user logic (save to localStorage)
-                let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-                if (!wishlist.includes(itemId)) {
-                    wishlist.push(itemId);  // Add item to wishlist
-                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-                    alert('Item added to wishlist (Guest User)!');
-                } else {
-                    alert('Item already in wishlist.');
-                }
+                fetch('/wishlist/toggle', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+                        body: JSON.stringify({
+                            ItemID: itemId
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Toggle heart icon color
+                            const heartIcon = button.querySelector('i');
+                            if (data.message.includes('removed')) {
+                                heartIcon.classList.remove('text-red-500');
+                                heartIcon.classList.add('text-gray-400');
+                            } else if (data.message.includes('added')) {
+                                heartIcon.classList.remove('text-gray-400');
+                                heartIcon.classList.add('text-red-500');
+                            }
+
+                            // Update wishlist counter
+                            if (window.updateWishlistCounters) {
+                                window.updateWishlistCounters();
+                            }
+                        } else {
+                            console.error(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             }
-        }
+        });
+
     });
-});
-
-
 </script>
-@endpush

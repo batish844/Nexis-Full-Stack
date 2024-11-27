@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
     @vite('resources/css/app.css')
@@ -16,13 +17,13 @@
 
     </button>
 </div>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
         <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-20">
 
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg z-10">
+        <div class="w-full max-w-[80%] sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg z-10">
             <form id="register-form" method="POST" action="{{ route('register') }}">
                 @csrf
                 <div>
@@ -117,15 +118,16 @@
                         </div>
                     @enderror
                 </div>
+                
                 <div class="mt-4 flex justify-center">
-    <a href="{{ route('google-auth') }}" 
-       class="flex items-center justify-center w-3/4 px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-full shadow hover:bg-gray-300 transition">
-        <img src="{{ asset('storage/img/login/google-icon-logo.svg') }}" 
-             alt="Google Logo" 
-             class="w-5 h-5 mr-2">
-        Continue with Google
-    </a>
-</div>
+                    <a href="{{ route('google-auth') }}" 
+                    class="flex items-center justify-center sm:w-3/4 px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-full shadow hover:bg-gray-300 transition z-10">
+                        <img src="{{ asset('storage/img/login/google-icon-logo.svg') }}" 
+                            alt="Google Logo" 
+                            class="w-5 h-5 mr-2">
+                        Continue with Google
+                    </a>
+                </div>
 
 
                 <div class="flex items-center justify-end mt-4">
@@ -133,7 +135,7 @@
                         {{ __('Already registered?') }}
                     </a>
 
-                    <button type="submit" class="ml-4 inline-flex items-center justify-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+                    <button type="submit" class="ml-4 inline-flex items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
                         {{ __('Register') }}
                     </button>
                 </div>
@@ -150,52 +152,11 @@
     this.appendChild(wishlistInput);
 });
 
-    </script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-
-<script>
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 150,
-                density: { enable: true, value_area: 800 }
-            },
-            color: { value: "#ffffff" },
-            shape: {
-                type: "circle",
-                stroke: { width: 0, color: "#000000" }
-            },
-            opacity: {
-                value: 0.7, 
-                random: true,
-                anim: { enable: true, speed: 2, opacity_min: 0.2, sync: false }
-            },
-            size: {
-                value: 5, 
-                random: true,
-                anim: { enable: false }
-            },
-            move: {
-                enable: true,
-                speed: 2, 
-                direction: "none",
-                random: false,
-                straight: false,
-                out_mode: "out"
-            }
-        },
-        interactivity: {
-            events: {
-                onhover: { enable: true, mode: "repulse" },
-                onclick: { enable: true, mode: "push" }
-            },
-            modes: {
-                repulse: { distance: 150, duration: 0.4 },
-                push: { particles_nb: 6 }
-            }
-        }
-    });
 </script>
+
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+    <script src="{{ mix('resources/js/particles-config.js') }}"></script> 
 </body>
 </html>
