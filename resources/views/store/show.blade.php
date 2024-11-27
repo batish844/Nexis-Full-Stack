@@ -253,8 +253,8 @@
 
             <!-- Navigation Arrows -->
             <div class="absolute top-1/2 transform -translate-y-1/2 flex justify-between w-full px-4">
-                <button id="prevImage" class="text-white text-5xl">&#10094;</button>
-                <button id="nextImage" class="text-white text-5xl">&#10095;</button>
+                <button id="prevImage" class="text-black text-5xl">&#10094;</button>
+                <button id="nextImage" class="text-black text-5xl">&#10095;</button>
             </div>
         </div>
         <!-- Close Button -->
