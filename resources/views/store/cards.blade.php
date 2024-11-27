@@ -1,6 +1,6 @@
 @foreach ($items as $item)
     @php
-        $isInWishlist = in_array($item->ItemID, $wishlistItems); // Check if item is in wishlist
+        $isInWishlist = in_array($item->ItemID, $wishlistItems);
     @endphp
     <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col h-full relative group">
         <!-- Wishlist Icon -->

@@ -35,7 +35,8 @@ class WomenController extends Controller
         $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice])
             ->whereHas('category', function ($query) {
                 $query->where('Gender', 'F');
-            });
+            })
+            ->where('isAvailable', true);
 
         if (!empty($categoryId)) {
             $itemsQuery->where('CategoryID', $categoryId);

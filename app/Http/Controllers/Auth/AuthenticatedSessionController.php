@@ -27,9 +27,14 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
-
         $user = Auth::user();
+
+        if (!$user->isActive) {
+            Auth::logout();
+            return redirect()->back()->with(['error' => 'Your account is inactive.']);
+        }
+
+        $request->session()->regenerate();
 
         $guestOrders = Order::where('guest_email', $user->email)->get();
 

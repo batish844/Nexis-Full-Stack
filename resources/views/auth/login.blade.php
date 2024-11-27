@@ -11,7 +11,7 @@
     <!-- Mobile navigation button (for smaller screens) -->
 <div class="absolute top-4 left-4 z-10">
     <button onclick="window.location.href='{{ url('/') }}'" 
-            class="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white font-medium rounded-full shadow-md hover:bg-indigo-500 transition duration-200">
+            class="flex items-center justify-center px-4 py-2 bg-blue-600 text-white font-medium rounded-full shadow-md hover:bg-indigo-500 transition duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
 </svg>
@@ -100,7 +100,7 @@
                         {{ __('New Customer? Register Here!') }}
                     </a>
 
-                    <button type="submit" class="ml-3 inline-flex items-center justify-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition z-10">
+                    <button type="submit" class="ml-3 inline-flex items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition z-10">
                         {{ __('Log in') }}
                     </button>
                 </div>
