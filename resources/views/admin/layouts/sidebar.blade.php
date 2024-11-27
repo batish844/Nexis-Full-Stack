@@ -58,14 +58,14 @@
                     @endforeach
                 </nav>
 
-                <div class="mt-14 mx-2">
-                    <a href="{{ route('home') }}" class="flex items-center px-4 py-2 bg-blue-600 text-white hover:bg-blue-900 rounded-full transition-colors shadow-lg w-full">
+                <div class="mt-14 mx-2 ">
+                    <a href="{{ route('home') }}" class="flex items-center justify-center px-4 py-2 bg-blue-600 text-white hover:bg-blue-900 rounded-full transition-colors shadow-lg w-full">
                         Return to Home
                     </a>
                 </div>
                 <form method="POST" action="{{ route('logout') }}" class="my-4 mx-2">
                     @csrf
-                    <button type="submit" class="flex items-center px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded-full transition-colors shadow-lg w-full">
+                    <button type="submit" class="flex items-center justify-center px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded-full transition-colors shadow-lg w-full">
                         <img src="/storage/img/icons/logout.png" alt="Logout Icon" class="h-5 w-5 mr-3">
                         Logout
                     </button>

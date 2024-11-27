@@ -11,7 +11,7 @@
 
 <body class="bg-gray-100">
     <div class="min-h-screen flex flex-col">
-        <header class="bg-blue-700 shadow-md relative">
+        <header class="bg-blue-800 shadow-md relative">
             <div class="container mx-auto px-4 py-4 flex items-center justify-between">
                 <!-- Logo and Welcome Message -->
                 <div class="flex items-center space-x-2 mb-4 lg:mb-0 lg:space-x-4 flex-wrap 2xl:max-w-fit lg:max-w-30">

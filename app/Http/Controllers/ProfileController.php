@@ -88,7 +88,7 @@ class ProfileController extends Controller
                     'name' => $orderItem->item->Name,
                     'photo' => $orderItem->item->Photo[0] ?? null,
                     'price' => $orderItem->item->Price,
-                    'points' => $orderItem->item->Points,
+                    'points' => $orderItem->item->Points * $orderItem->Quantity,
                     'size' => $orderItem->Size,
                     'quantity' => $orderItem->Quantity,
                     'subtotal' => $orderItem->TotalPrice,
@@ -96,9 +96,46 @@ class ProfileController extends Controller
             }),
         ]);
     }
+    public function filterOrders(Request $request)
+    {
+        $user = auth()->user();
 
+        // Fetch orders with their items
+        $query = $user->orders()->with(['orderItems.item']);
 
+        // Filter by status if a specific status is selected
+        if ($request->status && $request->status !== 'all') {
+            $query->where('Status', $request->status);
+        }
 
+        $orders = $query->get();
+
+        // Dynamically calculate TotalPoints for each order
+        $orders->each(function ($order) {
+            $order->TotalPoints = $order->orderItems->sum(function ($orderItem) {
+                return $orderItem->Quantity * $orderItem->item->Points;
+            });
+        });
+
+        // Convert to a collection for sorting purposes
+        $orders = $orders->sortBy(function ($order) use ($request) {
+            if ($request->sort) {
+                [$column, $direction] = explode(':', $request->sort);
+
+                if ($column === 'time_created') {
+                    return $direction === 'asc' ? $order->created_at : -$order->created_at->timestamp;
+                } elseif ($column === 'price') {
+                    return $direction === 'asc' ? $order->TotalPrice : -$order->TotalPrice;
+                } elseif ($column === 'points') {
+                    return $direction === 'asc' ? $order->TotalPoints : -$order->TotalPoints;
+                }
+            }
+            return $order->created_at; // Default sorting by creation time
+        });
+
+        // Render filtered and sorted orders
+        return view('profile.ordersFiltered', ['orders' => $orders])->render();
+    }
 
     public function edit(Request $request): View
     {
@@ -206,6 +243,7 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('status', 'avatar-deleted');
     }
+
     public function claimOrders(Request $request)
     {
         $user = Auth::user();
@@ -227,14 +265,14 @@ class ProfileController extends Controller
         foreach ($guestOrders as $order) {
             foreach ($order->orderItems as $orderItem) {
                 if ($orderItem->item) {
-                    $totalPointsRewarded += $orderItem->Quantity * $orderItem->item->Points; 
+                    $totalPointsRewarded += $orderItem->Quantity * $orderItem->item->Points;
                 }
             }
 
             $order->update([
-                'OrderedBy'     => $user->UserID,
-                'is_guest'      => false,
-                'guest_email'   => null,
+                'OrderedBy' => $user->UserID,
+                'is_guest' => false,
+                'guest_email' => null,
                 'guest_address' => null,
             ]);
         }

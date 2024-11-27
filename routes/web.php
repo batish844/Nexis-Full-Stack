@@ -65,6 +65,7 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/profile/account', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/orders', [ProfileController::class, 'order'])->name('profile.orders');
     Route::get('/profile/orders/{id}', [ProfileController::class, 'orderDetails'])->name('profile.orderDetails');
+    Route::get('/profile/ordersFiltered', [ProfileController::class, 'filterOrders'])->name('profile.orders.filter');
 
     Route::get('/profile/wishlist', function () {
         return view('profile.wishlist');
