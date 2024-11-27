@@ -206,11 +206,11 @@
       const maxPointsToRedeem = Math.min(
         parseInt(pointsToRedeemInput.value) || 0,
         availablePoints,
-        Math.floor((totalPrice - 0.50) / 0.30)
+        Math.max(0, Math.floor((totalPrice - 0.60) / 0.30))
       );
       const pointsValue = maxPointsToRedeem * 0.30;
       const adjustedPrice = totalPrice - pointsValue;
-
+    
       pointsToRedeemInput.value = maxPointsToRedeem;
       pointsValueElement.textContent = pointsValue.toFixed(2);
       adjustedTotalPriceEl.textContent = adjustedPrice.toFixed(2);

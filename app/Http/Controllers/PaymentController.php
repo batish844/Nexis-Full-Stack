@@ -9,6 +9,8 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Cart;
 use App\Models\Item;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
 
 class PaymentController extends Controller
 {
@@ -18,7 +20,6 @@ class PaymentController extends Controller
 
         try {
             if (Auth::check()) {
-
                 // ======= AUTHENTICATED USER LOGIC =======
                 $user = Auth::user();
 
@@ -30,25 +31,18 @@ class PaymentController extends Controller
                 if (empty($user->address)) {
                     return response()->json(['error' => 'Please update your address in your profile to proceed.'], 400);
                 }
+
                 $adjustedTotalPrice = $request->input('adjustedTotalPrice');
-                $pointsToRedeem = $request->input('pointsToRedeem');
+                $pointsToRedeem = intval($request->input('pointsToRedeem', 0)); // Default to 0 if not provided
 
-                if (!is_numeric($adjustedTotalPrice) || !is_numeric($pointsToRedeem)) {
-                    return response()->json(['error' => 'Invalid input data.'], 400);
+                if (!is_numeric($adjustedTotalPrice)) {
+                    return response()->json(['error' => 'Invalid adjusted total price.'], 400);
                 }
-
-                $pointsToRedeem = intval($pointsToRedeem);
 
                 $availablePoints = $user->Points;
 
                 if ($pointsToRedeem < 0 || $pointsToRedeem > $availablePoints) {
                     return response()->json(['error' => 'Invalid points to redeem.'], 400);
-                }
-
-                $cartItems = Cart::with('item')->where('UserID', $user->UserID)->get();
-
-                if ($cartItems->isEmpty()) {
-                    throw new \Exception('Your cart is empty.');
                 }
 
                 $totalPrice = 0;
@@ -65,12 +59,6 @@ class PaymentController extends Controller
                     return response()->json(['error' => 'Adjusted total price mismatch.'], 400);
                 }
 
-                $coupon = $stripe->coupons->create([
-                    'amount_off' => intval($pointsValue * 100), // amount in cents
-                    'currency' => 'usd',
-                    'duration' => 'once',
-                ]);
-
                 $lineItems = $cartItems->map(function ($cartItem) {
                     return [
                         'price_data' => [
@@ -84,22 +72,33 @@ class PaymentController extends Controller
                     ];
                 })->toArray();
 
-                $checkoutSession = $stripe->checkout->sessions->create([
+                $checkoutSessionData = [
                     'payment_method_types' => ['card'],
                     'line_items' => $lineItems,
                     'mode' => 'payment',
-                    'discounts' => [
-                        ['coupon' => $coupon->id],
-                    ],
                     'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
                     'cancel_url' => route('checkout.cancel'),
                     'customer_email' => $user->email,
-                ]);
+                ];
+
+                if ($pointsValue > 0) {
+                    $coupon = $stripe->coupons->create([
+                        'amount_off' => intval($pointsValue * 100), // amount in cents
+                        'currency' => 'usd',
+                        'duration' => 'once',
+                    ]);
+
+                    $checkoutSessionData['discounts'] = [
+                        ['coupon' => $coupon->id],
+                    ];
+                    session(['couponId' => $coupon->id]);
+                }
+
+                $checkoutSession = $stripe->checkout->sessions->create($checkoutSessionData);
 
                 session([
                     'checkoutSessionId' => $checkoutSession->id,
                     'pointsToRedeem' => $pointsToRedeem,
-                    'couponId' => $coupon->id,
                 ]);
 
                 return response()->json(['url' => $checkoutSession->url]);
@@ -191,6 +190,7 @@ class PaymentController extends Controller
                     'is_guest'    => false,
                     'Status'      => 'Pending',
                 ]);
+                Mail::to($user->email)->send(new OrderConfirmationMail($order, $user));
 
                 foreach ($cartItems as $cartItem) {
                     OrderItem::create([
@@ -239,6 +239,7 @@ class PaymentController extends Controller
                     'is_guest'      => true,
                     'Status'        => 'Pending',
                 ]);
+                Mail::to($email)->send(new OrderConfirmationMail($order));
 
                 foreach ($sessionCart as $cartItem) {
                     $item = Item::find($cartItem['ItemID']);
