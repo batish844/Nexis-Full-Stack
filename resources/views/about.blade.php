@@ -17,7 +17,7 @@
         </a>
     </div>
     <div class="relative z-0 md:w-1/2 h-full">
-        <img src="storage/img/aboutus/background2.jpg" alt="Nexis Fashion" class="object-cover w-full h-full transform scale-105 opacity-90 animate-parallax">
+        <img src="storage/img/aboutus/banner.jpg" alt="Nexis Fashion" class="object-cover w-full h-full transform scale-105 opacity-90 animate-parallax">
     </div>
 </div>
 <section id="our-journey" class="py-20 px-8 md:px-16 lg:px-24 text-gray-800 bg-gray-50">
@@ -45,25 +45,48 @@
         </div>
     </div>
 </section>
+@php
+$founders = [
+[
+'name' => 'Mahmoud Batish',
+'title' => 'Co-Founder & CEO',
+'image' => '/storage/img/aboutus/about1.jpg',
+'description' => 'Mahmoud’s vision and strategic acumen have been pivotal in establishing Nexis’s presence.'
+],
+[
+'name' => 'Ahmad Sharara',
+'title' => 'Co-Founder & CTO',
+'image' => '/storage/img/aboutus/about2.png',
+'description' => 'Ahmad has led Nexis toward fashion excellence and innovation with a focus on sustainable practices.'
+],
+[
+'name' => 'Jamal Hamd',
+'title' => 'Chief Marketing Officer',
+'image' => '/storage/img/aboutus/about3.png',
+'description' => 'Jamal’s expertise in marketing has driven Nexis to reach broader audiences and enhance brand presence.'
+], [
+'name' => 'Samia Majzoub',
+'title' => 'Chief Operations Officer',
+'image' => '/storage/img/aboutus/about4.png',
+'description' => 'Samia ensures smooth operations and efficient processes, maintaining Nexis’s commitment to quality and excellence.'
+]
+];
+
+@endphp
+
 <section class="py-20 px-8 md:px-16 lg:px-24 bg-gray-50">
     <h2 class="text-4xl font-extrabold text-center mb-12">Meet Our Founders</h2>
-    <div class="flex flex-col md:flex-row gap-12 justify-center items-center">
-        <div class="bg-white p-10 rounded-3xl shadow-lg max-w-sm text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 justify-center items-center">
+        @foreach ($founders as $founder)
+        <div class="bg-white p-10 rounded-3xl shadow-lg max-w-sm mx-auto text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl flex flex-col">
             <div class="w-32 h-32 mx-auto mb-6">
-                <img src="{{ asset('storage/img/aboutus/CEO1.jpg') }}" alt="CEO Samer Hariri" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
+                <img src="{{ asset($founder['image']) }}" alt="CEO {{ $founder['name'] }}" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
             </div>
-            <h3 class="text-2xl font-bold text-gray-800 mb-2">Samer Hariri</h3>
-            <p class="text-md text-gray-500 mb-4">Co-Founder & CEO</p>
-            <p class="text-lg text-gray-600">Samer has led Nexis toward fashion excellence and innovation with a focus on sustainable practices.</p>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ $founder['name'] }}</h3>
+            <p class="text-md text-gray-500 mb-4">{{ $founder['title'] }}</p>
+            <p class="text-lg text-gray-600 flex-grow">{{ $founder['description'] }}</p>
         </div>
-        <div class="bg-white p-10 rounded-3xl shadow-lg max-w-sm text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <div class="w-32 h-32 mx-auto mb-6">
-                <img src="{{ asset('storage/img/aboutus/CEO2.jpg') }}" alt="CEO Mahmoud Batish" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
-            </div>
-            <h3 class="text-2xl font-bold text-gray-800 mb-2">Mahmoud Batish</h3>
-            <p class="text-md text-gray-500 mb-4">Co-Founder & CEO</p>
-            <p class="text-lg text-gray-600">Mahmoud’s vision and strategic acumen have been pivotal in establishing Nexis’s international presence.</p>
-        </div>
+        @endforeach
     </div>
 </section>
 
@@ -129,6 +152,7 @@
             background-position: 0% 50%;
         }
     }
+
     .animate-fade-in {
         animation: fadeIn 1s ease forwards;
         opacity: 0;
@@ -155,6 +179,7 @@
             transform: translateY(0);
         }
     }
+
     .animate-parallax {
         animation: parallaxMove 20s ease-in-out infinite alternate;
     }
