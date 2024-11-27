@@ -106,7 +106,7 @@ class RegisteredUserController extends Controller
             DB::commit();
 
             return redirect(route('profile.index'))
-                ->with('success', 'Registration successful! Your previous orders, wishlist, and cart items have been linked to your account.');
+                ->with('success', 'Registration successful!');
         } catch (\Exception $e) {
             DB::rollBack();
 

@@ -197,7 +197,7 @@
     <main class="mt-8">
         @yield('content')
     </main>
-
+    @if (!Request::is('cart'))
     <footer class="bg-gray-900 text-white pt-10 pb-6">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-10 md:space-y-0">
@@ -242,7 +242,7 @@
             <p class="mt-4 text-gray-500 text-sm">&copy; 2024 Nexis. All rights reserved.</p>
         </div>
     </footer>
-
+    @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/js/common.js')
     <script>
