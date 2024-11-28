@@ -55,7 +55,7 @@
                 <div class="category-filter mt-6">
                     <h4 class="font-medium text-gray-700">Category</h4>
                     <select id="category-dropdown"
-                        class="w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">All Items</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->CategoryID }}">{{ $category->Name }}</option>
@@ -66,7 +66,7 @@
                 <div class="sort-dropdown mt-6 lg:mt-5">
                     <h4 class="font-medium text-gray-700 mb-2">Sort By</h4>
                     <select id="sort-dropdown"
-                        class="w-4/5 sm:w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full sm:w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">Default</option>
                         <option value="name:asc">Name (A - Z)</option>
                         <option value="name:desc">Name (Z - A)</option>
@@ -79,11 +79,27 @@
             </div>
 
             <!-- Items Section -->
-            <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-                id="dynamic-products">
-
+            <div class="w-full flex-1">
+                <div id="dynamic-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Products will be dynamically injected here -->
+                </div>
+                <div id="no-results" class="hidden flex flex-col items-center justify-center w-full h-full">
+                    <div class="flex flex-col items-center space-y-6">
+                        <div class="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-full shadow-md">
+                            <img src="{{ asset('/storage/img/CommonImg/No Items Found.png') }}" alt="No Items Found" class="w-48 h-48 object-contain">
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-gray-800">
+                                No Items Found
+                            </p>
+                            <p class="text-md text-gray-600 mt-2 leading-relaxed">
+                                It seems we couldn’t find what you’re looking for. <br> Adjust your filters or try searching with different keywords.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                                
             </div>
-
         </div>
     </div>
 @endsection
@@ -133,31 +149,47 @@
             };
 
             const updateProducts = () => {
-                let minPrice = sliderOne.value;
-                let maxPrice = sliderTwo.value;
-                let categoryId = categoryDropdown.value;
-                let searchQuery = searchInput.value;
-                let sort = document.getElementById("sort-dropdown").value;
+            let minPrice = sliderOne.value;
+            let maxPrice = sliderTwo.value;
+            let categoryId = categoryDropdown.value;
+            let searchQuery = searchInput.value;
+            let sort = document.getElementById("sort-dropdown").value;
 
-                const url = new URL('{{ route('men.filter.products') }}', window.location.origin);
-                url.searchParams.append('minPrice', minPrice);
-                url.searchParams.append('maxPrice', maxPrice);
-                url.searchParams.append('category', categoryId);
-                url.searchParams.append('search', searchQuery);
-                if (sort) {
-                    url.searchParams.append('sort', sort);
-                }
+            const url = new URL('{{ route('men.filter.products') }}', window.location.origin);
+            url.searchParams.append('minPrice', minPrice);
+            url.searchParams.append('maxPrice', maxPrice);
+            url.searchParams.append('category', categoryId);
+            url.searchParams.append('search', searchQuery);
+            if (sort) {
+                url.searchParams.append('sort', sort);
+            }
 
-                fetch(url)
-                    .then(response => response.text())
-                    .then(html => {
-                        productsContainer.innerHTML = html;
-                        initializeCarousel();
-                    })
-                    .catch(error => {
-                        console.error("Error fetching filtered products:", error);
-                    });
-            };
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    productsContainer.innerHTML = html;
+
+                    // Check if any products exist
+                    const hasProducts = productsContainer.querySelector('.product-card'); // Corrected class name
+                    const noResults = document.getElementById('no-results');
+
+                    if (!hasProducts) {
+                        productsContainer.classList.add('hidden');
+                        noResults.classList.remove('hidden');
+                    } else {
+                        productsContainer.classList.remove('hidden');
+                        noResults.classList.add('hidden');
+                    }
+
+                    initializeCarousel(); // Initialize carousel if applicable
+                })
+                .catch(error => {
+                    console.error("Error fetching filtered products:", error);
+                    productsContainer.innerHTML = '<p class="text-red-500">Failed to load products. Please try again.</p>';
+                });
+        };
+
+
 
             let debounceTimer;
             searchInput.addEventListener("input", () => {
