@@ -194,7 +194,11 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Profile updated successfully.');
+        return redirect()->route('profile.index', ['#profile-section'])
+            ->with(
+                'success',
+                'Profile updated successfully.'
+            );
     }
 
     //upload avatar function

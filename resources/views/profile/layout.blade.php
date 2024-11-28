@@ -14,7 +14,7 @@
         <header class="bg-blue-800 shadow-md relative">
             <div class="container mx-auto px-4 py-4 flex items-center justify-between">
                 <!-- Logo and Welcome Message -->
-                <div class="flex items-center space-x-2 mb-4 lg:mb-0 lg:space-x-4 flex-wrap 2xl:max-w-fit lg:max-w-30">
+                <div class="flex items-center space-x-2 mb-4 lg:mb-0 lg:space-x-4 flex-wrap 2xl:max-w-fit lg:w-26">
                     <a href="{{ route('home') }}">
                         <img src="/storage/img/CommonImg/blacklogo.png" alt="Logo" class="h-24 lg:h-24">
                     </a>
@@ -131,124 +131,12 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x/dist/cdn.min.js" defer></script>
     <script>
         $(document).ready(function() {
-
-            let $editBtn = $("#edit-profile-btn");
-            let $cancelBtn = $("#cancel-edit");
-            let $formInputs = $("#profile-form input");
-            let $editActions = $("#edit-actions");
-
-            let $updateBtn = $("#edit-pass-btn")
-            let $cancelPassBtn = $("#cancel-pass");
-            let $passForm = $("#update-password-form input");
-            let $updateActions = $("#update-actions");
-
-            // const $burgerMenuBtn = $('#burger-menu-btn');
-            // const $mobileMenu = $('#mobile-menu');
-
-            // // Toggle mobile menu
-            // $burgerMenuBtn.on('click', function() {
-            //     $mobileMenu.toggleClass('hidden');
-            // });
-
-
-
-            // Enable edit mode
-            $editBtn.on("click", function() {
-                $formInputs.prop("disabled", false); // Enable inputs
-                $editActions.removeClass("hidden"); // Show save and cancel buttons
-                $editBtn.addClass("hidden"); // Hide edit button
-            });
-
-            // Cancel edit mode
-            $cancelBtn.on("click", function() {
-                $formInputs.prop("disabled", true); // Disable inputs
-                $editActions.addClass("hidden"); // Hide save and cancel buttons
-                $editBtn.removeClass("hidden"); // Show edit button
-            });
-
-            // Enable Password Update mode
-            $updateBtn.on("click", function() {
-                $passForm.prop("disabled", false); // Enable inputs
-                $updateActions.removeClass("hidden"); // Show save and cancel buttons
-                $updateBtn.addClass("hidden"); // Hide edit button
-            });
-
-            // Cancel Password Update mode
-            $cancelPassBtn.on("click", function() {
-                $passForm.prop("disabled", true); // Disable inputs
-                $updateActions.addClass("hidden"); // Hide save and cancel buttons
-                $updateBtn.removeClass("hidden"); // Show edit button
-            });
-
-        });
-        if ($('.flash-message').length) {
+            if ($('.flash-message').length) {
             $('.flash-message').delay(3000).fadeOut(500, function() {
                 $(this).remove();
             });}
-        function showPasswordNotification(message, type = 'success') {
-            const $notification = $('#password-notification');
-            const $message = $('#password-notification-message');
-
-            // Set the message and apply styles based on the type
-            $message.text(message);
-            $notification
-                .addClass(
-                    type === 'success' ?
-                    'bg-green-100 border-green-400 text-green-700' :
-                    'bg-red-100 border-red-400 text-red-700'
-                );
-
-            // Slide notification up into view
-            $notification
-                .css('transform', 'translate(0, -100%)') // Move to visible position
-                .removeClass('hidden');
-
-            // Hide notification after 5 seconds
-            setTimeout(function() {
-                $notification.css('transform', 'translate(0, 100%)'); // Move back down
-                setTimeout(function() {
-                    $notification
-                        .addClass('hidden'), 2000
-                })
-            }, 5000);
-        }
-        if (window.location.hash) {
-            const target = $(window.location.hash);
-            if (target.length) {
-                $('html, body').animate({
-                        scrollTop: target.offset().top,
-                    },
-                    800 // Smooth scroll duration in milliseconds
-                );
-            }
-        }
-
-        function showProfileNotification(message, type = 'success') {
-            const $notification = $('#profile-notification');
-            const $messageSpan = $('#profile-notification-message');
-
-            // Set the notification message
-            $messageSpan.text(message);
-
-            // Apply styles based on the type
-            const notificationClass = type === 'success' ?
-                'bg-green-100 border-green-400 text-green-700' :
-                'bg-red-100 border-red-400 text-red-700';
-
-            $notification
-                .attr('class',
-                    `relative top-1 transform -translate-x-1/2 max-w-fit whitespace-nowrap px-4 py-2 rounded shadow-md z-50 transition-transform transition-opacity duration-500 ease-in-out ${notificationClass}`
-                )
-                .css('transform', 'translateY(0)')
-                .removeClass('hidden');
-
-            // Hide the notification after 5 seconds
-            setTimeout(() => {
-                $notification
-                    .css('transform', 'translateY(-150%)')
-                    .addClass('hidden');
-            }, 5000);
-        }
+            
+        });
     </script>
 </body>
 
