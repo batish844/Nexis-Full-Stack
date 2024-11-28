@@ -83,16 +83,22 @@
                 <div id="dynamic-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     <!-- Products will be dynamically injected here -->
                 </div>
-                <div id="no-results" class="hidden flex items-center justify-center w-full h-full bg-gray-100">
-                    <div class="text-center">
-                        <p class="text-lg text-gray-600 font-medium">
-                            Unfortunately, no items match your search criteria.
-                        </p>
-                        <p class="text-sm text-gray-500 mt-2">
-                            Please try adjusting your filters or price range to explore more options.
-                        </p>
+                <div id="no-results" class="hidden flex flex-col items-center justify-center w-full h-full">
+                    <div class="flex flex-col items-center space-y-6">
+                        <div class="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-full shadow-md">
+                            <img src="{{ asset('/storage/img/CommonImg/No Items Found.png') }}" alt="No Items Found" class="w-48 h-48 object-contain">
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-gray-800">
+                                No Items Found
+                            </p>
+                            <p class="text-md text-gray-600 mt-2 leading-relaxed">
+                                It seems we couldn’t find what you’re looking for. <br> Adjust your filters or try searching with different keywords.
+                            </p>
+                        </div>
                     </div>
                 </div>
+                                
             </div>
         </div>
     </div>
