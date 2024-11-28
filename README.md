@@ -66,16 +66,18 @@ Nexis is more than just a platform – it’s a vision for seamless online shopp
 To set up Nexis on your local machine:
 
 1. **Clone the repository**:
-   git clone 
+   ```bash
+   git clone https://github.com/batish844/Nexis-Full-Stack.git
+   cd Nexis-Full-Stack
    ```
 
-2. **Install dependencies**:
+3. **Install dependencies**:
    ```bash
    composer install
    npm install
    ```
 
-3. **Set up your environment variables**:
+4. **Set up your environment variables**:
    - Copy `.env.example` to `.env` and update the following values:
      ```env
      APP_NAME=Nexis
@@ -97,12 +99,12 @@ To set up Nexis on your local machine:
      MAIL_FROM_NAME="Nexis"
      ```
 
-4. **Run migrations and seed the database**:
+5. **Run migrations and seed the database**:
    ```bash
    php artisan migrate --seed
    ```
 
-5. **Start the development server**:
+6. **Start the development server**:
    ```bash
    php artisan serve
    npm run dev
