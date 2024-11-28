@@ -28,27 +28,31 @@ class MenController extends Controller
     }
     public function filterProducts(Request $request)
     {
+        // Get filter parameters with defaults
         $minPrice = $request->input('minPrice', 0);
         $maxPrice = $request->input('maxPrice', 150);
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
         $sort = $request->input('sort');
 
+        // Start building the query
         $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice])
+            ->where('isAvailable', true)
             ->whereHas('category', function ($query) {
                 $query->where('Gender', 'M');
-            })
-            ->where('isAvailable', true);
+            });
 
+        // Apply category filter
         if (!empty($categoryId)) {
             $itemsQuery->where('CategoryID', $categoryId);
         }
 
+        // Apply search query filter
         if (!empty($searchQuery)) {
             $itemsQuery->where('Name', 'like', '%' . $searchQuery . '%');
         }
 
-        // Sorting logic
+        // Apply sorting logic
         if (!empty($sort)) {
             [$column, $direction] = explode(':', $sort);
 
@@ -57,24 +61,22 @@ class MenController extends Controller
             } elseif ($column === 'price') {
                 $itemsQuery->orderBy('Price', $direction);
             } elseif ($column === 'popularity') {
+                // Ensure relationship and sorting on reviews' average rating
                 $itemsQuery->withAvg('reviews', 'Stars')->orderBy('reviews_avg_Stars', $direction);
             }
         }
 
+        // Fetch filtered items with related category
         $items = $itemsQuery->with('category')->get();
 
-        // Get wishlist items based on auth status
-        if (Auth::check()) {
-            $wishlistItems = Wishlist::where('UserID', Auth::id())
-                ->pluck('ItemID') // Fetch only ItemID
-                ->toArray();
-        } else {
-            $wishlistItems = session('wishlist', []);
-        }
+        // Check if user is authenticated to fetch their wishlist
+        $wishlistItems = Auth::check()
+            ? Wishlist::where('UserID', Auth::id())->pluck('ItemID')->toArray()
+            : session('wishlist', []); // Use session-based wishlist for guests
 
+        // Return a view with the filtered products and wishlist
         return view('store.cards', compact('items', 'wishlistItems'));
     }
-
 
     public function show(string $id)
     {

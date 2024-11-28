@@ -45,17 +45,3 @@ $isInWishlist = in_array($item->ItemID, $wishlistItems);
     </a>
 </div>
 @endforeach
-
-
-@if ($items->isEmpty())
-<div class="flex items-center justify-center w-full h-full bg-gray-100">
-    <div class="text-center">
-        <p class="text-lg text-gray-600 font-medium">
-            Unfortunately, no items match your search criteria.
-        </p>
-        <p class="text-sm text-gray-500 mt-2">
-            Please try adjusting your filters or price range to explore more options.
-        </p>
-    </div>
-</div>
-@endif
