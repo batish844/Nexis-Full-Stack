@@ -55,7 +55,7 @@
                 <div class="category-filter mt-6">
                     <h4 class="font-medium text-gray-700">Category</h4>
                     <select id="category-dropdown"
-                        class="w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">All Items</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->CategoryID }}">{{ $category->Name }}</option>
@@ -66,7 +66,7 @@
                 <div class="sort-dropdown mt-6 lg:mt-5">
                     <h4 class="font-medium text-gray-700 mb-2">Sort By</h4>
                     <select id="sort-dropdown"
-                        class="w-4/5 sm:w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full sm:w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">Default</option>
                         <option value="name:asc">Name (A - Z)</option>
                         <option value="name:desc">Name (Z - A)</option>
