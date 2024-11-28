@@ -82,7 +82,7 @@ class UserController extends Controller
 
             fputcsv($file, ['First Name', 'Last Name', 'Email', 'Phone Number', 'Address', 'Status', 'Role', 'Points', 'Item Count', 'Date Registered']);
 
-            $users = User::all();
+            $users = User::withCount('orders')->get();
             foreach ($users as $user) {
                 $address = json_decode($user->address);
                 $user->Full_Address = $this->concatAddress($address);
@@ -97,9 +97,9 @@ class UserController extends Controller
                     $user->Full_Address,
                     $user->isActive ? 'Activated' : 'Deactivated',
                     $user->isAdmin ? 'Admin' : 'User',
-                    $user->Points, // Assuming 'points' is a column in the users table
-                    $user->orders_count, // Assuming 'items' is a relationship in the User model
-                    $user->created_at->format('Y-m-d'), // Date registered
+                    $user->Points, 
+                    $user->orders_count, 
+                    $user->created_at->format('Y-m-d'),
                 ]);
             }
 
