@@ -97,7 +97,7 @@ class UserController extends Controller
                     $user->Full_Address,
                     $user->isActive ? 'Activated' : 'Deactivated',
                     $user->isAdmin ? 'Admin' : 'User',
-                    $user->points, // Assuming 'points' is a column in the users table
+                    $user->Points, // Assuming 'points' is a column in the users table
                     $user->orders_count, // Assuming 'items' is a relationship in the User model
                     $user->created_at->format('Y-m-d'), // Date registered
                 ]);
