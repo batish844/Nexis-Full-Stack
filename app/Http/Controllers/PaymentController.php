@@ -192,6 +192,7 @@ class PaymentController extends Controller
                 ]);
                 Mail::to($user->email)->send(new OrderConfirmationMail($order, $user));
 
+                $totalPoints = 0;
                 foreach ($cartItems as $cartItem) {
                     OrderItem::create([
                         'OrderID'    => $order->OrderID,
@@ -200,14 +201,15 @@ class PaymentController extends Controller
                         'Quantity'   => $cartItem->Quantity,
                         'TotalPrice' => $cartItem->Quantity * $cartItem->item->Price,
                     ]);
-
+                    $totalPoints += $cartItem->item->Points;
                     $cartItem->item->decrement('Quantity', $cartItem->Quantity);
                     if ($cartItem->item->Quantity <= 0) {
                         $cartItem->item->isAvailable = false;
                         $cartItem->item->save();
                     }
                 }
-
+                $user->Points += $totalPoints;
+                $user->save();
                 Cart::where('UserID', $user->UserID)->delete();
                 Log::info('Cart cleared for authenticated user:', ['userID' => $user->UserID]);
             } else {
