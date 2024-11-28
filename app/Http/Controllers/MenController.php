@@ -30,7 +30,7 @@ class MenController extends Controller
     {
         // Get filter parameters with defaults
         $minPrice = $request->input('minPrice', 0);
-        $maxPrice = $request->input('maxPrice', 150);
+        $maxPrice = $request->input('maxPrice', 50);
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
         $sort = $request->input('sort');

@@ -70,14 +70,28 @@
                 </div>
             </div>
 
-            <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-                id="dynamic-products">
-
+            <!-- Items Section -->
+            <div class="w-full flex-1">
+                <div id="dynamic-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Products will be dynamically injected here -->
+                </div>
+                <div id="no-results" class="hidden flex flex-col items-center justify-center w-full h-full">
+                    <div class="flex flex-col items-center space-y-6">
+                        <div class="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-full shadow-md">
+                            <img src="{{ asset('/storage/img/CommonImg/No Items Found.png') }}" alt="No Items Found" class="w-48 h-48 object-contain">
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-gray-800">
+                                No Items Found
+                            </p>
+                            <p class="text-md text-gray-600 mt-2 leading-relaxed">
+                                It seems we couldn’t find what you’re looking for. <br> Adjust your filters or try searching with different keywords.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                                
             </div>
-
-
-
-
         </div>
     </div>
 @endsection
@@ -146,10 +160,24 @@
                 .then(response => response.text())
                 .then(html => {
                     productsContainer.innerHTML = html;
-                    initializeCarousel();
+
+                    // Check if any products exist
+                    const hasProducts = productsContainer.querySelector('.product-card'); // Corrected class name
+                    const noResults = document.getElementById('no-results');
+
+                    if (!hasProducts) {
+                        productsContainer.classList.add('hidden');
+                        noResults.classList.remove('hidden');
+                    } else {
+                        productsContainer.classList.remove('hidden');
+                        noResults.classList.add('hidden');
+                    }
+
+                    initializeCarousel(); // Initialize carousel if applicable
                 })
                 .catch(error => {
                     console.error("Error fetching filtered products:", error);
+                    productsContainer.innerHTML = '<p class="text-red-500">Failed to load products. Please try again.</p>';
                 });
         };
 
