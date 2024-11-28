@@ -31,33 +31,53 @@ class WomenController extends Controller
         $maxPrice = $request->input('maxPrice', 150);
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
+        $sort = $request->input('sort'); // Sorting parameter
 
         $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice])
             ->whereHas('category', function ($query) {
-                $query->where('Gender', 'F');
+                $query->where('Gender', 'F'); // Filtering for women's category
             })
             ->where('isAvailable', true);
 
+        // Apply category filter if provided
         if (!empty($categoryId)) {
             $itemsQuery->where('CategoryID', $categoryId);
         }
 
+        // Apply search query if provided
         if (!empty($searchQuery)) {
             $itemsQuery->where('Name', 'like', '%' . $searchQuery . '%');
         }
 
+        // Apply sorting if provided
+        if (!empty($sort)) {
+            [$column, $direction] = explode(':', $sort);
+
+            if ($column === 'name') {
+                $itemsQuery->orderBy('Name', $direction);
+            } elseif ($column === 'price') {
+                $itemsQuery->orderBy('Price', $direction);
+            } elseif ($column === 'popularity') {
+                $itemsQuery->withAvg('reviews', 'Stars')->orderBy('reviews_avg_Stars', $direction);
+            }
+        }
+
+        // Fetch the filtered items with their categories
         $items = $itemsQuery->with('category')->get();
 
+        // Handle wishlist items
         if (Auth::check()) {
             $wishlistItems = Wishlist::where('UserID', Auth::id())
-                ->pluck('ItemID')
+                ->pluck('ItemID') // Fetch only ItemID
                 ->toArray();
         } else {
             $wishlistItems = session('wishlist', []);
         }
 
+        // Return the filtered items view
         return view('store.cards', compact('items', 'wishlistItems'));
     }
+
     /**
      * Show the form for creating a new resource.
      */

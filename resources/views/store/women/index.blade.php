@@ -3,67 +3,87 @@
 @section('title', 'Women Store')
 
 @section('content')
-<!-- Image Slider for Women Store -->
-<!-- <div class="image-slider">
-    <div class="slide">
-        <img src="{{ asset('storage/img/slides/g1.webp') }}" alt="Slide 1">
-    </div>
-    <div class="slide">
-        <img src="{{ asset('storage/img/slides/g2.webp') }}" alt="Slide 3">
-    </div>
-    <div class="slide">
-        <img src="{{ asset('storage/img/slides/g3.jpg') }}" alt="Slide 1">
-    </div>
-</div> -->
-<div class="container mx-auto px-4 py-10">
-    <div class="flex justify-center items-center mb-6">
-        <div class="w-full sm:w-3/4 md:w-1/2 lg:w-1/3">
-            <input type="text" id="search-input" class="w-full p-3 rounded-full border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 text-lg" placeholder="Search for items...">
-        </div>
-    </div>
-
-
-    <div class="flex flex-col lg:flex-row gap-6">
-        <div id="filter-panel" class="w-full sm:w-64 p-6 bg-gray-50 rounded-lg shadow-md mb-6 lg:mb-0">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">Filters</h3>
-            <div class="price-filter mt-6">
-                <h4 class="font-medium text-gray-700">Price</h4>
-                <div class="flex justify-between mb-2">
-                    <span id="min-price-display">0</span>
-                    <span>&dash;</span>
-                    <span id="max-price-display">150</span>
-                </div>
-                <div class="relative">
-                    <div class="slider-track bg-gray-200 h-2 rounded-full"></div>
-                    <input type="range" min="0" max="150" value="0" id="slider-1" class="absolute left-0 w-full cursor-pointer opacity-0">
-                    <input type="range" min="0" max="150" value="150" id="slider-2" class="absolute right-0 w-full cursor-pointer opacity-0">
-                </div>
-            </div>
-
-            <div class="category-filter mt-6">
-                <h4 class="font-medium text-gray-700">Category</h4>
-                <select id="category-dropdown" class="w-full mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Items</option>
-                    @foreach ($categories as $category)
-                    <option value="{{ $category->CategoryID }}">{{ $category->Name }}</option>
-                    @endforeach
-                </select>
+    <!-- Image Slider for Women Store -->
+    <!-- <div class="image-slider">
+                    <div class="slide">
+                        <img src="{{ asset('storage/img/slides/g1.webp') }}" alt="Slide 1">
+                    </div>
+                    <div class="slide">
+                        <img src="{{ asset('storage/img/slides/g2.webp') }}" alt="Slide 3">
+                    </div>
+                    <div class="slide">
+                        <img src="{{ asset('storage/img/slides/g3.jpg') }}" alt="Slide 1">
+                    </div>
+                </div> -->
+    <div class="container mx-auto px-4 py-10">
+        <div class="flex justify-center items-center mb-6">
+            <div class="w-full sm:w-3/4 md:w-1/2 lg:w-1/3">
+                <input type="text" id="search-input"
+                    class="w-full p-3 rounded-full border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 text-lg"
+                    placeholder="Search for items...">
             </div>
         </div>
 
-        <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="dynamic-products">
+
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div id="filter-panel" class="w-full sm:w-64 p-6 bg-gray-50 rounded-lg shadow-md mb-6 lg:mb-0">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Filters</h3>
+                <div class="price-filter mt-6">
+                    <h4 class="font-medium text-gray-700">Price</h4>
+                    <div class="flex justify-between mb-2">
+                        <span id="min-price-display">0</span>
+                        <span>&dash;</span>
+                        <span id="max-price-display">150</span>
+                    </div>
+                    <div class="relative">
+                        <div class="slider-track bg-gray-200 h-2 rounded-full"></div>
+                        <input type="range" min="0" max="150" value="0" id="slider-1"
+                            class="absolute left-0 w-full cursor-pointer opacity-0">
+                        <input type="range" min="0" max="150" value="150" id="slider-2"
+                            class="absolute right-0 w-full cursor-pointer opacity-0">
+                    </div>
+                </div>
+
+                <div class="category-filter mt-6">
+                    <h4 class="font-medium text-gray-700">Category</h4>
+                    <select id="category-dropdown"
+                        class="w-full mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">All Items</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->CategoryID }}">{{ $category->Name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- Sort Dropdown -->
+                <div class="sort-dropdown mt-6 lg:mt-5">
+                    <h4 class="font-medium text-gray-700 mb-2">Sort By</h4>
+                    <select id="sort-dropdown"
+                        class="w-4/5 sm:w-full text-lg lg:text-md mt-2 p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Default</option>
+                        <option value="name:asc">Name (A - Z)</option>
+                        <option value="name:desc">Name (Z - A)</option>
+                        <option value="price:asc">Price (Low to High)</option>
+                        <option value="price:desc">Price (High to Low)</option>
+                        <option value="popularity:asc">Rating (Low to High)</option>
+                        <option value="popularity:desc">Rating (High to Low)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                id="dynamic-products">
+
+            </div>
+
+
+
 
         </div>
-
-
-
-
     </div>
-</div>
 @endsection
 
 @push('styles')
-@vite('resources/css/men.css')
+    @vite('resources/css/men.css')
 @endpush
 
 @vite('resources/js/men.js')
@@ -78,6 +98,7 @@
         let minPriceDisplay = document.getElementById("min-price-display");
         let maxPriceDisplay = document.getElementById("max-price-display");
         let categoryDropdown = document.getElementById("category-dropdown");
+        let sortDropdown = document.getElementById("sort-dropdown");
         let searchInput = document.getElementById("search-input");
         let sliderTrack = document.querySelector(".slider-track");
         let sliderMaxValue = parseInt(sliderOne.max);
@@ -101,7 +122,8 @@
         const fillColor = () => {
             let percent1 = (sliderOne.value / sliderMaxValue) * 100;
             let percent2 = (sliderTwo.value / sliderMaxValue) * 100;
-            sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}%, #3264fe ${percent1}%, #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
+            sliderTrack.style.background =
+                `linear-gradient(to right, #dadae5 ${percent1}%, #3264fe ${percent1}%, #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
         };
 
         const updateProducts = () => {
@@ -109,12 +131,16 @@
             let maxPrice = sliderTwo.value;
             let categoryId = categoryDropdown.value;
             let searchQuery = searchInput.value;
+            let sort = document.getElementById("sort-dropdown").value;
 
-            const url = new URL('{{ route("women.filter.products") }}', window.location.origin);
+            const url = new URL('{{ route('women.filter.products') }}', window.location.origin);
             url.searchParams.append('minPrice', minPrice);
             url.searchParams.append('maxPrice', maxPrice);
             url.searchParams.append('category', categoryId);
             url.searchParams.append('search', searchQuery);
+            if (sort) {
+                url.searchParams.append('sort', sort);
+            }
 
             fetch(url)
                 .then(response => response.text())
@@ -126,6 +152,7 @@
                     console.error("Error fetching filtered products:", error);
                 });
         };
+
 
         let debounceTimer;
         searchInput.addEventListener("input", () => {
@@ -174,6 +201,7 @@
         sliderOne.addEventListener("input", updateSliderValues);
         sliderTwo.addEventListener("input", updateSliderValues);
         categoryDropdown.addEventListener("change", updateProducts);
+        sortDropdown.addEventListener("change", updateProducts);
 
         updateProducts();
         initializeCarousel();

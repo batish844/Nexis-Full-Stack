@@ -32,6 +32,7 @@ class MenController extends Controller
         $maxPrice = $request->input('maxPrice', 150);
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
+        $sort = $request->input('sort');
 
         $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice])
             ->whereHas('category', function ($query) {
@@ -47,6 +48,19 @@ class MenController extends Controller
             $itemsQuery->where('Name', 'like', '%' . $searchQuery . '%');
         }
 
+        // Sorting logic
+        if (!empty($sort)) {
+            [$column, $direction] = explode(':', $sort);
+
+            if ($column === 'name') {
+                $itemsQuery->orderBy('Name', $direction);
+            } elseif ($column === 'price') {
+                $itemsQuery->orderBy('Price', $direction);
+            } elseif ($column === 'popularity') {
+                $itemsQuery->withAvg('reviews', 'Stars')->orderBy('reviews_avg_Stars', $direction);
+            }
+        }
+
         $items = $itemsQuery->with('category')->get();
 
         // Get wishlist items based on auth status
@@ -60,6 +74,7 @@ class MenController extends Controller
 
         return view('store.cards', compact('items', 'wishlistItems'));
     }
+
 
     public function show(string $id)
     {
