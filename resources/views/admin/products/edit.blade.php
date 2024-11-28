@@ -83,22 +83,39 @@
 
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-2">Sizes</label>
-            <div class="flex space-x-4">
+            <div class="flex flex-wrap gap-4">
                 @php
                 $productSizes = $product->Size ?? [];
                 @endphp
-                @foreach(['S', 'M', 'L', 'XL'] as $size)
-                <label class="relative cursor-pointer">
-                    <input type="checkbox" name="sizes[]" value="{{ $size }}"
-                        {{ in_array($size, $productSizes) ? 'checked' : '' }}
-                        class="size-checkbox hidden">
-                    <div class="w-12 h-12 flex items-center justify-center rounded-lg border cursor-pointer 
-                        {{ in_array($size, $productSizes) ? 'bg-blue-600 text-white' : 'bg-gray-200 ' }}">
-                        {{ $size }}
-                    </div>
-                </label>
-                @endforeach
+                @if ($product->Category->Name !== 'Shoes')
+                    @foreach(['S', 'M', 'L', 'XL'] as $size)
+                        <label class="relative cursor-pointer">
+                            <input type="checkbox" name="sizes[]" value="{{ $size }}"
+                                {{ in_array($size, $productSizes) ? 'checked' : '' }}
+                                class="size-checkbox hidden">
+                            <div class="w-12 h-12 flex items-center justify-center rounded-lg border cursor-pointer 
+                                {{ in_array($size, $productSizes) ? 'bg-blue-600 text-white' : 'bg-gray-200' }} 
+                                sm:w-14 sm:h-14 md:w-16 md:h-16">
+                                {{ $size }}
+                            </div>
+                        </label>
+                    @endforeach
+                @else
+                    @for ($i = 39; $i <= 49; $i++)
+                        <label class="relative cursor-pointer">
+                            <input type="checkbox" name="sizes[]" value="{{ $i }}"
+                                {{ in_array($i, $productSizes) ? 'checked' : '' }}
+                                class="size-checkbox hidden">
+                            <div class="w-12 h-12 flex items-center justify-center rounded-lg border cursor-pointer 
+                                {{ in_array($i, $productSizes) ? 'bg-blue-600 text-white' : 'bg-gray-200' }} 
+                                sm:w-14 sm:h-14 md:w-16 md:h-16">
+                                {{ $i }}
+                            </div>
+                        </label>
+                    @endfor
+                @endif
             </div>
+        </div>
             @error('sizes')
             <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror

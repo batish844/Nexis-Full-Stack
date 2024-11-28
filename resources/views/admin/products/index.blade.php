@@ -22,7 +22,7 @@
             <select id="categoryfilter" class="w-full sm:w-40 px-4 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="all">All</option>
                 @foreach($categories as $category)
-                <option value="{{$category->CategoryID }}">{{ $category->Name }}</option>
+                <option value="{{$category->CategoryID }}">{{ $category->Name }} - {{ $category->Gender }} </option>
                 @endforeach
 
             </select>

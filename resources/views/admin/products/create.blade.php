@@ -149,10 +149,8 @@
         genderSelect.addEventListener('change', function() {
             const gender = this.value;
 
-            // Clear existing categories
             categorySelect.innerHTML = '<option value="" disabled selected>Select a Category</option>';
 
-            // Fetch categories based on gender
             fetch(`/gender/${gender}`)
                 .then(response => response.json())
                 .then(categories => {

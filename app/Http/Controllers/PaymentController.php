@@ -202,6 +202,10 @@ class PaymentController extends Controller
                     ]);
 
                     $cartItem->item->decrement('Quantity', $cartItem->Quantity);
+                    if ($cartItem->item->Quantity <= 0) {
+                        $cartItem->item->isAvailable = false;
+                        $cartItem->item->save();
+                    }
                 }
 
                 Cart::where('UserID', $user->UserID)->delete();
@@ -257,6 +261,10 @@ class PaymentController extends Controller
                     ]);
 
                     $item->decrement('Quantity', $cartItem['Quantity']);
+                    if ($item->Quantity <= 0) {
+                        $item->isAvailable = false;
+                        $item->save();
+                    }
                 }
 
                 session()->forget('cart');
