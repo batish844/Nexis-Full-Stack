@@ -21,7 +21,6 @@ class StoreController extends Controller
         if (!$item->isAvailable) {
             return redirect()->back()->with('error', 'Item is not available.');
         }
-
         // Fetch all reviews for the item
         $reviews = $item->reviews()->with('user')->get();
 
@@ -46,18 +45,30 @@ class StoreController extends Controller
         if (!auth()->check()) {
             return redirect()->back()->with('error', 'You need to log in to add a review.');
         }
+        $user = auth()->user();
+
         $request->validate([
             'Stars' => 'required|integer|min:1|max:5',
             'Comment' => 'nullable|string|max:500',
         ]);
 
+        // Check if the user has purchased the item
+        $hasPurchased = $user->orders()->whereHas('orderItems', function ($query) use ($id) {
+            $query->where('ItemID', $id);
+        })->exists();
+
+        if (!$hasPurchased) {
+            return redirect()->route('store.show', ['id' => $id, '#reviewSection'])
+                ->with('error', 'You can only review items you have purchased.');
+        }
         // Check if the user has already reviewed this product
         $existingReview = Review::where('ItemID', $id)
             ->where('UserID', auth()->user()->id)
             ->first();
 
         if ($existingReview) {
-            return redirect()->route('store.show', $id)->with('error', 'You have already reviewed this product.');
+            return redirect()->route('store.show', ['id' => $id, '#reviewSection'])
+                ->with('error', 'You have already reviewed this product.');
         }
 
         // Create a new review
@@ -67,8 +78,12 @@ class StoreController extends Controller
             'Stars' => $request->Stars,
             'Comment' => $request->Comment,
         ]);
+        // Increment the user's points by 1
 
-        return redirect()->route('store.show', $id)->with('success', 'Review added successfully.');
+        $user->increment('Points', 1);
+
+        return redirect()->route('store.show', ['id' => $id, '#reviewSection'])
+            ->with('success', 'Review added successfully. You earned 1 point!');
     }
 
     public function update(Request $request, $id)
@@ -90,10 +105,12 @@ class StoreController extends Controller
 
         // Redirect back with success message
         if ($updated) {
-            return redirect()->route('store.show', $id)->with('success', 'Review updated successfully.');
+            return redirect()->route('store.show', ['id' => $id, '#reviewSection'])
+                ->with('success', 'Review updated successfully.');
         }
 
         // Fallback if update fails
-        return redirect()->route('store.show', $id)->with('error', 'Failed to update review.');
+        return redirect()->route('store.show', ['id' => $id, '#reviewSection'])
+            ->with('error', 'Failed to update review.');
     }
 }

@@ -22,6 +22,10 @@
                         class="text-xl sm:text-2xl md:text-xl lg:text-lg 2xl:text-2xl font-semibold text-white max-w-34 text-center lg:text-left">
                         Welcome, {{ Auth::user()->First_Name }}!
                     </span>
+                    <p class="text-lg sm:text-xl font-medium text-yellow-400">
+                        <i class="fas fa-trophy text-yellow-400 text-xl"></i>
+                        Points: {{ number_format($totalPoints) }}
+                    </p>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -122,6 +126,7 @@
             @yield('content')
         </main>
     </div>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x/dist/cdn.min.js" defer></script>
     <script>

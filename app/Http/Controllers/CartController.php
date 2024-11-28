@@ -22,7 +22,7 @@ class CartController extends Controller
     {
         $validatedData = $request->validate([
             'ItemID'   => 'required|exists:items,ItemID',
-            'Size'     => 'required|string|in:S,M,L,XL',
+            'Size'     => 'required|string',
             'Quantity' => 'required|integer|min:1',
         ]);
 
@@ -210,7 +210,7 @@ class CartController extends Controller
         try {
             $validatedData = $request->validate([
                 'itemID' => 'required|integer|exists:items,ItemID',
-                'size'   => 'required|string|in:S,M,L,XL',
+                'size'   => 'required|string',
                 'action' => 'required|in:increment,decrement',
             ]);
         } catch (ValidationException $e) {

@@ -31,7 +31,9 @@ class ProfileController extends Controller
         $user->building = $decodedAddress['building'] ?? null;
         $user->city = $decodedAddress['city'] ?? null;
 
-        return view('profile.profile', compact('user'));
+        $totalPoints = $user->Points;
+
+        return view('profile.profile', compact('user', 'totalPoints'));
     }
     public function order(Request $request)
     {
@@ -53,8 +55,10 @@ class ProfileController extends Controller
             });
         });
 
+        $totalPoints = $user->Points;
+
         // Pass calculated totals to the view
-        return view('profile.order', compact('orders'));
+        return view('profile.order', compact('orders', 'totalPoints'));
     }
 
 
@@ -87,7 +91,7 @@ class ProfileController extends Controller
                 return [
                     'name' => $orderItem->item->Name,
                     'photo' => $orderItem->item->Photo[0] ?? null,
-                    'price' => $orderItem->item->Price,
+                    'price' => $orderItem->item->Price * $orderItem->Quantity,
                     'points' => $orderItem->item->Points * $orderItem->Quantity,
                     'size' => $orderItem->Size,
                     'quantity' => $orderItem->Quantity,
