@@ -65,8 +65,9 @@ class WomenController extends Controller
             }
         }
 
-        // Fetch filtered items with related category
-        $items = $itemsQuery->with('category')->get();
+        // Fetch the filtered items with their categories
+        $items = $itemsQuery->with('category')->paginate(8);
+
 
         // Check if user is authenticated to fetch their wishlist
         $wishlistItems = Auth::check()

@@ -178,35 +178,51 @@
   height: 5px;
   margin-top: 10px;
 }
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 5px;
-  background: transparent;
-  pointer-events: none;
-  position: absolute;
-  margin: 0;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 15px;
-  width: 15px;
-  background: #3264fe;
-  border-radius: 50%;
-  pointer-events: auto;
-  cursor: pointer;
-}
-input[type="range"]::-moz-range-thumb {
-  height: 15px;
-  width: 15px;
-  background: #3264fe;
-  border-radius: 50%;
-  cursor: pointer;
-}
+
 .slider-track {
   background: #dadae5;
   height: 5px;
   border-radius: 5px;
+}
+
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Slider Track */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: transparent;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: transparent;
+}
+
+/* Thumb Styling */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  background-color: #1D4ED8;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -14px; /* Align thumb with the track */
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  background-color: #1D4ED8;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -14px; /* Align thumb with the track */
 }
 
 /*Trophy*/
@@ -362,3 +378,4 @@ input[type="range"]::-moz-range-thumb {
   height: 20px;
   order: 2; /* Positioned at the end */
 }
+

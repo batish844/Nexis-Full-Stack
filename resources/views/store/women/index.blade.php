@@ -29,20 +29,30 @@
             <div id="filter-panel" class="w-full sm:w-64 p-6 bg-gray-50 rounded-lg shadow-md mb-6 lg:mb-0">
                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Filters</h3>
                 <div class="price-filter mt-6">
-                    <h4 class="font-medium text-gray-700">Price</h4>
+                    <h4 class="font-medium text-gray-700">Price ($)</h4>
                     <div class="flex justify-between mb-2">
                         <span id="min-price-display">0</span>
                         <span>&dash;</span>
-                        <span id="max-price-display">150</span>
+                        <span id="max-price-display">50</span>
                     </div>
-                    <div class="relative">
-                        <div class="slider-track bg-gray-200 h-2 rounded-full"></div>
-                        <input type="range" min="0" max="150" value="0" id="slider-1"
-                            class="absolute left-0 w-full cursor-pointer opacity-0">
-                        <input type="range" min="0" max="150" value="150" id="slider-2"
-                            class="absolute right-0 w-full cursor-pointer opacity-0">
+                    <div class="relative w-full py-4">
+
+                    <div class="slider-track bg-gray-300 h-2 rounded-full relative">
+
+
                     </div>
-                </div>
+
+                        <!-- Range Inputs -->
+                    <input type="range" min="0" max="50" value="0" id="slider-1"
+                        class="absolute left-0 w-full h-2 appearance-none bg-transparent pointer-events-auto z-10 thumb-slider">
+                    <input type="range" min="0" max="50" value="50" id="slider-2"
+                        class="absolute left-0 w-full h-2 appearance-none bg-transparent pointer-events-auto z-10 thumb-slider">
+
+                    <!-- Thumb Styling -->
+
+                    </div>
+                    </div>
+
 
                 <div class="category-filter mt-6">
                     <h4 class="font-medium text-gray-700">Category</h4>
@@ -73,12 +83,13 @@
             <!-- Items Section -->
             <div class="w-full flex-1">
                 <div id="dynamic-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    <!-- Products will be dynamically injected here -->
                 </div>
+                
                 <div id="no-results" class="hidden flex flex-col items-center justify-center w-full h-full">
                     <div class="flex flex-col items-center space-y-6">
                         <div class="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-full shadow-md">
                             <img src="{{ asset('/storage/img/CommonImg/No Items Found.png') }}" alt="No Items Found" class="w-48 h-48 object-contain">
+                            
                         </div>
                         <div class="text-center">
                             <p class="text-2xl font-bold text-gray-800">
@@ -97,7 +108,7 @@
 @endsection
 
 @push('styles')
-    @vite('resources/css/men.css')
+    @vite('resources/css/women.css')
 @endpush
 
 @vite('resources/js/men.js')
@@ -160,7 +171,18 @@
                 .then(response => response.text())
                 .then(html => {
                     productsContainer.innerHTML = html;
+                    
+                    const parentContainer = productsContainer.parentElement;
+                    const oldPagination = parentContainer.querySelector(".external-pagination");
+                    if (oldPagination) oldPagination.remove();
 
+                    const newPagination = productsContainer.querySelector(".pagination");
+                    if (newPagination) {
+                        const clonedPagination = newPagination.cloneNode(true);
+                        clonedPagination.classList.add("external-pagination", "mt-6", "flex", "justify-center");
+                        parentContainer.appendChild(clonedPagination);
+                        newPagination.remove();
+                    }
                     // Check if any products exist
                     const hasProducts = productsContainer.querySelector('.product-card'); // Corrected class name
                     const noResults = document.getElementById('no-results');
@@ -172,7 +194,8 @@
                         productsContainer.classList.remove('hidden');
                         noResults.classList.add('hidden');
                     }
-
+                    
+                    initializePagination();
                     initializeCarousel(); // Initialize carousel if applicable
                 })
                 .catch(error => {
@@ -180,6 +203,46 @@
                     productsContainer.innerHTML = '<p class="text-red-500">Failed to load products. Please try again.</p>';
                 });
         };
+        const initializePagination = () => {
+    document.addEventListener("click", (e) => {
+        const paginationLink = e.target.closest(".external-pagination a");
+        if (paginationLink) {
+            e.preventDefault();
+            const url = new URL(paginationLink.href);
+
+            // Append current filters to the pagination URL
+            const params = new URLSearchParams(url.search);
+            params.set('minPrice', sliderOne.value);
+            params.set('maxPrice', sliderTwo.value);
+            params.set('category', categoryDropdown.value);
+            params.set('search', searchInput.value);
+            const sortValue = document.getElementById("sort-dropdown").value;
+            if (sortValue) params.set('sort', sortValue);
+
+            fetch(`${url.origin}${url.pathname}?${params.toString()}`)
+                .then(response => response.text())
+                .then(html => {
+                    productsContainer.innerHTML = html;
+
+                    // Update pagination links
+                    const parentContainer = productsContainer.parentElement;
+                    const oldPagination = parentContainer.querySelector(".external-pagination");
+                    if (oldPagination) oldPagination.remove();
+
+                    const newPagination = productsContainer.querySelector(".pagination");
+                    if (newPagination) {
+                        const clonedPagination = newPagination.cloneNode(true);
+                        clonedPagination.classList.add("external-pagination", "mt-6", "flex", "justify-center");
+                        parentContainer.appendChild(clonedPagination);
+                        newPagination.remove();
+                    }
+
+                    initializePagination();
+                })
+                .catch(error => console.error("Error loading pagination:", error));
+        }
+    });
+};
 
 
         let debounceTimer;
@@ -232,6 +295,7 @@
         sortDropdown.addEventListener("change", updateProducts);
 
         updateProducts();
+        initializePagination();
         initializeCarousel();
 
         // Event delegation for dynamically added products
