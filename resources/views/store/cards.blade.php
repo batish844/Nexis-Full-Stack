@@ -45,3 +45,7 @@ $isInWishlist = in_array($item->ItemID, $wishlistItems);
     </a>
 </div>
 @endforeach
+
+<div class="flex pagination mt-6 justify-center w-full">
+    {{ $items->links() }}
+</div>

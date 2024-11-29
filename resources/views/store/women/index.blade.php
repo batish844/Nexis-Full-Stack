@@ -33,16 +33,26 @@
                     <div class="flex justify-between mb-2">
                         <span id="min-price-display">0</span>
                         <span>&dash;</span>
-                        <span id="max-price-display">150</span>
+                        <span id="max-price-display">50</span>
                     </div>
-                    <div class="relative">
-                        <div class="slider-track bg-gray-200 h-2 rounded-full"></div>
-                        <input type="range" min="0" max="150" value="0" id="slider-1"
-                            class="absolute left-0 w-full cursor-pointer opacity-0">
-                        <input type="range" min="0" max="150" value="150" id="slider-2"
-                            class="absolute right-0 w-full cursor-pointer opacity-0">
+                    <div class="relative w-full py-4">
+
+                    <div class="slider-track bg-gray-300 h-2 rounded-full relative">
+
+
                     </div>
-                </div>
+
+                        <!-- Range Inputs -->
+                    <input type="range" min="0" max="50" value="0" id="slider-1"
+                        class="absolute left-0 w-full h-2 appearance-none bg-transparent pointer-events-auto z-10 thumb-slider">
+                    <input type="range" min="0" max="50" value="50" id="slider-2"
+                        class="absolute left-0 w-full h-2 appearance-none bg-transparent pointer-events-auto z-10 thumb-slider">
+
+                    <!-- Thumb Styling -->
+
+                    </div>
+                    </div>
+
 
                 <div class="category-filter mt-6">
                     <h4 class="font-medium text-gray-700">Category</h4>

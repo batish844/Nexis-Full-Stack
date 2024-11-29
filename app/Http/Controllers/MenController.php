@@ -30,7 +30,7 @@ class MenController extends Controller
     {
         // Get filter parameters with defaults
         $minPrice = $request->input('minPrice', 0);
-        $maxPrice = $request->input('maxPrice', 150);
+        $maxPrice = $request->input('maxPrice', 50);
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
         $sort = $request->input('sort');
@@ -67,7 +67,7 @@ class MenController extends Controller
         }
 
         // Fetch filtered items with related category
-        $items = $itemsQuery->with('category')->get();
+        $items = $itemsQuery->with('category')->paginate(8);
 
         // Check if user is authenticated to fetch their wishlist
         $wishlistItems = Auth::check()

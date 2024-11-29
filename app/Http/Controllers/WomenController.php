@@ -28,7 +28,7 @@ class WomenController extends Controller
     public function filterProducts(Request $request)
     {
         $minPrice = $request->input('minPrice', 0);
-        $maxPrice = $request->input('maxPrice', 150);
+        $maxPrice = $request->input('maxPrice', 50);
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
         $sort = $request->input('sort'); // Sorting parameter
@@ -63,7 +63,7 @@ class WomenController extends Controller
         }
 
         // Fetch the filtered items with their categories
-        $items = $itemsQuery->with('category')->get();
+        $items = $itemsQuery->with('category')->paginate(8);;
 
         // Handle wishlist items
         if (Auth::check()) {

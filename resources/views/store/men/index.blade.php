@@ -36,18 +36,27 @@
 
                 <!-- Price Filter -->
                 <div class="price-filter mt-6">
-                    <h4 class="font-medium text-gray-700">Price</h4>
+                    <h4 class="font-medium text-gray-700">Price ($)</h4>
                     <div class="flex justify-between mb-2">
                         <span id="min-price-display">0</span>
                         <span>&dash;</span>
-                        <span id="max-price-display">150</span>
+                        <span id="max-price-display">50</span>
                     </div>
-                    <div class="relative">
-                        <div class="slider-track bg-gray-200 h-2 rounded-full"></div>
-                        <input type="range" min="0" max="150" value="0" id="slider-1"
-                            class="absolute left-0 w-full cursor-pointer opacity-0">
-                        <input type="range" min="0" max="150" value="150" id="slider-2"
-                            class="absolute right-0 w-full cursor-pointer opacity-0">
+                    <div class="relative w-full py-4">
+
+                    <div class="slider-track bg-gray-300 h-2 rounded-full relative">
+        
+        
+                 </div>
+
+                        <!-- Range Inputs -->
+                    <input type="range" min="0" max="50" value="0" id="slider-1"
+                        class="absolute left-0 w-full h-2 appearance-none bg-transparent pointer-events-auto z-10 thumb-slider">
+                    <input type="range" min="0" max="50" value="50" id="slider-2"
+                        class="absolute left-0 w-full h-2 appearance-none bg-transparent pointer-events-auto z-10 thumb-slider">
+
+                    <!-- Thumb Styling -->
+                    
                     </div>
                 </div>
 
@@ -163,6 +172,17 @@
                 .then(html => {
                     productsContainer.innerHTML = html;
 
+                    const parentContainer = productsContainer.parentElement;
+                    const oldPagination = parentContainer.querySelector(".external-pagination");
+                    if (oldPagination) oldPagination.remove();
+
+                    const newPagination = productsContainer.querySelector(".pagination");
+                    if (newPagination) {
+                        const clonedPagination = newPagination.cloneNode(true);
+                        clonedPagination.classList.add("external-pagination", "mt-6", "flex", "justify-center");
+                        parentContainer.appendChild(clonedPagination);
+                        newPagination.remove();
+                    }
                     // Check if any products exist
                     const hasProducts = productsContainer.querySelector('.product-card'); // Corrected class name
                     const noResults = document.getElementById('no-results');
@@ -174,15 +194,49 @@
                         productsContainer.classList.remove('hidden');
                         noResults.classList.add('hidden');
                     }
-
+                    
+                    initializePagination();
                     initializeCarousel(); // Initialize carousel if applicable
+                
                 })
                 .catch(error => {
                     console.error("Error fetching filtered products:", error);
                     productsContainer.innerHTML = '<p class="text-red-500">Failed to load products. Please try again.</p>';
                 });
         };
+        const initializePagination = () => {
+            document.addEventListener("click", (e) => {
+                const paginationLink = e.target.closest(".external-pagination a");
+                if (paginationLink) {
+                    e.preventDefault();
+                    const url = paginationLink.href;
 
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => {
+                            const productsContainer = document.getElementById("dynamic-products");
+                            productsContainer.innerHTML = html;
+
+                            // Reinitialize pagination
+                            const parentContainer = productsContainer.parentElement;
+                            const oldPagination = parentContainer.querySelector(".external-pagination");
+                            if (oldPagination) oldPagination.remove();
+
+                            const newPagination = productsContainer.querySelector(".pagination");
+                            if (newPagination) {
+                                const clonedPagination = newPagination.cloneNode(true);
+                                clonedPagination.classList.add("external-pagination", "mt-6", "flex", "justify-center");
+                                parentContainer.appendChild(clonedPagination);
+                                newPagination.remove();
+                            }
+
+                            initializePagination();
+                            initializeCarousel();
+                        })
+                        .catch(error => console.error("Error loading pagination:", error));
+                }
+            });
+        };
 
 
             let debounceTimer;
@@ -235,10 +289,26 @@
             document.getElementById("sort-dropdown").addEventListener("change", updateProducts);
 
             updateProducts();
+            initializePagination();
             initializeCarousel();
 
             // Event delegation for dynamically added products
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+            document.addEventListener("click", (e) => {
+                if (e.target.closest(".pagination a")) {
+                    e.preventDefault();
+                    const url = e.target.closest(".pagination a").href;
+
+                    fetch(url)
+                        .then((response) => response.text())
+                        .then((html) => {
+                            document.getElementById("dynamic-products").innerHTML = html;
+                        })
+                        .catch((error) => console.error("Error loading pagination:", error));
+                }
+            });
+
 
             // Event delegation for wishlist button toggling
             document.getElementById('dynamic-products').addEventListener('click', function(event) {
