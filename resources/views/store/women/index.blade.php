@@ -29,7 +29,7 @@
             <div id="filter-panel" class="w-full sm:w-64 p-6 bg-gray-50 rounded-lg shadow-md mb-6 lg:mb-0">
                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Filters</h3>
                 <div class="price-filter mt-6">
-                    <h4 class="font-medium text-gray-700">Price</h4>
+                    <h4 class="font-medium text-gray-700">Price ($)</h4>
                     <div class="flex justify-between mb-2">
                         <span id="min-price-display">0</span>
                         <span>&dash;</span>
