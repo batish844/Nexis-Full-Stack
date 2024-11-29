@@ -27,29 +27,31 @@ class WomenController extends Controller
     }
     public function filterProducts(Request $request)
     {
+        // Get filter parameters with defaults
         $minPrice = $request->input('minPrice', 0);
         $maxPrice = $request->input('maxPrice', 50);
         $categoryId = $request->input('category');
         $searchQuery = $request->input('search');
-        $sort = $request->input('sort'); // Sorting parameter
+        $sort = $request->input('sort');
 
+        // Start building the query
         $itemsQuery = Item::whereBetween('Price', [$minPrice, $maxPrice])
+            ->where('isAvailable', true)
             ->whereHas('category', function ($query) {
-                $query->where('Gender', 'F'); // Filtering for women's category
-            })
-            ->where('isAvailable', true);
+                $query->where('Gender', 'F');
+            });
 
-        // Apply category filter if provided
+        // Apply category filter
         if (!empty($categoryId)) {
             $itemsQuery->where('CategoryID', $categoryId);
         }
 
-        // Apply search query if provided
+        // Apply search query filter
         if (!empty($searchQuery)) {
             $itemsQuery->where('Name', 'like', '%' . $searchQuery . '%');
         }
 
-        // Apply sorting if provided
+        // Apply sorting logic
         if (!empty($sort)) {
             [$column, $direction] = explode(':', $sort);
 
@@ -58,23 +60,21 @@ class WomenController extends Controller
             } elseif ($column === 'price') {
                 $itemsQuery->orderBy('Price', $direction);
             } elseif ($column === 'popularity') {
+                // Ensure relationship and sorting on reviews' average rating
                 $itemsQuery->withAvg('reviews', 'Stars')->orderBy('reviews_avg_Stars', $direction);
             }
         }
 
         // Fetch the filtered items with their categories
-        $items = $itemsQuery->with('category')->paginate(8);;
+        $items = $itemsQuery->with('category')->paginate(8);
 
-        // Handle wishlist items
-        if (Auth::check()) {
-            $wishlistItems = Wishlist::where('UserID', Auth::id())
-                ->pluck('ItemID') // Fetch only ItemID
-                ->toArray();
-        } else {
-            $wishlistItems = session('wishlist', []);
-        }
 
-        // Return the filtered items view
+        // Check if user is authenticated to fetch their wishlist
+        $wishlistItems = Auth::check()
+            ? Wishlist::where('UserID', Auth::id())->pluck('ItemID')->toArray()
+            : session('wishlist', []); // Use session-based wishlist for guests
+
+        // Return a view with the filtered products and wishlist
         return view('store.cards', compact('items', 'wishlistItems'));
     }
 

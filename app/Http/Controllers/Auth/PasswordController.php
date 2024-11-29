@@ -17,28 +17,47 @@ class PasswordController extends Controller
      */
     public function create(Request $request): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'confirmed', Password::defaults()],
-        ]);
+        try {
+            $validation = $request->validate([
+                'password' => ['required', 'confirmed', Password::defaults()],
+            ]);
 
-        $user = $request->user();
-        $user->update([
-            'password' => Hash::make($request->password),
-        ]);
+            $user = $request->user();
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
 
-        return redirect()->route('profile.index')->withFragment('update-password')->with('status', 'password-created');
+            return redirect()->route('profile.index', ['#password-section'])->with('update-password')->with('status', 'password-created');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->route('profile.index', ['#password-section'])
+                ->withErrors($e->errors(), 'updatePassword')
+                ->with('status', 'password-failed');
+        }
     }
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validateWithBag('updatePassword', [
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
-        ]);
+        try {
+            // Validate the request
+            $validated = $request->validateWithBag('updatePassword', [
+                'current_password' => ['required', 'current_password'],
+                'password' => ['required', Password::defaults(), 'confirmed'],
+            ]);
 
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
+            // Update the user's password
+            $request->user()->update([
+                'password' => Hash::make($validated['password']),
+            ]);
 
-        return redirect()->route('profile.index')->withFragment('update-password')->with('status', 'password-updated');
+            // Redirect with success message
+            return redirect()->route('profile.index', ['#password-section'])
+                ->with('status', 'password-updated');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Redirect back with validation errors
+            return redirect()->route('profile.index', ['#password-section'])
+                ->withErrors($e->errors(), 'updatePassword')
+                ->with('status', 'password-update-failed');
+        }
     }
+    
+
 }

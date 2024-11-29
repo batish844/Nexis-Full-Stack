@@ -7,8 +7,8 @@
         <h1 class="text-4xl font-extrabold text-center text-blue-900 tracking-wide mb-12">
             Your Orders
         </h1>
-        <div class="flex flex-col sm:flex-row sm:justify-center space-x-5 items-center mb-6 w-full max-w-screen-lg">
-            <label for="statusFilter" class="text-lg font-semibold text-gray-800 mb-2 sm:mb-0">
+        <div class="flex flex-col sm:flex-row sm:justify-center xl:mr-24 space-y-1 sm:space-x-6 items-center mb-12 w-full max-w-screen-lg">
+            <label for="statusFilter" class="text-lg sm:text-md md:text-lg font-semibold text-gray-800 mb-2 sm:mb-0">
                 Filter by Status:
             </label>
             <div class="relative w-full sm:w-64">
@@ -21,7 +21,7 @@
                     <option value="Cancelled">Cancelled</option>
                 </select>
             </div>
-            <label for="sortFilter" class="text-lg font-semibold text-gray-800 mb-2 sm:mb-0">
+            <label for="sortFilter" class="text-lg sm:text-md md:text-lg font-semibold text-gray-800 mb-2 sm:mb-0">
                 Sort by:
             </label>
             <div class="relative w-full sm:w-64">
@@ -40,7 +40,7 @@
 
         @if ($orders->isEmpty())
             <!-- Empty State -->
-            <div class="bg-gradient-to-r from-blue-500 to-pink-500 text-white p-10 rounded-lg shadow-xl text-center">
+            <div class="w-full sm:w-4/5 md:w-3/5 lg:w-1/2 xl:w-[30%]  bg-gradient-to-r from-blue-500 to-pink-500 text-white p-10 rounded-lg shadow-xl text-center">
                 <h2 class="text-3xl font-bold">No Orders Yet!</h2>
                 <p class="text-lg mt-2">Looks like you haven’t placed an order yet. Let’s get shopping!</p>
                 <div class="mt-6 flex justify-center space-x-4">

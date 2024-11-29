@@ -80,20 +80,35 @@
                 </div>
             </div>
 
-            <div class="w-full flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-                id="dynamic-products">
-
+            <!-- Items Section -->
+            <div class="w-full flex-1">
+                <div id="dynamic-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                </div>
+                
+                <div id="no-results" class="hidden flex flex-col items-center justify-center w-full h-full">
+                    <div class="flex flex-col items-center space-y-6">
+                        <div class="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-full shadow-md">
+                            <img src="{{ asset('/storage/img/CommonImg/No Items Found.png') }}" alt="No Items Found" class="w-48 h-48 object-contain">
+                            
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-gray-800">
+                                No Items Found
+                            </p>
+                            <p class="text-md text-gray-600 mt-2 leading-relaxed">
+                                It seems we couldn’t find what you’re looking for. <br> Adjust your filters or try searching with different keywords.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                                
             </div>
-
-
-
-
         </div>
     </div>
 @endsection
 
 @push('styles')
-    @vite('resources/css/men.css')
+    @vite('resources/css/women.css')
 @endpush
 
 @vite('resources/js/men.js')
@@ -156,12 +171,78 @@
                 .then(response => response.text())
                 .then(html => {
                     productsContainer.innerHTML = html;
-                    initializeCarousel();
+                    
+                    const parentContainer = productsContainer.parentElement;
+                    const oldPagination = parentContainer.querySelector(".external-pagination");
+                    if (oldPagination) oldPagination.remove();
+
+                    const newPagination = productsContainer.querySelector(".pagination");
+                    if (newPagination) {
+                        const clonedPagination = newPagination.cloneNode(true);
+                        clonedPagination.classList.add("external-pagination", "mt-6", "flex", "justify-center");
+                        parentContainer.appendChild(clonedPagination);
+                        newPagination.remove();
+                    }
+                    // Check if any products exist
+                    const hasProducts = productsContainer.querySelector('.product-card'); // Corrected class name
+                    const noResults = document.getElementById('no-results');
+
+                    if (!hasProducts) {
+                        productsContainer.classList.add('hidden');
+                        noResults.classList.remove('hidden');
+                    } else {
+                        productsContainer.classList.remove('hidden');
+                        noResults.classList.add('hidden');
+                    }
+                    
+                    initializePagination();
+                    initializeCarousel(); // Initialize carousel if applicable
                 })
                 .catch(error => {
                     console.error("Error fetching filtered products:", error);
+                    productsContainer.innerHTML = '<p class="text-red-500">Failed to load products. Please try again.</p>';
                 });
         };
+        const initializePagination = () => {
+    document.addEventListener("click", (e) => {
+        const paginationLink = e.target.closest(".external-pagination a");
+        if (paginationLink) {
+            e.preventDefault();
+            const url = new URL(paginationLink.href);
+
+            // Append current filters to the pagination URL
+            const params = new URLSearchParams(url.search);
+            params.set('minPrice', sliderOne.value);
+            params.set('maxPrice', sliderTwo.value);
+            params.set('category', categoryDropdown.value);
+            params.set('search', searchInput.value);
+            const sortValue = document.getElementById("sort-dropdown").value;
+            if (sortValue) params.set('sort', sortValue);
+
+            fetch(`${url.origin}${url.pathname}?${params.toString()}`)
+                .then(response => response.text())
+                .then(html => {
+                    productsContainer.innerHTML = html;
+
+                    // Update pagination links
+                    const parentContainer = productsContainer.parentElement;
+                    const oldPagination = parentContainer.querySelector(".external-pagination");
+                    if (oldPagination) oldPagination.remove();
+
+                    const newPagination = productsContainer.querySelector(".pagination");
+                    if (newPagination) {
+                        const clonedPagination = newPagination.cloneNode(true);
+                        clonedPagination.classList.add("external-pagination", "mt-6", "flex", "justify-center");
+                        parentContainer.appendChild(clonedPagination);
+                        newPagination.remove();
+                    }
+
+                    initializePagination();
+                })
+                .catch(error => console.error("Error loading pagination:", error));
+        }
+    });
+};
 
 
         let debounceTimer;
@@ -214,6 +295,7 @@
         sortDropdown.addEventListener("change", updateProducts);
 
         updateProducts();
+        initializePagination();
         initializeCarousel();
 
         // Event delegation for dynamically added products
