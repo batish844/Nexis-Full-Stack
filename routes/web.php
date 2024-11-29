@@ -85,11 +85,8 @@ Route::get('/messages/export', [MessageController::class, 'exportCsv'])->name('m
 Route::get('/orders/export', [OrderController::class, 'exportCsv'])->name('orders.export');
 
 
-// Home Page
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-//Wishlist 
 
-// Static Pages Routes
 Route::get('/about-us', function () {
     return view('about');
 });
@@ -103,16 +100,11 @@ Route::get('/contact-us', [ContactController::class, 'index']);
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contacts.store');
 
 
-Route::get('/checkout', function () {
-    return view('checkout');
-});
-
 Route::post('/profile/account', [ProfileController::class, 'uploadAvatar'])->name('profile.avatar.upload');
 Route::delete('/profile/account', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.delete');
 
 Route::resource('items', ProductController::class);
 
-Route::get('/checkout', [PaymentController::class, 'checkoutForm'])->name('checkout.form');
 Route::post('/checkout/session', [PaymentController::class, 'createCheckoutSession'])->name('checkout.session');
 Route::get('/checkout/success', [PaymentController::class, 'checkoutSuccess'])->name('checkout.success');
 Route::get('/checkout/cancel', [PaymentController::class, 'checkoutCancel'])->name('checkout.cancel');
