@@ -1,7 +1,7 @@
 @extends('profile.layout')
 
 @section('content')
-    <div class="px-3 sm:px-8 md:px-12 lg:px-20">
+    <div class="px-3 sm:px-8 md:px-12 lg:px-32">
 
         <div class="py-12 bg-gray-50">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
