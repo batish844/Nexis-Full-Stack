@@ -10,9 +10,11 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/Homepage.js',
                 'resources/js/bootstrap.js',
-
             ],
             refresh: true,
         }),
     ],
+    build: {
+        outDir: 'public/build',
+    },
 });

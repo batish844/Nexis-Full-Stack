@@ -4,7 +4,9 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "postinstall": "npm run build"
+        "postinstall": "npm install",
+        "heroku-postbuild": "npm run build"
+
 
     },
     "devDependencies": {
