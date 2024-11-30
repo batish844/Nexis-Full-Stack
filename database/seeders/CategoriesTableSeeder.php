@@ -25,7 +25,7 @@ class CategoriesTableSeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            DB::table('Categories')->insert([
+            DB::table('categories')->insert([
                 'Name'       => $category['Name'],
                 'Gender'     => $category['Gender'],
                 'created_at' => Carbon::now(),
