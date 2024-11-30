@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/Homepage.js',
                 'resources/js/bootstrap.js',
+                'resources/js/particles-config.js'
             ],
             refresh: true,
         }),

@@ -128,9 +128,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/wishlist/merge', [WishlistController::class, 'mergeWishlist'])->name('wishlist.merge');
 });
 
-Route::get('/test', function () {
-    return 'Laravel is working!';
-});
 
 Route::fallback(function () {
     return response()->view('404', [], 404);
