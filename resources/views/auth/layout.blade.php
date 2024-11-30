@@ -42,7 +42,7 @@
     
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-    <script src="{{ mix('resources/js/particles-config.js') }}"></script>
+    @vite('resources/js/particles-config.js')
 </body>
 
 </html>
