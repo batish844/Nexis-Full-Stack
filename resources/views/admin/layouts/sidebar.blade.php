@@ -34,7 +34,7 @@
                     'icon' => '/storage/img/icons/categories.png',
                     'route' => 'categories.*',], // Wildcard for Categories
                     ['name' => 'Products',
-                    'icon' => '/storage/img/icons/item.png',
+                    'icon' => '/storage/img/icons/Item.png',
                     'route' => 'products.*',], // Wildcard for Products
                     ['name' => 'Users',
                     'icon' => '/storage/img/icons/users.png',
