@@ -72,7 +72,7 @@ class AnalyticsController extends Controller
                 ->whereHas('order', function ($query) use ($startDate, $endDate) {
                     $query->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()]);
                 })
-                ->select('ItemID', DB::raw('SUM("Quantity") as totalQuantity'))
+                ->select('ItemID', DB::raw('SUM("Quantity") as "totalQuantity"'))
                 ->groupBy('ItemID')
                 ->orderByDesc('totalQuantity')
                 ->take(5)
@@ -106,12 +106,17 @@ class AnalyticsController extends Controller
                 $revenueComparison = null;
             }
 
+            // Fetch top customers
             $topCustomers = Order::with('user')
                 ->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()])
                 ->whereHas('user', function ($query) {
                     $query->where('email', '!=', 'guest@guest.com');
                 })
-                ->select('OrderedBy', DB::raw('COUNT(*) as orders'), DB::raw('SUM(TotalPrice) as total_spent'))
+                ->select(
+                    'OrderedBy',
+                    DB::raw('COUNT(*) as orders'),
+                    DB::raw('SUM("TotalPrice") as "total_spent"')
+                )
                 ->groupBy('OrderedBy')
                 ->orderByDesc('total_spent')
                 ->take(5)
@@ -123,6 +128,7 @@ class AnalyticsController extends Controller
                         'total_spent' => round($order->total_spent, 2),
                     ];
                 });
+
             return response()->json([
                 'totalOrders' => $totalOrders,
                 'totalRevenue' => round($totalRevenue, 2),
@@ -150,7 +156,7 @@ class AnalyticsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store()
     {
         //
     }
@@ -158,7 +164,7 @@ class AnalyticsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         //
     }
@@ -166,7 +172,7 @@ class AnalyticsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
         //
     }
@@ -174,7 +180,7 @@ class AnalyticsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update()
     {
         //
     }
@@ -182,7 +188,7 @@ class AnalyticsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy()
     {
         //
     }

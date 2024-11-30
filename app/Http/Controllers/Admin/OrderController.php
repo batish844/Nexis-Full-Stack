@@ -18,7 +18,7 @@ class OrderController extends Controller
 
         if ($request->has('email') && $request->email) {
             $query->whereHas('user', function ($q) use ($request) {
-                $q->where('Email', $request->email);
+                $q->where('email', $request->email);
             });
         }
         $orders = $query->get();
@@ -90,7 +90,7 @@ class OrderController extends Controller
             $query->whereHas('user', function ($q) use ($searchTerm) {
                 $q->where('First_Name', 'like', '%' . $searchTerm . '%')
                     ->orWhere('Last_Name', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('Email', 'like', '%' . $searchTerm . '%');
+                    ->orWhere('email', 'like', '%' . $searchTerm . '%');
             });
         }
 
@@ -102,11 +102,11 @@ class OrderController extends Controller
             $userFilter = $request->input('userfilter');
             if ($userFilter === 'User') {
             $query->whereHas('user', function ($q) {
-                $q->where('Email', '!=', 'guest@guest.com');
+                $q->where('email', '!=', 'guest@guest.com');
             });
             } elseif ($userFilter === 'Guest') {
             $query->whereHas('user', function ($q) {
-                $q->where('Email', 'guest@guest.com');
+                $q->where('email', 'guest@guest.com');
             });
             }
         }
