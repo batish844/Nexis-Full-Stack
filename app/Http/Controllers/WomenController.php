@@ -16,7 +16,7 @@ class WomenController extends Controller
     public function index()
     {
         $items = Item::whereHas('category', function ($query) {
-            $query->where('gender', 'F');
+            $query->where('Gender', 'F');
         })->get();
 
 
