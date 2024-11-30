@@ -39,18 +39,20 @@
               data-item-id="{{ $itemID }}"
               data-size="{{ $itemSize }}"
               data-points="{{ $itemPoints }}">
-              <td class="px-4 sm:px-6 py-4 flex items-center">
-                <a href="{{ $itemID ? route('store.show', ['id' => $itemID]) : '#' }}">
-                  <img src="{{ asset($itemPhoto) }}"
-                    alt="{{ $itemName }}"
-                    class="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-lg shadow-md mr-4 sm:mr-6">
-                  <div class="text-gray-800 font-medium">
-                    <div class="text-sm sm:text-lg font-semibold text-gray-800 py-2">{{ $itemName }}</div>
-                </a>
-                <div class="text-xs sm:text-sm text-gray-500 py-2">
-                  <strong>Size:</strong> {{ $itemSize }}
-                </div>
-      </div>
+      <td class="px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center">
+        <a href="{{ $itemID ? route('store.show', ['id' => $itemID]) : '#' }}" class="flex-shrink-0">
+          <img src="{{ asset($itemPhoto) }}"
+            alt="{{ $itemName }}"
+            class="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-lg shadow-md mb-2 sm:mb-0 mr-0 sm:mr-6">
+        </a>
+        <div class="text-gray-800 font-medium sm:ml-4">
+          <a href="{{ $itemID ? route('store.show', ['id' => $itemID]) : '#' }}">
+            <div class="text-sm sm:text-lg font-semibold text-gray-800 py-2">{{ $itemName }}</div>
+          </a>
+          <div class="text-xs sm:text-sm text-gray-500 py-2">
+            <strong>Size:</strong> {{ $itemSize }}
+          </div>
+        </div>
       </td>
       <td class="px-4 sm:px-6 py-4 text-center text-gray-600">${{ number_format($itemPrice, 2) }}</td>
       <td class="px-4 sm:px-6 py-4 text-center">

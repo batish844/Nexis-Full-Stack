@@ -67,11 +67,12 @@ class AnalyticsController extends Controller
                 ];
             });
 
+            // Fetch best-selling products
             $bestSellingProducts = OrderItem::with('item')
                 ->whereHas('order', function ($query) use ($startDate, $endDate) {
                     $query->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()]);
                 })
-                ->select('ItemID', DB::raw('SUM(Quantity) as totalQuantity'))
+                ->select('ItemID', DB::raw('SUM("Quantity") as totalQuantity'))
                 ->groupBy('ItemID')
                 ->orderByDesc('totalQuantity')
                 ->take(5)
