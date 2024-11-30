@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('OrderID');
             $table->string('Status');
             $table->decimal('TotalPrice', 8, 2)->nullable();
-            $table->foreignId('OrderedBy')->constrained('users', 'UserID');
+            $table->foreignId('OrderedBy')->constrained('users', 'UserID')->onDelete('cascade');
             $table->string('guest_email')->nullable();
             $table->json('guest_address')->nullable();
             $table->boolean('is_guest')->default(false);
