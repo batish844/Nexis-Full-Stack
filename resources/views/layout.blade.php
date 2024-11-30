@@ -244,8 +244,7 @@
     </footer>
     @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    @vite('resources/js/common.js')
-    <script>
+\    <script>
         function toggleMenu() {
             let overlay = $("#overlay");
             let mobileMenu = $("#mobileMenu");
