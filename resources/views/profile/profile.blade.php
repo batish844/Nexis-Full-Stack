@@ -1,7 +1,7 @@
 @extends('profile.layout')
 
 @section('content')
-    <div class="px-3 sm:px-8 md:px-12 lg:px-20">
+    <div class="px-3 sm:px-8 md:px-12 lg:px-32 py-3 sm:py-4 md:py-6 lg:py-10 rounded">
 
         <div class="py-12 bg-gray-50">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
@@ -228,14 +228,14 @@
                         <section>
                             <header class="border-b pb-4 mb-6">
                                 <h2 class="text-2xl font-semibold text-blue-900">
-                                    @if(!$user->password)
+                                    @if (!$user->password)
                                         {{ __('Set Password') }}
                                     @else
                                         {{ __('Update Password') }}
                                     @endif
                                 </h2>
                                 <p class="mt-2 text-sm text-blue-800">
-                                    @if(!$user->password)
+                                    @if (!$user->password)
                                         {{ __('Please set a strong password for your account.') }}
                                     @else
                                         {{ __('Ensure your account is using a long, random password to stay secure.') }}

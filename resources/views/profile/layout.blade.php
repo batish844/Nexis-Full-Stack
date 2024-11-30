@@ -9,7 +9,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 max-w-screen overflow-x-hidden">
     <div class="min-h-screen flex flex-col">
         <header class="bg-blue-800 shadow-md relative">
             <div class="container mx-auto px-4 py-4 flex items-center justify-between">

@@ -64,7 +64,7 @@ class OrderController extends Controller
                 fputcsv($file, [
                     $order->OrderID,
                     $order->user->First_Name . ' ' . $order->user->Last_Name,
-                    $order->user->Email,
+                    $order->user->email,
                     $order->Status,
                     number_format($order->TotalPrice, 2),
                     $order->created_at ? $order->created_at->format('Y-m-d H:i:s') : '####',

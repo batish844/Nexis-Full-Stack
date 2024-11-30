@@ -73,59 +73,64 @@
                 <a href="/men" class="nav-items transition-colors hover:text-white">Men</a>
                 <a href="/contact-us" class="nav-items transition-colors hover:text-white">Contact us</a>
                 @if (Auth::check())
-                @if (Auth::user()->isAdmin)
-                <a href="{{ route('analytics.index') }}"
-                    class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
-                @else
-                <div class="relative inline-block text-left">
-                    <button onclick="toggleDropdown()"
-                        class="nav-items flex items-center transition-colors hover:text-white">
-                        <span>{{ Auth::user()->First_Name }}</span>
-                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.25 7.75L10 12.5l4.75-4.75" stroke="currentColor" stroke-width="1.5"
-                                fill="none" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    <div id="userDropdown"
-                        class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
-                        <a href="{{ route('profile.orders') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
-                        <a href="{{ route('profile.index') }}"
-                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit"
-                                class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                                onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                Logout
+                    @if (Auth::user()->isAdmin)
+                        <a href="{{ route('analytics.index') }}"
+                            class="nav-items transition-colors hover:text-white">Admin Dashboard</a>
+                    @else
+                        <div class="relative inline-block text-left">
+                            <button onclick="toggleDropdown()"
+                                class="nav-items flex items-center transition-colors hover:text-white">
+                                <span>{{ Auth::user()->First_Name }}</span>
+                                @if (Auth::user()->avatar)
+                                    <!-- Display user avatar if available -->
+                                    <img src="{{ asset('storage/img/avatar/' . Auth::user()->avatar) }}"
+                                        alt="User Avatar"
+                                        class="w-10 h-10 rounded-full ml-2 border border-gray-300 object-cover">
+                                @else
+                                    <!-- Default avatar if none exists -->
+                                    <img src="/storage/img/icons/Default-Avatar.png" alt="Default Avatar"
+                                        class="w-10 h-10 rounded-full ml-2 border border-gray-300 object-cover">
+                                @endif
                             </button>
-                        </form>
-                    </div>
-                </div>
-                @endif
+                            <div id="userDropdown"
+                                class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
+                                <a href="{{ route('profile.orders') }}"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
+                                <a href="{{ route('profile.index') }}"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                                        onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
                 @else
-                <a href="{{ route('login') }}" class="nav-items transition-colors hover:text-white">Sign In</a>
+                    <a href="{{ route('login') }}" class="nav-items transition-colors hover:text-white">Sign In</a>
                 @endif
             </div>
             <div id="icon" class="ml-6">
                 <a href="/wishlist" id="wishlist-icon" class="relative inline-block">
-                    <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
-                        state="morph-heart" colors="primary:#c71f16"
-                        style="width:35px;height:35px"></lord-icon>
+                    <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph" state="morph-heart"
+                        colors="primary:#c71f16" style="width:35px;height:35px"></lord-icon>
                     <span id="wishlist-count-desktop"
                         class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"></span>
                 </a>
             </div>
             <div id="icon" class="ml-6">
                 <a href="{{ route('cart.view') }}" id="cart-icon" class="relative inline-block">
-                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-desktop"
-                        trigger="hover"
+                    <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-desktop" trigger="hover"
                         style="width:35px;height:35px"></lord-icon>
                     <span id="cart-count-desktop"
                         class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"></span>
                 </a>
             </div>
+
         </nav>
         <div class="flex items-center justify-between w-full lg:hidden">
             <div class="cursor-pointer">
@@ -149,7 +154,7 @@
                 <a href="/home" class="mb-8">
                     <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-24 mx-auto">
                 </a>
-                <div class="flex flex-col items-center space-y-6 text-lg font-medium text-black">
+                <div class="flex flex-col w-full items-center space-y-6 text-lg font-medium text-black">
                     <a href="/home" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Home</a>
                     <a href="/about-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">About</a>
                     <a href="/women" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Women</a>
@@ -157,26 +162,37 @@
                     <a href="/contact-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Contact
                         us</a>
                     @if (Auth::check())
-                    @if (Auth::user()->isAdmin)
-                    <a href="{{ route('analytics.index') }}" class="mobile-menu-link hover:text-white"
-                        onclick="toggleMenu()">Admin Dashboard</a>
+                        @if (Auth::user()->isAdmin)
+                            <a href="{{ route('analytics.index') }}" class="mobile-menu-link hover:text-white"
+                                onclick="toggleMenu()">Admin Dashboard</a>
+                        @else
+                            <a href="{{ route('profile.index') }}" class="mobile-menu-link flex flex-row items-center justify-center mr-7 hover:text-white"
+                                onclick="toggleMenu()">
+                                @if (Auth::user()->avatar)
+                                    <!-- Display user avatar if available -->
+                                    <img src="{{ asset('storage/img/avatar/' . Auth::user()->avatar) }}"
+                                        alt="User Avatar"
+                                        class="w-10 h-10 rounded-full mr-3 border border-gray-300 object-cover">
+                                @else
+                                    <!-- Default avatar if none exists -->
+                                    <img src="/storage/img/icons/Default-Avatar.png" alt="Default Avatar"
+                                        class="w-10 h-10 rounded-full ml-2 border border-gray-300 object-cover">
+                                @endif
+                                Profile
+                            </a>
+                            <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white"
+                                onclick="toggleMenu()">Orders</a>
+                        @endif
                     @else
-                    <a href="{{ route('profile.index') }}" class="mobile-menu-link hover:text-white"
-                        onclick="toggleMenu()">Profile</a>
-                    <a href="{{ route('profile.orders') }}" class="mobile-menu-link hover:text-white"
-                        onclick="toggleMenu()">Orders</a>
-                    @endif
-                    @else
-                    <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white"
-                        onclick="toggleMenu()">Sign In</a>
+                        <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white"
+                            onclick="toggleMenu()">Sign In</a>
                     @endif
                 </div>
-                
+
                 <div class="mt-8 mb-4 flex justify-center">
                     <a href="{{ url('wishlist') }}" id="wishlist-icon" class="relative inline-block">
-                    <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph"
-                        state="morph-heart" colors="primary:#c71f16"
-                        style="width:35px;height:35px"></lord-icon>
+                        <lord-icon src="https://cdn.lordicon.com/ulnswmkk.json" trigger="morph" state="morph-heart"
+                            colors="primary:#c71f16" style="width:35px;height:35px"></lord-icon>
                         <span id="wishlist-count-hamburger"
                             class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">1</span>
                     </a>
@@ -186,7 +202,8 @@
                         <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" id="cart-icon-mobile" trigger="hover"
                             style="width:48px;height:48px"></lord-icon>
                         <span id="cart-count-hamburger"
-                            class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center"> 0
+                            class="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full px-1 text-xs font-bold text-center">
+                            0
                         </span>
                     </a>
                 </div>
@@ -198,50 +215,56 @@
         @yield('content')
     </main>
     @if (!Request::is('cart'))
-    <footer class="bg-gray-900 text-white pt-10 pb-6">
-        <div class="container mx-auto px-6 lg:px-12">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-10 md:space-y-0">
-                <div class="text-center md:text-left md:flex-1">
-                    <h2 class="text-3xl font-semibold mb-3">Stay Connected</h2>
-                    <p class="text-gray-400 leading-relaxed max-w-md mx-auto md:mx-0">
-                        Join us on social media and keep up-to-date with our latest updates and exclusive offers.
-                    </p>
-                </div>
+        <footer class="bg-gray-900 text-white pt-10 pb-6">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-10 md:space-y-0">
+                    <div class="text-center md:text-left md:flex-1">
+                        <h2 class="text-3xl font-semibold mb-3">Stay Connected</h2>
+                        <p class="text-gray-400 leading-relaxed max-w-md mx-auto md:mx-0">
+                            Join us on social media and keep up-to-date with our latest updates and exclusive offers.
+                        </p>
+                    </div>
 
-                <div class="flex justify-center md:justify-center space-x-8 md:flex-1">
-                    <a href="https://www.facebook.com" target="_blank" class="transform transition hover:scale-110">
-                        <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook" class="h-12 w-12">
-                    </a>
-                    <a href="https://www.pinterest.com" target="_blank" class="transform transition hover:scale-110">
-                        <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest" class="h-12 w-12">
-                    </a>
-                    <a href="https://www.instagram.com" target="_blank" class="transform transition hover:scale-110">
-                        <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram" class="h-12 w-12">
-                    </a>
-                    <a href="https://www.tiktok.com" target="_blank" class="transform transition hover:scale-110">
-                        <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok" class="h-12 w-12">
-                    </a>
-                </div>
+                    <div class="flex justify-center md:justify-center space-x-8 md:flex-1">
+                        <a href="https://www.facebook.com" target="_blank"
+                            class="transform transition hover:scale-110">
+                            <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook" class="h-12 w-12">
+                        </a>
+                        <a href="https://www.pinterest.com" target="_blank"
+                            class="transform transition hover:scale-110">
+                            <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest" class="h-12 w-12">
+                        </a>
+                        <a href="https://www.instagram.com" target="_blank"
+                            class="transform transition hover:scale-110">
+                            <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram" class="h-12 w-12">
+                        </a>
+                        <a href="https://www.tiktok.com" target="_blank"
+                            class="transform transition hover:scale-110">
+                            <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok" class="h-12 w-12">
+                        </a>
+                    </div>
 
-                <div class="text-center md:text-right md:mr-20 md:flex-1">
-                    <h3 class="text-xl font-medium mr-0 sm:mr-12 mb-4">We Accept</h3>
-                    <div class="flex justify-center md:justify-end items-center space-x-6">
-                        <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-14 w-auto">
-                        <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-14 w-auto">
+                    <div class="text-center md:text-right md:mr-20 md:flex-1">
+                        <h3 class="text-xl font-medium mr-0 sm:mr-12 mb-4">We Accept</h3>
+                        <div class="flex justify-center md:justify-end items-center space-x-6">
+                            <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa"
+                                class="h-14 w-auto">
+                            <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard"
+                                class="h-14 w-auto">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="border-t border-gray-700 mt-10 pt-6 text-center">
-            <ul class="flex flex-wrap justify-center space-x-6 text-gray-400 text-sm">
-                <li><a href="/home" class="hover:text-white transition duration-300">Home</a></li>
-                <li><a href="/about-us" class="hover:text-white transition duration-300">About Us</a></li>
-                <li><a href="/contact-us" class="hover:text-white transition duration-300">Contact Us</a></li>
-            </ul>
-            <p class="mt-4 text-gray-500 text-sm">&copy; 2024 Nexis. All rights reserved.</p>
-        </div>
-    </footer>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center">
+                <ul class="flex flex-wrap justify-center space-x-6 text-gray-400 text-sm">
+                    <li><a href="/home" class="hover:text-white transition duration-300">Home</a></li>
+                    <li><a href="/about-us" class="hover:text-white transition duration-300">About Us</a></li>
+                    <li><a href="/contact-us" class="hover:text-white transition duration-300">Contact Us</a></li>
+                </ul>
+                <p class="mt-4 text-gray-500 text-sm">&copy; 2024 Nexis. All rights reserved.</p>
+            </div>
+        </footer>
     @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 \    <script>
@@ -297,8 +320,9 @@
                         if (updateCartIcon) {
                             updateCartIcon.dispatchEvent(new MouseEvent('mouseover')); // Simulate hover
                             setTimeout(() => {
-                                updateCartIcon.dispatchEvent(new MouseEvent('mouseout')); // End hover after animation
-                            }, 1000); 
+                                updateCartIcon.dispatchEvent(new MouseEvent(
+                                    'mouseout')); // End hover after animation
+                            }, 1000);
                         }
                     })
                     .catch(error => {
@@ -319,7 +343,8 @@
                     .then(response => response.json())
                     .then(data => {
                         const desktopWishlistCounter = document.getElementById('wishlist-count-desktop');
-                        const hamburgerWishlistCounter = document.getElementById('wishlist-count-hamburger');
+                        const hamburgerWishlistCounter = document.getElementById(
+                            'wishlist-count-hamburger');
 
                         if (desktopWishlistCounter) {
                             desktopWishlistCounter.textContent = data.wishlistCount;
