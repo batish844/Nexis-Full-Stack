@@ -131,13 +131,13 @@
         <h3 class="text-xl font-semibold mb-4 border-b-2 border-gray-200 pb-2">Redeem Points</h3>
         <div class="flex items-center space-x-3 mb-3">
           <input type="number" id="points-to-redeem"
-            class="flex-1 border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring focus:ring-blue-100"
-            placeholder="Enter points to redeem"
-            min="0"
-            max="{{ $availablePoints }}">
+        class="flex-1 border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring focus:ring-blue-100"
+        placeholder="Enter points to redeem"
+        min="0"
+        max="{{ $availablePoints }}">
           <button id="max-points-btn"
-            class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-500 transition">
-            Max
+        class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-500 transition">
+        Max
           </button>
         </div>
         <p class="text-sm text-gray-600">
@@ -145,6 +145,9 @@
         </p>
         <p class="text-sm text-gray-600">
           <span class="font-medium">Value:</span> $<span id="points-value">0.00</span>
+        </p>
+        <p class="text-sm text-gray-600">
+        1<i class="fas fa-trophy text-yellow-400"></i>  = $0.30
         </p>
       </div>
 
@@ -167,31 +170,32 @@
 </div>
 </div>
 @endsection
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @push('scripts')
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const cartMessage = document.getElementById('cart-message');
-    const cartRows = document.querySelectorAll('.cart-item-row');
-    const totalPriceEl = document.getElementById('total-price');
-    const totalPriceSum = document.getElementById('total-price-sum');
-    const totalPointsEl = document.getElementById('total-points');
-    const totalPointsSummaryEl = document.getElementById('total-points-summary'); // Added
-    const adjustedTotalPriceEl = document.getElementById('adjusted-total-price');
-    const pointsToRedeemInput = document.getElementById('points-to-redeem');
-    const maxPointsBtn = document.getElementById('max-points-btn');
-    const pointsValueElement = document.getElementById('points-value');
-    const availablePoints = parseInt('{{ $availablePoints }}');
+    let cartMessage = document.getElementById('cart-message');
+    let cartRows = document.querySelectorAll('.cart-item-row');
+    let totalPriceEl = document.getElementById('total-price');
+    let totalPriceSum = document.getElementById('total-price-sum');
+    let totalPointsEl = document.getElementById('total-points');
+    let totalPointsSummaryEl = document.getElementById('total-points-summary'); // Added
+    let adjustedTotalPriceEl = document.getElementById('adjusted-total-price');
+    let pointsToRedeemInput = document.getElementById('points-to-redeem');
+    let maxPointsBtn = document.getElementById('max-points-btn');
+    let pointsValueElement = document.getElementById('points-value');
+    let availablePoints = parseInt('{{ $availablePoints }}');
 
-    const updateSummaryValues = () => {
+    let updateSummaryValues = () => {
       let totalPrice = 0;
       let totalPoints = 0;
 
       cartRows.forEach(row => {
-        const quantity = parseInt(row.querySelector('.cart-quantity').textContent);
-        const subtotal = parseFloat(row.querySelector('.cart-subtotal').textContent);
-        const points = parseFloat(row.dataset.points || 0);
+        let quantity = parseInt(row.querySelector('.cart-quantity').textContent);
+        let subtotal = parseFloat(row.querySelector('.cart-subtotal').textContent);
+        let points = parseFloat(row.dataset.points || 0);
 
         totalPrice += subtotal;
         totalPoints += quantity * points;
@@ -204,23 +208,23 @@
       updateAdjustedTotalPrice(totalPrice);
     };
 
-    const updateAdjustedTotalPrice = (totalPrice) => {
-      const maxPointsToRedeem = Math.min(
+    let updateAdjustedTotalPrice = (totalPrice) => {
+      let maxPointsToRedeem = Math.min(
         parseInt(pointsToRedeemInput.value) || 0,
         availablePoints,
         Math.max(0, Math.floor((totalPrice - 0.60) / 0.30))
       );
-      const pointsValue = maxPointsToRedeem * 0.30;
-      const adjustedPrice = totalPrice - pointsValue;
+      let pointsValue = maxPointsToRedeem * 0.30;
+      let adjustedPrice = totalPrice - pointsValue;
     
       pointsToRedeemInput.value = maxPointsToRedeem;
       pointsValueElement.textContent = pointsValue.toFixed(2);
       adjustedTotalPriceEl.textContent = adjustedPrice.toFixed(2);
     };
 
-    const updateCart = async (itemID, size, action) => {
+    let updateCart = async (itemID, size, action) => {
       try {
-        const response = await fetch('/cart/update', {
+        let response = await fetch('/cart/update', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -233,7 +237,7 @@
           }),
         });
 
-        const data = await response.json();
+        let data = await response.json();
         if (!response.ok || !data.success) {
           if (data.message) {
             showCartMessage(data.message);
@@ -241,7 +245,7 @@
           }
           return null;
         }
-        const row = document.querySelector(`.cart-item-row[data-item-id="${itemID}"][data-size="${size}"]`);
+        let row = document.querySelector(`.cart-item-row[data-item-id="${itemID}"][data-size="${size}"]`);
         if (data.newQuantity > 0) {
           row.querySelector('.cart-quantity').textContent = data.newQuantity;
           row.querySelector('.cart-subtotal').textContent = (data.newQuantity * data.itemPrice).toFixed(2);
@@ -258,24 +262,24 @@
     };
 
     cartRows.forEach(row => {
-      const incrementButton = row.querySelector('.increment-button');
-      const decrementButton = row.querySelector('.decrement-button');
-      const itemID = row.dataset.itemId;
-      const size = row.dataset.size;
+      let incrementButton = row.querySelector('.increment-button');
+      let decrementButton = row.querySelector('.decrement-button');
+      let itemID = row.dataset.itemId;
+      let size = row.dataset.size;
 
       incrementButton.addEventListener('click', () => updateCart(itemID, size, 'increment'));
       decrementButton.addEventListener('click', () => updateCart(itemID, size, 'decrement'));
     });
 
-    const checkoutButton = document.getElementById('proceed-to-checkout-btn');
+    let checkoutButton = document.getElementById('proceed-to-checkout-btn');
     checkoutButton.addEventListener('click', async (e) => {
       e.preventDefault();
 
-      const adjustedTotalPrice = parseFloat(adjustedTotalPriceEl.textContent);
-      const pointsToRedeem = parseInt(pointsToRedeemInput.value) || 0;
+      let adjustedTotalPrice = parseFloat(adjustedTotalPriceEl.textContent);
+      let pointsToRedeem = parseInt(pointsToRedeemInput.value) || 0;
 
       try {
-        const response = await fetch('/checkout/session', {
+        let response = await fetch('/checkout/session', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -288,11 +292,11 @@
         });
 
         if (!response.ok) {
-          const errorData = await response.json();
+          let errorData = await response.json();
           throw new Error(errorData.error || 'Failed to create checkout session.');
         }
 
-        const {
+        let {
           url
         } = await response.json();
         window.location.href = url;
@@ -300,7 +304,7 @@
         showCartMessage(error.message);
       }
     });
-    const showCartMessage = (message) => {
+    let showCartMessage = (message) => {
       if (cartMessage) {
         cartMessage.textContent = message;
         cartMessage.classList.remove('hidden');
