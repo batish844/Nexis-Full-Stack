@@ -20,7 +20,7 @@ class GoogleAuthController extends Controller
 
 
         try {
-            $google_user = Socialite::driver('google')->user();
+            $google_user = Socialite::driver('google')->stateless()->user();
 
             $user = User::firstOrCreate(
                 ['google_id' => $google_user->getId()],
@@ -29,7 +29,6 @@ class GoogleAuthController extends Controller
                     'First_Name' => $google_user->user['given_name'] ?? 'N/A',
                     'Last_Name' => $google_user->user['family_name'] ?? 'N/A',
                     'Phone_Number' => 'N/A', 
-                    'password' => null, 
                     'isActive' => true,
                 ]
             );
