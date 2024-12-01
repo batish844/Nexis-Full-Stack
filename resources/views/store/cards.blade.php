@@ -46,5 +46,4 @@ $isInWishlist = in_array($item->ItemID, $wishlistItems);
 </div>
 @endforeach
 
-    <!-- {{ $items->withQueryString()->links() }} -->
-    @include('components.pagination', ['items' => $items])
+    
