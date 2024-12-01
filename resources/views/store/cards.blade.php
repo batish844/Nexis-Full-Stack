@@ -46,6 +46,5 @@ $isInWishlist = in_array($item->ItemID, $wishlistItems);
 </div>
 @endforeach
 
-<div class="flex pagination mt-6 justify-center w-full">
-    {{ $items->withQueryString()->links() }}
-</div>
+    <!-- {{ $items->withQueryString()->links() }} -->
+    @include('components.pagination', ['items' => $items])

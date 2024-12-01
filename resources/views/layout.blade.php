@@ -154,11 +154,11 @@
                     <img src="{{ Storage::url('img/CommonImg/BrandLogo.png') }}" alt="Logo" class="h-24 mx-auto">
                 </a>
                 <div class="flex flex-col items-center space-y-6 text-lg font-medium text-black">
-                    <a href="/home" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Home</a>
-                    <a href="/about-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">About</a>
-                    <a href="/women" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Women</a>
-                    <a href="/men" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Men</a>
-                    <a href="/contact-us" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Contact
+                    <a href="/home" class="mobile-menu-link hover:text-blue-800" onclick="toggleMenu()">Home</a>
+                    <a href="/about-us" class="mobile-menu-link hover:text-blue-800" onclick="toggleMenu()">About</a>
+                    <a href="/women" class="mobile-menu-link hover:text-blue-800" onclick="toggleMenu()">Women</a>
+                    <a href="/men" class="mobile-menu-link hover:text-blue-800" onclick="toggleMenu()">Men</a>
+                    <a href="/contact-us" class="mobile-menu-link hover:text-blue-800" onclick="toggleMenu()">Contact
                         us</a>
                     @if (Auth::check())
                     @if (Auth::user()->isAdmin)
@@ -181,7 +181,7 @@
                         onclick="toggleMenu()">Orders</a>
                     @endif
                     @else
-                    <a href="{{ route('login') }}" class="mobile-menu-link hover:text-white"
+                    <a href="{{ route('login') }}" class="mobile-menu-link hover:text-blue-800"
                         onclick="toggleMenu()">Sign In</a>
                     @endif
                 </div>
