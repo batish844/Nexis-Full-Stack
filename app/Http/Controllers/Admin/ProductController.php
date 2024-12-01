@@ -215,20 +215,24 @@ class ProductController extends Controller
 
         $product = Item::findOrFail($id);
 
+        // Existing photos from request
         $existingPhotos = $request->input('existing_photos', []);
 
+        // Current photos in the database
         $currentPhotos = $product->Photo ? $product->Photo : [];
 
+        // Identify removed photos
         $removedPhotos = array_diff($currentPhotos, $existingPhotos);
         foreach ($removedPhotos as $photo) {
-            $photoPath = public_path($photo);
-            if (file_exists($photoPath)) {
-                unlink($photoPath);
+            $photoPath = str_replace(Storage::url(''), '', $photo); // Get relative path
+            if (Storage::exists($photoPath)) {
+                Storage::delete($photoPath);
             }
         }
 
         $newPhotos = [];
 
+        // Handle new photos upload
         if ($request->hasFile('new_photos')) {
             $files = $request->file('new_photos');
             foreach ($files as $file) {
@@ -238,24 +242,29 @@ class ProductController extends Controller
                     $categoryName = strtolower(str_replace(' ', '_', $category->Name));
                     $productName = strtolower(str_replace(' ', '_', $request->input('name')));
 
-                    $folderPath = "/storage/img/{$gender}/{$categoryName}/{$productName}/";
-                    $fullFolderPath = public_path($folderPath);
+                    // Define folder path in S3
+                    $folderPath = "img/{$gender}/{$categoryName}/{$productName}/";
 
-                    if (!file_exists($fullFolderPath)) {
-                        mkdir($fullFolderPath, 0777, true);
-                    }
-
+                    // Generate unique file name
                     $fileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
-                    $file->move($fullFolderPath, $fileName);
 
-                    $newPhotoPath = $folderPath . $fileName;
+                    // Full path for the file
+                    $filePath = $folderPath . $fileName;
+
+                    // Upload the file to S3
+                    Storage::put($filePath, file_get_contents($file), 'public');
+
+                    // Generate public URL
+                    $newPhotoPath = Storage::url($filePath);
                     $newPhotos[] = $newPhotoPath;
                 }
             }
         }
 
+        // Merge existing and new photos
         $finalPhotos = array_merge($existingPhotos, $newPhotos);
 
+        // Reorder photos based on `image_order`
         $imageOrder = json_decode($request->input('image_order'), true);
         $orderedPhotos = [];
         foreach ($imageOrder as $key) {
@@ -272,11 +281,12 @@ class ProductController extends Controller
             }
         }
 
+        // Update product's photo list
         $product->Photo = $orderedPhotos;
 
+        // Update other product attributes
         $sizes = $request->input('sizes', []);
         $product->Size = $sizes;
-
         $product->Name = $request->input('name');
         $product->CategoryID = $request->input('category_id');
         $product->Price = $request->input('price');
@@ -284,11 +294,12 @@ class ProductController extends Controller
         $product->Points = $request->input('points');
         $product->Description = $request->input('description');
 
-
+        // Save the product
         $product->save();
 
         return redirect()->route('products.show', $id)->with('success', 'Product updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -127,7 +127,7 @@
                 @foreach($product->Photo as $photo)
                 <div class="flex items-center space-x-4 draggable-item">
                     <span class="handle cursor-move text-gray-500">☰</span>
-                    <img src="{{ $photo }}" alt="Existing Image" class="w-20 h-20 object-cover rounded-md shadow">
+                    <img src="{{ Storage::url($photo) }}" alt="Existing Image" class="w-20 h-20 object-cover rounded-md shadow">
                     <input type="hidden" name="existing_photos[]" value="{{ $photo }}">
                     <button type="button" class="delete-existing-image bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500">
                         Delete

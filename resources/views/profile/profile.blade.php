@@ -23,7 +23,7 @@
                                     {{-- Display default icon --}}
                                     <div
                                         class="overflow-hidden w-36 h-36 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-60 lg:h-60 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
-                                        <img src="/storage/img/icons/Default-Avatar.png" alt="USER AVATAR">
+                                        <img src="{{ Storage::url('img/icons/Default-Avatar.png') }}" alt="USER AVATAR">
                                     </div>
 
                                     {{-- Upload Button --}}
@@ -47,7 +47,7 @@
                                     {{-- Display uploaded avatar --}}
                                     <div
                                         class="overflow-hidden w-36 h-36 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-60 lg:h-60 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
-                                        <img src="{{ asset('storage/img/avatar/' . $user->avatar) }}" alt="User Avatar">
+                                        <img src="{{ Storage::url('img/avatar/' . $user->avatar) }}" alt="User Avatar">
                                     </div>
 
                                     {{-- Update and Delete Buttons --}}
@@ -187,7 +187,7 @@
                                 <div class="flex justify-end">
                                     <button id="edit-profile-btn" type="button"
                                         class="w-fit flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
-                                        <img src="/storage/img/icons/edit-icon.svg" alt="Edit" class="w-4 h-4 mr-2">
+                                        <img src="{{ Storage::url('img/icons/edit-icon.svg') }}" alt="Edit" class="w-4 h-4 mr-2">
                                         Edit
                                     </button>
 
@@ -321,7 +321,7 @@
                             <div class="flex justify-end">
                                 <button id="edit-pass-btn" type="button"
                                     class="w-fit flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
-                                    <img src="/storage/img/icons/edit-icon.svg" alt="Edit" class="w-4 h-4 mr-2">
+                                    <img src="{{ Storage::url('img/icons/edit-icon.svg') }}" alt="Edit" class="w-4 h-4 mr-2">
                                     Edit
                                 </button>
 

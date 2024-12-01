@@ -201,7 +201,7 @@ class PaymentController extends Controller
                         'Quantity'   => $cartItem->Quantity,
                         'TotalPrice' => $cartItem->Quantity * $cartItem->item->Price,
                     ]);
-                    $totalPoints += $cartItem->item->Points;
+                    $totalPoints += $cartItem->item->Points * $cartItem->Quantity;
                     $cartItem->item->decrement('Quantity', $cartItem->Quantity);
                     if ($cartItem->item->Quantity <= 0) {
                         $cartItem->item->isAvailable = false;

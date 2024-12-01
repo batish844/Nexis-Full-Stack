@@ -123,7 +123,7 @@
                     @foreach ($order->orderItems as $orderItem)
                     <tr class="hover:bg-gray-50 transition">
                         <td class="px-6 py-4 border-b flex items-center gap-4">
-                            <img src="{{ $orderItem->item->Photo[0] }}" alt="{{ $orderItem->item->Name }}" class="w-12 h-12 object-cover rounded-md">
+                            <img src="{{ Storage::url($orderItem->item->Photo[0]) }}" alt="{{ $orderItem->item->Name }}" class="w-12 h-12 object-cover rounded-md">
                             <span class="text-gray-800 font-medium">{{ $orderItem->item->Name }}</span>
                         </td>
                         <td class="px-6 py-4 border-b">${{ number_format($orderItem->item->Price, 2) }}</td>

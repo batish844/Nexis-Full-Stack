@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
+    <link rel="icon" type="image/png" href="{{ Storage::url('img/CommonImg/blacklogo.png') }}">
     @vite('resources/css/app.css')
 </head>
 
@@ -21,29 +21,29 @@
             <div
                 class="fixed z-30 h-screen inset-y-0 left-0 w-64 bg-blue-800 text-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0">
                 <div class="flex flex-col items-center justify-center h-32 bg-blue-900">
-                    <img src="/storage/img/CommonImg/blacklogo.png" alt="Logo" class="h-20">
+                    <img src="{{ Storage::url('img/CommonImg/blacklogo.png') }}" alt="Logo" class="h-20">
                     <span>Welcome, {{ Auth::user()->First_Name }}!</span>
                 </div>
                 <nav class="flex flex-col mt-4 space-y-2 px-2">
                     @php
                     $navItems = [
                     ['name' => 'Analytics',
-                    'icon' => '/storage/img/icons/analytics.png',
+                    'icon' => 'img/icons/analytics.png',
                     'route' => 'analytics.*',], // Wildcard for Analytics
                     ['name' => 'Categories',
-                    'icon' => '/storage/img/icons/categories.png',
+                    'icon' => 'img/icons/categories.png',
                     'route' => 'categories.*',], // Wildcard for Categories
                     ['name' => 'Products',
-                    'icon' => '/storage/img/icons/Item.png',
+                    'icon' => 'img/icons/Item.png',
                     'route' => 'products.*',], // Wildcard for Products
                     ['name' => 'Users',
-                    'icon' => '/storage/img/icons/users.png',
+                    'icon' => 'img/icons/users.png',
                     'route' => 'users.*',], // Wildcard for Users
                     ['name' => 'Orders',
-                    'icon' => '/storage/img/icons/orders.png',
+                    'icon' => 'img/icons/orders.png',
                     'route' => 'orders.*',], // Wildcard for Orders
                     ['name' => 'Messages',
-                    'icon' => '/storage/img/icons/messages.png',
+                    'icon' => 'img/icons/messages.png',
                     'route' => 'messages.*',], // Wildcard for Messages
                     ];
                     @endphp
@@ -52,7 +52,7 @@
                     <a href="{{ route(str_replace('.*', '.index', $item['route'])) }}"
                         class="{{ request()->routeIs($item['route']) ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }} 
             flex items-center px-6 py-3 rounded-md transition-colors">
-                        <img src="{{ $item['icon'] }}" alt="{{ $item['name'] }} Icon" class="h-6 w-6 mr-4">
+                        <img src="{{ Storage::url($item['icon']) }}" alt="{{ $item['name'] }} Icon" class="h-6 w-6 mr-4">
                         <span class="text-lg font-bold text-white">{{ $item['name'] }}</span>
                     </a>
                     @endforeach
@@ -66,7 +66,7 @@
                 <form method="POST" action="{{ route('logout') }}" class="my-4 mx-2">
                     @csrf
                     <button type="submit" class="flex items-center justify-center px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded-full transition-colors shadow-lg w-full">
-                        <img src="/storage/img/icons/logout.png" alt="Logout Icon" class="h-5 w-5 mr-3">
+                        <img src="{{ Storage::url('img/icons/logout.png') }}" alt="Logout Icon" class="h-5 w-5 mr-3">
                         Logout
                     </button>
                 </form>

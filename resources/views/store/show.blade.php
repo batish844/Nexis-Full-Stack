@@ -16,18 +16,18 @@
                     <!-- Thumbnail Images -->
                     <div class="hidden sm:flex flex-row sm:flex-col mt-4 items-center space-x-3 sm:space-x-0 sm:space-y-3">
                         @foreach ($item->Photo as $photo)
-                            <img src="{{ asset($photo) }}" alt="{{ $item->Name }}"
+                            <img src="{{ Storage::url($photo) }}" alt="{{ $item->Name }}"
                                 class="w-24 h-24 object-cover border cursor-pointer thumbnail rounded shadow-lg">
                         @endforeach
                     </div>
                     <!-- Main Image -->
-                    <img id="mainImage" src="{{ asset($item->Photo[0]) }}" alt="{{ $item->Name }}"
+                    <img id="mainImage" src="{{ Storage::url($item->Photo[0]) }}" alt="{{ $item->Name }}"
                         class="w-full sm:w-9/12 h-auto object-cover cursor-zoom-in rounded shadow-lg"
                         data-large="{{ asset($item->Photo[0]) }}">
                     <!-- Thumbnail Images (Mobile) -->
                     <div class="sm:hidden flex flex-row items-center space-x-3 mt-4">
                         @foreach ($item->Photo as $photo)
-                            <img src="{{ asset($photo) }}" alt="{{ $item->Name }}"
+                            <img src="{{ Storage::url($photo) }}" alt="{{ $item->Name }}"
                                 class="w-16 h-16 object-cover border cursor-pointer thumbnail rounded shadow-lg">
                         @endforeach
                     </div>
@@ -246,7 +246,7 @@
                     <div
                         class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4 p-4 border border-gray-300 rounded-lg bg-gray-50">
                         <!-- User Avatar -->
-                        <img src="{{ $review->user->avatar ? asset('storage/img/avatar/' . $review->user->avatar) : asset('storage/img/icons/Default-Avatar.png') }}"
+                        <img src="{{ $review->user->avatar ? Storage::url('img/avatar/' . $review->user->avatar) : Storage::url('img/icons/Default-Avatar.png') }}"
                             alt="{{ $review->user->name }}" class="w-12 h-12 rounded-full object-cover">
 
                         <!-- Review Details -->

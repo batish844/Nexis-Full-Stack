@@ -3,7 +3,7 @@
 <div class="flex items-center justify-center my-10">
     <div class="text-center px-4 sm:px-8">
         <div class="mb-6">
-            <img src="{{ asset('/storage/img/CommonImg/404.png') }}" alt="404 Illustration" class="w-64 mx-auto sm:w-64 animate-pulse">
+            <img src="{{ Storage::url('img/CommonImg/404.png') }}" alt="404 Illustration" class="w-64 mx-auto sm:w-64 animate-pulse">
         </div>
         <h2 class="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4">Page Not Found</h2>
         <p class="text-lg text-gray-500 mb-6">

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
+    <link rel="icon" type="image/png" href="{{ Storage::url('img/CommonImg/blacklogo.png') }}">
     @vite('resources/css/app.css')
 </head>
 
@@ -16,7 +16,7 @@
                 <!-- Logo and Welcome Message -->
                 <div class="flex items-center space-x-2 mb-4 lg:mb-0 lg:space-x-4 flex-wrap 2xl:max-w-fit lg:w-26">
                     <a href="{{ route('home') }}">
-                        <img src="/storage/img/CommonImg/blacklogo.png" alt="Logo" class="h-24 lg:h-24">
+                        <img src="{{ Storage::url('img/CommonImg/blacklogo.png') }}" alt="Logo" class="h-24 lg:h-24">
                     </a>
                     <span
                         class="text-xl sm:text-2xl md:text-xl lg:text-lg 2xl:text-2xl font-semibold text-white max-w-34 text-center lg:text-left">
@@ -47,14 +47,14 @@
                         <nav id="navbar-menu" class="text-center">
                             <a href="{{ route('profile.index') }}"
                                 class="p-2 flex items-center space-x-2 lg:space-x-3 2xl:space-x-4 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200 {{ request()->routeIs('profile.index') ? 'border-b-2 border-white' : '' }}">
-                                <img src="/storage/img/icons/profile-user-icon.png" alt="Profile"
+                                <img src="{{ Storage::url('img/icons/profile-user-icon.png') }}" alt="Profile"
                                     class="h-8 lg:h-10 w-8 lg:w-10">
                                 <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Profile
                                     Info</span>
                             </a>
                             <a href="{{ route('profile.orders') }}"
                                 class="p-2 flex items-center space-x-2 lg:space-x-3 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200 {{ request()->routeIs('profile.orders') ? 'border-b-2 border-white' : '' }}">
-                                <img src="/storage/img/icons/order-icon.png" alt="Orders"
+                                <img src="{{ Storage::url('img/icons/order-icon.png') }}" alt="Orders"
                                     class="h-8 lg:h-10 w-8 lg:w-10">
                                 <span
                                     class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Orders</span>
@@ -72,7 +72,7 @@
 
                                 <button type="submit"
                                     class="flex items-center justify-center text-white bg-red-600 hover:bg-red-400 px-4 py-2 rounded-md font-semibold transition duration-300">
-                                    <img src="/storage/img/icons/user-logout-icon.png" alt="Logout"
+                                    <img src="{{ Storage::url('img/icons/user-logout-icon.png') }}" alt="Logout"
                                         class="w-6 h-6 mr-3">
 
                                     Log Out
@@ -87,14 +87,14 @@
                     class="hidden lg:flex justify-center content-center lg:items-center space-x-4 mb-4 lg:mb-0 text-center md:space-x-1 lg:space-x-2 xl:space-x-8">
                     <a href="{{ route('profile.index') }}"
                         class="p-2 flex items-center space-x-2 lg:space-x-3 2xl:space-x-4 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200 {{ request()->routeIs('profile.index') ? 'border-b-2 border-white' : '' }}">
-                        <img src="/storage/img/icons/profile-user-icon.png" alt="Profile"
+                        <img src="{{ Storage::url('img/icons/profile-user-icon.png') }}" alt="Profile"
                             class="h-8 lg:h-10 w-8 lg:w-10">
                         <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Profile
                             Info</span>
                     </a>
                     <a href="{{ route('profile.orders') }}"
                         class="p-2 flex items-center space-x-2 lg:space-x-3 text-gray-700 hover:bg-blue-300 hover:rounded transition duration-200 {{ request()->routeIs('profile.orders') ? 'border-b-2 border-white' : '' }}">
-                        <img src="/storage/img/icons/order-icon.png" alt="Orders" class="h-8 lg:h-10 w-8 lg:w-10">
+                        <img src="{{ Storage::url('img/icons/order-icon.png') }}" alt="Orders" class="h-8 lg:h-10 w-8 lg:w-10">
                         <span class="text-xs sm:text-sm md:text-base lg:text-lg 2xl:text-2xl text-white">Orders</span>
                     </a>
                 </nav>

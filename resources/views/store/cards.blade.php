@@ -15,7 +15,7 @@ $isInWishlist = in_array($item->ItemID, $wishlistItems);
     <div class="carousel relative">
         <a href="{{ route('store.show', ['id' => $item->ItemID]) }}">
             @foreach ($item->Photo as $index => $photo)
-            <img src="{{ $photo }}" alt="{{ $item->Name }}" class="carousel-img object-cover w-full h-64 {{ $index === 0 ? 'active' : 'hidden' }}" data-index="{{ $index }}">
+            <img src="{{ Storage::url($photo) }}" alt="{{ $item->Name }}" class="carousel-img object-cover w-full h-64 {{ $index === 0 ? 'active' : 'hidden' }}" data-index="{{ $index }}">
             @endforeach
         </a>
         @if(count($item->Photo) > 1)

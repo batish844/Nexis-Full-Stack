@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <title>@yield('title', 'Nexis')</title>
 
-    <link rel="icon" type="image/png" href="/storage/img/CommonImg/blacklogo.png">
+    <link rel="icon" type="image/png" href="{{ Storage::disk('s3')->url('img/CommonImg/blacklogo.png') }}">
 
     @vite('resources/css/app.css')
     @stack('styles')
@@ -63,7 +63,7 @@
         <nav
             class="nav hidden lg:flex items-center bg-white rounded-full shadow-lg w-4/5 max-w-5xl justify-center transition duration-300 ease-in-out py-4 px-10">
             <a href="/home" class="mr-6">
-                <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-20">
+                <img src="{{ Storage::url('img/CommonImg/BrandLogo.png') }}" alt="Logo" class="h-20">
             </a>
 
             <div id="navMenu" class="flex items-center text-lg text-black font-normal space-x-8">
@@ -130,7 +130,7 @@
         <div class="flex items-center justify-between w-full lg:hidden">
             <div class="cursor-pointer">
                 <a href="/home">
-                    <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-16">
+                    <img src="{{ Storage::url('img/CommonImg/BrandLogo.png') }}" alt="Logo" class="h-16">
                 </a>
             </div>
             <div class="ml-auto cursor-pointer" onclick="toggleMenu()">
@@ -144,10 +144,10 @@
             <div
                 class="bg-white rounded-3xl shadow-2xl overflow-y-auto flex flex-col items-center py-10 px-6 w-11/12 max-w-md relative">
                 <button class="absolute top-4 right-4 text-gray-800 hover:text-gray-900" onclick="toggleMenu()">
-                    <lord-icon src="/storage/xicon.json" trigger="hover" style="width:32px;height:32px"></lord-icon>
+                    <lord-icon src="{{ Storage::url('xicon.json') }}" trigger="hover" style="width:32px;height:32px"></lord-icon>
                 </button>
                 <a href="/home" class="mb-8">
-                    <img src="/storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-24 mx-auto">
+                    <img src="{{ Storage::url('img/CommonImg/BrandLogo.png') }}" alt="Logo" class="h-24 mx-auto">
                 </a>
                 <div class="flex flex-col items-center space-y-6 text-lg font-medium text-black">
                     <a href="/home" class="mobile-menu-link hover:text-white" onclick="toggleMenu()">Home</a>
@@ -165,12 +165,12 @@
                         onclick="toggleMenu()">
                         @if (Auth::user()->avatar)
                         <!-- Display user avatar if available -->
-                        <img src="{{ asset('storage/img/avatar/' . Auth::user()->avatar) }}"
+                        <img src="{{ Storage::url('img/avatar/' . Auth::user()->avatar) }}"
                             alt="User Avatar"
                             class="w-10 h-10 rounded-full mr-3 border border-gray-300 object-cover">
                         @else
                         <!-- Default avatar if none exists -->
-                        <img src="/storage/img/icons/Default-Avatar.png" alt="Default Avatar"
+                        <img src="{{ Storage::url('img/icons/Default-Avatar.png') }}" alt="Default Avatar"
                             class="w-10 h-10 rounded-full ml-2 border border-gray-300 object-cover">
                         @endif
                         Profile
@@ -222,24 +222,24 @@
 
                 <div class="flex justify-center md:justify-center space-x-8 md:flex-1">
                     <a href="https://www.facebook.com" target="_blank" class="transform transition hover:scale-110">
-                        <img src="/storage/img/CommonImg/facebook logo.png" alt="Facebook" class="h-12 w-12">
+                        <img src="{{ Storage::url('img/CommonImg/facebook logo.png') }}" alt="Facebook" class="h-12 w-12">
                     </a>
                     <a href="https://www.pinterest.com" target="_blank" class="transform transition hover:scale-110">
-                        <img src="/storage/img/CommonImg/pinterest logo.png" alt="Pinterest" class="h-12 w-12">
+                        <img src="{{ Storage::url('img/CommonImg/pinterest logo.png') }}" alt="Pinterest" class="h-12 w-12">
                     </a>
                     <a href="https://www.instagram.com" target="_blank" class="transform transition hover:scale-110">
-                        <img src="/storage/img/CommonImg/instagram logo.png" alt="Instagram" class="h-12 w-12">
+                        <img src="{{ Storage::url('img/CommonImg/instagram logo.png') }}" alt="Instagram" class="h-12 w-12">
                     </a>
                     <a href="https://www.tiktok.com" target="_blank" class="transform transition hover:scale-110">
-                        <img src="/storage/img/CommonImg/tiktok logo.png" alt="TikTok" class="h-12 w-12">
+                        <img src="{{ Storage::url('img/CommonImg/tiktok logo.png') }}" alt="TikTok" class="h-12 w-12">
                     </a>
                 </div>
 
                 <div class="text-center md:text-right md:mr-20 md:flex-1">
                     <h3 class="text-xl font-medium mr-0 sm:mr-12 mb-4">We Accept</h3>
                     <div class="flex justify-center md:justify-end items-center space-x-6">
-                        <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-14 w-auto">
-                        <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-14 w-auto">
+                        <img src="{{ Storage::url('img/CommonImg/visa.png') }}" alt="Visa" class="h-14 w-auto">
+                        <img src="{{ Storage::url('img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-14 w-auto">
                     </div>
                 </div>
             </div>

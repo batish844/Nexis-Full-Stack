@@ -44,7 +44,7 @@
         </form>
     </div>
     <div class="flex justify-center items-center w-full md:w-1/2 max-w-xs md:max-w-md mx-auto animate-bounce-custom">
-        <img src="storage/img/CommonImg/Contact.png" alt="Contact" class="w-full rounded-lg">
+        <img src="{{ Storage::url('img/CommonImg/Contact.png') }}" alt="Contact" class="w-full rounded-lg">
     </div>
 </section>
 

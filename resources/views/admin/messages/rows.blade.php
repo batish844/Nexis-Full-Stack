@@ -27,7 +27,7 @@
         <div class="flex justify-center">
             <a href="{{ route('messages.show', $message->ContactID) }}"
                 class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
-                <img src="/storage/img/icons/list.png" alt="Manage" class="w-5 h-5">
+                <img src="{{ Storage::url('img/icons/list.png') }}" alt="Manage" class="w-5 h-5">
                 <span>Manage</span>
             </a>
         </div>

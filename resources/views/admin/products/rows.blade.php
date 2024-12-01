@@ -3,7 +3,7 @@
     <td class="px-6 py-4 text-center">
         <div class="flex items-center justify-center">
             <div class="flex-shrink-0 h-10 w-10">
-                <img class="h-10 w-10 rounded-lg object-cover" src="{{ $product->Photo[0] }}" alt="{{ $product->Name }}">
+                <img class="h-10 w-10 rounded-lg object-cover" src="{{ Storage::url($product->Photo[0]) }}" alt="{{ $product->Name }}">
             </div>
         </div>
     </td>
@@ -32,7 +32,7 @@
     <td class="px-6 py-4 text-center">
         <div class="flex justify-center space-x-2">
             <a href="{{ route('products.show', $product->ItemID) }}" class="text-blue-600 hover:text-blue-800">
-                <img src="/storage/img/icons/list.png" alt="Manage" class="w-5 h-5 inline-block"> Manage
+                <img src="{{ Storage::url('img/icons/list.png') }}" alt="Manage" class="w-5 h-5 inline-block"> Manage
             </a>
         </div>
     </td>

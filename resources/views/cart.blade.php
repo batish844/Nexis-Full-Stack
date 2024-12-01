@@ -41,7 +41,7 @@
               data-points="{{ $itemPoints }}">
       <td class="px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center">
         <a href="{{ $itemID ? route('store.show', ['id' => $itemID]) : '#' }}" class="flex-shrink-0">
-          <img src="{{ asset($itemPhoto) }}"
+            <img src="{{ Storage::url($itemPhoto) }}"
             alt="{{ $itemName }}"
             class="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-lg shadow-md mb-2 sm:mb-0 mr-0 sm:mr-6">
         </a>
@@ -160,8 +160,8 @@
       Proceed to Checkout
     </a>
     <div class="flex justify-center mt-4">
-      <img src="{{ asset('/storage/img/CommonImg/visa.png') }}" alt="Visa" class="h-6 sm:h-8 mx-2">
-      <img src="{{ asset('/storage/img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-6 sm:h-8 mx-2">
+      <img src="{{ Storage::url('img/CommonImg/visa.png') }}" alt="Visa" class="h-6 sm:h-8 mx-2">
+      <img src="{{ Storage::url('img/CommonImg/mastercard.webp') }}" alt="Mastercard" class="h-6 sm:h-8 mx-2">
     </div>
   </div>
 </div>

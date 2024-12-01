@@ -19,6 +19,8 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CartController;
 
 use App\Http\Controllers\WishlistController;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 
 use Illuminate\Http\Request;
@@ -115,10 +117,6 @@ Route::post('/wishlist/toggle', [WishlistController::class, 'toggleWishlist'])->
 Route::get('/wishlist', [WishlistController::class, 'viewWishlist'])->name('wishlist.view');
 Route::get('/wishlist/count', [WishlistController::class, 'getWishlistCount'])->name('wishlist.count');
 
-// Middleware for merging wishlist after login
-Route::middleware(['auth'])->group(function () {
-    Route::post('/wishlist/merge', [WishlistController::class, 'mergeWishlist'])->name('wishlist.merge');
-});
 
 
 Route::fallback(function () {

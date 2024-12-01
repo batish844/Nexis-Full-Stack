@@ -17,7 +17,7 @@
         </a>
     </div>
     <div class="relative z-0 md:w-1/2 h-full">
-        <img src="storage/img/aboutus/banner.jpg" alt="Nexis Fashion" class="object-cover w-full h-full transform scale-105 opacity-90 animate-parallax">
+        <img src="{{ Storage::url('img/aboutus/banner.jpg') }}" alt="Nexis Fashion" class="object-cover w-full h-full transform scale-105 opacity-90 animate-parallax">
     </div>
 </div>
 <section id="our-journey" class="py-20 px-8 md:px-16 lg:px-24 text-gray-800 bg-gray-50">
@@ -50,24 +50,24 @@ $founders = [
 [
 'name' => 'Mahmoud Batish',
 'title' => 'Co-Founder & CEO',
-'image' => '/storage/img/aboutus/about1.jpg',
+'image' => 'img/aboutus/about1.jpg',
 'description' => 'Mahmoud’s vision and strategic acumen have been pivotal in establishing Nexis’s presence.'
 ],
 [
 'name' => 'Ahmad Sharara',
 'title' => 'Co-Founder & CTO',
-'image' => '/storage/img/aboutus/about2.png',
+'image' => 'img/aboutus/about2.png',
 'description' => 'Ahmad has led Nexis toward fashion excellence and innovation with a focus on sustainable practices.'
 ],
 [
 'name' => 'Jamal Hamd',
 'title' => 'Chief Marketing Officer',
-'image' => '/storage/img/aboutus/about3.png',
+'image' => 'img/aboutus/about3.png',
 'description' => 'Jamal’s expertise in marketing has driven Nexis to reach broader audiences and enhance brand presence.'
 ], [
 'name' => 'Samia Majzoub',
 'title' => 'Chief Operations Officer',
-'image' => '/storage/img/aboutus/about4.png',
+'image' => 'img/aboutus/about4.png',
 'description' => 'Samia ensures smooth operations and efficient processes, maintaining Nexis’s commitment to quality and excellence.'
 ]
 ];
@@ -80,7 +80,7 @@ $founders = [
         @foreach ($founders as $founder)
         <div class="bg-white p-10 rounded-3xl shadow-lg max-w-sm mx-auto text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl flex flex-col">
             <div class="w-32 h-32 mx-auto mb-6">
-                <img src="{{ asset($founder['image']) }}" alt="CEO {{ $founder['name'] }}" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
+                <img src="{{ Storage::url($founder['image']) }}" alt="CEO {{ $founder['name'] }}" class="rounded-full shadow-md border-4 border-gray-100 object-cover w-full h-full">
             </div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ $founder['name'] }}</h3>
             <p class="text-md text-gray-500 mb-4">{{ $founder['title'] }}</p>

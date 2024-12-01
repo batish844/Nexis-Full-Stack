@@ -19,7 +19,7 @@
     </td>
     <td class="px-6 py-4 whitespace-nowrap">
         <a href="{{ route('orders.show', $order->OrderID) }}" class="text-blue-600">
-            <img src="/storage/img/icons/list.png" alt="Manage" class="w-5 h-5 inline-block"> Manage
+            <img src="{{ Storage::url('img/icons/list.png') }}" alt="Manage" class="w-5 h-5 inline-block"> Manage
 
         </a>
     </td>

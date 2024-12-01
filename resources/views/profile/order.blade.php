@@ -67,7 +67,7 @@
                                 @foreach ($order->orderItems as $orderItem)
                                     @if (!empty($orderItem->item->Photo))
                                         <div class="w-20 h-20">
-                                            <img src="{{ asset($orderItem->item->Photo[0]) }}"
+                                            <img src="{{ Storage::url($orderItem->item->Photo[0]) }}"
                                                 class="w-full h-full object-cover rounded-lg shadow">
                                         </div>
                                     @endif
@@ -209,7 +209,7 @@
                                 (item) => `
                                     <div class="flex justify-between items-center border-b py-4">
                                         <div class="flex items-center space-x-4">
-                                            <img src="${item.photo}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
+                                            <img src="{{ Storage::url('${item.photo}') }}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
                                             <div>
                                                 <p class="text-gray-900 font-bold">${item.name}</p>
                                                 <p class="text-sm text-gray-500">Size: ${item.size}</p>

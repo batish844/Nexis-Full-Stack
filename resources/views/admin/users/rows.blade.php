@@ -34,7 +34,7 @@
             <div class="flex space-x-2">
                 <!-- View -->
                 <a href="{{ route('users.show', $user->UserID) }}" class="text-blue-600 hover:text-blue-800">
-                <img src="/storage/img/icons/list.png" alt="Show" class="w-5 h-5 inline-block">
+                <img src="{{ Storage::url('img/icons/list.png') }}" alt="Show" class="w-5 h-5 inline-block">
             Manage
             </a>
             </div>

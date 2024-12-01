@@ -8,7 +8,7 @@
 
     @if ($wishlistItems->isEmpty())
     <div class="flex items-center justify-center flex-col text-center py-20">
-        <img src="{{ asset('/storage/img/CommonImg/emptywishlist2.png') }}" alt="Empty Wishlist" class="w-64 h-64 mb-6">
+        <img src="{{ Storage::url('img/CommonImg/emptywishlist2.png') }}" alt="Empty Wishlist" class="w-64 h-64 mb-6">
         <p class="text-lg text-gray-500 mb-4">You don't have any items in your wishlist yet.</p>
         <a href="{{ route('store.men') }}" class="text-blue-500 underline text-xl font-semibold">
             Browse our store to add items to your wishlist!
@@ -28,7 +28,7 @@
             </button>
 
             <a href="{{ route('store.show', ['id' => $wishlist['ItemID']]) }}" class="block">
-                <img src="{{ asset($wishlist['item']['Photo'][0] ?? 'storage/default.jpg') }}" 
+                <img src="{{ Storage::url($wishlist['item']['Photo'][0] ?? 'default.jpg') }}" 
                      alt="{{ $wishlist['item']['Name'] }}" 
                      class="w-full h-72 object-cover rounded-t-xl">
             </a>

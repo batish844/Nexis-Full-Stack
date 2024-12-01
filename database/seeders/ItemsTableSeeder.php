@@ -24,9 +24,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 4,
                 'Photo'         => json_encode([
-                    "/storage/img/men/bottoms/b1/p1.png",
-                    "/storage/img/men/bottoms/b1/p2.png",
-                    "/storage/img/men/bottoms/b1/p3.png"
+                    "img/men/bottoms/b1/p1.png",
+                    "img/men/bottoms/b1/p2.png",
+                    "img/men/bottoms/b1/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -41,9 +41,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 4,
                 'Photo'         => json_encode([
-                    "/storage/img/men/bottoms/b2/p1.png",
-                    "/storage/img/men/bottoms/b2/p2.png",
-                    "/storage/img/men/bottoms/b2/p3.png"
+                    "img/men/bottoms/b2/p1.png",
+                    "img/men/bottoms/b2/p2.png",
+                    "img/men/bottoms/b2/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -58,9 +58,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 4,
                 'Photo'         => json_encode([
-                    "/storage/img/men/bottoms/b3/p1.png",
-                    "/storage/img/men/bottoms/b3/p2.png",
-                    "/storage/img/men/bottoms/b3/p3.png"
+                    "img/men/bottoms/b3/p1.png",
+                    "img/men/bottoms/b3/p2.png",
+                    "img/men/bottoms/b3/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -75,9 +75,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 4,
                 'Photo'         => json_encode([
-                    "/storage/img/men/bottoms/b4/p1.png",
-                    "/storage/img/men/bottoms/b4/p2.png",
-                    "/storage/img/men/bottoms/b4/p3.png"
+                    "img/men/bottoms/b4/p1.png",
+                    "img/men/bottoms/b4/p2.png",
+                    "img/men/bottoms/b4/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -92,9 +92,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 4,
                 'Photo'         => json_encode([
-                    "/storage/img/men/bottoms/b5/p1.png",
-                    "/storage/img/men/bottoms/b5/p2.png",
-                    "/storage/img/men/bottoms/b5/p3.png"
+                    "img/men/bottoms/b5/p1.png",
+                    "img/men/bottoms/b5/p2.png",
+                    "img/men/bottoms/b5/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -109,9 +109,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 4,
                 'Photo'         => json_encode([
-                    "/storage/img/men/bottoms/b6/p1.png",
-                    "/storage/img/men/bottoms/b6/p2.png",
-                    "/storage/img/men/bottoms/b6/p3.png"
+                    "img/men/bottoms/b6/p1.png",
+                    "img/men/bottoms/b6/p2.png",
+                    "img/men/bottoms/b6/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -126,9 +126,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 4,
                 'Photo'         => json_encode([
-                    "/storage/img/men/bottoms/b7/p1.png",
-                    "/storage/img/men/bottoms/b7/p2.png",
-                    "/storage/img/men/bottoms/b7/p3.png"
+                    "img/men/bottoms/b7/p1.png",
+                    "img/men/bottoms/b7/p2.png",
+                    "img/men/bottoms/b7/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -143,9 +143,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 4,
                 'Photo'         => json_encode([
-                    "/storage/img/men/bottoms/b8/p1.png",
-                    "/storage/img/men/bottoms/b8/p2.png",
-                    "/storage/img/men/bottoms/b8/p3.png"
+                    "img/men/bottoms/b8/p1.png",
+                    "img/men/bottoms/b8/p2.png",
+                    "img/men/bottoms/b8/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -162,9 +162,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/men/tops/top1/p1.png",
-                    "/storage/img/men/tops/top1/p2.png",
-                    "/storage/img/men/tops/top1/p3.png"
+                    "img/men/tops/top1/p1.png",
+                    "img/men/tops/top1/p2.png",
+                    "img/men/tops/top1/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -179,9 +179,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/men/tops/top2/p1.png",
-                    "/storage/img/men/tops/top2/p2.png",
-                    "/storage/img/men/tops/top2/p3.png"
+                    "img/men/tops/top2/p1.png",
+                    "img/men/tops/top2/p2.png",
+                    "img/men/tops/top2/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -196,9 +196,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/men/tops/top3/p1.png",
-                    "/storage/img/men/tops/top3/p2.png",
-                    "/storage/img/men/tops/top3/p3.png"
+                    "img/men/tops/top3/p1.png",
+                    "img/men/tops/top3/p2.png",
+                    "img/men/tops/top3/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -213,9 +213,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/men/tops/top4/p1.png",
-                    "/storage/img/men/tops/top4/p2.png",
-                    "/storage/img/men/tops/top4/p3.png"
+                    "img/men/tops/top4/p1.png",
+                    "img/men/tops/top4/p2.png",
+                    "img/men/tops/top4/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -230,9 +230,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/men/tops/top5/p1.png",
-                    "/storage/img/men/tops/top5/p2.png",
-                    "/storage/img/men/tops/top5/p3.png"
+                    "img/men/tops/top5/p1.png",
+                    "img/men/tops/top5/p2.png",
+                    "img/men/tops/top5/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -247,9 +247,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/men/tops/top6/p1.png",
-                    "/storage/img/men/tops/top6/p2.png",
-                    "/storage/img/men/tops/top6/p3.png"
+                    "img/men/tops/top6/p1.png",
+                    "img/men/tops/top6/p2.png",
+                    "img/men/tops/top6/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -264,9 +264,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/men/tops/top7/p1.png",
-                    "/storage/img/men/tops/top7/p2.png",
-                    "/storage/img/men/tops/top7/p3.png"
+                    "img/men/tops/top7/p1.png",
+                    "img/men/tops/top7/p2.png",
+                    "img/men/tops/top7/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -281,9 +281,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 20,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/men/tops/top8/p1.png",
-                    "/storage/img/men/tops/top8/p2.png",
-                    "/storage/img/men/tops/top8/p3.png"
+                    "img/men/tops/top8/p1.png",
+                    "img/men/tops/top8/p2.png",
+                    "img/men/tops/top8/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -300,10 +300,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/men/shoes/s1/p1.png",
-                    "/storage/img/men/shoes/s1/p2.png",
-                    "/storage/img/men/shoes/s1/p3.png",
-                    "/storage/img/men/shoes/s1/p4.png"
+                    "img/men/shoes/s1/p1.png",
+                    "img/men/shoes/s1/p2.png",
+                    "img/men/shoes/s1/p3.png",
+                    "img/men/shoes/s1/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -318,10 +318,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/men/shoes/s2/p1.png",
-                    "/storage/img/men/shoes/s2/p2.png",
-                    "/storage/img/men/shoes/s2/p3.png",
-                    "/storage/img/men/shoes/s2/p4.png"
+                    "img/men/shoes/s2/p1.png",
+                    "img/men/shoes/s2/p2.png",
+                    "img/men/shoes/s2/p3.png",
+                    "img/men/shoes/s2/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -336,10 +336,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/men/shoes/s3/p1.png",
-                    "/storage/img/men/shoes/s3/p2.png",
-                    "/storage/img/men/shoes/s3/p3.png",
-                    "/storage/img/men/shoes/s3/p4.png"
+                    "img/men/shoes/s3/p1.png",
+                    "img/men/shoes/s3/p2.png",
+                    "img/men/shoes/s3/p3.png",
+                    "img/men/shoes/s3/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -354,10 +354,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/men/shoes/s4/p1.png",
-                    "/storage/img/men/shoes/s4/p2.png",
-                    "/storage/img/men/shoes/s4/p3.png",
-                    "/storage/img/men/shoes/s4/p4.png"
+                    "img/men/shoes/s4/p1.png",
+                    "img/men/shoes/s4/p2.png",
+                    "img/men/shoes/s4/p3.png",
+                    "img/men/shoes/s4/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -372,10 +372,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/men/shoes/s5/p1.png",
-                    "/storage/img/men/shoes/s5/p2.png",
-                    "/storage/img/men/shoes/s5/p3.png",
-                    "/storage/img/men/shoes/s5/p4.png"
+                    "img/men/shoes/s5/p1.png",
+                    "img/men/shoes/s5/p2.png",
+                    "img/men/shoes/s5/p3.png",
+                    "img/men/shoes/s5/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -390,10 +390,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/men/shoes/s6/p1.png",
-                    "/storage/img/men/shoes/s6/p2.png",
-                    "/storage/img/men/shoes/s6/p3.png",
-                    "/storage/img/men/shoes/s6/p4.png"
+                    "img/men/shoes/s6/p1.png",
+                    "img/men/shoes/s6/p2.png",
+                    "img/men/shoes/s6/p3.png",
+                    "img/men/shoes/s6/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -408,10 +408,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/men/shoes/s7/p1.png",
-                    "/storage/img/men/shoes/s7/p2.png",
-                    "/storage/img/men/shoes/s7/p3.png",
-                    "/storage/img/men/shoes/s7/p4.png"
+                    "img/men/shoes/s7/p1.png",
+                    "img/men/shoes/s7/p2.png",
+                    "img/men/shoes/s7/p3.png",
+                    "img/men/shoes/s7/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -426,10 +426,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/men/shoes/s8/p1.png",
-                    "/storage/img/men/shoes/s8/p2.png",
-                    "/storage/img/men/shoes/s8/p3.png",
-                    "/storage/img/men/shoes/s8/p4.png"
+                    "img/men/shoes/s8/p1.png",
+                    "img/men/shoes/s8/p2.png",
+                    "img/men/shoes/s8/p3.png",
+                    "img/men/shoes/s8/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -446,9 +446,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 15,
                 'Points'        => 3,
                 'Photo'         => json_encode([
-                    "/storage/img/men/sweatpants-pjs/sw1/p1.png",
-                    "/storage/img/men/sweatpants-pjs/sw1/p2.png",
-                    "/storage/img/men/sweatpants-pjs/sw1/p3.png"
+                    "img/men/sweatpants-pjs/sw1/p1.png",
+                    "img/men/sweatpants-pjs/sw1/p2.png",
+                    "img/men/sweatpants-pjs/sw1/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -463,9 +463,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 15,
                 'Points'        => 3,
                 'Photo'         => json_encode([
-                    "/storage/img/men/sweatpants-pjs/sw2/p1.png",
-                    "/storage/img/men/sweatpants-pjs/sw2/p2.png",
-                    "/storage/img/men/sweatpants-pjs/sw2/p3.png"
+                    "img/men/sweatpants-pjs/sw2/p1.png",
+                    "img/men/sweatpants-pjs/sw2/p2.png",
+                    "img/men/sweatpants-pjs/sw2/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -480,9 +480,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 15,
                 'Points'        => 3,
                 'Photo'         => json_encode([
-                    "/storage/img/men/sweatpants-pjs/sw3/p1.png",
-                    "/storage/img/men/sweatpants-pjs/sw3/p2.png",
-                    "/storage/img/men/sweatpants-pjs/sw3/p3.png"
+                    "img/men/sweatpants-pjs/sw3/p1.png",
+                    "img/men/sweatpants-pjs/sw3/p2.png",
+                    "img/men/sweatpants-pjs/sw3/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -497,9 +497,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 15,
                 'Points'        => 3,
                 'Photo'         => json_encode([
-                    "/storage/img/men/sweatpants-pjs/sw4/p1.png",
-                    "/storage/img/men/sweatpants-pjs/sw4/p2.png",
-                    "/storage/img/men/sweatpants-pjs/sw4/p3.png"
+                    "img/men/sweatpants-pjs/sw4/p1.png",
+                    "img/men/sweatpants-pjs/sw4/p2.png",
+                    "img/men/sweatpants-pjs/sw4/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -514,9 +514,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 15,
                 'Points'        => 3,
                 'Photo'         => json_encode([
-                    "/storage/img/men/sweatpants-pjs/sw5/p1.png",
-                    "/storage/img/men/sweatpants-pjs/sw5/p2.png",
-                    "/storage/img/men/sweatpants-pjs/sw5/p3.png"
+                    "img/men/sweatpants-pjs/sw5/p1.png",
+                    "img/men/sweatpants-pjs/sw5/p2.png",
+                    "img/men/sweatpants-pjs/sw5/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -531,9 +531,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 15,
                 'Points'        => 3,
                 'Photo'         => json_encode([
-                    "/storage/img/men/sweatpants-pjs/sw6/p1.png",
-                    "/storage/img/men/sweatpants-pjs/sw6/p2.png",
-                    "/storage/img/men/sweatpants-pjs/sw6/p3.png"
+                    "img/men/sweatpants-pjs/sw6/p1.png",
+                    "img/men/sweatpants-pjs/sw6/p2.png",
+                    "img/men/sweatpants-pjs/sw6/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -548,9 +548,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 15,
                 'Points'        => 3,
                 'Photo'         => json_encode([
-                    "/storage/img/men/sweatpants-pjs/sw7/p1.png",
-                    "/storage/img/men/sweatpants-pjs/sw7/p2.png",
-                    "/storage/img/men/sweatpants-pjs/sw7/p3.png"
+                    "img/men/sweatpants-pjs/sw7/p1.png",
+                    "img/men/sweatpants-pjs/sw7/p2.png",
+                    "img/men/sweatpants-pjs/sw7/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -565,9 +565,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 15,
                 'Points'        => 3,
                 'Photo'         => json_encode([
-                    "/storage/img/men/sweatpants-pjs/sw8/p1.png",
-                    "/storage/img/men/sweatpants-pjs/sw8/p2.png",
-                    "/storage/img/men/sweatpants-pjs/sw8/p3.png"
+                    "img/men/sweatpants-pjs/sw8/p1.png",
+                    "img/men/sweatpants-pjs/sw8/p2.png",
+                    "img/men/sweatpants-pjs/sw8/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -584,9 +584,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/bottoms/b1/p1.png",
-                    "/storage/img/women/bottoms/b1/p2.png",
-                    "/storage/img/women/bottoms/b1/p3.png"
+                    "img/women/bottoms/b1/p1.png",
+                    "img/women/bottoms/b1/p2.png",
+                    "img/women/bottoms/b1/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -601,9 +601,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/bottoms/b2/p1.png",
-                    "/storage/img/women/bottoms/b2/p2.png",
-                    "/storage/img/women/bottoms/b2/p3.png"
+                    "img/women/bottoms/b2/p1.png",
+                    "img/women/bottoms/b2/p2.png",
+                    "img/women/bottoms/b2/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -618,9 +618,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/bottoms/b3/p1.png",
-                    "/storage/img/women/bottoms/b3/p2.png",
-                    "/storage/img/women/bottoms/b3/p3.png"
+                    "img/women/bottoms/b3/p1.png",
+                    "img/women/bottoms/b3/p2.png",
+                    "img/women/bottoms/b3/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -635,9 +635,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/bottoms/b4/p1.png",
-                    "/storage/img/women/bottoms/b4/p2.png",
-                    "/storage/img/women/bottoms/b4/p3.png"
+                    "img/women/bottoms/b4/p1.png",
+                    "img/women/bottoms/b4/p2.png",
+                    "img/women/bottoms/b4/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -652,9 +652,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/bottoms/b5/p1.png",
-                    "/storage/img/women/bottoms/b5/p2.png",
-                    "/storage/img/women/bottoms/b5/p3.png"
+                    "img/women/bottoms/b5/p1.png",
+                    "img/women/bottoms/b5/p2.png",
+                    "img/women/bottoms/b5/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -669,9 +669,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/bottoms/b6/p1.png",
-                    "/storage/img/women/bottoms/b6/p2.png",
-                    "/storage/img/women/bottoms/b6/p3.png"
+                    "img/women/bottoms/b6/p1.png",
+                    "img/women/bottoms/b6/p2.png",
+                    "img/women/bottoms/b6/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -686,9 +686,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/bottoms/b7/p1.png",
-                    "/storage/img/women/bottoms/b7/p2.png",
-                    "/storage/img/women/bottoms/b7/p3.png"
+                    "img/women/bottoms/b7/p1.png",
+                    "img/women/bottoms/b7/p2.png",
+                    "img/women/bottoms/b7/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -703,9 +703,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/bottoms/b8/p1.png",
-                    "/storage/img/women/bottoms/b8/p2.png",
-                    "/storage/img/women/bottoms/b8/p3.png"
+                    "img/women/bottoms/b8/p1.png",
+                    "img/women/bottoms/b8/p2.png",
+                    "img/women/bottoms/b8/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -722,9 +722,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/tops/top1/p1.png",
-                    "/storage/img/women/tops/top1/p2.png",
-                    "/storage/img/women/tops/top1/p3.png"
+                    "img/women/tops/top1/p1.png",
+                    "img/women/tops/top1/p2.png",
+                    "img/women/tops/top1/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -739,9 +739,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/tops/top2/p1.png",
-                    "/storage/img/women/tops/top2/p2.png",
-                    "/storage/img/women/tops/top2/p3.png"
+                    "img/women/tops/top2/p1.png",
+                    "img/women/tops/top2/p2.png",
+                    "img/women/tops/top2/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -756,9 +756,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/tops/top3/p1.png",
-                    "/storage/img/women/tops/top3/p2.png",
-                    "/storage/img/women/tops/top3/p3.png"
+                    "img/women/tops/top3/p1.png",
+                    "img/women/tops/top3/p2.png",
+                    "img/women/tops/top3/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -773,9 +773,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/tops/top4/p1.png",
-                    "/storage/img/women/tops/top4/p2.png",
-                    "/storage/img/women/tops/top4/p3.png"
+                    "img/women/tops/top4/p1.png",
+                    "img/women/tops/top4/p2.png",
+                    "img/women/tops/top4/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -790,9 +790,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/tops/top5/p1.png",
-                    "/storage/img/women/tops/top5/p2.png",
-                    "/storage/img/women/tops/top5/p3.png"
+                    "img/women/tops/top5/p1.png",
+                    "img/women/tops/top5/p2.png",
+                    "img/women/tops/top5/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -807,9 +807,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/tops/top6/p1.png",
-                    "/storage/img/women/tops/top6/p2.png",
-                    "/storage/img/women/tops/top6/p3.png"
+                    "img/women/tops/top6/p1.png",
+                    "img/women/tops/top6/p2.png",
+                    "img/women/tops/top6/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -824,9 +824,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/tops/top7/p1.png",
-                    "/storage/img/women/tops/top7/p2.png",
-                    "/storage/img/women/tops/top7/p3.png"
+                    "img/women/tops/top7/p1.png",
+                    "img/women/tops/top7/p2.png",
+                    "img/women/tops/top7/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -841,9 +841,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 5,
                 'Photo'         => json_encode([
-                    "/storage/img/women/tops/top8/p1.png",
-                    "/storage/img/women/tops/top8/p2.png",
-                    "/storage/img/women/tops/top8/p3.png"
+                    "img/women/tops/top8/p1.png",
+                    "img/women/tops/top8/p2.png",
+                    "img/women/tops/top8/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -860,10 +860,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/women/shoes/s1/p1.png",
-                    "/storage/img/women/shoes/s1/p2.png",
-                    "/storage/img/women/shoes/s1/p3.png",
-                    "/storage/img/women/shoes/s1/p4.png"
+                    "img/women/shoes/s1/p1.png",
+                    "img/women/shoes/s1/p2.png",
+                    "img/women/shoes/s1/p3.png",
+                    "img/women/shoes/s1/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -878,10 +878,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/women/shoes/s2/p1.png",
-                    "/storage/img/women/shoes/s2/p2.png",
-                    "/storage/img/women/shoes/s2/p3.png",
-                    "/storage/img/women/shoes/s2/p4.png"
+                    "img/women/shoes/s2/p1.png",
+                    "img/women/shoes/s2/p2.png",
+                    "img/women/shoes/s2/p3.png",
+                    "img/women/shoes/s2/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -896,10 +896,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/women/shoes/s3/p1.png",
-                    "/storage/img/women/shoes/s3/p2.png",
-                    "/storage/img/women/shoes/s3/p3.png",
-                    "/storage/img/women/shoes/s3/p4.png"
+                    "img/women/shoes/s3/p1.png",
+                    "img/women/shoes/s3/p2.png",
+                    "img/women/shoes/s3/p3.png",
+                    "img/women/shoes/s3/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -914,10 +914,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/women/shoes/s4/p1.png",
-                    "/storage/img/women/shoes/s4/p2.png",
-                    "/storage/img/women/shoes/s4/p3.png",
-                    "/storage/img/women/shoes/s4/p4.png"
+                    "img/women/shoes/s4/p1.png",
+                    "img/women/shoes/s4/p2.png",
+                    "img/women/shoes/s4/p3.png",
+                    "img/women/shoes/s4/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -932,10 +932,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/women/shoes/s5/p1.png",
-                    "/storage/img/women/shoes/s5/p2.png",
-                    "/storage/img/women/shoes/s5/p3.png",
-                    "/storage/img/women/shoes/s5/p4.png"
+                    "img/women/shoes/s5/p1.png",
+                    "img/women/shoes/s5/p2.png",
+                    "img/women/shoes/s5/p3.png",
+                    "img/women/shoes/s5/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -950,10 +950,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/women/shoes/s6/p1.png",
-                    "/storage/img/women/shoes/s6/p2.png",
-                    "/storage/img/women/shoes/s6/p3.png",
-                    "/storage/img/women/shoes/s6/p4.png"
+                    "img/women/shoes/s6/p1.png",
+                    "img/women/shoes/s6/p2.png",
+                    "img/women/shoes/s6/p3.png",
+                    "img/women/shoes/s6/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -968,10 +968,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/women/shoes/s7/p1.png",
-                    "/storage/img/women/shoes/s7/p2.png",
-                    "/storage/img/women/shoes/s7/p3.png",
-                    "/storage/img/women/shoes/s7/p4.png"
+                    "img/women/shoes/s7/p1.png",
+                    "img/women/shoes/s7/p2.png",
+                    "img/women/shoes/s7/p3.png",
+                    "img/women/shoes/s7/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -986,10 +986,10 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 6,
                 'Photo'         => json_encode([
-                    "/storage/img/women/shoes/s8/p1.png",
-                    "/storage/img/women/shoes/s8/p2.png",
-                    "/storage/img/women/shoes/s8/p3.png",
-                    "/storage/img/women/shoes/s8/p4.png"
+                    "img/women/shoes/s8/p1.png",
+                    "img/women/shoes/s8/p2.png",
+                    "img/women/shoes/s8/p3.png",
+                    "img/women/shoes/s8/p4.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -1006,9 +1006,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 8,
                 'Photo'         => json_encode([
-                    "/storage/img/women/dresses/d1/p1.png",
-                    "/storage/img/women/dresses/d1/p2.png",
-                    "/storage/img/women/dresses/d1/p3.png"
+                    "img/women/dresses/d1/p1.png",
+                    "img/women/dresses/d1/p2.png",
+                    "img/women/dresses/d1/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -1023,9 +1023,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 8,
                 'Photo'         => json_encode([
-                    "/storage/img/women/dresses/d2/p1.png",
-                    "/storage/img/women/dresses/d2/p2.png",
-                    "/storage/img/women/dresses/d2/p3.png"
+                    "img/women/dresses/d2/p1.png",
+                    "img/women/dresses/d2/p2.png",
+                    "img/women/dresses/d2/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -1040,9 +1040,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 8,
                 'Photo'         => json_encode([
-                    "/storage/img/women/dresses/d3/p1.png",
-                    "/storage/img/women/dresses/d3/p2.png",
-                    "/storage/img/women/dresses/d3/p3.png"
+                    "img/women/dresses/d3/p1.png",
+                    "img/women/dresses/d3/p2.png",
+                    "img/women/dresses/d3/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -1057,9 +1057,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 8,
                 'Photo'         => json_encode([
-                    "/storage/img/women/dresses/d4/p1.png",
-                    "/storage/img/women/dresses/d4/p2.png",
-                    "/storage/img/women/dresses/d4/p3.png"
+                    "img/women/dresses/d4/p1.png",
+                    "img/women/dresses/d4/p2.png",
+                    "img/women/dresses/d4/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -1074,9 +1074,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 8,
                 'Photo'         => json_encode([
-                    "/storage/img/women/dresses/d5/p1.png",
-                    "/storage/img/women/dresses/d5/p2.png",
-                    "/storage/img/women/dresses/d5/p3.png"
+                    "img/women/dresses/d5/p1.png",
+                    "img/women/dresses/d5/p2.png",
+                    "img/women/dresses/d5/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -1091,9 +1091,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 8,
                 'Photo'         => json_encode([
-                    "/storage/img/women/dresses/d6/p1.png",
-                    "/storage/img/women/dresses/d6/p2.png",
-                    "/storage/img/women/dresses/d6/p3.png"
+                    "img/women/dresses/d6/p1.png",
+                    "img/women/dresses/d6/p2.png",
+                    "img/women/dresses/d6/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -1108,9 +1108,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 8,
                 'Photo'         => json_encode([
-                    "/storage/img/women/dresses/d7/p1.png",
-                    "/storage/img/women/dresses/d7/p2.png",
-                    "/storage/img/women/dresses/d7/p3.png"
+                    "img/women/dresses/d7/p1.png",
+                    "img/women/dresses/d7/p2.png",
+                    "img/women/dresses/d7/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),
@@ -1125,9 +1125,9 @@ class ItemsTableSeeder extends Seeder
                 'Quantity'      => 10,
                 'Points'        => 8,
                 'Photo'         => json_encode([
-                    "/storage/img/women/dresses/d8/p1.png",
-                    "/storage/img/women/dresses/d8/p2.png",
-                    "/storage/img/women/dresses/d8/p3.png"
+                    "img/women/dresses/d8/p1.png",
+                    "img/women/dresses/d8/p2.png",
+                    "img/women/dresses/d8/p3.png"
                 ]),
                 'isAvailable'   => 1,
                 'created_at'    => Carbon::now(),

@@ -18,11 +18,11 @@
     <td class="px-6 py-4 text-center">
         <div class="flex justify-center space-x-2">
             <a href="{{ route('categories.edit', $category->CategoryID) }}" class="text-blue-600 hover:text-blue-800">
-                <img src="/storage/img/icons/list.png" alt="Show" class="w-5 h-5 inline-block">
+                <img src="{{ Storage::url('img/icons/list.png') }}" alt="Show" class="w-5 h-5 inline-block">
             Manage
             </a>
             <button type="button" class="text-red-600 hover:text-red-800 delete-button" data-category-id="{{ $category->CategoryID }}" data-action-url="{{ route('categories.destroy', $category->CategoryID) }}">
-                <img src="/storage/img/icons/trash.png" alt="Delete" class="w-5 h-5 inline-block">
+                <img src="{{ Storage::url('img/icons/trash.png') }}" alt="Delete" class="w-5 h-5 inline-block">
                 Delete
             </button>
         </div>

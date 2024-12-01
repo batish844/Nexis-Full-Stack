@@ -6,7 +6,7 @@
                 @foreach ($order->orderItems as $orderItem)
                     @if (!empty($orderItem->item->Photo))
                         <div class="w-20 h-20">
-                            <img src="{{ asset($orderItem->item->Photo[0]) }}"
+                            <img src="{{ Storage::url($orderItem->item->Photo[0]) }}"
                                 class="w-full h-full object-cover rounded-lg shadow">
                         </div>
                     @endif

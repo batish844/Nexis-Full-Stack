@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="icon" type="image/png" href="storage/img/CommonImg/blacklogo.png">
+    <link rel="icon" type="image/png" href="{{ Storage::url('img/CommonImg/blacklogo.png') }}">
     @vite('resources/css/app.css')
 </head>
 <body>
@@ -19,7 +19,7 @@
 </div>
     <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
-        <img src="storage/img/CommonImg/BrandLogo.png" alt="Logo" class="h-20">
+        <img src="{{ Storage::url('img/CommonImg/BrandLogo.png') }}" alt="Logo" class="h-20">
 
         </div>
 
@@ -122,7 +122,7 @@
                 <div class="mt-4 flex justify-center">
                     <a href="{{ route('google-auth') }}" 
                     class="flex items-center justify-center sm:w-3/4 px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-full shadow hover:bg-gray-300 transition z-10">
-                        <img src="{{ asset('storage/img/login/google-icon-logo.svg') }}" 
+                        <img src="{{ Storage::url('img/login/google-icon-logo.svg') }}" 
                             alt="Google Logo" 
                             class="w-5 h-5 mr-2">
                         Continue with Google
