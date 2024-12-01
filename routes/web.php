@@ -117,6 +117,44 @@ Route::post('/wishlist/toggle', [WishlistController::class, 'toggleWishlist'])->
 Route::get('/wishlist', [WishlistController::class, 'viewWishlist'])->name('wishlist.view');
 Route::get('/wishlist/count', [WishlistController::class, 'getWishlistCount'])->name('wishlist.count');
 
+Route::get('/test-s3', function () {
+    $filePath = 'img/men/bottoms/b1/p3.png';
+    
+    try {
+        // Check existence
+        $exists = Storage::exists($filePath);
+        Log::info('Checking existence for: ' . $filePath . ' | Result: ' . ($exists ? 'Exists' : 'Does not exist'));
+
+        if ($exists) {
+            // Generate URL
+            $url = Storage::url($filePath);
+            Log::info('Generated URL: ' . $url);
+
+            // Attempt to retrieve file content (optional)
+            $content = Storage::get($filePath);
+            Log::info('File content successfully retrieved.');
+
+            // Upload a test file (optional)
+            Storage::put('test-file.txt', 'This is a test');
+            Log::info('Test file uploaded: Success');
+
+            // Return response
+            return response()->json([
+                'file_path' => $filePath,
+                'exists' => $exists,
+                'url' => $url,
+            ]);
+        }
+
+        return response()->json([
+            'file_path' => $filePath,
+            'exists' => $exists,
+        ]);
+    } catch (\Exception $e) {
+        Log::error($e->getMessage());
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});
 
 
 Route::fallback(function () {

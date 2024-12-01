@@ -116,18 +116,15 @@ class ProductController extends Controller
                     $categoryName = strtolower(str_replace(' ', '_', $category->Name));
                     $productName = strtolower(str_replace(' ', '_', $request->input('name')));
 
-                    $folderPath = "/storage/img/{$gender}/{$categoryName}/{$productName}/";
-                    $fullFolderPath = public_path($folderPath);
-
-                    if (!file_exists($fullFolderPath)) {
-                        mkdir($fullFolderPath, 0777, true);
-                    }
-
+                    $folderPath = "img/{$gender}/{$categoryName}/{$productName}/";
                     $fileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
-                    $file->move($fullFolderPath, $fileName);
 
-                    $newPhotoPath = $folderPath . $fileName;
-                    $newPhotos[] = $newPhotoPath;
+                    $filePath = $folderPath . $fileName;
+
+                    // Store the file in S3
+                    Storage::put($filePath, file_get_contents($file));
+
+                    $newPhotos[] = $filePath;
                 }
             }
         }
@@ -215,24 +212,11 @@ class ProductController extends Controller
 
         $product = Item::findOrFail($id);
 
-        // Existing photos from request
         $existingPhotos = $request->input('existing_photos', []);
 
-        // Current photos in the database
         $currentPhotos = $product->Photo ? $product->Photo : [];
 
-        // Identify removed photos
-        $removedPhotos = array_diff($currentPhotos, $existingPhotos);
-        foreach ($removedPhotos as $photo) {
-            $photoPath = str_replace(Storage::url(''), '', $photo); // Get relative path
-            if (Storage::exists($photoPath)) {
-                Storage::delete($photoPath);
-            }
-        }
-
         $newPhotos = [];
-
-        // Handle new photos upload
         if ($request->hasFile('new_photos')) {
             $files = $request->file('new_photos');
             foreach ($files as $file) {
@@ -242,35 +226,25 @@ class ProductController extends Controller
                     $categoryName = strtolower(str_replace(' ', '_', $category->Name));
                     $productName = strtolower(str_replace(' ', '_', $request->input('name')));
 
-                    // Define folder path in S3
                     $folderPath = "img/{$gender}/{$categoryName}/{$productName}/";
-
-                    // Generate unique file name
                     $fileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
 
-                    // Full path for the file
                     $filePath = $folderPath . $fileName;
+                    Storage::put($filePath, file_get_contents($file));
 
-                    // Upload the file to S3
-                    Storage::put($filePath, file_get_contents($file), 'public');
-
-                    // Generate public URL
-                    $newPhotoPath = Storage::url($filePath);
-                    $newPhotos[] = $newPhotoPath;
+                    $newPhotos[] = $filePath;
                 }
             }
         }
 
-        // Merge existing and new photos
         $finalPhotos = array_merge($existingPhotos, $newPhotos);
 
-        // Reorder photos based on `image_order`
         $imageOrder = json_decode($request->input('image_order'), true);
         $orderedPhotos = [];
         foreach ($imageOrder as $key) {
             if (strpos($key, 'existing-') === 0) {
                 $photoPath = substr($key, strlen('existing-'));
-                if (in_array($photoPath, $finalPhotos)) {
+                if (in_array($photoPath, $currentPhotos)) {
                     $orderedPhotos[] = $photoPath;
                 }
             } elseif (strpos($key, 'new-') === 0) {
@@ -281,12 +255,9 @@ class ProductController extends Controller
             }
         }
 
-        // Update product's photo list
         $product->Photo = $orderedPhotos;
 
-        // Update other product attributes
-        $sizes = $request->input('sizes', []);
-        $product->Size = $sizes;
+        $product->Size = $request->input('sizes', []);
         $product->Name = $request->input('name');
         $product->CategoryID = $request->input('category_id');
         $product->Price = $request->input('price');
@@ -294,7 +265,6 @@ class ProductController extends Controller
         $product->Points = $request->input('points');
         $product->Description = $request->input('description');
 
-        // Save the product
         $product->save();
 
         return redirect()->route('products.show', $id)->with('success', 'Product updated successfully.');
