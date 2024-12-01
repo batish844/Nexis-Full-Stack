@@ -24,13 +24,13 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $query = Item::query();
-
+    
         if ($request->filled('name')) {
-            $query->where('Name', 'like', '%' . $request->name . '%');
+            $query->whereRaw('LOWER(Name) LIKE ?', ['%' . strtolower($request->name) . '%']);
         }
-
+    
         if ($request->filled('genderfilter') && $request->input('genderfilter') !== 'A') {
-            $query->where('Gender', $request->input('genderfilter'));
+            $query->whereRaw('LOWER(Gender) = ?', [strtolower($request->input('genderfilter'))]);
         }
         if ($request->filled('categoryfilter') && $request->input('categoryfilter') !== 'all') {
             $query->where('CategoryID', $request->input('categoryfilter'));
@@ -38,11 +38,9 @@ class ProductController extends Controller
         if ($request->filled('availabilityfilter') && $request->input('availabilityfilter') !== 'all') {
             $query->where('isAvailable', $request->input('availabilityfilter'));
         }
-
+    
         $products = $query->with('category')->get();
-
-
-
+    
         return view('admin.products.rows', compact('products'));
     }
     /**
@@ -121,7 +119,6 @@ class ProductController extends Controller
 
                     $filePath = $folderPath . $fileName;
 
-                    // Store the file in S3
                     Storage::put($filePath, file_get_contents($file));
 
                     $newPhotos[] = $filePath;
@@ -143,7 +140,6 @@ class ProductController extends Controller
 
         $product->Photo = $orderedPhotos;
 
-        // Assign sizes
         $sizes = $request->input('sizes', []);
         $product->Size = $sizes;
 

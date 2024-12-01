@@ -144,7 +144,7 @@
             <div
                 class="bg-white rounded-3xl shadow-2xl overflow-y-auto flex flex-col items-center py-10 px-6 w-11/12 max-w-md relative">
                 <button class="absolute top-4 right-4 text-gray-800 hover:text-gray-900" onclick="toggleMenu()">
-                    <lord-icon src="{{ Storage::url('xicon.json') }}" trigger="hover" style="width:32px;height:32px"></lord-icon>
+                    <lord-icon src="{{ Storage::url('xicon.json') }}" trigger="hover" style="width:32px;height:32px" mode="no-cors"></lord-icon>
                 </button>
                 <a href="/home" class="mb-8">
                     <img src="{{ Storage::url('img/CommonImg/BrandLogo.png') }}" alt="Logo" class="h-24 mx-auto">
