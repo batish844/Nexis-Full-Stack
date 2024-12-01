@@ -172,18 +172,9 @@
                     productsContainer.innerHTML = html;
                     
                     const parentContainer = productsContainer.parentElement;
-                    const oldPagination = parentContainer.querySelector(".external-pagination");
-                    if (oldPagination) oldPagination.remove();
-
-                    const newPagination = productsContainer.querySelector(".pagination");
-                    if (newPagination) {
-                        const clonedPagination = newPagination.cloneNode(true);
-                        clonedPagination.classList.add("external-pagination", "mt-6", "flex", "justify-center");
-                        parentContainer.appendChild(clonedPagination);
-                        newPagination.remove();
-                    }
+                   
                     // Check if any products exist
-                    const hasProducts = productsContainer.querySelector('.product-card'); // Corrected class name
+                    const hasProducts = productsContainer.querySelector('.product-card');
                     const noResults = document.getElementById('no-results');
 
                     if (!hasProducts) {
@@ -194,7 +185,7 @@
                         noResults.classList.add('hidden');
                     }
                     
-                    initializePagination();
+                    
                     initializeCarousel(); // Initialize carousel if applicable
                 })
                 .catch(error => {
@@ -202,47 +193,7 @@
                     productsContainer.innerHTML = '<p class="text-red-500">Failed to load products. Please try again.</p>';
                 });
         };
-        const initializePagination = () => {
-    document.addEventListener("click", (e) => {
-        const paginationLink = e.target.closest(".external-pagination a");
-        if (paginationLink) {
-            e.preventDefault();
-            const url = new URL(paginationLink.href);
-
-            // Append current filters to the pagination URL
-            const params = new URLSearchParams(url.search);
-            params.set('minPrice', sliderOne.value);
-            params.set('maxPrice', sliderTwo.value);
-            params.set('category', categoryDropdown.value);
-            params.set('search', searchInput.value);
-            const sortValue = document.getElementById("sort-dropdown").value;
-            if (sortValue) params.set('sort', sortValue);
-
-            fetch(`${url.origin}${url.pathname}?${params.toString()}`)
-                .then(response => response.text())
-                .then(html => {
-                    productsContainer.innerHTML = html;
-
-                    // Update pagination links
-                    const parentContainer = productsContainer.parentElement;
-                    const oldPagination = parentContainer.querySelector(".external-pagination");
-                    if (oldPagination) oldPagination.remove();
-
-                    const newPagination = productsContainer.querySelector(".pagination");
-                    if (newPagination) {
-                        const clonedPagination = newPagination.cloneNode(true);
-                        clonedPagination.classList.add("external-pagination", "mt-6", "flex", "justify-center");
-                        parentContainer.appendChild(clonedPagination);
-                        newPagination.remove();
-                    }
-
-                    initializePagination();
-                })
-                .catch(error => console.error("Error loading pagination:", error));
-        }
-    });
-};
-
+       
 
         let debounceTimer;
         searchInput.addEventListener("input", () => {
@@ -294,7 +245,7 @@
         sortDropdown.addEventListener("change", updateProducts);
 
         updateProducts();
-        initializePagination();
+        
         initializeCarousel();
 
         // Event delegation for dynamically added products
