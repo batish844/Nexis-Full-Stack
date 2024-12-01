@@ -207,22 +207,20 @@ class ProfileController extends Controller
         $request->validate([
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $user = Auth::user();
-        $user = request()->user();
+
+        $user = $request->user();
+
         if ($request->file('avatar')->isValid()) {
-            $fileName = time() . '.' . $request->file('avatar')->extension();
+            $folderPath = "img/avatar/{$user->UserID}/";
 
-            $filePath = public_path('storage/img/avatar');
+            $fileName = uniqid() . '_' . time() . '.' . $request->file('avatar')->extension();
 
-            if (!file_exists($filePath)) {
-                mkdir($filePath, 0777, true);
-            }
+            $filePath = $folderPath . $fileName;
 
-            $request->file('avatar')->move($filePath, $fileName);
+            Storage::put($filePath, file_get_contents($request->file('avatar')));
 
-
-            if ($user->avatar && file_exists(public_path('storage/img/avatar/' . $user->avatar))) {
-                unlink(public_path('storage/img/avatar/' . $user->avatar));
+            if ($user->avatar && Storage::exists("img/avatar/{$user->UserID}/" . $user->avatar)) {
+                Storage::delete("img/avatar/{$user->UserID}/" . $user->avatar);
             }
 
             $user->avatar = $fileName;
@@ -232,25 +230,24 @@ class ProfileController extends Controller
         return redirect()->back()->with('status', 'avatar-updated');
     }
 
-    //Delete avatar
     public function deleteAvatar()
-    {
-        $user = Auth::user();
-        $user = request()->user();
-        if ($user->avatar) {
+{
+    $user = request()->user();
 
-            $filePath = public_path('storage/img/avatar/' . $user->avatar);
+    if ($user->avatar) {
+        $filePath = "img/avatar/{$user->UserID}/" . $user->avatar;
 
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-
-            $user->avatar = null;
-            $user->save();
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
         }
 
-        return redirect()->back()->with('status', 'avatar-deleted');
+        $user->avatar = null;
+        $user->save();
     }
+
+    return redirect()->back()->with('status', 'avatar-deleted');
+}
+
 
     public function claimOrders(Request $request)
     {

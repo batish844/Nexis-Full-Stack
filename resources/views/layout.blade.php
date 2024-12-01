@@ -81,10 +81,14 @@
                     <button onclick="toggleDropdown()"
                         class="nav-items flex items-center transition-colors hover:text-white">
                         <span>{{ Auth::user()->First_Name }}</span>
-                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.25 7.75L10 12.5l4.75-4.75" stroke="currentColor" stroke-width="1.5"
-                                fill="none" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
+                        @if (Auth::user()->avatar)
+                        <img src="{{ Storage::url('img/avatar/' . Auth::user()->UserID . '/' . Auth::user()->avatar) }}"
+                            alt="User Avatar"
+                            class="w-10 h-10 rounded-full ml-2 border border-gray-300 object-cover">
+                        @else
+                        <img src="{{ Storage::url('img/icons/Default-Avatar.png') }}" alt="Default Avatar"
+                            class="w-10 h-10 rounded-full ml-2 border border-gray-300 object-cover">
+                        @endif
                     </button>
                     <div id="userDropdown"
                         class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-20">
@@ -164,12 +168,10 @@
                     <a href="{{ route('profile.index') }}" class="mobile-menu-link flex flex-row items-center justify-center mr-7 hover:text-white"
                         onclick="toggleMenu()">
                         @if (Auth::user()->avatar)
-                        <!-- Display user avatar if available -->
-                        <img src="{{ Storage::url('img/avatar/' . Auth::user()->avatar) }}"
+                        <img src="{{ Storage::url('img/avatar/' . Auth::user()->UserID . '/' . Auth::user()->avatar) }}"
                             alt="User Avatar"
                             class="w-10 h-10 rounded-full mr-3 border border-gray-300 object-cover">
                         @else
-                        <!-- Default avatar if none exists -->
                         <img src="{{ Storage::url('img/icons/Default-Avatar.png') }}" alt="Default Avatar"
                             class="w-10 h-10 rounded-full ml-2 border border-gray-300 object-cover">
                         @endif

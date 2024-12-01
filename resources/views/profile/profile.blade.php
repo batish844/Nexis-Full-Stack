@@ -47,7 +47,7 @@
                                     {{-- Display uploaded avatar --}}
                                     <div
                                         class="overflow-hidden w-36 h-36 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-60 lg:h-60 mx-auto rounded-full bg-gray-300 flex items-center justify-center border-4 border-blue-600 shadow-md">
-                                        <img src="{{ Storage::url('img/avatar/' . $user->avatar) }}" alt="User Avatar">
+                                        <img src="{{ Storage::url('img/avatar/' . $user->UserID . '/' . $user->avatar) }}" alt="User Avatar">
                                     </div>
 
                                     {{-- Update and Delete Buttons --}}

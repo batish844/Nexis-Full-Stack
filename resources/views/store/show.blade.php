@@ -246,7 +246,7 @@
                     <div
                         class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4 p-4 border border-gray-300 rounded-lg bg-gray-50">
                         <!-- User Avatar -->
-                        <img src="{{ $review->user->avatar ? Storage::url('img/avatar/' . $review->user->avatar) : Storage::url('img/icons/Default-Avatar.png') }}"
+                        <img src="{{ $review->user->avatar ? Storage::url('img/avatar/' . $review->user->UserID . '/' . $review->user->avatar) : Storage::url('img/icons/Default-Avatar.png') }}"
                             alt="{{ $review->user->name }}" class="w-12 h-12 rounded-full object-cover">
 
                         <!-- Review Details -->
