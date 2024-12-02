@@ -43,7 +43,7 @@ class WomenController extends Controller
             $itemsQuery->where('isAvailable', true);
 
             $itemsQuery->whereHas('category', function ($query) {
-                $query->where('Gender', 'M');
+                $query->where('Gender', 'F');
             });
 
             if (!empty($categoryId)) {

@@ -19,7 +19,7 @@ class MenController extends Controller
      */
     public function index()
     {
-        $items = Item::whereHas('category', function ($query) {
+        $items = Item::whereHas('Category', function ($query) {
             $query->where('Gender', 'M');
         })->get();
 
@@ -43,7 +43,7 @@ class MenController extends Controller
 
             $itemsQuery->where('isAvailable', true);
 
-            $itemsQuery->whereHas('category', function ($query) {
+            $itemsQuery->whereHas('Category', function ($query) {
                 $query->where('Gender', 'M');
             });
 
