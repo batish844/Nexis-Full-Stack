@@ -301,7 +301,7 @@
         } = await response.json();
         window.location.href = url;
       } catch (error) {
-        showCartMessage(error.message);
+        showCartMessage('No items in cart.');
       }
     });
     let showCartMessage = (message) => {

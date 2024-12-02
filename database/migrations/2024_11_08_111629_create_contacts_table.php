@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('Email');
             $table->string('Full_Name');
             $table->boolean('is_read')->default(false);
-            $table->foreignId('ContactedBy')->nullable()->constrained('users', 'UserID');
+            $table->foreignId('ContactedBy')->nullable()->constrained('users', 'UserID')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -42,7 +42,6 @@ class AuthenticatedSessionController extends Controller
             session(['has_guest_orders' => true]);
         }
 
-        // Redirect based on user role
         if ($user->isAdmin) {
             return redirect()->intended('/admin/analytics');
         } else {

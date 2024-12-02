@@ -23,26 +23,46 @@ class ProductController extends Controller
     }
     public function search(Request $request)
     {
-        $query = Item::query();
+        try {
+            // Start building the query
+            $query = Item::query();
     
-        if ($request->filled('name')) {
-            $query->whereRaw('LOWER(Name) LIKE ?', ['%' . strtolower($request->name) . '%']);
-        }
+            // Filter by name (case-sensitive fix for PostgreSQL)
+            if ($request->filled('name')) {
+                $query->whereRaw('"Name" ILIKE ?', ['%' . $request->input('name') . '%']);
+            }
     
-        if ($request->filled('genderfilter') && $request->input('genderfilter') !== 'A') {
-            $query->whereRaw('LOWER(Gender) = ?', [strtolower($request->input('genderfilter'))]);
-        }
-        if ($request->filled('categoryfilter') && $request->input('categoryfilter') !== 'all') {
-            $query->where('CategoryID', $request->input('categoryfilter'));
-        }
-        if ($request->filled('availabilityfilter') && $request->input('availabilityfilter') !== 'all') {
-            $query->where('isAvailable', $request->input('availabilityfilter'));
-        }
+            // Filter by gender
+            if ($request->filled('genderfilter') && $request->genderfilter !== 'A') {
+                $query->whereRaw('LOWER("Gender") = ?', [strtolower($request->genderfilter)]);
+            }
     
-        $products = $query->with('category')->get();
+            // Filter by category
+            if ($request->filled('categoryfilter') && $request->categoryfilter !== 'all') {
+                $query->where('CategoryID', $request->categoryfilter);
+            }
     
-        return view('admin.products.rows', compact('products'));
+            // Filter by availability
+            if ($request->filled('availabilityfilter') && $request->availabilityfilter !== 'all') {
+                $query->where('isAvailable', $request->availabilityfilter);
+            }
+    
+            // Fetch filtered products with their categories
+            $products = $query->with('category')->get();
+    
+            // Return the filtered results view
+            return view('admin.products.rows', compact('products'));
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            Log::error('Admin Filtering Error: ' . $e->getMessage());
+    
+            // Return a user-friendly error response
+            return response()->json([
+                'error' => 'An error occurred while filtering products. Please try again later.'
+            ], 500);
+        }
     }
+    
     /**
      * Show the form for creating a new resource.
      */

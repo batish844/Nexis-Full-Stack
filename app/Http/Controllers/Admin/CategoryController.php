@@ -29,12 +29,13 @@ class CategoryController extends Controller
         $query = Category::query();
 
         if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+            $query->where('Name', 'ILIKE', '%' . $request->name . '%');
         }
+
         $query->orderBy('items_count', 'desc');
 
         if ($request->filled('genderfilter') && $request->input('genderfilter') !== 'A') {
-            $query->where('gender', $request->input('genderfilter'));
+            $query->where('Gender', $request->input('genderfilter'));
         }
         $categories = $query->withCount('items')->get();
 
@@ -56,7 +57,7 @@ class CategoryController extends Controller
             'gender' => 'required|in:M,F,A',
         ]);
 
-        if (Category::where('name', $request->name)->where('gender', $request->gender)->exists()) {
+        if (Category::where('Name', $request->name)->where('Gender', $request->gender)->exists()) {
             return redirect()->back()->with('error', "{$request->name} already exists.");
         }
         Category::create([

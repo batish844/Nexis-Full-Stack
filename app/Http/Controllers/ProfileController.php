@@ -297,9 +297,9 @@ class ProfileController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
 
-        if (is_null($request->user()->google_id)) {
+        if (!is_null($request->user()->password)) {
             $request->validateWithBag('userDeletion', [
-                'password' => ['required', 'current_password'],
+            'password' => ['required', 'current_password'],
             ]);
         }
 

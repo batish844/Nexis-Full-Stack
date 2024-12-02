@@ -88,7 +88,7 @@
                 <div id="no-results" class="hidden flex flex-col items-center justify-center w-full h-full">
                     <div class="flex flex-col items-center space-y-6">
                         <div class="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-full shadow-md">
-                            <img src="{{ asset('/storage/img/CommonImg/No Items Found.png') }}" alt="No Items Found" class="w-48 h-48 object-contain">
+                            <img src="{{ Storage::url('img/CommonImg/No Items Found.png') }}" alt="No Items Found" class="w-48 h-48 object-contain">
                             
                         </div>
                         <div class="text-center">
