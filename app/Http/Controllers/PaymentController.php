@@ -262,6 +262,10 @@ class PaymentController extends Controller
                         'TotalPrice' => $cartItem['Quantity'] * $item->Price,
                     ]);
 
+                    if ($item->Quantity < $cartItem['Quantity']) {
+                        return redirect()->route('cart.view')->with('error', 'Insufficient stock for item: ' . $item->Name);
+                    }
+
                     $item->decrement('Quantity', $cartItem['Quantity']);
                     if ($item->Quantity <= 0) {
                         $item->isAvailable = false;

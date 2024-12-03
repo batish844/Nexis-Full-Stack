@@ -59,17 +59,6 @@
             color: #1D4289;
         }
 
-        .order-items ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 10px 0;
-        }
-
-        .order-items ul li {
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-
         .email-footer {
             background-color: #f1f1f1;
             color: #555;
@@ -91,10 +80,6 @@
             .email-header h1 {
                 font-size: 20px;
             }
-
-            .order-items ul li {
-                font-size: 14px;
-            }
         }
     </style>
 </head>
@@ -102,7 +87,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://batish844.github.io/testingModelViewer/blacklogo.png" alt="Nexis Logo" aria-label="Nexis Logo">
+            <img src="https://batish844.github.io/testingModelViewer/blacklogo.png" alt="Nexis Logo" aria-label="Nexis Logo" style="max-width: 100px; height: auto; margin-bottom: 10px;">
             <h1>Order Confirmation</h1>
         </div>
 
@@ -115,23 +100,20 @@
                 <p><strong>Total Price:</strong> ${{ number_format($order->TotalPrice, 2) }}</p>
             </div>
 
-            <!-- Order Items -->
-            <!-- <div class="order-items">
-                <p><strong>Items:</strong></p>
-                <ul>
-                    @foreach ($order->orderItems as $orderItem)
-                        <li>{{ $orderItem->Quantity }} x {{ $orderItem->item->Name }} ({{ $orderItem->Size }}) - ${{ number_format($orderItem->TotalPrice, 2) }}</li>
-                    @endforeach
-                </ul>
-            </div> -->
-
             <p>We’ll process your order shortly. You’ll receive a shipping confirmation email when your items are on the way!</p>
+
+            <!-- View Order Button -->
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="{{ url('/profile/orders') }}" style="background-color: #1D4289; color: #ffffff; text-decoration: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; display: inline-block;">
+                    View Your Order
+                </a>
+            </div>
         </div>
 
         <div class="email-footer">
-            &copy; {{ date('Y') }} Your Company Name. All rights reserved.
+            &copy; {{ date('Y') }} Nexis. All rights reserved.
             <br>
-            Need help? <a href="mailto:support@yourcompany.com">Contact Us</a>
+            Need help? <a href="{{ url('/contact-us') }}">Contact Us</a>
         </div>
     </div>
 </body>

@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
             'updated_at'      => Carbon::now(),
         ]);
         DB::table('users')->insert([
-            'UserID'          => '1',
+            'UserID'          => '6',
             'email'           => 'admin@admin.com',
             'Phone_Number'    => '1234567890',
             'First_Name'      => 'Admin',

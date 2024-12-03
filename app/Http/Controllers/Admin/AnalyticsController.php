@@ -8,6 +8,7 @@ use App\Models\Order;
 use Carbon\Carbon;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class AnalyticsController extends Controller
@@ -24,11 +25,12 @@ class AnalyticsController extends Controller
     {
         try {
             $startDateInput = $request->input('startDate');
-            $endDateInput = $request->input('endDate');
+            $endDateInput   = $request->input('endDate');
 
             $startDate = $startDateInput ? Carbon::parse($startDateInput) : Carbon::now()->subMonth();
-            $endDate = $endDateInput ? Carbon::parse($endDateInput) : Carbon::now();
+            $endDate   = $endDateInput ? Carbon::parse($endDateInput) : Carbon::now();
 
+            // Fetch orders within the date range
             $orders = Order::with(['orderItems.item', 'user'])
                 ->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()])
                 ->get();
@@ -36,22 +38,25 @@ class AnalyticsController extends Controller
             $totalOrders = $orders->count();
 
             $totalRevenue = 0;
-            $totalProfit = 0;
+            $totalProfit  = 0;
 
+            // Calculate total revenue and profit
             foreach ($orders as $order) {
                 foreach ($order->orderItems as $orderItem) {
-                    $lineTotal = $orderItem->TotalPrice; 
+                    $lineTotal     = $orderItem->TotalPrice;
                     $totalRevenue += $lineTotal;
-                    $totalProfit += $lineTotal * 0.2; 
+                    $totalProfit  += $lineTotal * 0.2; // Assuming 20% profit margin
                 }
             }
 
             $averageOrderValue = $totalOrders > 0 ? $totalRevenue / $totalOrders : 0;
 
+            // Count orders by status
             $statusCounts = $orders->groupBy('Status')->map(function ($statusGroup) {
                 return $statusGroup->count();
             });
 
+            // Daily data for charts
             $dailyData = $orders->groupBy(function ($order) {
                 return $order->created_at->format('Y-m-d');
             })->map(function ($dailyOrders) {
@@ -62,32 +67,40 @@ class AnalyticsController extends Controller
                     }
                 }
                 return [
-                    'totalOrders' => $dailyOrders->count(),
+                    'totalOrders'  => $dailyOrders->count(),
                     'totalRevenue' => $dailyTotalRevenue,
                 ];
             });
 
-            // Fetch best-selling products
-            $bestSellingProducts = OrderItem::with('item')
+            // Best selling products
+            $quantityColumn = DB::getQueryGrammar()->wrap('Quantity');
+            $itemIDColumn = DB::getQueryGrammar()->wrap('ItemID');
+
+            $bestSellingProducts = OrderItem::select('ItemID')
+                ->selectRaw("SUM($quantityColumn) as total_quantity")
                 ->whereHas('order', function ($query) use ($startDate, $endDate) {
-                    $query->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()]);
+                    $query->whereBetween('orders.created_at', [$startDate->startOfDay(), $endDate->endOfDay()]);
                 })
-                ->select('ItemID', DB::raw('SUM("Quantity") as "totalQuantity"'))
                 ->groupBy('ItemID')
-                ->orderByDesc('totalQuantity')
+                ->orderByRaw("SUM($quantityColumn) DESC")
                 ->take(5)
+                ->with(['item' => function ($query) {
+                    $query->select('ItemID', 'Name', 'Photo');
+                }])
                 ->get()
                 ->map(function ($orderItem) {
+                    $item = $orderItem->item;
                     return [
-                        'name' => $orderItem->item->Name,
-                        'totalQuantity' => $orderItem->totalQuantity,
-                        'photo' => $orderItem->item->Photo[0] ?? null,
+                        'name'          => optional($item)->Name ?? 'Unknown',
+                        'totalQuantity' => $orderItem->total_quantity,
+                        'photo'         => optional($item)->Photo[0] ?? null,
                     ];
                 });
 
-            $periodDays = $startDate->diffInDays($endDate) + 1;
+            // Revenue comparison with previous period
+            $periodDays        = $startDate->diffInDays($endDate) + 1;
             $previousStartDate = (clone $startDate)->subDays($periodDays);
-            $previousEndDate = (clone $startDate)->subDay();
+            $previousEndDate   = (clone $startDate)->subDay();
 
             $previousOrders = Order::with(['orderItems'])
                 ->whereBetween('created_at', [$previousStartDate->startOfDay(), $previousEndDate->endOfDay()])
@@ -100,51 +113,55 @@ class AnalyticsController extends Controller
                 }
             }
 
-            if ($previousTotalRevenue > 0) {
-                $revenueComparison = (($totalRevenue - $previousTotalRevenue) / $previousTotalRevenue) * 100;
-            } else {
-                $revenueComparison = null;
-            }
+            $revenueComparison = $previousTotalRevenue > 0
+                ? (($totalRevenue - $previousTotalRevenue) / $previousTotalRevenue) * 100
+                : null;
 
             // Fetch top customers
-            $topCustomers = Order::with('user')
+            $totalPriceColumn = DB::getQueryGrammar()->wrap('TotalPrice');
+
+            $topCustomers = Order::select(
+                'OrderedBy',
+                DB::raw('COUNT(*) as orders_count'),
+                DB::raw("SUM($totalPriceColumn) as total_spent")
+            )
+                ->with(['user' => function ($query) {
+                    $query->select('UserID', 'First_Name', 'Last_Name', 'email');
+                }])
                 ->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()])
                 ->whereHas('user', function ($query) {
                     $query->where('email', '!=', 'guest@guest.com');
                 })
-                ->select(
-                    'OrderedBy',
-                    DB::raw('COUNT(*) as orders'),
-                    DB::raw('SUM("TotalPrice") as "total_spent"')
-                )
                 ->groupBy('OrderedBy')
-                ->orderByDesc('total_spent')
+                ->orderByRaw("SUM($totalPriceColumn) DESC")
                 ->take(5)
                 ->get()
                 ->map(function ($order) {
+                    $customer = $order->user;
                     return [
-                        'customer' => $order->user->First_Name . ' ' . $order->user->Last_Name,
-                        'orders' => $order->orders,
+                        'customer'    => optional($customer)->First_Name . ' ' . optional($customer)->Last_Name,
+                        'orders'      => $order->orders_count,
                         'total_spent' => round($order->total_spent, 2),
                     ];
                 });
 
             return response()->json([
-                'totalOrders' => $totalOrders,
-                'totalRevenue' => round($totalRevenue, 2),
-                'averageOrderValue' => round($averageOrderValue, 2),
-                'profit' => round($totalProfit, 2),
-                'statusCounts' => $statusCounts,
-                'dailyData' => $dailyData,
+                'totalOrders'         => $totalOrders,
+                'totalRevenue'        => round($totalRevenue, 2),
+                'averageOrderValue'   => round($averageOrderValue, 2),
+                'profit'              => round($totalProfit, 2),
+                'statusCounts'        => $statusCounts,
+                'dailyData'           => $dailyData,
                 'bestSellingProducts' => $bestSellingProducts,
-                'revenueComparison' => $revenueComparison,
-                'topCustomers' => $topCustomers,
+                'revenueComparison'   => $revenueComparison,
+                'topCustomers'        => $topCustomers,
             ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            // Log the exception
+            Log::error('Analytics getData error: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while fetching analytics data.'], 500);
         }
     }
-
     /**
      * Show the form for creating a new resource.
      */
